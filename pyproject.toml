@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "npu-sr"
+version = "0.1.0"
+description = "Single-image 2x super-resolution on Snapdragon X Hexagon NPUs"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "licenses/*.txt"]
+authors = [{name = "NPU-SR contributors"}]
+classifiers = ["Programming Language :: Python :: 3", "Topic :: Multimedia :: Graphics"]
+dependencies = [
+  "numpy>=2.2,<3",
+  "Pillow>=11.2,<13",
+  "onnx>=1.18,<2",
+  "onnxruntime-windowsml==1.25.2.202605110140; sys_platform == 'win32'",
+  "wasdk-Microsoft.Windows.AI.MachineLearning==2.3.0; sys_platform == 'win32'",
+  "wasdk-Microsoft.Windows.ApplicationModel.DynamicDependency.Bootstrap==2.3.0; sys_platform == 'win32'",
+  "winrt-Windows.ApplicationModel==3.2.1; sys_platform == 'win32'",
+  "winrt-Windows.Foundation==3.2.1; sys_platform == 'win32'",
+  "winrt-Windows.Foundation.Collections==3.2.1; sys_platform == 'win32'",
+  "onnxruntime>=1.23,<2; sys_platform != 'win32'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "ruff>=0.11,<1", "build>=1.2,<2", "twine>=6,<7"]
+
+[project.scripts]
+npu-sr = "npu_sr.cli:main"
+
+[project.urls]
+Repository = "https://github.com/AKMessi/npu-sr"
+Issues = "https://github.com/AKMessi/npu-sr/issues"
+Changelog = "https://github.com/AKMessi/npu-sr/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not npu'"
+markers = ["npu: requires Windows ARM64, installed model and Qualcomm NPU"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

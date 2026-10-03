@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible inference, installation, or CLI problem.
+body:
+  - type: textarea
+    attributes:
+      label: Problem and reproduction
+      description: Include the command and expected/actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: System and runtime versions
+      description: OS build, Python architecture/version, ORT, QNN package and NPU driver versions.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Sanitized diagnostics
+      description: Include doctor output and relevant verbose evidence. Remove usernames and personal paths.
+  - type: textarea
+    attributes:
+      label: Image/model details
+      description: Dimensions, format, model hash; attach only images you can share publicly.

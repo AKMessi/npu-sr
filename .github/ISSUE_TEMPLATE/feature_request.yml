@@ -1,0 +1,13 @@
+name: Feature request
+description: Suggest a focused improvement.
+body:
+  - type: textarea
+    attributes:
+      label: Use case
+      description: What would this make possible?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed behavior and validation
+      description: Describe scope, compatibility, and evidence needed to demonstrate it works.
