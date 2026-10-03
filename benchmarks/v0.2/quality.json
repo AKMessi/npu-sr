@@ -1,0 +1,3111 @@
+{
+  "schema_version": 2,
+  "sr": {
+    "schema_version": 2,
+    "environment": {
+      "npu_sr_version": "0.2.0",
+      "timestamp": "2026-10-03T23:10:10.099926+00:00",
+      "git_commit": "3e1390a7c4d1f32b2cb71def333981a1be70860c",
+      "working_tree_dirty": false,
+      "python_source_sha256": "495587ec13f8dd934d64000d71f49e6fa70a81766b6ec9319001a272ae93d1e7",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.2.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 53
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "results": [
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.812775919943398,
+          "ssim_y": 0.7200867697065862,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.71941805686086,
+          "ssim_y": 0.882882947004883,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.181602277970313,
+          "ssim_y": 0.8670234370901877,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.30669671181241,
+          "ssim_y": 0.9262822510290319,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.522983078997477,
+          "ssim_y": 0.8362959743521484,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.813308296904655,
+          "ssim_y": 0.7200941733796472,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.73826414349732,
+          "ssim_y": 0.8820361370003489,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.1823915108879,
+          "ssim_y": 0.8670468843788669,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.307160304639304,
+          "ssim_y": 0.9262703564662808,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.529348162452656,
+          "ssim_y": 0.8359785747508675,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.81277859830154,
+          "ssim_y": 0.7200869179554542,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.719435386483035,
+          "ssim_y": 0.8828834007720401,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.181603860771002,
+          "ssim_y": 0.8670239730526959,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.30673464928799,
+          "ssim_y": 0.9262825568406089,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2",
+        "model_sha256": "4d9dbfb6cb9cdf2246fd5676c09d7e813dcf8f725e1cb8323c930963938670a1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.522976110123206,
+          "ssim_y": 0.8362957487870645,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.812775919943398,
+          "ssim_y": 0.7200867697065862,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.71941805686086,
+          "ssim_y": 0.882882947004883,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.181602277970313,
+          "ssim_y": 0.8670234370901877,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.30669671181241,
+          "ssim_y": 0.9262822510290319,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.522983078997477,
+          "ssim_y": 0.8362959743521484,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.813308296904655,
+          "ssim_y": 0.7200941733796472,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.73826414349732,
+          "ssim_y": 0.8820361370003489,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.1823915108879,
+          "ssim_y": 0.8670468843788669,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.307160304639304,
+          "ssim_y": 0.9262703564662808,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.529348162452656,
+          "ssim_y": 0.8359785747508675,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.81277859830154,
+          "ssim_y": 0.7200869179554542,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.719435386483035,
+          "ssim_y": 0.8828834007720401,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.181603860771002,
+          "ssim_y": 0.8670239730526959,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.30673464928799,
+          "ssim_y": 0.9262825568406089,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "espcn-x2-256",
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.522976110123206,
+          "ssim_y": 0.8362957487870645,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.79075623986528,
+          "ssim_y": 0.7169352202576093,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.679726886057423,
+          "ssim_y": 0.8805374923980945,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.13037980412935,
+          "ssim_y": 0.8656038658540508,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.12619145633021,
+          "ssim_y": 0.9228433682010507,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.508633906337256,
+          "ssim_y": 0.8360624973360424,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.791997799913634,
+          "ssim_y": 0.7170808296058787,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.68203291689403,
+          "ssim_y": 0.880602301032214,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.131584691521063,
+          "ssim_y": 0.8656408710375086,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.12746369681116,
+          "ssim_y": 0.9228671893209307,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.50881445600383,
+          "ssim_y": 0.836196203591639,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.790757363652173,
+          "ssim_y": 0.7169352213883691,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.679726886057423,
+          "ssim_y": 0.8805374923980945,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.13038096414483,
+          "ssim_y": 0.8656039510392465,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.12618483238709,
+          "ssim_y": 0.9228434212756248,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-small-x2",
+        "model_sha256": "029a7fbcfee198e3d813758cec8cf2359cf47f02adb884272e2bd20d58a470f1",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.50863515454975,
+          "ssim_y": 0.836062338945707,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.924985728357832,
+          "ssim_y": 0.7269361839691094,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.903987135944867,
+          "ssim_y": 0.8857757807355638,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.30111206206173,
+          "ssim_y": 0.8704478061993746,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.50666141122548,
+          "ssim_y": 0.9295382377308947,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.757438244627135,
+          "ssim_y": 0.8454406782592929,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.92538366150225,
+          "ssim_y": 0.726943807934703,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.904753098709907,
+          "ssim_y": 0.8858399421247177,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.302225980859642,
+          "ssim_y": 0.8705095243082843,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.50527485796015,
+          "ssim_y": 0.9295189035820511,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.758941305671833,
+          "ssim_y": 0.845581559421032,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.924986419499703,
+          "ssim_y": 0.7269361986351316,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.903987343725156,
+          "ssim_y": 0.8857758638049475,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.301111953367418,
+          "ssim_y": 0.8704478083992481,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.50666405695553,
+          "ssim_y": 0.9295384710848958,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "fsrcnn-x2",
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.757427367422864,
+          "ssim_y": 0.8454403723654953,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.753328481820162,
+          "ssim_y": 0.7158166474081976,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.60782888563585,
+          "ssim_y": 0.8801677075111191,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.057539883985648,
+          "ssim_y": 0.8644963948024277,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.147935608738244,
+          "ssim_y": 0.923949120056435,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.517860943180494,
+          "ssim_y": 0.8362911442309722,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.753260457133095,
+          "ssim_y": 0.7157791881859552,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.607060759661405,
+          "ssim_y": 0.8801455334468172,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.057231331028817,
+          "ssim_y": 0.8644650954174988,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.14763411555573,
+          "ssim_y": 0.9239387392212193,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.517529982190077,
+          "ssim_y": 0.836247459042712,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101085.jpg",
+        "reference_sha256": "dbefbd4ae3749913ee9fffcdb663bea87ab6634dc8b989422f741243bdbedc8a",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 24.753328106791148,
+          "ssim_y": 0.7158166939043298,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 24.491803809828767,
+          "ssim_y": 0.7083983055248041,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "101087.jpg",
+        "reference_sha256": "d755a74144410290cff5e214bb7cbf352a8cb920d45fac3d992b9772ad92a017",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 29.607824209073584,
+          "ssim_y": 0.8801675413275688,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 29.226208973231426,
+          "ssim_y": 0.8758754142293831,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "102061.jpg",
+        "reference_sha256": "35ce0a9baaebae00c19f6abccd1d7b3ecd8f1c62003e178610b2179c082f0a8e",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.057541390756175,
+          "ssim_y": 0.8644964328069499,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 26.75097334502603,
+          "ssim_y": 0.858617200149724,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "103070.jpg",
+        "reference_sha256": "6d1d9e564b5459e969f65470ff03aa3104af779e93c93ca434ad546477e27261",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 32.147935459043154,
+          "ssim_y": 0.9239490048760158,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 31.859084278523287,
+          "ssim_y": 0.9216394326451758,
+          "border_hr_pixels": 2
+        }
+      },
+      {
+        "model": "lapsrn-x2",
+        "model_sha256": "8dfc0362ae05ec32f692d948e8f8959f9679cebb239c5dbc9a3321efbb4de281",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "105025.jpg",
+        "reference_sha256": "6678e84e923e5c1b085afe43ae2fc3735f7f424e02eaefe50a64405f76b9b51b",
+        "degradation": {
+          "type": "Pillow bicubic x2 downsample",
+          "border": 2
+        },
+        "metrics": {
+          "psnr_y_db": 27.51787009847292,
+          "ssim_y": 0.8362911473289313,
+          "border_hr_pixels": 2
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 27.409222565314174,
+          "ssim_y": 0.8348991817929563,
+          "border_hr_pixels": 2
+        }
+      }
+    ],
+    "metric_definition": "full-range Rec.601 Y; PSNR; Gaussian 11x11 sigma=1.5 population SSIM",
+    "dataset": "BSDS300-test-first-five",
+    "methodology": "Pillow bicubic LR generation, not canonical MATLAB BSD100 scores"
+  },
+  "denoise": {
+    "schema_version": 2,
+    "environment": {
+      "npu_sr_version": "0.2.0",
+      "timestamp": "2026-10-03T23:11:36.958944+00:00",
+      "git_commit": "3e1390a7c4d1f32b2cb71def333981a1be70860c",
+      "working_tree_dirty": false,
+      "python_source_sha256": "495587ec13f8dd934d64000d71f49e6fa70a81766b6ec9319001a272ae93d1e7",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.2.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 53
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "results": [
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "test001.png",
+        "reference_sha256": "94ddd662377347ca7b07d5a11c2a83feff658723cf31f79bfa75f65713e94ee4",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 25.673365001688737,
+          "ssim_y": 0.7131173856024877,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.525462941589154,
+          "ssim_y": 0.5376636768234669,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "test002.png",
+        "reference_sha256": "7dabadb169c463d7bd7da110c36d486846c8c787883b6fc979257d44e09b3a29",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 28.47110795400524,
+          "ssim_y": 0.8682539898457065,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.919132523217247,
+          "ssim_y": 0.33758461085374875,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "test003.png",
+        "reference_sha256": "d27b8117a1b175b594f80de162e81776c8587e2e512fa4d07fbaeacb67c97949",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 29.72330628488666,
+          "ssim_y": 0.8581986151976305,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.3204752499838,
+          "ssim_y": 0.3104465594376989,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "test004.png",
+        "reference_sha256": "3ceebbbf583e355fefcdb9e653bff65451b20a512f1c4ca12a0518f4569b481c",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 30.39672492000853,
+          "ssim_y": 0.8497593450328693,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.245228749128973,
+          "ssim_y": 0.2984141759469007,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "cpu",
+        "evidence": {
+          "providers": [
+            "CPUExecutionProvider"
+          ]
+        },
+        "image": "test005.png",
+        "reference_sha256": "d187d8b58e5d19b4aa6e055b849064fb974cad7b18083c25f6580a1ba17d6bb3",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 26.723782333290195,
+          "ssim_y": 0.8002936580868796,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.89208794825336,
+          "ssim_y": 0.45638249504198125,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "test001.png",
+        "reference_sha256": "94ddd662377347ca7b07d5a11c2a83feff658723cf31f79bfa75f65713e94ee4",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 25.673516908922082,
+          "ssim_y": 0.713096142425134,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.525462941589154,
+          "ssim_y": 0.5376636768234669,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "test002.png",
+        "reference_sha256": "7dabadb169c463d7bd7da110c36d486846c8c787883b6fc979257d44e09b3a29",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 28.48027682977428,
+          "ssim_y": 0.8682203500659007,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.919132523217247,
+          "ssim_y": 0.33758461085374875,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "test003.png",
+        "reference_sha256": "d27b8117a1b175b594f80de162e81776c8587e2e512fa4d07fbaeacb67c97949",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 29.722966495085437,
+          "ssim_y": 0.8581259554895896,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.3204752499838,
+          "ssim_y": 0.3104465594376989,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "test004.png",
+        "reference_sha256": "3ceebbbf583e355fefcdb9e653bff65451b20a512f1c4ca12a0518f4569b481c",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 30.395875281254302,
+          "ssim_y": 0.8497070962387521,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.245228749128973,
+          "ssim_y": 0.2984141759469007,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "npu",
+        "evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "disabled"
+        },
+        "image": "test005.png",
+        "reference_sha256": "d187d8b58e5d19b4aa6e055b849064fb974cad7b18083c25f6580a1ba17d6bb3",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 26.72675360470275,
+          "ssim_y": 0.8002758790094229,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.89208794825336,
+          "ssim_y": 0.45638249504198125,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "test001.png",
+        "reference_sha256": "94ddd662377347ca7b07d5a11c2a83feff658723cf31f79bfa75f65713e94ee4",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 25.673369023636766,
+          "ssim_y": 0.7131175149212104,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.525462941589154,
+          "ssim_y": 0.5376636768234669,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "test002.png",
+        "reference_sha256": "7dabadb169c463d7bd7da110c36d486846c8c787883b6fc979257d44e09b3a29",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 28.471087505038525,
+          "ssim_y": 0.8682527444529112,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.919132523217247,
+          "ssim_y": 0.33758461085374875,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "test003.png",
+        "reference_sha256": "d27b8117a1b175b594f80de162e81776c8587e2e512fa4d07fbaeacb67c97949",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 29.723316201288107,
+          "ssim_y": 0.8581998041243529,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.3204752499838,
+          "ssim_y": 0.3104465594376989,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "test004.png",
+        "reference_sha256": "3ceebbbf583e355fefcdb9e653bff65451b20a512f1c4ca12a0518f4569b481c",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 30.396738248800137,
+          "ssim_y": 0.849760224364989,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.245228749128973,
+          "ssim_y": 0.2984141759469007,
+          "border_hr_pixels": 0
+        }
+      },
+      {
+        "model": "dncnn-25",
+        "model_sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a",
+        "backend": "gpu",
+        "evidence": {
+          "device_type": "GPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "DmlExecutionProvider": 1
+          },
+          "providers": [
+            "DmlExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+        },
+        "image": "test005.png",
+        "reference_sha256": "d187d8b58e5d19b4aa6e055b849064fb974cad7b18083c25f6580a1ba17d6bb3",
+        "degradation": {
+          "type": "Gaussian luminance noise, clipped uint8",
+          "sigma": 25.0,
+          "seed": 2026,
+          "border": 0
+        },
+        "metrics": {
+          "psnr_y_db": 26.72377760022005,
+          "ssim_y": 0.8002938633097957,
+          "border_hr_pixels": 0
+        },
+        "baseline_metrics": {
+          "psnr_y_db": 20.89208794825336,
+          "ssim_y": 0.45638249504198125,
+          "border_hr_pixels": 0
+        }
+      }
+    ],
+    "metric_definition": "full-range Rec.601 Y; PSNR; Gaussian 11x11 sigma=1.5 population SSIM",
+    "dataset": "BSD68-author-test-first-five",
+    "methodology": "Pillow bicubic LR generation, not canonical MATLAB BSD100 scores"
+  },
+  "summary": [
+    {
+      "task": "upscale",
+      "model": "espcn-x2",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.308695209116888,
+      "mean_ssim_y": 0.8465142758365675,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "espcn-x2",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.31409448367637,
+      "mean_ssim_y": 0.8462852251952022,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "espcn-x2",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.308705720993355,
+      "mean_ssim_y": 0.8465145194815726,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "espcn-x2-256",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.308695209116888,
+      "mean_ssim_y": 0.8465142758365675,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "espcn-x2-256",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.31409448367637,
+      "mean_ssim_y": 0.8462852251952022,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "espcn-x2-256",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.308705720993355,
+      "mean_ssim_y": 0.8465145194815726,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-small-x2",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.247137658543902,
+      "mean_ssim_y": 0.8443964888093696,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-small-x2",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.248378712228742,
+      "mean_ssim_y": 0.8444774789176342,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-small-x2",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.247137040158254,
+      "mean_ssim_y": 0.8443964850094083,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-x2",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.478836916443406,
+      "mean_ssim_y": 0.8516277373788471,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-x2",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.47931578094076,
+      "mean_ssim_y": 0.8516787474741576,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "fsrcnn-x2",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.478835428194134,
+      "mean_ssim_y": 0.8516277428579435,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "lapsrn-x2",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.21689876067208,
+      "mean_ssim_y": 0.8441442028018302,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "lapsrn-x2",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.216543329113826,
+      "mean_ssim_y": 0.8441152030628405,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "upscale",
+      "model": "lapsrn-x2",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.216899852827396,
+      "mean_ssim_y": 0.8441441640487591,
+      "baseline_mean_psnr_y_db": 27.947458594384734,
+      "baseline_mean_ssim_y": 0.8398859068684086
+    },
+    {
+      "task": "denoise",
+      "model": "dncnn-25",
+      "backend": "cpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.19765729877587,
+      "mean_ssim_y": 0.8179245987531146,
+      "baseline_mean_psnr_y_db": 20.580477482434507,
+      "baseline_mean_ssim_y": 0.3880983036207593
+    },
+    {
+      "task": "denoise",
+      "model": "dncnn-25",
+      "backend": "npu",
+      "images": 5,
+      "mean_psnr_y_db": 28.19987782394777,
+      "mean_ssim_y": 0.8178850846457598,
+      "baseline_mean_psnr_y_db": 20.580477482434507,
+      "baseline_mean_ssim_y": 0.3880983036207593
+    },
+    {
+      "task": "denoise",
+      "model": "dncnn-25",
+      "backend": "gpu",
+      "images": 5,
+      "mean_psnr_y_db": 28.19765771579672,
+      "mean_ssim_y": 0.8179248302346519,
+      "baseline_mean_psnr_y_db": 20.580477482434507,
+      "baseline_mean_ssim_y": 0.3880983036207593
+    }
+  ]
+}

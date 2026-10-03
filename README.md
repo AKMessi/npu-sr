@@ -13,7 +13,22 @@ An NPU is a processor designed to run neural networks efficiently.
 This project makes custom ONNX inference reproducible on Snapdragon laptops and
 provides a CPU comparison for future work on video enhancement.
 
-Published v0.1 baseline on Snapdragon X Plus X1P-42-100:
+v0.2 measurements on Snapdragon X Plus X1P-42-100:
+
+- 960 × 540 ESPCN with larger tiles: **89.4 ms** warm complete-image NPU processing,
+  versus **153.0 ms CPU** and **126.9 ms DirectML GPU**.
+- FSRCNN SR quality: **28.48 dB / 0.8517 SSIM**, versus bicubic **27.95 dB / 0.8399**
+  on the five-image research subset.
+- DnCNN denoising: **28.20 dB / 0.8179 SSIM**, versus noisy **20.58 dB / 0.3881**
+  on five BSD68 images with reproducible Gaussian luminance noise.
+- Strict QNN and DirectML profiling verified neural execution without CPU kernels.
+
+These are one machine's measurements on battery in Balanced mode, with three
+performance trials. Full-image timing excludes startup and file IO. Power is not
+measured, and no video throughput is claimed. See the [v0.2 summary](benchmarks/v0.2/summary.md)
+and its raw JSON for inputs, methodology, versions and limitations.
+
+Historical v0.1 baseline on the same laptop:
 
 - CPU median inference: **8.5 ms**
 - NPU median inference: **4.9 ms**
@@ -150,6 +165,7 @@ npu-sr models download espcn-x2-256
 npu-sr upscale input.png --model espcn-x2-256 --device npu --cache-dir .cache/qnn -o output.png
 npu-sr models download dncnn-25
 npu-sr denoise noisy.png --device npu -o clean.png
+python scripts/create_denoise_example.py your-photo.jpg --device npu
 npu-sr benchmark examples/input.png --model fsrcnn-x2 --gpu --runs 30 --json outputs/image.json
 ```
 
@@ -181,7 +197,7 @@ flowchart TD
     S --> U[2x SR image or native-size denoised image]
 ```
 
-The fixed `1 × 1 × 136 × 136` model uses Conv, Relu, DepthToSpace, and Tanh.
+The baseline fixed `1 × 1 × 136 × 136` model uses Conv, Relu, DepthToSpace, and Tanh.
 Three convolutions operate on normalized luminance; chroma is resized on CPU.
 128 × 128 tile cores have four input pixels of context on each side. Tiling is
 necessary for arbitrary sizes because QNN requires fixed shapes. The halo matches

@@ -6,10 +6,12 @@
 - Strict DirectML GPU execution and CPU/NPU/GPU image comparisons.
 - Shape-aware receptive-field tiles, reused contiguous input buffers and cheaper RGB quantization.
 - Reusable runtimes, optional integrity-checked QNN contexts, separate proof/startup timings.
-- Reproducible five-image BSDS300 research subset acquisition, PSNR/SSIM quality evaluation.
+- Reproducible BSDS300 SR and author-designated BSD68 denoising subsets, PSNR/SSIM evaluation.
 - Multi-resolution, three-trial performance suite with phase timings and JSON checkpointing.
 - CPU process time and working-set measurements; power and accelerator utilization not measured.
 - Existing v0.1 command syntax and exact baseline export retained. No video implementation yet.
+- Published CPU/NPU/DirectML measurements for five resolutions and three trials;
+  FSRCNN improves the tested SR subset and DnCNN improves synthetic luminance noise.
 
 ## 0.1.0 — 2026-10-04
 

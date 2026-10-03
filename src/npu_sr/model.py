@@ -108,7 +108,9 @@ def model_path(directory: Path | None = None, identifier: str = "espcn-x2") -> P
 
 def validate_model(path: Path) -> dict:
     if not path.is_file():
-        raise SRException("Model missing. Run: python scripts/download_model.py")
+        if path.stem in MODELS:
+            raise SRException(f"Model missing. Run: npu-sr models download {path.stem}")
+        raise SRException("Model missing. Supply an existing ONNX path or run: npu-sr models list")
     try:
         manifest = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
         if not isinstance(manifest, dict) or not all(

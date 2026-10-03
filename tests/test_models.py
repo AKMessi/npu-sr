@@ -29,6 +29,11 @@ def test_registry_and_legacy_paths():
         model_spec("nonexistent")
 
 
+def test_missing_registry_model_has_specific_acquisition_command(tmp_path):
+    with pytest.raises(SRException, match="models download fsrcnn-x2"):
+        validate_model(tmp_path / "fsrcnn-x2.onnx")
+
+
 @pytest.mark.parametrize("identifier", list(MODELS))
 @pytest.mark.parametrize("size", [(1, 1), (271, 513)])
 def test_shape_aware_tiling_is_exact(identifier, size):

@@ -1,0 +1,30 @@
+{
+  "npu_sr_version": "0.2.0",
+  "timestamp": "2026-10-03T23:10:10.099926+00:00",
+  "git_commit": "3e1390a7c4d1f32b2cb71def333981a1be70860c",
+  "working_tree_dirty": false,
+  "python_source_sha256": "495587ec13f8dd934d64000d71f49e6fa70a81766b6ec9319001a272ae93d1e7",
+  "os": "Windows",
+  "architecture": "ARM64",
+  "python": "3.12.0",
+  "software_versions": {
+    "npu-sr": "0.2.0",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0",
+    "onnx": "1.23.1",
+    "onnxruntime-windowsml": "1.25.2.202605110140",
+    "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+    "winrt-runtime": "3.2.1"
+  },
+  "power": "not measured",
+  "background_processes": "uncontrolled",
+  "power_state": {
+    "ac_line": "battery",
+    "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "battery_percent": 53
+  },
+  "qnn_catalog_package": "2.2480.53.0",
+  "windows_build": 26200,
+  "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+  "npu_driver": "30.0.219.1000"
+}

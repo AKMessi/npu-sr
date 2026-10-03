@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "npu-sr"
 version = "0.2.0"
-description = "Single-image 2x super-resolution on Snapdragon X Hexagon NPUs"
+description = "Image super-resolution and denoising on Snapdragon X Hexagon NPUs"
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
 license = "MIT"
