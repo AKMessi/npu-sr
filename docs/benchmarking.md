@@ -66,6 +66,8 @@ python scripts/download_benchmarks.py
 npu-sr models download fsrcnn-x2
 npu-sr models download dncnn-25
 npu-sr benchmark-suite datasets/bsds300-five --quality --models espcn-x2 fsrcnn-x2 dncnn-25 --devices cpu npu gpu --json outputs/quality.json
+python scripts/download_benchmarks.py --dataset bsd68-five
+npu-sr benchmark-suite datasets/bsd68-five --quality --models dncnn-25 --devices cpu npu gpu --json outputs/denoising-quality.json
 npu-sr benchmark-suite examples/input.png --models espcn-x2 fsrcnn-x2 --runs 5 --warmups 3 --trials 3 --cache-dir .cache/qnn --json outputs/performance.json
 ```
 
@@ -95,6 +97,11 @@ the reference to gray and adds clipped Gaussian luminance noise at sigma 25 with
 seed 2026. Each output is compared with the clean reference, never the LR/noisy
 source. The JSON includes baseline metrics, image hashes, model hashes and
 execution evidence. No dataset images or private machine identifiers are published.
+
+BSD68's first five author-designated test images provide a separate denoising
+validation subset. Its immutable upstream files are individually hash checked.
+BSDS300 photographic demonstrations alone do not establish a held-out denoising
+score or absence of overlap with a model's original training data.
 
 [Research notes](research-notes.md) explain the dataset's research-only terms.
 [Release summary](../benchmarks/v0.2/summary.md) links actual measurements and

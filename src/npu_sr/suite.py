@@ -211,10 +211,12 @@ def quality_suite(directory: Path, models: list[str], devices: list[str]) -> dic
     if not paths:
         raise SRException("Quality input directory contains no reference images")
     provenance_path = directory / "provenance.json"
+    dataset_name = "user supplied references; names and SHA256 recorded"
     if provenance_path.exists():
         import json
 
         provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+        dataset_name = provenance["dataset"]
         for path in paths:
             if provenance["files"].get(path.name) != sha256(path):
                 raise SRException(f"Dataset image integrity mismatch: {path.name}")
@@ -277,9 +279,6 @@ def quality_suite(directory: Path, models: list[str], devices: list[str]) -> dic
         "environment": environment(),
         "results": results,
         "metric_definition": "full-range Rec.601 Y; PSNR; Gaussian 11x11 sigma=1.5 population SSIM",
-        "dataset": (
-            "user supplied; image names and SHA256 recorded; "
-            "first-five BSDS300 test subset for release"
-        ),
+        "dataset": dataset_name,
         "methodology": "Pillow bicubic LR generation, not canonical MATLAB BSD100 scores",
     }
