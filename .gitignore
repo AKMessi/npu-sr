@@ -10,6 +10,7 @@ dist/
 models/*
 !models/.gitkeep
 outputs/
+datasets/
 .cache/
 *.dll
 *.bin
@@ -18,4 +19,9 @@ outputs/
 *.log
 .env
 *.onnx.data
+*.pth
+*.pt
+*.npz
+*.safetensors
+.env.*
 onnxruntime_profile*.json

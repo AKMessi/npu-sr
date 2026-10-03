@@ -26,6 +26,7 @@ def statistics(samples_ms: list[float]) -> dict[str, float]:
         "mean_ms": float(np.mean(samples_ms)),
         "p95_ms": float(np.percentile(samples_ms, 95)),
         "fps_equivalent": 1000 / median,
+        "theoretical_images_per_second": 1000 / median,
     }
 
 
@@ -48,7 +49,12 @@ def measure(image: PreparedImage, runtime: "Runtime", runs: int, warmups: int) -
 
 
 def benchmark(
-    image: PreparedImage, path: Path, runs: int, warmups: int, verbose: bool = False
+    image: PreparedImage,
+    path: Path,
+    runs: int,
+    warmups: int,
+    verbose: bool = False,
+    gpu: bool = False,
 ) -> dict[str, Any]:
     from .runtime import Runtime
 
@@ -64,6 +70,9 @@ def benchmark(
         del npu
     except NPUUnavailable as exc:
         unavailable = str(exc)
+    if gpu:
+        accelerator = Runtime(path, "gpu", verbose)
+        results.append(measure(image, accelerator, runs, warmups))
     report = {
         "schema_version": 1,
         "timestamp": datetime.now(UTC).isoformat(),
@@ -78,7 +87,7 @@ def benchmark(
     }
     if sys.platform == "win32":
         report["device"]["windows_build"] = sys.getwindowsversion().build
-    if len(results) == 2:
+    if unavailable is None:
         report["npu_speedup"] = (
             results[0]["latency"]["median_ms"] / results[1]["latency"]["median_ms"]
         )

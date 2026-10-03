@@ -55,3 +55,18 @@ warning above, and the strict NPU proof passed with and without it.
 `benchmark`: 0 when valid measurements were produced, even if NPU is unavailable;
 inspect `npu_unavailable` in JSON to distinguish a CPU-only result.
 Argparse usage errors return 2. Auto fallback is printed explicitly.
+## v0.2 models and GPU
+
+- Missing registry model: run `npu-sr models download IDENTIFIER`. Paths still
+  require adjacent hash/contract manifests. Do not rename model identifiers in a manifest.
+- DnCNN cleans luminance Gaussian noise at sigma 25/255. Colored or structured
+  real-world noise may remain; this is a model limitation, not a backend failure.
+- GPU mode requires the DirectML provider supplied by the Windows ML ORT wheel.
+  It fails explicitly on CPU-only installations. QNN GPU execution was unsuccessful
+  on the tested package; changing `backend_type` alone does not establish GPU usage.
+- Cache invalid/corrupt: source models must remain available. Cache metadata checks
+  trigger recompilation; a cached context that fails proof is invalidated and retried
+  from the source graph. Never publish compiled contexts or native verbose logs.
+- The research dataset downloader requires access to Berkeley's official server.
+  It refuses changed archives rather than using unverified data. Dataset images
+  are research-only and excluded from git; benchmark your own aligned images if needed.

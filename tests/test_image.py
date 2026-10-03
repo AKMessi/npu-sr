@@ -81,3 +81,17 @@ def test_exif_rotation(tmp_path: Path):
     path = tmp_path / "rotated.jpg"
     Image.new("RGB", (10, 5)).save(path, exif=exif)
     assert load_image(path).size == (5, 10)
+
+
+def test_plane_quantization_matches_original_vectorized_formula():
+    from npu_sr.image import resize_plane
+
+    rng = np.random.default_rng(13)
+    prepared = preprocess(Image.fromarray(rng.integers(0, 256, (19, 27, 3), np.uint8)))
+    y = rng.uniform(-0.2, 1.2, (38, 54)).astype(np.float32)
+    cb = resize_plane(prepared.cb, (54, 38)) - 0.5
+    cr = resize_plane(prepared.cr, (54, 38)) - 0.5
+    red, blue = y + cr / 0.713, y + cb / 0.564
+    green = (y - 0.299 * red - 0.114 * blue) / 0.587
+    expected = np.rint(np.clip(np.stack([red, green, blue], -1), 0, 1) * 255).astype(np.uint8)
+    np.testing.assert_array_equal(np.asarray(postprocess(y, prepared)), expected)

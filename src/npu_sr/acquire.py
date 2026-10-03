@@ -87,7 +87,7 @@ def read_weights(data: bytes) -> dict[str, np.ndarray]:
     return result
 
 
-def export(weights: dict[str, np.ndarray], path: Path) -> None:
+def export(weights: dict[str, np.ndarray], path: Path, shape: list[int] | None = None) -> None:
     nodes, initializers = [], []
     previous = "input"
     for index, pad in ((1, 2), (2, 1), (3, 1)):
@@ -125,8 +125,14 @@ def export(weights: dict[str, np.ndarray], path: Path) -> None:
     graph = helper.make_graph(
         nodes,
         MODEL_NAME,
-        [helper.make_tensor_value_info("input", TensorProto.FLOAT, INPUT_SHAPE)],
-        [helper.make_tensor_value_info("output", TensorProto.FLOAT, OUTPUT_SHAPE)],
+        [helper.make_tensor_value_info("input", TensorProto.FLOAT, shape or INPUT_SHAPE)],
+        [
+            helper.make_tensor_value_info(
+                "output",
+                TensorProto.FLOAT,
+                [1, 1, shape[2] * 2, shape[3] * 2] if shape else OUTPUT_SHAPE,
+            )
+        ],
         initializers,
     )
     model = helper.make_model(

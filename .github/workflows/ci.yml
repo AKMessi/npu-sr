@@ -38,7 +38,13 @@ jobs:
           python -m ruff check .
           python -m ruff format --check .
       - name: Acquire hash-checked model for CPU integration
-        run: python scripts/download_model.py
+        run: |
+          python scripts/download_model.py
+          npu-sr models download espcn-x2-256
+          npu-sr models download fsrcnn-small-x2
+          npu-sr models download fsrcnn-x2
+          npu-sr models download lapsrn-x2
+          npu-sr models download dncnn-25
       - name: Test CPU and failure paths (no NPU expected)
         run: python -m pytest -m "not npu"
       - name: Build and validate public artifacts

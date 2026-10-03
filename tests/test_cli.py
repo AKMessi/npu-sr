@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
+from npu_sr import __version__
 from npu_sr.cli import main, parser
 
 
@@ -11,7 +12,7 @@ def test_parsing_and_version(capsys):
     with pytest.raises(SystemExit) as exc:
         main(["--version"])
     assert exc.value.code == 0
-    assert "0.1.0" in capsys.readouterr().out
+    assert __version__ in capsys.readouterr().out
     with pytest.raises(SystemExit):
         parser().parse_args(["benchmark", "image.png", "--runs", "0"])
 

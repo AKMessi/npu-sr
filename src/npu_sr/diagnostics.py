@@ -62,7 +62,8 @@ def diagnose(path: Path, verbose: bool = False) -> dict[str, Any]:
     except SRException as exc:
         report["errors"].append(str(exc))
     try:
-        validate_model(path)
+        manifest = validate_model(path)
+        report["model"] = manifest["name"]
         report["model_status"] = "ready"
     except SRException as exc:
         report["errors"].append(str(exc))

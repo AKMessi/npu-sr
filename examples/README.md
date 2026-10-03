@@ -13,3 +13,18 @@ npu-sr upscale examples/input.png -o outputs/npu.png --device npu --comparison-d
 Generated comparison files were copied here for README display after local QNN
 verification. The image is an intentionally simple test pattern; also try a real
 photo of your own to judge texture recovery and artifacts.
+
+## Photographic denoising comparison (v0.2)
+
+```powershell
+python scripts/download_benchmarks.py
+npu-sr models download dncnn-25
+python scripts/create_denoise_example.py datasets/bsds300-five/102061.jpg --device npu
+```
+
+Open `outputs/denoise-example/clean-reference.png`, `noisy.png` and `denoised.png`
+at native size. The photographic source is from the downloadable BSDS300 research
+subset; it is not redistributed here. Noise is explicitly synthetic Gaussian
+sigma 25 with seed 2026. This visual example does not establish performance on
+arbitrary real camera noise. Substitute your own noisy photo with
+`npu-sr denoise your-photo.png --comparison-dir outputs/your-comparison`.

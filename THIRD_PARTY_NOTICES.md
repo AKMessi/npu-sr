@@ -19,6 +19,37 @@ The pretrained model retains its Apache 2.0 license. If you redistribute a deriv
 model, include the upstream license and attribution, and identify your changes.
 DIV2K training data and upstream sample images are not distributed here.
 
+## Additional v0.2 models
+
+- FSRCNN and FSRCNN-small: [Saafke/FSRCNN_Tensorflow](https://github.com/Saafke/FSRCNN_Tensorflow),
+  revision `6a4812c4ef1c4f5947d79beafa32a05a6eb4a94d`,
+  [Apache 2.0](licenses/TF-FSRCNN-APACHE-2.0.txt). The upstream implementation
+  uses a subpixel output layer. Exports change layout and fold bias/PRelu expressions.
+- LapSRN x2: Fanny Monori's [TF-LapSRN](https://github.com/fannymonori/TF-LapSRN),
+  revision `fc51c90af1b5801a357abc919160d7ff4f24b997`,
+  [Apache 2.0](licenses/TF-LapSRN-APACHE-2.0.txt). Exports preserve SAME padding
+  and express leaky activation using equivalent PRelu slopes for QNN compatibility.
+- DnCNN sigma 25: Kai Zhang's [KAIR](https://github.com/cszn/KAIR), release v1.0
+  `dncnn_25.pth`, [MIT](licenses/KAIR-MIT.txt). License copy pinned at
+  `fc1732f4a4514e42ce15e5b3a1e18c828af47a1e`. The upstream weights already fold
+  batch normalization. The ONNX export computes input minus predicted noise.
+
+Exact source SHA256 values and download URLs are in
+[`acquire_models.py`](src/npu_sr/acquire_models.py) and the generated manifests.
+Parameters are not retrained. Original and exported weights remain ignored;
+their model licenses apply independently of this repository's MIT code license.
+
+## Benchmark data
+
+The [BSDS300](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/) images
+are available for non-commercial research and educational use; copyright remains
+with their owners. This project downloads a fixed five-image test subset for
+research and does not redistribute the images or their derivatives.
+Citation: D. Martin, C. Fowlkes, D. Tal and J. Malik, *A Database of Human Segmented
+Natural Images and its Application to Evaluating Segmentation Algorithms and
+Measuring Ecological Statistics*, ICCV 2001. Download provenance and hashes are
+written beside local data. Committed benchmark JSON contains measurements only.
+
 ## Runtime and Python dependencies
 
 | Component | License / terms | Distribution in this repository |

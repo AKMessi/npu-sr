@@ -11,7 +11,7 @@ import numpy as np
 from PIL import Image, ImageOps, UnidentifiedImageError
 
 from .errors import SRException
-from .model import CORE, HALO, TILE
+from .model import MODELS, ModelSpec
 
 if TYPE_CHECKING:
     from .runtime import Runtime
@@ -27,6 +27,7 @@ class PreparedImage:
     padded_y: np.ndarray
     cb: np.ndarray
     cr: np.ndarray
+    spec: ModelSpec = MODELS["espcn-x2"]
 
     @property
     def size(self) -> tuple[int, int]:
@@ -35,14 +36,18 @@ class PreparedImage:
     @property
     def tile_count(self) -> int:
         width, height = self.size
-        return ((width + CORE - 1) // CORE) * ((height + CORE - 1) // CORE)
+        core = self.spec.core
+        return ((width + core - 1) // core) * ((height + core - 1) // core)
 
     def tiles(self) -> Iterator[tuple[int, int, np.ndarray]]:
         width, height = self.size
-        for top in range(0, height, CORE):
-            for left in range(0, width, CORE):
-                tensor = self.padded_y[top : top + TILE, left : left + TILE][None, None]
-                yield left, top, np.ascontiguousarray(tensor, dtype=np.float32)
+        core, tile = self.spec.core, self.spec.input_shape[2]
+        # One contiguous input buffer per image, reused for each synchronous ORT call.
+        buffer = np.empty(self.spec.input_shape, np.float32)
+        for top in range(0, height, core):
+            for left in range(0, width, core):
+                buffer[0, 0] = self.padded_y[top : top + tile, left : left + tile]
+                yield left, top, buffer
 
 
 def load_image(path: Path) -> Image.Image:
@@ -53,7 +58,7 @@ def load_image(path: Path) -> Image.Image:
                 if image.format not in FORMATS:
                     raise SRException("Unsupported input format. Use PNG, JPEG, or WebP.")
                 if image.width * image.height > MAX_PIXELS:
-                    raise SRException(f"Image exceeds the v0.1 limit of {MAX_PIXELS:,} pixels.")
+                    raise SRException(f"Image exceeds the limit of {MAX_PIXELS:,} pixels.")
                 if getattr(image, "n_frames", 1) > 1:
                     raise SRException("Animated images are unsupported. Supply one still image.")
                 oriented = ImageOps.exif_transpose(image)
@@ -70,7 +75,7 @@ def load_image(path: Path) -> Image.Image:
         raise SRException(f"Cannot load image '{path}': {exc}") from exc
 
 
-def preprocess(image: Image.Image) -> PreparedImage:
+def preprocess(image: Image.Image, spec: ModelSpec = MODELS["espcn-x2"]) -> PreparedImage:
     rgb = image.convert("RGB")
     pixels = np.asarray(rgb, dtype=np.float32) / 255.0
     red, green, blue = pixels.transpose(2, 0, 1)
@@ -78,11 +83,11 @@ def preprocess(image: Image.Image) -> PreparedImage:
     cb, cr = (blue - y) * 0.564 + 0.5, (red - y) * 0.713 + 0.5
     height, width = y.shape
     # Repeat edge pixels only at the image boundary, not at internal tile boundaries.
-    bottom = HALO + (-height % CORE)
-    right = HALO + (-width % CORE)
-    padded = np.pad(y, ((HALO, bottom), (HALO, right)), mode="edge")
+    bottom = spec.halo + (-height % spec.core)
+    right = spec.halo + (-width % spec.core)
+    padded = np.pad(y, ((spec.halo, bottom), (spec.halo, right)), mode="edge")
     alpha = image.getchannel("A") if "A" in image.getbands() else None
-    return PreparedImage(rgb, alpha, padded, cb, cr)
+    return PreparedImage(rgb, alpha, padded, cb, cr, spec)
 
 
 def resize_plane(plane: np.ndarray, size: tuple[int, int]) -> np.ndarray:
@@ -94,33 +99,61 @@ def resize_plane(plane: np.ndarray, size: tuple[int, int]) -> np.ndarray:
 
 def postprocess(y: np.ndarray, image: PreparedImage) -> Image.Image:
     width, height = image.size
-    size = (width * 2, height * 2)
+    size = (width * image.spec.scale, height * image.spec.scale)
     if y.shape != (size[1], size[0]) or not np.isfinite(y).all():
         raise SRException("Invalid luminance output shape or values.")
-    cb, cr = resize_plane(image.cb, size) - 0.5, resize_plane(image.cr, size) - 0.5
+    cb = (resize_plane(image.cb, size) if image.spec.scale != 1 else image.cb) - 0.5
+    cr = (resize_plane(image.cr, size) if image.spec.scale != 1 else image.cr) - 0.5
     red = y + cr / 0.713
     blue = y + cb / 0.564
     green = (y - 0.299 * red - 0.114 * blue) / 0.587
-    pixels = np.rint(np.clip(np.stack([red, green, blue], axis=-1), 0, 1) * 255).astype(np.uint8)
+    # Quantize each plane in place; avoid several full-size float RGB temporaries.
+    pixels = np.empty((size[1], size[0], 3), dtype=np.uint8)
+    for index, plane in enumerate((red, green, blue)):
+        np.clip(plane, 0, 1, out=plane)
+        plane *= 255
+        np.rint(plane, out=plane)
+        pixels[:, :, index] = plane
     result = Image.fromarray(pixels)
     if image.alpha is not None:
         result.putalpha(image.alpha.resize(size, Image.Resampling.BICUBIC))
     return result
 
 
-def infer_y(image: PreparedImage, runtime: "Runtime") -> tuple[np.ndarray, float]:
+def infer_y(
+    image: PreparedImage, runtime: "Runtime", timings: dict[str, float] | None = None
+) -> tuple[np.ndarray, float]:
     width, height = image.size
-    output = np.empty((height * 2, width * 2), dtype=np.float32)
+    core, scale = image.spec.core, image.spec.scale
+    if hasattr(runtime, "spec") and runtime.spec != image.spec:
+        raise SRException("Image tile contract does not match the selected model.")
+    output = np.empty((height * scale, width * scale), dtype=np.float32)
     inference_seconds = 0.0
-    for left, top, tensor in image.tiles():
+    extraction_seconds, stitching_seconds = 0.0, 0.0
+    iterator = iter(image.tiles())
+    while True:
+        started = perf_counter()
+        try:
+            left, top, tensor = next(iterator)
+        except StopIteration:
+            break
+        extraction_seconds += perf_counter() - started
         started = perf_counter()
         tile = runtime.run(tensor)[0, 0]
         inference_seconds += perf_counter() - started
-        kept_w, kept_h = min(CORE, width - left) * 2, min(CORE, height - top) * 2
-        border = HALO * 2
-        output[top * 2 : top * 2 + kept_h, left * 2 : left * 2 + kept_w] = tile[
+        started = perf_counter()
+        kept_w, kept_h = min(core, width - left) * scale, min(core, height - top) * scale
+        border = image.spec.halo * scale
+        output[top * scale : top * scale + kept_h, left * scale : left * scale + kept_w] = tile[
             border : border + kept_h, border : border + kept_w
         ]
+        stitching_seconds += perf_counter() - started
+    if timings is not None:
+        timings.update(
+            tile_extraction_ms=extraction_seconds * 1000,
+            inference_ms=inference_seconds * 1000,
+            stitching_ms=stitching_seconds * 1000,
+        )
     return output, inference_seconds * 1000
 
 

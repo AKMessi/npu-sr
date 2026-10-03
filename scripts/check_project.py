@@ -6,12 +6,14 @@ import tomllib
 import zipfile
 from pathlib import Path
 
+from npu_sr import __version__
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def check() -> None:
     metadata = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    assert metadata["project"]["version"] == "0.1.0"
+    assert metadata["project"]["version"] == __version__
     assert metadata["project"]["license"] == "MIT"
     assert metadata["project"]["scripts"]["npu-sr"] == "npu_sr.cli:main"
     required = [
@@ -42,7 +44,7 @@ def check() -> None:
                 names = archive.getnames()
         else:
             continue
-        forbidden = {".dll", ".bin", ".onnx", ".pb", ".pyc"}
+        forbidden = {".dll", ".bin", ".onnx", ".pb", ".pyc", ".pth", ".npz"}
         assert not any(Path(name).suffix in forbidden or ".venv" in name for name in names)
         assert any(name.endswith("TF-ESPCN-APACHE-2.0.txt") for name in names)
     print("Project metadata, documentation links, and package contents passed.")

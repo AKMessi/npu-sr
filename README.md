@@ -4,15 +4,16 @@
 
 [![CI](https://github.com/AKMessi/npu-sr/actions/workflows/ci.yml/badge.svg)](https://github.com/AKMessi/npu-sr/actions/workflows/ci.yml)
 
-**v0.1.0 supports single-image 2× super-resolution** on Snapdragon X Windows laptops,
-using a small pretrained ESPCN model. **Video enhancement is planned and is not
+**v0.2.0 supports single-image 2× super-resolution and luminance denoising** on
+Snapdragon X Windows laptops. It includes several lightweight models and strict
+CPU, Qualcomm NPU and DirectML GPU comparisons. **Video enhancement is planned and is not
 implemented in this release.**
 
 An NPU is a processor designed to run neural networks efficiently.
 This project makes custom ONNX inference reproducible on Snapdragon laptops and
 provides a CPU comparison for future work on video enhancement.
 
-Snapdragon X Plus X1P-42-100 benchmark:
+Published v0.1 baseline on Snapdragon X Plus X1P-42-100:
 
 - CPU median inference: **8.5 ms**
 - NPU median inference: **4.9 ms**
@@ -120,6 +121,7 @@ npu-sr --help
 | --- | --- |
 | `npu` | Requires an explicit QNN NPU device, strict assignment, and a successful profiled proof run; failures exit nonzero |
 | `cpu` | Uses only `CPUExecutionProvider` |
+| `gpu` | Requires DirectML GPU kernels, strict assignment and successful profiled inference |
 | `auto` (default) | Tries the same strict NPU path; reports `NPU unavailable — using CPU` if it cannot establish it |
 
 Every upscale prints its selected backend, dimensions, inference time, startup time,
@@ -135,7 +137,30 @@ The comparison directory contains `original.png`, `bicubic_2x.png`, and
 `npu_sr_2x.png`; the last name identifies the model output even if explicitly run
 on CPU. `evaluate` reports full-image RGB PSNR for SR and bicubic **only against
 a supplied opaque ground-truth image of exactly twice the input dimensions**.
-SSIM is not implemented in v0.1.
+v0.2 also reports luminance PSNR and SSIM with an explicit border crop.
+
+## v0.2 image tools
+
+```powershell
+npu-sr models list
+npu-sr models info fsrcnn-x2
+npu-sr models download fsrcnn-x2
+npu-sr upscale input.png --model fsrcnn-x2 --device npu -o output.png
+npu-sr models download espcn-x2-256
+npu-sr upscale input.png --model espcn-x2-256 --device npu --cache-dir .cache/qnn -o output.png
+npu-sr models download dncnn-25
+npu-sr denoise noisy.png --device npu -o clean.png
+npu-sr benchmark examples/input.png --model fsrcnn-x2 --gpu --runs 30 --json outputs/image.json
+```
+
+FSRCNN provides a modest quality improvement over ESPCN in the tested natural-image
+subset. DnCNN targets Gaussian luminance noise at sigma 25/255. Larger ESPCN tiles
+reduce invocation overhead for larger images. Each choice has a different quality
+and speed cost; see [models](docs/models.md) and [image pipeline](docs/image-pipeline.md).
+
+The [v0.2 benchmark summary](benchmarks/v0.2/summary.md) records full-image phase
+measurements and quality, rather than treating tiny-model throughput as video FPS.
+Power is **not measured**. These remain single-machine results.
 
 ## How NPU execution works
 
@@ -153,7 +178,7 @@ flowchart TD
     O --> Q[QNN Execution Provider / HTP]
     Q --> N[Qualcomm Hexagon NPU]
     N --> S[Tile stitching and postprocessing / CPU]
-    S --> U[2x image]
+    S --> U[2x SR image or native-size denoised image]
 ```
 
 The fixed `1 × 1 × 136 × 136` model uses Conv, Relu, DepthToSpace, and Tanh.
@@ -162,6 +187,7 @@ Three convolutions operate on normalized luminance; chroma is resized on CPU.
 necessary for arbitrary sizes because QNN requires fixed shapes. The halo matches
 the network's receptive field; the implementation discards halo outputs.
 The installed QNN HTP backend accepts this FP32 ONNX model and uses FP16 math.
+Additional models have their own fixed shape and halo from the registry.
 No quantization, training, proprietary credential, or cloud inference is required.
 See [QNN integration](docs/qnn.md) and [architecture](docs/architecture.md).
 
@@ -192,18 +218,18 @@ for a small model. Task Manager is not the application's assignment check.
 Actual local measurements for the included 256 × 160 image, four tiles/image,
 30 runs after five warmups, captured in [raw JSON](benchmarks/snapdragon-x-plus.json):
 
-| Backend | Median | Mean | p95 | FPS equivalent |
+| Backend | Median | Mean | p95 | Theoretical images/sec |
 | --- | ---: | ---: | ---: | ---: |
 | CPU | 8.5 ms | 9.0 ms | 11.8 ms | 117.3 |
 | QNN NPU | 4.9 ms | 4.9 ms | 5.1 ms | 203.1 |
 
 NPU speedup for that run: **1.73×**. This is the sum of ORT calls for all four
-tiles, excluding startup, image IO, preprocessing, and stitching. FPS equivalent
+tiles, excluding startup, image IO, preprocessing, and stitching. Theoretical images/sec
 is `1000 / median_ms`, not measured video throughput. Startup in this process was
 about 4 ms for CPU and 1890 ms for QNN, including catalog registration, graph
 preparation and proof inference. Package download and Python import time are not
-included in these startup numbers. Compilation/context caching is deferred;
-startup and warm inference are already separate in the architecture and JSON.
+included in these startup numbers. The historical v0.1 measurements did not use caching. v0.2 adds an opt-in local
+QNN context cache and records startup separately from steady-state processing.
 
 Results depend on input size, thermal state, background work, driver/provider
 version, and power settings. There is no energy-efficiency measurement.
@@ -211,9 +237,9 @@ See [benchmark methodology](docs/benchmarking.md) for reproducible comparisons.
 
 ## Limitations and troubleshooting
 
-- A small, older luminance model; artifacts and limited texture recovery are expected.
-- Single images and 2× scale only. High-resolution inputs take many tile calls.
-- Fixed shapes, unbatched tiles, no persistent context cache or GPU benchmark.
+- Lightweight luminance models; artifacts and limited texture recovery are expected.
+- Single images: 2× SR or native-size Gaussian luminance denoising. No video yet.
+- Fixed shapes and unbatched tiles. Denoising does not remove chroma noise.
 - CPU and NPU differ slightly because the NPU uses FP16 arithmetic.
 - Driver and Windows ML package servicing can change compatibility; strict proof
   inference runs each time an NPU session is created.
@@ -245,10 +271,10 @@ v0.1
 
 v0.2
 
-- [ ] Image denoising
-- [ ] Better SR models
-- [ ] Tiled high-resolution processing improvements
-- [ ] GPU comparison
+- [x] Image denoising
+- [x] Better SR models
+- [x] Tiled high-resolution processing improvements
+- [x] GPU comparison (strict DirectML)
 
 v0.3
 

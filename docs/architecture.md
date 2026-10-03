@@ -1,12 +1,14 @@
 # Architecture
 
-`cli.py` parses commands and presents actionable failures. `model.py` fixes the
-model contract and checks the generated manifest. `acquire.py` downloads one pinned
-86 KB upstream protobuf, extracts six constants, and constructs ONNX without a
-TensorFlow installation. `qnn.py` owns Windows ML's process-lifetime bootstrap and
+`cli.py` parses commands and presents actionable failures. `model.py` supplies
+the model registry and checks generated manifests. `acquire.py` retains the exact
+v0.1 baseline; `acquire_models.py` constructs additional static ONNX graphs from
+hash-checked upstream parameters without TensorFlow/PyTorch dependencies.
+`qnn.py` owns Windows ML's process-lifetime bootstrap and
 provider registration. `runtime.py` owns strict session creation and inference proof.
 `image.py` owns preprocessing, tiling, reconstruction and file IO.
-`benchmark.py` measures inference independently of acquisition/startup.
+`benchmark.py` measures inference independently of acquisition/startup;
+`suite.py` adds full-image phase measurements and reference-based quality evaluation.
 
 ## Model
 
@@ -28,7 +30,7 @@ RGB/alpha. Compute full-range BT.601-style luminance/chroma in float32:
 `Y=.299R+.587G+.114B`, `Cb=.564(B-Y)+.5`, `Cr=.713(R-Y)+.5`.
 This matches the upstream normalized luminance convention. The output reconstruction
 uses the inverse coefficients, bicubic chroma and alpha, and clamps to uint8.
-Color management and metadata copying are outside v0.1.
+Color management and metadata copying remain outside scope.
 
 ## Why tiles exist in v0.1
 
@@ -55,9 +57,16 @@ explicit message. A later run failure never triggers silent backend switching.
 Benchmark always creates explicit CPU and NPU sessions, and reports unavailable
 NPU status instead of generating measurements for a nonexistent backend.
 
-## Extension points
+## v0.2 contracts and reuse
 
-Future context caching belongs in `Runtime._npu`, before session creation, using
-a key including model hash, provider/runtime versions, options and hardware identity.
-Image preparation and benchmarking remain independent of how the session is loaded.
-Future denoising/video/GPU support is outside the 0.1 implementation.
+Registry entries provide task, scale, core, halo and color space; runtime shape
+checks and image padding/stitching consume that shared contract. Learned denoising
+uses scale one. Inputs are copied into one reused contiguous tile buffer.
+Independent TF graph reference tests validate additional SR export semantics.
+
+One Runtime can serve many images. QNN contexts can be cached locally using
+`cache.py`; model/runtime/package/driver changes select another cache key.
+Integrity checks precede loading, and strict proof follows every cache load.
+DirectML provides a separately verified GPU comparison. See [models](models.md),
+[image pipeline](image-pipeline.md) and [research notes](research-notes.md).
+Video belongs to the next gated release and is not implemented in v0.2.

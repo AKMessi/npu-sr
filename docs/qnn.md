@@ -69,12 +69,22 @@ check during longer benchmark runs, not as the only evidence.
 
 The documented ORT QNN context mechanism uses `ep.context_enable=1` and optionally
 `ep.context_file_path`; it produces an EPContext ONNX plus a context binary.
-v0.1 deliberately does not persist this device/provider-sensitive artifact. The
-tiny model's graph preparation is short; catalog/bootstrap time also remains.
-Session creation is isolated in `Runtime._npu`, ready for a future cache keyed by
-model SHA256, QNN package version, ORT version, NPU hardware and provider options.
-Future cache loads must still run strict proof and invalidate on driver/provider
-changes. No context binary belongs in git; `.bin` and `.onnx` are ignored globally.
+v0.2 provides an opt-in local cache: `--cache-dir .cache/qnn`. It enables embedded
+contexts (`ep.context_embed_mode=1`), so one generated ONNX contains its binary.
+Cache keys include model SHA256, QNN package, ORT, architecture, processor class,
+NPU driver and backend/precision options. Integrity metadata is published only
+after strict proof. Every cache hit gets another strict proof; a failed context
+is invalidated and the original graph is recompiled. CPU fallback remains disabled.
+The first cache setup also queries hardware; startup reports this separately from
+steady inference. No context binary belongs in git; `.bin` and `.onnx` are ignored.
+
+## GPU comparison
+
+`--device gpu` requires DirectML, sequential session execution and disabled memory
+patterns. It performs the same successful-output and profiling checks, accepting
+only `DmlExecutionProvider` kernels. It never retries on CPU. This is distinct from
+QNN HTP inference: the GPU is not the NPU. QNN GPU execution failed locally; see
+[research notes](research-notes.md). DirectML availability varies across installs.
 
 ## Distribution
 
