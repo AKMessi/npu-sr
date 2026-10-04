@@ -69,3 +69,16 @@ does not embed TensorFlow code or generated TensorFlow protobuf files.
 Review installed packages' own LICENSE/NOTICE files when distributing an application
 or environment. No permission to redistribute Microsoft or Qualcomm binaries is
 granted by NPU-SR. Vendor names identify compatible hardware; no endorsement is implied.
+## FFmpeg and video benchmark sources (v0.3)
+
+FFmpeg is invoked as a separate executable. The optional acquisition script uses
+the BtbN GPL shared build linked by FFmpeg's official download page, retaining
+its bundled license/notices outside git. No codec binaries or libraries are
+redistributed by this repository/package. Microsoft Media Foundation and Qualcomm
+driver transforms retain their own installed-system terms.
+
+Tears of Steel benchmark source: Blender Foundation / mango.blender.org,
+Creative Commons Attribution 3.0. The pinned source is downloaded from Blender's
+official server. Prepared research clips, audio and reference videos remain
+outside git. Scripts document retiming, crop, degradation and source hash.
+The generated FFmpeg test pattern is a separate synthetic workload.

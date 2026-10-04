@@ -40,3 +40,29 @@
   temperature and power are not measured. TOPS does not imply watts or throughput.
 
 Video API research and implementation belong to the subsequent gated releases.
+## v0.3 video IO investigation (2026-10-04)
+
+- [FFmpeg documentation](https://ffmpeg.org/ffmpeg-all.html) documents
+  `h264_mf`/`hevc_mf` with `-hw_encoding 1`. Its
+  [transform selection source](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/mf_utils.c)
+  enumerates with `MFT_ENUM_FLAG_HARDWARE` when that flag is requested;
+  successful encoding and the selected MFT name are stronger evidence than an encoder listing.
+- Microsoft's [hardware MFT](https://learn.microsoft.com/en-us/windows/win32/medfound/hardware-mfts)
+  and [MFTEnumEx](https://learn.microsoft.com/en-us/windows/win32/api/mfapi/nf-mfapi-mftenumex)
+  documentation explain hardware codec proxies. This does not measure the internal
+  silicon's power or utilization.
+- D3D11VA decode should retain hardware surfaces until an explicit `hwdownload`.
+  Requiring that filter plus successful frame output prevents a software pixel-format
+  fallback from being mislabeled as hardware decode.
+- Existing FFmpeg on this laptop is x64 (PE machine 0x8664). Prefer native ARM64:
+  [FFmpeg's download page](https://ffmpeg.org/download.html) links BtbN builds;
+  [platform documentation](https://ffmpeg.org/platform.html) supports native ARM64
+  toolchains, while ARM64EC is explicitly unsupported.
+- Investigation build: BtbN `autobuild-2026-10-03-18-14`, native ARM64 GPL shared
+  FFmpeg `n9.0.2-22-g46d8f462ee`; archive SHA256
+  `82b7eef78a79fdc93a2835154e753b4b175797712f707cc4f419405c0e9f6a2c`.
+  It is downloaded outside git, with its notices and licenses. No binaries are redistributed.
+  Actual tests completed H.264, HEVC and AV1 encoding with activated
+  `QCOM Hardware Encoder` transforms. D3D11VA H.264 decode completed with
+  selected `d3d11` frames and explicit download. The driver rejected a 64×48
+  fixture, while 640×360 worked; strict mode rejected that failure.

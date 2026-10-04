@@ -70,6 +70,42 @@ def parser() -> argparse.ArgumentParser:
     suite.add_argument("--verbose", action="store_true")
     suite.add_argument("--cache-dir", type=Path, help="Local QNN compiled context cache")
     evaluate.add_argument("reference", type=Path)
+    video = commands.add_parser(
+        "video", help="Stream 2x video through one persistent model session"
+    )
+    video.add_argument("input", type=Path)
+    video.add_argument("-o", "--output", type=Path, required=True)
+    video.add_argument("--model", default="espcn-x2-256")
+    video.add_argument("--device", choices=["auto", "npu", "gpu", "cpu"], default="auto")
+    video.add_argument("--decode", choices=["auto", "hardware", "software"], default="auto")
+    video.add_argument("--encode", choices=["auto", "hardware", "software"], default="auto")
+    video.add_argument("--codec", choices=["h264", "hevc", "av1"], default="h264")
+    video.add_argument("--audio", choices=["copy", "none"], default="copy")
+    video.add_argument("--bitrate", default="8M", help="Hardware encoder target rate")
+    video.add_argument(
+        "--quality", type=int, default=20, help="Software CRF, 0–51 (lower is better)"
+    )
+    video.add_argument("--ffmpeg", type=Path)
+    video.add_argument("--cache-dir", type=Path)
+    video.add_argument("--json", type=Path)
+    video.add_argument("--overwrite", action="store_true")
+    video.add_argument("--verbose", action="store_true")
+    video_bench = commands.add_parser(
+        "benchmark-video",
+        parents=[video],
+        add_help=False,
+        help="Run multiple complete video processing trials",
+    )
+    video_bench.add_argument("--trials", type=positive, default=3)
+    video_quality = commands.add_parser(
+        "evaluate-video", help="Compare with an aligned HR reference video"
+    )
+    video_quality.add_argument("input", type=Path)
+    video_quality.add_argument("reference", type=Path)
+    video_quality.add_argument("--ffmpeg", type=Path)
+    video_quality.add_argument("--stride", type=positive, default=12)
+    video_quality.add_argument("--json", type=Path, required=True)
+    video_quality.add_argument("--verbose", action="store_true")
     return root
 
 
@@ -281,6 +317,56 @@ def _suite(args: argparse.Namespace) -> int:
     return 0
 
 
+def _video(args: argparse.Namespace) -> int:
+    from .benchmark import save_report
+    from .video import VideoSettings, process_video
+
+    if args.json and args.json.resolve() in {args.input.resolve(), args.output.resolve()}:
+        raise SRException("Video JSON would overwrite input or output.")
+    settings = VideoSettings(
+        **{key: getattr(args, key) for key in VideoSettings.__dataclass_fields__}
+    )
+
+    def progress(frames: int) -> None:
+        if frames % 30 == 0:
+            print(f"Processed {frames} frames", file=sys.stderr)
+
+    if args.command == "benchmark-video":
+        from .video_benchmark import benchmark_video
+
+        report = benchmark_video(args.input, args.output, settings, args.trials, args.json)
+        if args.json:
+            save_report(report, args.json)
+        return 0
+    report = process_video(args.input, args.output, settings, progress)
+    width, height = report["input"]["resolution"]
+    out_width, out_height = report["output"]["resolution"]
+    print(f"Input:       {width} × {height} @ {report['input']['frame_rate']} FPS")
+    print(f"Output:      {out_width} × {out_height} @ {report['output']['frame_rate']} FPS")
+    print(f"Frames:      {report['frames_processed']}")
+    print(f"SR backend:  {report['backend']} ({report['model']})")
+    for kind in ("decode", "encode"):
+        print(f"{kind.title()}:      {report['codec_evidence'][kind]}")
+    print(f"End-to-end:  {report['end_to_end_fps']:.1f} FPS")
+    print(f"Real-time factor: {report['real_time_factor']:.2f} (processing / source duration)")
+    print(f"Saved:       {args.output}")
+    if args.json:
+        save_report(report, args.json)
+    return 0
+
+
+def _video_quality(args: argparse.Namespace) -> int:
+    from .benchmark import save_report
+    from .video_benchmark import evaluate_video
+
+    if args.json.resolve() in {args.input.resolve(), args.reference.resolve()}:
+        raise SRException("Quality JSON would overwrite video input.")
+    report = evaluate_video(args.input, args.reference, args.ffmpeg, args.stride)
+    save_report(report, args.json)
+    print(f"PSNR Y: {report['mean_psnr_y_db']} dB; SSIM Y: {report['mean_ssim_y']:.4f}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     logging.basicConfig(
@@ -295,7 +381,13 @@ def main(argv: list[str] | None = None) -> int:
             "benchmark-suite": _suite,
             "benchmark": _benchmark,
             "evaluate": _evaluate,
+            "video": _video,
+            "benchmark-video": _video,
+            "evaluate-video": _video_quality,
         }[args.command](args)
+    except KeyboardInterrupt:
+        print("Cancelled; child processes cleaned up.", file=sys.stderr)
+        return 130
     except (SRException, OSError, ValueError, ImportError) as exc:
         print(f"Error: {exc}\n\nRun: npu-sr doctor\nSee: docs/troubleshooting.md", file=sys.stderr)
         if args.verbose:

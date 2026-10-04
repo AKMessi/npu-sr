@@ -106,3 +106,43 @@ score or absence of overlap with a model's original training data.
 [Research notes](research-notes.md) explain the dataset's research-only terms.
 [Release summary](../benchmarks/v0.2/summary.md) links actual measurements and
 records optimizations and their limits.
+
+## Video (v0.3)
+
+```powershell
+python scripts/download_ffmpeg.py
+python scripts/download_video_benchmarks.py
+python scripts/run_video_benchmarks.py --trials 3
+python scripts/run_video_benchmarks.py --quality
+npu-sr benchmark-video input.mp4 -o outputs/trials --device npu --trials 3 --json outputs/video.json
+npu-sr evaluate-video enhanced.mp4 high-reference.mkv --json outputs/video-quality.json
+```
+
+The small suite uses three four-second CC BY Tears of Steel clips (faces, outdoor
+scene, motion) and a synthetic texture/text sequence. The original 24 FPS film is
+retimed 1.25× to 30 FPS without intentionally duplicating frames, scaled with
+preserved aspect ratio and center-cropped to 1920×1080. That is benchmark input
+preparation, not a runtime enhancement shortcut. FFV1 references preserve those
+decoded pixels losslessly; LR uses bicubic downscale and H.264 CRF10. This source
+is already compressed film, not raw camera footage. Dataset acquisition records
+the immutable source hash and generated clip hashes. Videos are not committed.
+
+Performance tests 360p/540p/720p inputs, CPU versus NPU neural enhancement with
+the same hardware H.264 codec configuration. Three complete trials retain their
+results. Standalone decoding includes hardware download and raw pipe transfer.
+Standalone encoding cycles up to sixteen predecoded reference frames through
+RGB conversion, hardware encode and flush. These separate tests are not a
+decomposition of a parallel pipeline's wall time. Startup is measured separately.
+
+Quality compares delivered H.264 output at the same 8M target rate with aligned
+1080p references. Every twelfth frame receives Rec.601 Y PSNR/SSIM, with the same
+two-pixel shave as image quality. Bicubic is FFmpeg's YUV scale path; neural models
+use the documented RGB/luminance path. This compares complete delivered pipelines,
+not only isolated network architecture. Results include codec artifacts.
+
+The temporal diagnostic is mean absolute consecutive change in reconstruction
+residual at 256×144, divided by 255. It is not a standard perceptual metric, is
+not motion compensated, and can reward smoothing. Scene motion/cuts affect it.
+Inspect flicker visually too. VMAF is optional; no VMAF claim is made unless
+actually measured. Four-second results cannot establish sustained real-time
+behavior; v0.4 requires at least sixty seconds of measured useful processing.

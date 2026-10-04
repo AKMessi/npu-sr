@@ -37,6 +37,15 @@ jobs:
         run: |
           python -m ruff check .
           python -m ruff format --check .
+      - name: Install FFmpeg for real CPU video integration (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Acquire pinned native FFmpeg for CPU video integration (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $tool = python scripts/download_ffmpeg.py --architecture x64
+          Split-Path $tool | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Acquire hash-checked model for CPU integration
         run: |
           python scripts/download_model.py
@@ -46,7 +55,7 @@ jobs:
           npu-sr models download lapsrn-x2
           npu-sr models download dncnn-25
       - name: Test CPU and failure paths (no NPU expected)
-        run: python -m pytest -m "not npu"
+        run: python -m pytest -m "not npu and not video_hw"
       - name: Build and validate public artifacts
         run: |
           python -m build

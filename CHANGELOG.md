@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — 2026-10-04
+
+- In-memory ordered video streaming with one persistent strict enhancement session.
+- Native ARM64 FFmpeg acquisition with a pinned archive hash and separate licensing.
+- Executed D3D11VA decoding and QCOM Media Foundation H.264/HEVC/AV1 encoding evidence.
+- Explicit strict/auto/software codec modes, audio copy, atomic output validation and cancellation cleanup.
+- Actual CFR timestamp validation, frame-count/framerate/duration/resolution checks and bounded diagnostics.
+- Complete-video trials, aligned delivered-video PSNR/SSIM and a documented temporal residual diagnostic.
+- Ordinary CPU video integration and separate Snapdragon video hardware tests.
+- No sustained real-time claim; that remains the v0.4 acceptance gate.
+
 ## 0.2.0 — 2026-10-04
 
 - Static model registry, pinned FSRCNN/FSRCNN-small/LapSRN exports and learned DnCNN denoising.

@@ -4,10 +4,11 @@
 
 [![CI](https://github.com/AKMessi/npu-sr/actions/workflows/ci.yml/badge.svg)](https://github.com/AKMessi/npu-sr/actions/workflows/ci.yml)
 
-**v0.2.0 supports single-image 2× super-resolution and luminance denoising** on
-Snapdragon X Windows laptops. It includes several lightweight models and strict
-CPU, Qualcomm NPU and DirectML GPU comparisons. **Video enhancement is planned and is not
-implemented in this release.**
+**v0.3.0 supports 2× image and video super-resolution, plus image luminance denoising**
+on Snapdragon X Windows laptops. It uses one persistent NPU session per video,
+with verified D3D11VA decode and Qualcomm Media Foundation encoding where available.
+CPU and DirectML GPU modes remain available. **Sustained real-time video is a later
+milestone; it is not claimed for v0.3.**
 
 An NPU is a processor designed to run neural networks efficiently.
 This project makes custom ONNX inference reproducible on Snapdragon laptops and
@@ -207,6 +208,32 @@ Additional models have their own fixed shape and halo from the registry.
 No quantization, training, proprietary credential, or cloud inference is required.
 See [QNN integration](docs/qnn.md) and [architecture](docs/architecture.md).
 
+## Video
+
+Install native FFmpeg separately, then use strict modes to require each hardware path:
+
+```powershell
+python scripts/download_ffmpeg.py
+npu-sr video input.mp4 -o output.mp4 --model espcn-x2-256 --device npu --decode hardware --encode hardware --codec av1 --json outputs/video.json
+npu-sr video input.mp4 -o cpu.mp4 --device cpu --decode software --encode software
+npu-sr benchmark-video input.mp4 -o outputs/trials --device npu --trials 3 --json outputs/trials.json
+npu-sr evaluate-video enhanced.mp4 high-reference.mkv --json outputs/quality.json
+```
+
+Frames travel through bounded raw-memory pipes, without intermediate PNG files.
+Audio is copied by default; `--audio none` disables it. Output frame count,
+duration, resolution and framerate are checked before the file is published.
+Existing video outputs require `--overwrite`. Hardware bitrate (`--bitrate 8M`)
+and software CRF (`--quality 20`) are separate controls. MP4/MKV, constant-framerate
+SDR, square pixels and even dimensions are supported; HDR and rotated/anamorphic
+sources require explicit conversion first.
+
+H.264, HEVC and AV1 tests selected `QCOM Hardware Encoder` transforms on the tested
+laptop. Strict hardware decode requires successful D3D11 hardware frames, while
+strict encoding forces hardware-only transform enumeration and records the
+activated transform. No internal video-block utilization or power is measured.
+See [video pipeline](docs/video-pipeline.md) and [FFmpeg setup/evidence](docs/ffmpeg.md).
+
 ## Verify NPU usage
 
 ```powershell
@@ -254,12 +281,14 @@ See [benchmark methodology](docs/benchmarking.md) for reproducible comparisons.
 ## Limitations and troubleshooting
 
 - Lightweight luminance models; artifacts and limited texture recovery are expected.
-- Single images: 2× SR or native-size Gaussian luminance denoising. No video yet.
+- 2× image/video SR or native-size Gaussian luminance image denoising.
+- Per-frame image models can ring or flicker; they do not use temporal context.
+- v0.3 does not promise sustained real-time processing.
 - Fixed shapes and unbatched tiles. Denoising does not remove chroma noise.
 - CPU and NPU differ slightly because the NPU uses FP16 arithmetic.
 - Driver and Windows ML package servicing can change compatibility; strict proof
   inference runs each time an NPU session is created.
-- No GUI, video, FFmpeg, cloud APIs, or proprietary binaries in the repository.
+- No GUI, cloud APIs, models, codec binaries or proprietary runtime binaries in the repository.
 
 If `doctor` fails, check ARM64 Python, Windows build, App Runtime installation,
 driver updates, internet access for first QNN installation, and the model manifest.
@@ -294,9 +323,9 @@ v0.2
 
 v0.3
 
-- [ ] Video frame pipeline
-- [ ] FFmpeg integration
-- [ ] Snapdragon VPU decode/encode
+- [x] Video frame pipeline
+- [x] FFmpeg integration
+- [x] Qualcomm hardware decode/encode (executed D3D11VA and QCOM MFT evidence)
 
 v0.4
 
@@ -319,6 +348,7 @@ python -m ruff check .
 python -m ruff format --check .
 python -m pytest
 python -m pytest -m npu
+python -m pytest -m video_hw
 python -m build
 ```
 

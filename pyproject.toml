@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "npu-sr"
-version = "0.2.0"
-description = "Image super-resolution and denoising on Snapdragon X Hexagon NPUs"
+version = "0.3.0"
+description = "Image and video enhancement on Snapdragon X Hexagon NPUs"
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
 license = "MIT"
@@ -41,8 +41,11 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-m 'not npu'"
-markers = ["npu: requires Windows ARM64, installed model and Qualcomm NPU"]
+addopts = "-m 'not npu and not video_hw'"
+markers = [
+  "npu: requires Windows ARM64, installed model and Qualcomm NPU",
+  "video_hw: requires Snapdragon NPU and proven FFmpeg hardware codecs",
+]
 
 [tool.ruff]
 line-length = 100
