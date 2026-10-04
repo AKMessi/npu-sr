@@ -39,6 +39,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
         overwrite=True,
     )
     if quality:
+        settings = replace(settings, codec="av1")
         report = {
             "schema_version": 3,
             "environment": environment(),
@@ -64,7 +65,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
                             str(source),
                             "-vf",
                             "scale=1920:1080:flags=bicubic",
-                            *codec_args("h264", True, "8M", 20),
+                            *codec_args("av1", True, "8M", 20),
                             "-c:a",
                             "copy",
                             str(output),
@@ -91,7 +92,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
         report.update(
             complete=True,
             methodology=(
-                "delivered H264 hardware output at 8M vs aligned FFV1 HR; "
+                "delivered AV1 hardware output at 8M vs aligned FFV1 HR; "
                 "full-range Rec601 Y, shave2, every12th frame; temporal residual everyframe"
             ),
         )

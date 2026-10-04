@@ -134,7 +134,7 @@ Standalone encoding cycles up to sixteen predecoded reference frames through
 RGB conversion, hardware encode and flush. These separate tests are not a
 decomposition of a parallel pipeline's wall time. Startup is measured separately.
 
-Quality compares delivered H.264 output at the same 8M target rate with aligned
+Quality compares delivered AV1 output at the same 8M target rate with aligned
 1080p references. Every twelfth frame receives Rec.601 Y PSNR/SSIM, with the same
 two-pixel shave as image quality. Bicubic is FFmpeg's YUV scale path; neural models
 use the documented RGB/luminance path. This compares complete delivered pipelines,
