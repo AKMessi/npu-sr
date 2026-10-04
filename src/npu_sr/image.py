@@ -21,6 +21,33 @@ FORMATS = {"PNG", "JPEG", "WEBP"}
 
 
 @dataclass
+class LuminanceInput:
+    size: tuple[int, int]
+    padded_y: np.ndarray
+    spec: ModelSpec = MODELS["espcn-x2"]
+    buffer: np.ndarray | None = None
+
+    @property
+    def tile_count(self) -> int:
+        width, height = self.size
+        core = self.spec.core
+        return ((width + core - 1) // core) * ((height + self.spec.height - 1) // self.spec.height)
+
+    def tiles(self) -> Iterator[tuple[int, int, np.ndarray]]:
+        width, height = self.size
+        core = self.spec.core
+        tile_h, tile_w = self.spec.input_shape[2:]
+        # One contiguous input buffer per image, reused for each synchronous ORT call.
+        buffer = (
+            self.buffer if self.buffer is not None else np.empty(self.spec.input_shape, np.float32)
+        )
+        for top in range(0, height, self.spec.height):
+            for left in range(0, width, core):
+                buffer[0, 0] = self.padded_y[top : top + tile_h, left : left + tile_w]
+                yield left, top, buffer
+
+
+@dataclass
 class PreparedImage:
     rgb: Image.Image
     alpha: Image.Image | None
@@ -35,19 +62,10 @@ class PreparedImage:
 
     @property
     def tile_count(self) -> int:
-        width, height = self.size
-        core = self.spec.core
-        return ((width + core - 1) // core) * ((height + core - 1) // core)
+        return LuminanceInput(self.size, self.padded_y, self.spec).tile_count
 
     def tiles(self) -> Iterator[tuple[int, int, np.ndarray]]:
-        width, height = self.size
-        core, tile = self.spec.core, self.spec.input_shape[2]
-        # One contiguous input buffer per image, reused for each synchronous ORT call.
-        buffer = np.empty(self.spec.input_shape, np.float32)
-        for top in range(0, height, core):
-            for left in range(0, width, core):
-                buffer[0, 0] = self.padded_y[top : top + tile, left : left + tile]
-                yield left, top, buffer
+        return LuminanceInput(self.size, self.padded_y, self.spec).tiles()
 
 
 def load_image(path: Path) -> Image.Image:
@@ -83,7 +101,7 @@ def preprocess(image: Image.Image, spec: ModelSpec = MODELS["espcn-x2"]) -> Prep
     cb, cr = (blue - y) * 0.564 + 0.5, (red - y) * 0.713 + 0.5
     height, width = y.shape
     # Repeat edge pixels only at the image boundary, not at internal tile boundaries.
-    bottom = spec.halo + (-height % spec.core)
+    bottom = spec.halo + (-height % spec.height)
     right = spec.halo + (-width % spec.core)
     padded = np.pad(y, ((spec.halo, bottom), (spec.halo, right)), mode="edge")
     alpha = image.getchannel("A") if "A" in image.getbands() else None
@@ -121,13 +139,19 @@ def postprocess(y: np.ndarray, image: PreparedImage) -> Image.Image:
 
 
 def infer_y(
-    image: PreparedImage, runtime: "Runtime", timings: dict[str, float] | None = None
+    image: PreparedImage | LuminanceInput,
+    runtime: "Runtime",
+    timings: dict[str, float] | None = None,
+    output: np.ndarray | None = None,
 ) -> tuple[np.ndarray, float]:
     width, height = image.size
     core, scale = image.spec.core, image.spec.scale
     if hasattr(runtime, "spec") and runtime.spec != image.spec:
         raise SRException("Image tile contract does not match the selected model.")
-    output = np.empty((height * scale, width * scale), dtype=np.float32)
+    if output is None:
+        output = np.empty((height * scale, width * scale), dtype=np.float32)
+    elif output.shape != (height * scale, width * scale) or output.dtype != np.float32:
+        raise SRException("Invalid reusable luminance output buffer.")
     inference_seconds = 0.0
     extraction_seconds, stitching_seconds = 0.0, 0.0
     iterator = iter(image.tiles())
@@ -142,7 +166,8 @@ def infer_y(
         tile = runtime.run(tensor)[0, 0]
         inference_seconds += perf_counter() - started
         started = perf_counter()
-        kept_w, kept_h = min(core, width - left) * scale, min(core, height - top) * scale
+        kept_w = min(core, width - left) * scale
+        kept_h = min(image.spec.height, height - top) * scale
         border = image.spec.halo * scale
         output[top * scale : top * scale + kept_h, left * scale : left * scale + kept_w] = tile[
             border : border + kept_h, border : border + kept_w

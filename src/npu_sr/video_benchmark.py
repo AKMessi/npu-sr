@@ -3,6 +3,7 @@
 import json
 import tempfile
 from collections import deque
+from fractions import Fraction
 from pathlib import Path
 from time import perf_counter
 
@@ -15,6 +16,53 @@ from .evaluate import luminance, quality_metrics
 from .ffmpeg import PipeProcess, decode_args, probe, read_frame, tool_path
 from .model import sha256
 from .video import VideoSettings, process_video
+
+
+def realtime_acceptance(report: dict) -> dict:
+    """Gate measured useful sustained video, rather than model-only throughput."""
+    failures = []
+    trials = report.get("trials", [])
+    if len(trials) < 3 or not report.get("complete"):
+        failures.append("requires three complete trials")
+    for index, trial in enumerate(trials, 1):
+        prefix = f"trial {index}: "
+        properties = trial["input"]
+        fps = float(Fraction(properties["frame_rate"]))
+        width, height = properties["resolution"]
+        if fps < 30 or width < 854 or height < 480:
+            failures.append(prefix + "requires at least 854x480 at 30 FPS")
+        if trial["processing_seconds"] < 60:
+            failures.append(prefix + "requires >=60 seconds measured processing")
+        if trial["end_to_end_fps"] < fps:
+            failures.append(prefix + "end-to-end throughput below source framerate")
+        rolling = trial.get("sustained", {}).get("minimum_rolling_10s_fps")
+        if rolling is None or rolling < fps:
+            failures.append(prefix + "rolling 10-second throughput below source framerate")
+        evidence = trial["execution_evidence"]
+        kernels = evidence.get("executed_kernel_counts", {})
+        if (
+            trial["backend"] != "npu"
+            or not evidence.get("cpu_fallback_disabled")
+            or set(kernels) != {"QNNExecutionProvider"}
+            or not kernels.get("QNNExecutionProvider")
+        ):
+            failures.append(prefix + "strict QNN evidence missing")
+        if trial["codec_evidence"]["encode"].get("method") != "Media Foundation hardware":
+            failures.append(prefix + "hardware encoder evidence missing")
+        if (
+            trial["dropped_frames"]
+            or trial["output"]["reported_frames"] != trial["frames_processed"]
+            or not trial.get("input_timestamps_validated")
+            or not trial.get("output_timestamps_validated")
+            or trial["output"]["resolution"] != [width * 2, height * 2]
+        ):
+            failures.append(prefix + "frame preservation or 2x output proof missing")
+    return {
+        "passed": not failures,
+        "failures": failures,
+        "minimum_trials": 3,
+        "minimum_processing_seconds": 60,
+    }
 
 
 def benchmark_video(
@@ -119,14 +167,18 @@ def evaluate_video(
             "mean absolute consecutive reconstruction-residual change /255 at 256x144; "
             "unregistered, no motion compensation"
         ),
-        "vmaf": measure_vmaf(output, reference, ffmpeg, stride) if vmaf else "not measured",
+        "vmaf": measure_vmaf(output, reference, ffmpeg, stride, count) if vmaf else "not measured",
     }
 
 
-def measure_vmaf(output: Path, reference: Path, ffmpeg: Path, stride: int = 12) -> dict:
+def measure_vmaf(
+    output: Path, reference: Path, ffmpeg: Path, stride: int = 12, frame_count: int | None = None
+) -> dict:
     """Use FFmpeg's native libvmaf with an explicit built-in 1080p model."""
     from .ffmpeg import run_tool
 
+    fps = probe(output, ffmpeg).fps
+    pts = f"N*{fps.denominator}/({fps.numerator}*TB)"
     with tempfile.TemporaryDirectory(prefix="npu-sr-vmaf-") as directory:
         run_tool(
             [
@@ -139,9 +191,9 @@ def measure_vmaf(output: Path, reference: Path, ffmpeg: Path, stride: int = 12) 
                 "-i",
                 str(reference.resolve()),
                 "-filter_complex",
-                "[0:v]setpts=PTS-STARTPTS[d];[1:v]setpts=PTS-STARTPTS[r];"
+                f"[0:v]settb=AVTB,setpts={pts}[d];[1:v]settb=AVTB,setpts={pts}[r];"
                 f"[d][r]libvmaf=model=version=vmaf_v0.6.1:n_threads=2:n_subsample={stride}:"
-                "log_fmt=json:log_path=metrics.json",
+                "shortest=1:repeatlast=0:log_fmt=json:log_path=metrics.json",
                 "-an",
                 "-f",
                 "null",
@@ -151,12 +203,15 @@ def measure_vmaf(output: Path, reference: Path, ffmpeg: Path, stride: int = 12) 
             cwd=Path(directory),
         )
         data = json.loads((Path(directory) / "metrics.json").read_text())
+        if frame_count is not None and len(data["frames"]) != (frame_count + stride - 1) // stride:
+            raise SRException("VMAF sample count disagrees with the aligned decoded frames.")
         return {
             "mean": data["pooled_metrics"]["vmaf"]["mean"],
             "model": "vmaf_v0.6.1",
             "libvmaf_version": data["version"],
             "sample_stride": stride,
             "samples": len(data["frames"]),
+            "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame",
         }
 
 

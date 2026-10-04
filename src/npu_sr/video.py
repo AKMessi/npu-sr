@@ -6,7 +6,7 @@ import threading
 import uuid
 from collections import defaultdict, deque
 from collections.abc import Callable, Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from time import perf_counter, process_time
 
@@ -34,6 +34,8 @@ from .image import infer_y, postprocess, preprocess
 from .model import resolve_model, sha256
 from .monitoring import memory_usage
 from .runtime import Runtime
+from .stream import Frame, process_stream
+from .video_stats import SustainedStatistics, resource_summary
 
 log = logging.getLogger(__name__)
 
@@ -52,6 +54,46 @@ class VideoSettings:
     cache_dir: Path | None = None
     overwrite: bool = False
     verbose: bool = False
+    frame_format: str = "rgb24"
+    npu_performance: str = "default"
+    pipeline_depth: int = 0
+    preset: str | None = None
+
+
+PRESETS = {
+    "quality": {
+        "model": "fsrcnn-x2",
+        "frame_format": "rgb24",
+        "npu_performance": "sustained_high_performance",
+        "pipeline_depth": 2,
+    },
+    "balanced": {
+        "model": "espcn-x2-256",
+        "frame_format": "rgb24",
+        "npu_performance": "sustained_high_performance",
+        "pipeline_depth": 2,
+    },
+    "realtime": {
+        "model": "espcn-x2-256",
+        "frame_format": "nv12",
+        "npu_performance": "sustained_high_performance",
+        "pipeline_depth": 2,
+        "device": "npu",
+        "decode": "hardware",
+        "encode": "hardware",
+        "codec": "av1",
+    },
+}
+
+
+def settings_for_preset(preset: str | None, overrides: dict) -> VideoSettings:
+    """Materialize a transparent CLI preset, then apply explicit user options."""
+    if preset is not None and preset not in PRESETS:
+        raise SRException(f"Unknown video preset: {preset}")
+    settings = replace(VideoSettings(), **PRESETS.get(preset, {}), preset=preset)
+    return replace(
+        settings, **{key: value for key, value in overrides.items() if value is not None}
+    )
 
 
 def select_codecs(
@@ -85,16 +127,16 @@ def select_codecs(
     return selected[0], selected[1], evidence
 
 
-def frames(process: PipeProcess, info: VideoInfo) -> Iterator[tuple[int, bytes, float]]:
+def frames(process: PipeProcess, info: VideoInfo, pixel_format: str = "rgb24") -> Iterator[Frame]:
     """A sequential source today; no seeking or known frame count is required."""
     assert process.process.stdout is not None
     index = 0
     while True:
         started = perf_counter()
-        frame = read_frame(process.process.stdout, info.frame_bytes)
+        frame = read_frame(process.process.stdout, info.bytes_for(pixel_format))
         if frame is None:
             return
-        yield index, frame, (perf_counter() - started) * 1000
+        yield Frame(index, frame, (perf_counter() - started) * 1000, started)
         index += 1
 
 
@@ -129,10 +171,21 @@ def process_video(
     info = probe(source, ffmpeg)
     source_frames = validate_cfr(source, ffmpeg, info)
     runtime = Runtime(
-        resolve_model(settings.model), settings.device, settings.verbose, settings.cache_dir
+        resolve_model(settings.model),
+        settings.device,
+        settings.verbose,
+        settings.cache_dir,
+        settings.npu_performance,
     )
     if runtime.spec.task != "upscale" or runtime.spec.scale != 2:
         raise SRException("Video v0.3 requires a 2x super-resolution model.")
+    planar = None
+    if settings.frame_format == "nv12":
+        from .planar import NV12Enhancer
+
+        planar = NV12Enhancer(info, runtime)
+    elif settings.frame_format != "rgb24":
+        raise SRException("Frame format must be rgb24 or nv12.")
     hardware_decode, hardware_encode, codec_evidence = select_codecs(
         ffmpeg, source, info, settings, 2
     )
@@ -149,21 +202,66 @@ def process_video(
     done = threading.Event()
     activity = [perf_counter()]
     timed_out = threading.Event()
+    sustained = SustainedStatistics()
+    resources: deque[dict] = deque(maxlen=7200)
+    previous_completion = [0.0]
+
+    def stop_children() -> None:
+        for child in (decoder, encoder):
+            if child and child.process.poll() is None:
+                child.process.kill()
+
+    def enhance(raw: bytes) -> tuple[bytes, dict[str, float]]:
+        if planar:
+            return planar.process(raw)
+        image = Image.frombytes("RGB", (info.width, info.height), raw)
+        before = perf_counter()
+        prepared = preprocess(image, runtime.spec)
+        timings = {"preprocessing_ms": (perf_counter() - before) * 1000}
+        y, _ = infer_y(prepared, runtime, timings)
+        before = perf_counter()
+        data = postprocess(y, prepared).tobytes()
+        timings["postprocessing_ms"] = (perf_counter() - before) * 1000
+        return data, timings
+
+    def record(count: int, timings: dict[str, float]) -> None:
+        nonlocal completed
+        timings["frame_total_ms"] = (
+            timings["enhancement_ms"]
+            + timings["decoder_pipe_wait_ms"]
+            + timings["encoder_pipe_wait_ms"]
+        )
+        for key, value in timings.items():
+            phases[key].append(value)
+        completed = count
+        elapsed = perf_counter() - started
+        timings["completion_interval_ms"] = (elapsed - previous_completion[0]) * 1000
+        phases["completion_interval_ms"].append(timings["completion_interval_ms"])
+        previous_completion[0] = elapsed
+        sustained.record(elapsed)
+        activity[0] = perf_counter()
+        if progress:
+            progress(completed)
 
     def watchdog() -> None:
         # Killing a stalled child unblocks an IO wait; never leave a broken pipe hanging forever.
-        while not done.wait(0.5):
+        while not done.wait(1):
+            readings = {"python": memory_usage()}
+            for label, child in (("decoder", decoder), ("encoder", encoder)):
+                if child:
+                    readings[label] = memory_usage(child.process.pid)
+            resources.append({"elapsed_seconds": perf_counter() - started, "processes": readings})
             if perf_counter() - activity[0] > 60:
                 timed_out.set()
-                for child in (decoder, encoder):
-                    if child and child.process.poll() is None:
-                        child.process.kill()
+                stop_children()
                 return
 
     watcher = threading.Thread(target=watchdog, daemon=True)
     started, cpu_started = perf_counter(), process_time()
     try:
-        decoder = PipeProcess(ffmpeg, decode_args(source, hardware_decode))
+        decoder = PipeProcess(
+            ffmpeg, decode_args(source, hardware_decode, pixel_format=settings.frame_format)
+        )
         encoder = PipeProcess(
             ffmpeg,
             encode_args(
@@ -176,38 +274,27 @@ def process_video(
                 settings.audio,
                 settings.bitrate,
                 settings.quality,
+                settings.frame_format,
             ),
             input_pipe=True,
         )
         watcher.start()
         assert encoder.process.stdin is not None
-        for index, raw, read_ms in frames(decoder, info):
-            frame_started = perf_counter()
-            image = Image.frombytes("RGB", (info.width, info.height), raw)
-            before = perf_counter()
-            prepared = preprocess(image, runtime.spec)
-            timings = {"preprocessing_ms": (perf_counter() - before) * 1000}
-            y, _ = infer_y(prepared, runtime, timings)
-            before = perf_counter()
-            enhanced = postprocess(y, prepared)
-            data = enhanced.tobytes()
-            timings["postprocessing_ms"] = (perf_counter() - before) * 1000
-            before = perf_counter()
-            write_frame(encoder.process.stdin, data)
-            timings["encoder_pipe_wait_ms"] = (perf_counter() - before) * 1000
-            timings["decoder_pipe_wait_ms"] = read_ms
-            timings["frame_total_ms"] = (perf_counter() - frame_started) * 1000 + read_ms
-            for key, value in timings.items():
-                phases[key].append(value)
-            completed = index + 1
-            activity[0] = perf_counter()
-            if progress:
-                progress(completed)
+        queue_peaks = process_stream(
+            frames(decoder, info, settings.frame_format),
+            enhance,
+            lambda data: write_frame(encoder.process.stdin, data),
+            record,
+            settings.pipeline_depth,
+            stop_children,
+        )
         encoder.process.stdin.close()
         decoder.finish()
         encoder.finish()
         processing_seconds = perf_counter() - started
         cpu_seconds = process_time() - cpu_started
+        done.set()
+        watcher.join(timeout=5)
         if timed_out.is_set():
             raise SRException("Video pipeline stalled for more than 60 seconds.")
         if not completed:
@@ -260,6 +347,14 @@ def process_video(
             "codec_evidence": codec_evidence,
             "codec": settings.codec,
             "bitrate": settings.bitrate if hardware_encode else None,
+            "frame_format": settings.frame_format,
+            "preset": settings.preset,
+            "pipeline_depth": settings.pipeline_depth,
+            "observed_queue_peaks": queue_peaks,
+            "frame_latency_scope": (
+                "raw read start through encoder pipe submission; excludes encoder completion"
+            ),
+            "npu_performance_requested": settings.npu_performance,
             "software_quality_crf": settings.quality if not hardware_encode else None,
             "audio": settings.audio,
             "input": info.public(),
@@ -277,6 +372,12 @@ def process_video(
             "real_time_factor": processing_seconds / (completed / float(info.fps)),
             "process_cpu_seconds": cpu_seconds,
             "process_memory": memory_usage(),
+            "resource_samples": list(resources),
+            "resources": resource_summary(list(resources)),
+            "resource_sample_scope": (
+                "1s Windows process CPU/working set; last 7200 samples; no process IDs"
+            ),
+            "sustained": sustained.report(processing_seconds),
             "phase_statistics": {key: _statistics(values) for key, values in phases.items()},
             "phase_sample_scope": f"last {min(completed, 8192)} frames; bounded storage",
             "inference_only_theoretical_fps": completed / inference_seconds

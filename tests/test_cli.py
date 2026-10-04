@@ -15,6 +15,8 @@ def test_parsing_and_version(capsys):
     assert __version__ in capsys.readouterr().out
     with pytest.raises(SystemExit):
         parser().parse_args(["benchmark", "image.png", "--runs", "0"])
+    assert parser().parse_args(["video", "in.mp4", "-o", "out.mp4"]).preset is None
+    assert parser().parse_args(["benchmark-realtime", "in.mp4", "-o", "trials"]).trials == 3
 
 
 def test_cli_cpu_end_to_end(tiny_model, tmp_path: Path, capsys):

@@ -38,11 +38,15 @@ class Runtime:
         device: str = "auto",
         verbose: bool = False,
         cache_dir: Path | None = None,
+        performance_mode: str = "default",
     ) -> None:
         started = perf_counter()
         self.manifest = validate_model(path)
         self.startup_phases = {"artifact_validation_ms": (perf_counter() - started) * 1000}
         self.cache_dir = cache_dir
+        if performance_mode not in {"default", "burst", "sustained_high_performance"}:
+            raise SRException(f"Unsupported QNN performance mode: {performance_mode}")
+        self.performance_mode = performance_mode
         self._loaded_context = False
         self.spec = manifest_spec(self.manifest)
         self.input_shape = self.spec.input_shape
@@ -115,13 +119,22 @@ class Runtime:
             device = ensure_qnn()
             self.startup_phases["catalog_ms"] = (perf_counter() - catalog_started) * 1000
             options.add_provider_for_devices(
-                [device], {"backend_type": "htp", "enable_htp_fp16_precision": "1"}
+                [device],
+                {
+                    "backend_type": "htp",
+                    "enable_htp_fp16_precision": "1",
+                    "htp_performance_mode": self.performance_mode,
+                },
             )
             if self.cache_dir is not None:
                 from .cache import ContextCache
 
                 cache = ContextCache(
-                    self.cache_dir, self.manifest["sha256"], ort.__version__, package_version()
+                    self.cache_dir,
+                    self.manifest["sha256"],
+                    ort.__version__,
+                    package_version(),
+                    self.performance_mode,
                 )
                 cached = cache.valid()
                 self._loaded_context = cached
@@ -216,6 +229,7 @@ class Runtime:
                 }
                 if backend == "npu":
                     self.evidence.update(qnn_backend="htp", qnn_package_version=package_version())
+                    self.evidence["htp_performance_mode_requested"] = self.performance_mode
                     self.evidence["context_cache"] = (
                         "hit" if cached else "miss" if cache else "disabled"
                     )

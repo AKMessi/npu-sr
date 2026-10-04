@@ -66,10 +66,19 @@ class VideoInfo:
     frames: int | None
     audio: bool
     codec: str
+    color_range: str = "unknown"
+    color_space: str = "unknown"
 
     @property
     def frame_bytes(self) -> int:
         return self.width * self.height * 3
+
+    def bytes_for(self, pixel_format: str) -> int:
+        if pixel_format == "rgb24":
+            return self.frame_bytes
+        if pixel_format == "nv12":
+            return self.width * self.height * 3 // 2
+        raise SRException("Frame format must be rgb24 or nv12.")
 
     def public(self) -> dict:
         return {
@@ -79,6 +88,8 @@ class VideoInfo:
             "reported_frames": self.frames,
             "audio": self.audio,
             "codec": self.codec,
+            "color_range": self.color_range,
+            "color_space": self.color_space,
         }
 
 
@@ -120,6 +131,8 @@ def probe(path: Path, ffmpeg: Path, count_frames: bool = False) -> VideoInfo:
         int(count) if count and count != "N/A" else None,
         any(s["codec_type"] == "audio" for s in streams),
         video.get("codec_name", "unknown"),
+        video.get("color_range", "unknown"),
+        video.get("color_space", "unknown"),
     )
 
 
@@ -174,17 +187,24 @@ def validate_cfr(source: Path, ffmpeg: Path, info: VideoInfo) -> int:
             child.stdout.close()
 
 
-def decode_args(source: Path, hardware: bool, frames: int | None = None) -> list[str]:
+def decode_args(
+    source: Path, hardware: bool, frames: int | None = None, pixel_format: str = "rgb24"
+) -> list[str]:
+    if pixel_format not in {"rgb24", "nv12"}:
+        raise SRException("Frame format must be rgb24 or nv12.")
     args = ["-loglevel", "debug" if hardware else "error", "-noautorotate"]
     if hardware:
         args += ["-hwaccel", "d3d11va", "-hwaccel_output_format", "d3d11"]
     args += ["-i", str(source.resolve()), "-map", "0:v:0", "-an", "-sn", "-dn"]
     if hardware:
         # A software fallback cannot satisfy hwdownload's hardware-frame input contract.
-        args += ["-vf", "hwdownload,format=nv12,format=rgb24"]
+        filter_text = "hwdownload,format=nv12"
+        if pixel_format == "rgb24":
+            filter_text += ",format=rgb24"
+        args += ["-vf", filter_text]
     if frames is not None:
         args += ["-frames:v", str(frames)]
-    return args + ["-fps_mode", "passthrough", "-pix_fmt", "rgb24", "-f", "rawvideo", "pipe:1"]
+    return args + ["-fps_mode", "passthrough", "-pix_fmt", pixel_format, "-f", "rawvideo", "pipe:1"]
 
 
 def codec_args(codec: str, hardware: bool, bitrate: str, quality: int) -> list[str]:
@@ -226,6 +246,7 @@ def encode_args(
     audio: str,
     bitrate: str,
     quality: int,
+    pixel_format: str = "rgb24",
 ) -> list[str]:
     args = [
         "-loglevel",
@@ -235,7 +256,7 @@ def encode_args(
         "-f",
         "rawvideo",
         "-pix_fmt",
-        "rgb24",
+        pixel_format,
         "-video_size",
         f"{info.width * scale}x{info.height * scale}",
         "-framerate",
@@ -247,9 +268,15 @@ def encode_args(
         args += ["-i", str(source.resolve()), "-map", "0:v:0", "-map", "1:a:0", "-c:a", "copy"]
     else:
         args += ["-map", "0:v:0", "-an"]
+    colors = []
+    if pixel_format == "nv12":
+        colors += ["-color_range", "tv"]
+        if info.color_space != "unknown":
+            colors += ["-colorspace", info.color_space]
     return (
         args
         + codec_args(codec, hardware, bitrate, quality)
+        + colors
         + [
             "-fps_mode",
             "passthrough",

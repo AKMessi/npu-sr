@@ -20,10 +20,11 @@ from npu_sr.model import sha256
 
 SOURCE = "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.mov.zip"
 SHA256 = "d87a41de040d3814dbde143e9ab85ef122caf22265f660b0bebf476cd8b357a5"
+MOVIE_SHA256 = "99486359be7e3681168a0fe94e1cbb0284c48b57b2a3ce7df4fa75e185987a15"
 CLIPS = {"faces": 32, "scene": 10, "motion": 124, "texture": None}
 
 
-def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
+def source_movie(directory: Path) -> Path:
     directory.mkdir(parents=True, exist_ok=True)
     archive = directory / "tears_of_steel_1080p.mov.zip"
     if not archive.exists():
@@ -41,6 +42,15 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
         with zipfile.ZipFile(archive) as bundle:
             with bundle.open("tears_of_steel_1080p.mov") as source, movie.open("wb") as target:
                 shutil.copyfileobj(source, target)
+    if sha256(movie) != MOVIE_SHA256:
+        raise ValueError(
+            "Extracted source movie SHA256 changed; inspect the local benchmark source"
+        )
+    return movie
+
+
+def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
+    movie = source_movie(directory)
     provenance = {
         "source": SOURCE,
         "source_sha256": SHA256,
@@ -150,18 +160,89 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
     print(f"Aligned clips prepared: {directory}")
 
 
+def prepare_sustained(directory: Path, duration: int, ffmpeg: Path) -> None:
+    """Prepare a varied real-film 540p input without storing a large HR reference."""
+    movie = source_movie(directory)
+    output = directory / f"sustained-960x540-{duration}s.mp4"
+    run_tool(
+        [
+            str(ffmpeg),
+            "-v",
+            "error",
+            "-y",
+            "-ss",
+            "32",
+            "-i",
+            str(movie),
+            "-vf",
+            "setpts=(PTS-STARTPTS)*0.8,scale=-2:540:flags=bicubic,crop=960:540",
+            "-af",
+            "atempo=1.25",
+            "-r",
+            "30",
+            "-t",
+            str(duration),
+            "-c:v",
+            "libx264",
+            "-preset",
+            "veryfast",
+            "-crf",
+            "10",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:a",
+            "aac",
+            str(output),
+        ],
+        timeout=1200,
+    )
+    from npu_sr.ffmpeg import probe, validate_cfr
+
+    info = probe(output, ffmpeg, count_frames=True)
+    count = validate_cfr(output, ffmpeg, info)
+    if count != duration * 30 or info.frames != count:
+        raise ValueError("Sustained input frame count changed")
+    (directory / "sustained-provenance.json").write_text(
+        json.dumps(
+            {
+                "source": SOURCE,
+                "source_sha256": SHA256,
+                "movie_sha256": MOVIE_SHA256,
+                "license": "CC-BY-3.0",
+                "attribution": "Blender Foundation / mango.blender.org",
+                "source_start_seconds": 32,
+                "input_file": output.name,
+                "input_sha256": sha256(output),
+                "input": info.public(),
+                "preparation": (
+                    "24 FPS film retimed 1.25x to 30 FPS, aspect-preserving scale/center crop, "
+                    "H264 CRF10 LR"
+                ),
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(f"Sustained input ready: {output}")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path)
-    parser.add_argument("--duration", type=int, default=4)
+    parser.add_argument("--duration", type=int)
+    parser.add_argument("--sustained", action="store_true")
     parser.add_argument("--ffmpeg", type=Path)
     args = parser.parse_args()
-    if not 1 <= args.duration <= 120:
-        parser.error("duration must be 1–120 seconds")
+    duration = args.duration if args.duration is not None else (120 if args.sustained else 4)
+    if not 1 <= duration <= 300:
+        parser.error("duration must be 1–300 seconds")
     default = (
         Path(os.environ.get("LOCALAPPDATA", Path.home() / ".cache"))
         / "npu-sr"
         / "benchmarks"
         / "video"
     )
-    acquire(args.directory or default, args.duration, tool_path(args.ffmpeg))
+    operation = prepare_sustained if args.sustained else acquire
+    operation(args.directory or default, duration, tool_path(args.ffmpeg))

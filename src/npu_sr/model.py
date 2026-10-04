@@ -26,6 +26,7 @@ class ModelSpec:
     task: str = "upscale"
     scale: int = 2
     core: int = 256
+    core_height: int | None = None
     halo: int = 4
     license: str = "Apache-2.0"
     color_space: str = "luminance"
@@ -34,7 +35,11 @@ class ModelSpec:
 
     @property
     def input_shape(self) -> list[int]:
-        return [1, 1, self.core + self.halo * 2, self.core + self.halo * 2]
+        return [1, 1, self.height + self.halo * 2, self.core + self.halo * 2]
+
+    @property
+    def height(self) -> int:
+        return self.core if self.core_height is None else self.core_height
 
     @property
     def output_shape(self) -> list[int]:

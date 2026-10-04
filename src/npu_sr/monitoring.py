@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-def memory_usage() -> dict[str, int]:
+def memory_usage(pid: int | None = None) -> dict[str, int | float]:
     """Windows working set and cumulative process peak; not per-model allocation."""
     if sys.platform != "win32":
         return {}
@@ -29,14 +29,31 @@ def memory_usage() -> dict[str, int]:
     counters.cb = ctypes.sizeof(counters)
     kernel = ctypes.WinDLL("kernel32")
     kernel.GetCurrentProcess.restype = ctypes.c_void_p
+    kernel.OpenProcess.argtypes = [ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
+    kernel.OpenProcess.restype = ctypes.c_void_p
+    kernel.CloseHandle.argtypes = [ctypes.c_void_p]
+    handle = (
+        kernel.OpenProcess(0x1000, False, pid) if pid is not None else kernel.GetCurrentProcess()
+    )
+    if not handle:
+        return {}
     psapi = ctypes.WinDLL("psapi")
     psapi.GetProcessMemoryInfo.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_ulong]
-    if psapi.GetProcessMemoryInfo(kernel.GetCurrentProcess(), ctypes.byref(counters), counters.cb):
-        return {
-            "working_set_bytes": counters.WorkingSetSize,
-            "peak_process_working_set_bytes": counters.PeakWorkingSetSize,
-        }
-    return {}
+    result = {}
+    try:
+        if psapi.GetProcessMemoryInfo(handle, ctypes.byref(counters), counters.cb):
+            result.update(
+                working_set_bytes=counters.WorkingSetSize,
+                peak_process_working_set_bytes=counters.PeakWorkingSetSize,
+            )
+        times = [ctypes.c_ulonglong() for _ in range(4)]
+        kernel.GetProcessTimes.argtypes = [ctypes.c_void_p] + [ctypes.c_void_p] * 4
+        if kernel.GetProcessTimes(handle, *(ctypes.byref(value) for value in times)):
+            result["cpu_seconds"] = (times[2].value + times[3].value) / 10_000_000
+        return result
+    finally:
+        if pid is not None:
+            kernel.CloseHandle(handle)
 
 
 def power_state() -> dict[str, str | int | None]:

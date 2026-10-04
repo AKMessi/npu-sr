@@ -93,7 +93,8 @@ def test_cpu_video_preserves_frames_audio_duration_and_order(video_source, tmp_p
     assert quality["temporal_residual_change"] == 0
 
 
-def test_cancellation_closes_both_children(video_source, tmp_path, monkeypatch):
+@pytest.mark.parametrize("depth", [0, 2])
+def test_cancellation_closes_both_children(video_source, tmp_path, monkeypatch, depth):
     source, ffmpeg = video_source
     children = []
 
@@ -108,9 +109,22 @@ def test_cancellation_closes_both_children(video_source, tmp_path, monkeypatch):
     monkeypatch.setattr("npu_sr.video.PipeProcess", record)
     output = tmp_path / "cancelled.mp4"
     with pytest.raises(KeyboardInterrupt):
-        process_video(source, output, cpu_settings(ffmpeg), interrupt)
+        process_video(
+            source, output, replace(cpu_settings(ffmpeg), pipeline_depth=depth), interrupt
+        )
     assert len(children) == 2 and all(c.process.poll() is not None for c in children)
     assert not output.exists() and not list(tmp_path.glob("*.partial.mp4"))
+
+
+@pytest.mark.parametrize("depth", [0, 2])
+def test_cpu_planar_video_preserves_frames_and_audio(video_source, tmp_path, depth):
+    source, ffmpeg = video_source
+    settings = replace(cpu_settings(ffmpeg), frame_format="nv12", pipeline_depth=depth)
+    report = process_video(source, tmp_path / "planar.mp4", settings)
+    assert report["frames_processed"] == 6 and report["dropped_frames"] == 0
+    assert report["frame_format"] == "nv12" and report["output"]["audio"]
+    assert report["output_timestamps_validated"]
+    assert max(report["observed_queue_peaks"].values()) <= depth
 
 
 def test_broken_encoder_is_clean_error(video_source, tmp_path, monkeypatch):

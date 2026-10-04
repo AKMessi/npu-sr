@@ -85,3 +85,34 @@ Video API research and implementation belong to the subsequent gated releases.
 - Balanced power scheme alone does not describe Windows energy saver. The
   [SYSTEM_POWER_STATUS SystemStatusFlag](https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status)
   reports that separately; new environment reports record it without estimating watts.
+
+## v0.4 hot-path experiments (2026-10-04)
+
+- The [current QNN provider documentation](https://github.com/onnxruntime/onnxruntime-qnn/blob/main/docs/execution_providers/QNN-ExecutionProvider.md)
+  describes `htp_performance_mode`. The installed catalog provider accepts
+  `sustained_high_performance` and `burst`; strict proof remains required. The
+  540p ESPCN compute experiment changed about 35 ms default to 12 ms sustained
+  and 10 ms burst. These short measurements do not establish thermal behavior.
+- Larger graphs were slower: 512-pixel tiles took about 14 ms sustained, and a
+  full 960x540 ESPCN graph took about 30 ms. A full-frame FSRCNN-small graph took
+  about 37 ms. All passed strict QNN proof and CPU/NPU agreement (max difference
+  below 0.002 on the test workload), but are rejected for the real-time preset.
+  QNN logs showed more DDR traffic on larger graphs; this is consistent with a
+  memory/locality cost, not a measured silicon-level diagnosis.
+- Native NV12 avoids the RGB round trip. Limited-range Y is normalized 16–235
+  to 0–1; native chroma is resized on CPU. Explicit full-range input needs RGB.
+  Unknown YUV range is assumed limited. This changes the delivered colorspace
+  path and requires new quality measurements; no zero-copy claim is made.
+- FFmpeg's [Media Foundation documentation](https://ffmpeg.org/ffmpeg-all.html#MediaFoundation)
+  supports NV12 encoder input. Executed paths still require hardware format/MFT
+  evidence. Queue depth 2 improved short 540p trials from about 40 to 42 FPS;
+  depth 4 had little extra benefit and holds more frames. Long trials are the gate.
+- VMAF framesync can repeat a frame when MP4 and millisecond Matroska clocks
+  differ. v0.4 assigns aligned CFR frame ordinals on a common AVTB clock, disables
+  repeated-last frames, and verifies the sampling count. Historical v0.3 VMAF
+  numbers used its disclosed original setup; v0.4 recomputes comparisons with
+  the corrected alignment. Ordinal PSNR/SSIM comparisons were already aligned.
+- [GetProcessTimes](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocesstimes)
+  and [GetProcessMemoryInfo](https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo)
+  provide process CPU and working set for Python and codec children. One-second
+  samples exclude other apps; they are not system energy or accelerator telemetry.

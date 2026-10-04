@@ -19,7 +19,9 @@ def positive(value: str) -> int:
 
 
 def parser() -> argparse.ArgumentParser:
-    root = argparse.ArgumentParser(prog="npu-sr", description="2x image SR on Snapdragon X NPUs")
+    root = argparse.ArgumentParser(
+        prog="npu-sr", description="Image and video enhancement on Snapdragon X NPUs"
+    )
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command", required=True)
     doctor = commands.add_parser("doctor", help="Check system and run strict NPU proof inference")
@@ -75,11 +77,11 @@ def parser() -> argparse.ArgumentParser:
     )
     video.add_argument("input", type=Path)
     video.add_argument("-o", "--output", type=Path, required=True)
-    video.add_argument("--model", default="espcn-x2-256")
-    video.add_argument("--device", choices=["auto", "npu", "gpu", "cpu"], default="auto")
-    video.add_argument("--decode", choices=["auto", "hardware", "software"], default="auto")
-    video.add_argument("--encode", choices=["auto", "hardware", "software"], default="auto")
-    video.add_argument("--codec", choices=["h264", "hevc", "av1"], default="h264")
+    video.add_argument("--model")
+    video.add_argument("--device", choices=["auto", "npu", "gpu", "cpu"])
+    video.add_argument("--decode", choices=["auto", "hardware", "software"])
+    video.add_argument("--encode", choices=["auto", "hardware", "software"])
+    video.add_argument("--codec", choices=["h264", "hevc", "av1"])
     video.add_argument("--audio", choices=["copy", "none"], default="copy")
     video.add_argument("--bitrate", default="8M", help="Hardware encoder target rate")
     video.add_argument(
@@ -90,6 +92,13 @@ def parser() -> argparse.ArgumentParser:
     video.add_argument("--json", type=Path)
     video.add_argument("--overwrite", action="store_true")
     video.add_argument("--verbose", action="store_true")
+    video.add_argument("--preset", choices=["quality", "balanced", "realtime"])
+    video.add_argument("--frame-format", choices=["rgb24", "nv12"])
+    video.add_argument(
+        "--npu-performance",
+        choices=["default", "sustained_high_performance", "burst"],
+    )
+    video.add_argument("--pipeline-depth", type=int, choices=range(5))
     video_bench = commands.add_parser(
         "benchmark-video",
         parents=[video],
@@ -97,6 +106,12 @@ def parser() -> argparse.ArgumentParser:
         help="Run multiple complete video processing trials",
     )
     video_bench.add_argument("--trials", type=positive, default=3)
+    commands.add_parser(
+        "benchmark-realtime",
+        parents=[video_bench],
+        add_help=False,
+        help="Validate a useful 30 FPS profile with >=60 seconds processing per trial",
+    )
     video_quality = commands.add_parser(
         "evaluate-video", help="Compare with an aligned HR reference video"
     )
@@ -322,24 +337,38 @@ def _suite(args: argparse.Namespace) -> int:
 
 def _video(args: argparse.Namespace) -> int:
     from .benchmark import save_report
-    from .video import VideoSettings, process_video
+    from .video import VideoSettings, process_video, settings_for_preset
 
     if args.json and args.json.resolve() in {args.input.resolve(), args.output.resolve()}:
         raise SRException("Video JSON would overwrite input or output.")
-    settings = VideoSettings(
-        **{key: getattr(args, key) for key in VideoSettings.__dataclass_fields__}
+    settings = settings_for_preset(
+        args.preset or ("realtime" if args.command == "benchmark-realtime" else None),
+        {key: getattr(args, key) for key in VideoSettings.__dataclass_fields__ if key != "preset"},
+    )
+    print(
+        f"Configuration: {settings.preset or 'custom/default'}; model={settings.model}; "
+        f"frames={settings.frame_format}; pipeline={settings.pipeline_depth}; "
+        f"NPU mode={settings.npu_performance}; decode={settings.decode}; "
+        f"encode={settings.encode}; codec={settings.codec}"
     )
 
     def progress(frames: int) -> None:
         if frames % 30 == 0:
             print(f"Processed {frames} frames", file=sys.stderr)
 
-    if args.command == "benchmark-video":
+    if args.command in {"benchmark-video", "benchmark-realtime"}:
         from .video_benchmark import benchmark_video
 
         report = benchmark_video(args.input, args.output, settings, args.trials, args.json)
+        if args.command == "benchmark-realtime":
+            from .video_benchmark import realtime_acceptance
+
+            report["realtime_acceptance"] = realtime_acceptance(report)
         if args.json:
             save_report(report, args.json)
+        if args.command == "benchmark-realtime":
+            print(f"Sustained real-time gate: {report['realtime_acceptance']}")
+            return 0 if report["realtime_acceptance"]["passed"] else 1
         return 0
     report = process_video(args.input, args.output, settings, progress)
     width, height = report["input"]["resolution"]
@@ -386,6 +415,7 @@ def main(argv: list[str] | None = None) -> int:
             "evaluate": _evaluate,
             "video": _video,
             "benchmark-video": _video,
+            "benchmark-realtime": _video,
             "evaluate-video": _video_quality,
         }[args.command](args)
     except KeyboardInterrupt:

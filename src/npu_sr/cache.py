@@ -19,7 +19,14 @@ def device_signature() -> dict:
 class ContextCache:
     """Embedded context plus integrity metadata; publish only after strict proof."""
 
-    def __init__(self, root: Path, model_hash: str, ort_version: str, qnn_version: str):
+    def __init__(
+        self,
+        root: Path,
+        model_hash: str,
+        ort_version: str,
+        qnn_version: str,
+        performance_mode: str = "default",
+    ):
         self.signature = {
             "model_sha256": model_hash,
             "ort": ort_version,
@@ -29,6 +36,8 @@ class ContextCache:
             "precision": "fp16",
             "cache_schema": 1,
         }
+        if performance_mode != "default":
+            self.signature["htp_performance_mode"] = performance_mode
         key = hashlib.sha256(json.dumps(self.signature, sort_keys=True).encode()).hexdigest()
         root.mkdir(parents=True, exist_ok=True)
         self.path = root / f"{key}.onnx"
