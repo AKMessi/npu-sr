@@ -179,3 +179,29 @@ mean luminance PSNR and SSIM must exceed bicubic, with strict QNN proof. This
 isolated image-model check does not promise universal delivered-video gains.
 Performance thresholds apply only to the declared local hardware/workload;
 generic CI tests gate logic and correctness, without tight timing thresholds.
+
+## Expanded quality protocol (v1 development)
+
+The [predeclared corpus](../benchmarks/corpus-v1.json) contains 24 clips, split
+equally into development and holdout. Model/fusion selection uses development
+only; lock settings before holdout evaluation. Download/preparation and delivered
+quality scripts are `download_quality_corpus.py` and `run_quality_corpus.py`.
+Media lives in the user cache, not git. Prepared provenance records source and
+fixture hashes, source time ranges, native active regions, degradation and tools.
+
+Native decoded 8-bit coded Y, peak 255, is evaluated directly. PSNR is calculated
+from mean sampled MSE per clip (every third frame), including perfect frames.
+SSIM uses an 11x11 Gaussian with sigma 1.5 and population covariance. Both shave
+two pixels from the declared active region; VMAF evaluates its full declared
+region on every frame. Report primary VMAF 0.6.1 and secondary NEG 0.6.1, which
+limits enhancement gain. Identical codec/rate settings apply to every method.
+This native-Y protocol differs from v0.4's RGB/Rec.601 conversion; absolute scores
+across the two protocols must not be presented as model improvements.
+
+`summarize_quality_corpus.py` rejects missing, duplicate or mismatched pairs.
+It reports equal per-clip averages and source/category/split groups, retaining
+negative results. Positive average PSNR, SSIM and VMAF are required for both
+all clips and holdout. A numeric pass does not replace artifact/temporal review
+or sustained performance validation. The temporal residual-change diagnostic is
+project-specific, does not compensate for motion and may reward smoothing;
+it is not a standard perceptual quality score.

@@ -28,6 +28,40 @@ class PartialRead(io.BytesIO):
         return super().readinto(buffer[:2])
 
 
+def test_planar_pipe_color_tags_both_input_and_output(tmp_path):
+    info = VideoInfo(64, 48, Fraction(30), 1, 30, False, "h264", "tv", "bt709")
+    args = encode_args(
+        Path("source.mp4"),
+        tmp_path / "result.mp4",
+        info,
+        2,
+        "av1",
+        True,
+        "none",
+        "8M",
+        20,
+        "nv12",
+    )
+    before_input = args[: args.index("-i")]
+    after_input = args[args.index("-i") + 2 :]
+    for group in (before_input, after_input):
+        assert group[group.index("-colorspace") + 1] == "bt709"
+        assert group[group.index("-color_range") + 1] == "tv"
+    rgb = encode_args(
+        Path("source.mp4"),
+        tmp_path / "rgb.mp4",
+        info,
+        2,
+        "h264",
+        False,
+        "none",
+        "8M",
+        20,
+        "rgb24",
+    )
+    assert "-colorspace" not in rgb[: rgb.index("-i")]
+
+
 class PartialWrite(io.BytesIO):
     def write(self, data):
         return super().write(data[:2])

@@ -139,3 +139,28 @@ Video API research and implementation belong to the subsequent gated releases.
   retained `n9.0.1-11-ge47273f4d9` passed startup and hardware codec checks.
   v0.4 uses that pinned build, adds startup/integrity cache acceptance and
   remeasures the final workload. No failing package or vendor binary is published.
+
+## v1 quality investigation
+
+- Qualcomm's official QuickSRNet small/medium x2 checkpoints use Conv, clipped
+  activations and pixel shuffle. The AI Hub manifest assigns BSD 3-Clause model
+  licensing; pinned checkpoint URLs/hashes and license attribution are retained.
+  Full RGB and neutral-RGB luminance graphs both passed strict QNN. On three
+  short model-only trials, 12 small-Y tile calls took about 8.7 ms, RGB 13.8 ms;
+  medium-Y 16.0 ms. These are not video FPS or sustained headline measurements.
+- The neutral-Y export sums the first RGB input weights and mixes output RGB
+  phases *after* their Clip. Mixing before Clip changes the function. All arrays
+  match independent Torch extraction; CPU output matches the source RGB network
+  on repeated Y within 1.32e-6. No Torch runtime dependency is introduced.
+- Expanded delivered-video testing exposed a color metadata bug: NV12 bytes
+  crossing a raw pipe lacked their BT709 input tag. FFmpeg's
+  [color options](https://www.ffmpeg.org/ffmpeg-all.html) apply to decoding/input
+  as well as encoding/output. Hardware/software decode matched byte-for-byte.
+  Native pre-encode neural output had low MSE, while the encoded result acquired
+  content-dependent brightness error. Tagging raw input and output reduced one
+  animation frame's MSE from 15.56 to 3.14. Correct the boundary and rerun paired
+  metrics instead of treating the error as a model defect or learning around it.
+- Global-bias subtraction and coarse lowpass-residual correction made little
+  difference in the untagged three-clip probe. Adaptive residual clipping reduced
+  VMAF in all three. These provisional experiments neither select a default nor
+  establish a fusion ranking; correct color negotiation precedes further search.

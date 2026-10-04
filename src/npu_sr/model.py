@@ -67,6 +67,8 @@ MODELS = {
         ModelSpec("fsrcnn-x2", "FSRCNN", halo=6),
         ModelSpec("lapsrn-x2", "LapSRN", halo=12),
         ModelSpec("dncnn-25", "DnCNN", task="denoise", scale=1, halo=17, license="MIT"),
+        ModelSpec("quicksrnet-small-y-x2", "QuickSRNet-small", license="BSD-3-Clause"),
+        ModelSpec("quicksrnet-medium-y-x2", "QuickSRNet-medium", halo=7, license="BSD-3-Clause"),
     )
 }
 

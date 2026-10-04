@@ -1,0 +1,29 @@
+{
+  "status": "locked before holdout preparation/evaluation; not a release pass",
+  "model": "quicksrnet-small-y-x2",
+  "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+  "source_sha256": "d95d70f1d2366cb9c28d99f8c7aa5bb07e1ffeaf5d7e30d9c66ab0fa28c6d0f8",
+  "corpus": "benchmarks/corpus-v1.json",
+  "selection_data": "12 development clips only",
+  "settings": {
+    "frame_format": "nv12",
+    "neural_strength": 1.0,
+    "color_boundary": "preserve coded range/matrix on both raw encoder input and output",
+    "tile_core": 256,
+    "halo": 4,
+    "npu_performance": "burst",
+    "pipeline_depth": 2,
+    "decode": "hardware",
+    "encode": "hardware",
+    "codec": "av1",
+    "bitrate": "8M"
+  },
+  "rationale": "Unblended small improves all three development averages and secondary NEG versus bicubic. Scalar 0.5/0.75 reduce PSNR/SSIM/VMAF averages. Temporal diagnostic increases about 2.4%, no inspected severe artifact. Medium doubles model-only compute for modest preliminary quality gains; reserved for comparison. Avoid learned/adaptive fusion complexity without a demonstrated benefit.",
+  "required_next": [
+    "evaluate all 12 holdout clips with these fixed settings",
+    "manual temporal/artifact review",
+    "sustained performance validation",
+    "complete comparative model reports",
+    "all release checks"
+  ]
+}

@@ -12,6 +12,7 @@ from onnx import TensorProto, helper, numpy_helper
 from .acquire import SOURCE, SOURCE_SHA256, _fields, acquire, export, read_weights
 from .errors import SRException
 from .model import ModelSpec, model_path, model_spec, sha256
+from .quicksr import export_quicksr, read_quicksr
 from .weights import read_dncnn
 
 FSRCNN_REVISION = "6a4812c4ef1c4f5947d79beafa32a05a6eb4a94d"
@@ -36,6 +37,16 @@ SOURCES = {
     "DnCNN": (
         "https://github.com/cszn/KAIR/releases/download/v1.0/dncnn_25.pth",
         "0451a70de9b672ae037270498fbb1c17a1c1c4403785df586ff65df5b858e5b0",
+    ),
+    "QuickSRNet-small": (
+        "https://github.com/quic/aimet-model-zoo/releases/download/phase_2_january_artifacts/"
+        "quicksrnet_small_2x_checkpoint_float32.pth.tar",
+        "d95d70f1d2366cb9c28d99f8c7aa5bb07e1ffeaf5d7e30d9c66ab0fa28c6d0f8",
+    ),
+    "QuickSRNet-medium": (
+        "https://github.com/quic/aimet-model-zoo/releases/download/phase_2_january_artifacts/"
+        "quicksrnet_medium_2x_checkpoint_float32.pth.tar",
+        "a0d176b40a649e45a176c3b53f45e0237015f4f2c17b157ef5c81e38c4442a0d",
     ),
 }
 
@@ -199,6 +210,9 @@ def acquire_model(identifier: str, directory: Path) -> Path:
     path = model_path(directory, identifier)
     if spec.architecture == "ESPCN":
         export(read_weights(data), path, spec.input_shape)
+    elif spec.architecture.startswith("QuickSRNet-"):
+        weights = read_quicksr(data, spec.architecture.removeprefix("QuickSRNet-"))
+        export_quicksr(weights, spec, path)
     else:
         weights = read_dncnn(data) if spec.architecture == "DnCNN" else read_constants(data)
         export_model(weights, spec, path)

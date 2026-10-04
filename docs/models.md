@@ -49,3 +49,21 @@ were tested with strict QNN proof but slower than 256-core ESPCN on the declared
 existing ESPCN network on native video luminance with declared fixed blending.
 The highest image-subset scorer is not automatically the fastest or best delivered
 video path. See [realtime](realtime.md) for the measured preset choices.
+
+## Development candidates (not preset defaults)
+
+`quicksrnet-small-y-x2` and `quicksrnet-medium-y-x2` are reproducible neutral-RGB
+luminance adaptations of Qualcomm's BSD 3-Clause x2 checkpoints. Download with
+`npu-sr models download <identifier>`. The small graph has three 32-channel
+Conv/Clip feature stages, a 12-channel Conv/Clip output, luminance phase mixing
+and DepthToSpace. Medium adds three feature stages. Core size is 256, with halo
+4 for small and 7 for medium. FP32 files use QNN HTP FP16 computation.
+
+The transformation evaluates the RGB network at R=G=B=Y, then converts its
+clipped RGB output to Y. It avoids RGB runtime traffic but does not model colored
+input identically to the original network. A NumPy reference test independently
+checks convolution, Clip order and RGB pixel-shuffle phases against ONNX CPU.
+No PyTorch dependency is added. Strict QNN tests still apply to every candidate.
+
+These candidates do not change the v0.4 realtime preset. Expanded development
+and holdout quality evaluation must pass before selecting a new default.

@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Reproducible BSD-licensed QuickSRNet small/medium neutral-Y candidate exports;
+  existing presets remain unchanged while release quality/performance gates run.
+- Predeclared 24-clip development/holdout video corpus, native-Y paired quality
+  evaluation, secondary VMAF NEG and complete-pair acceptance summaries.
+- Preserve color range/matrix on raw NV12 encoder input as well as output,
+  avoiding unintended color conversion when source BT709 metadata is known.
+
 ## 0.4.0 — 2026-10-04
 
 - Primary 960×540 → 1920×1080 at 30 FPS sustained 34.3 FPS across three 120-second

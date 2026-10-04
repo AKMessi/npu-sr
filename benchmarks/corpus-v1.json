@@ -1,0 +1,520 @@
+{
+  "schema_version": 1,
+  "identifier": "vision-video-v1",
+  "status": "predeclared before scoring expanded corpus",
+  "preparation": {
+    "output_fps": 30,
+    "frames_per_clip": 60,
+    "reference_codec": "FFV1 level 3",
+    "reference_pixel_format": "yuv420p limited SDR",
+    "color_matrix": "BT709; assumed for untagged HD sources, recorded",
+    "audio": "omitted",
+    "downscale": "FFmpeg scale 960x540, bicubic B=0 C=0.5, antialiasing",
+    "lr_codec": "libx264 veryfast CRF10; explicit CRF26 stress cases",
+    "timing": "retime original consecutive frames to 30 FPS; no intentional frame duplication",
+    "metrics": "active predeclared ROI excludes fixed film letterbox; paired PSNR/SSIM/VMAF, secondary VMAF NEG, reference residual-change diagnostic",
+    "averaging": "equal per-clip arithmetic means; also report by source/category and holdout separately"
+  },
+  "sources": {
+    "tos": {
+      "url": "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.mov.zip",
+      "sha256": "d87a41de040d3814dbde143e9ab85ef122caf22265f660b0bebf476cd8b357a5",
+      "member": "tears_of_steel_1080p.mov",
+      "media_sha256": "99486359be7e3681168a0fe94e1cbb0284c48b57b2a3ce7df4fa75e185987a15",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / mango.blender.org",
+      "license_url": "https://mango.blender.org/sharing/"
+    },
+    "bbb": {
+      "url": "https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4.zip",
+      "sha256": "e320fef389ec749117d0c1583945039266a40f25483881c2ff0d33207e62b362",
+      "member": "bbb_sunflower_1080p_30fps_normal.mp4",
+      "media_sha256": "ae51005850b0ff757fe60c3dd7a12d754d3cd2397d87d939b55235e457f97658",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / www.bigbuckbunny.org",
+      "license_url": "https://peach.blender.org/about/"
+    },
+    "sintel": {
+      "url": "https://download.blender.org/durian/trailer/sintel_trailer-1080p.mp4",
+      "sha256": "34bbd52a4b89fdf63c8ace50b268da26653a59508288100cd3c23de276db7931",
+      "license": "CC-BY-3.0 video; benchmark preparation omits audio",
+      "attribution": "Blender Foundation / www.sintel.org",
+      "license_url": "https://durian.blender.org/sharing/"
+    },
+    "forest": {
+      "url": "https://images-assets.nasa.gov/video/GSFC_20140908_Mapping_m11633_Alaska/GSFC_20140908_Mapping_m11633_Alaska~orig.mp4",
+      "sha256": "bccf17d7402af30d8fee4646457f74f2d929c01bc70461d77dc8717e5a675add",
+      "license": "NASA media usage guidelines; informational benchmarking, no endorsement",
+      "attribution": "NASA Goddard / Mapping Alaska's Forests",
+      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    },
+    "night": {
+      "url": "https://images-assets.nasa.gov/video/Marshall%20Night%20Stars/Marshall%20Night%20Stars~orig.mp4",
+      "sha256": "e870afa81df91dbd0b95cbf673c87f83c7b01bca87dd00f2de3c5dba4fab2b58",
+      "license": "NASA media usage guidelines; informational benchmarking, no endorsement",
+      "attribution": "NASA Marshall / Marshall Night Stars",
+      "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
+    }
+  },
+  "clips": [
+    {
+      "identifier": "conversation",
+      "source": "tos",
+      "start_seconds": 32,
+      "split": "development",
+      "categories": [
+        "talking-heads",
+        "faces"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "dark-city",
+      "source": "tos",
+      "start_seconds": 90,
+      "split": "development",
+      "categories": [
+        "city",
+        "low-light"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "action",
+      "source": "tos",
+      "start_seconds": 210,
+      "split": "development",
+      "categories": [
+        "fast-motion",
+        "scene-cuts"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "street-foliage",
+      "source": "tos",
+      "start_seconds": 270,
+      "split": "holdout",
+      "categories": [
+        "foliage",
+        "faces"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "city-pan",
+      "source": "tos",
+      "start_seconds": 330,
+      "split": "holdout",
+      "categories": [
+        "city",
+        "camera-pan"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "skin-closeup",
+      "source": "tos",
+      "start_seconds": 390,
+      "split": "holdout",
+      "categories": [
+        "skin",
+        "faces"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-landscape",
+      "source": "bbb",
+      "start_seconds": 17,
+      "split": "development",
+      "categories": [
+        "animation",
+        "landscape"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-leaves",
+      "source": "bbb",
+      "start_seconds": 92,
+      "split": "development",
+      "categories": [
+        "animation",
+        "foliage"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-face",
+      "source": "bbb",
+      "start_seconds": 227,
+      "split": "development",
+      "categories": [
+        "animation",
+        "faces"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-fur",
+      "source": "bbb",
+      "start_seconds": 47,
+      "split": "holdout",
+      "categories": [
+        "animation",
+        "fine-texture"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-motion",
+      "source": "bbb",
+      "start_seconds": 350,
+      "split": "holdout",
+      "categories": [
+        "animation",
+        "fast-motion"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-forest-pan",
+      "source": "bbb",
+      "start_seconds": 312,
+      "split": "holdout",
+      "categories": [
+        "animation",
+        "camera-pan",
+        "foliage"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "snow-pan",
+      "source": "sintel",
+      "start_seconds": 5,
+      "split": "development",
+      "categories": [
+        "animation",
+        "camera-pan"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        130,
+        1920,
+        818
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "animated-skin",
+      "source": "sintel",
+      "start_seconds": 24,
+      "split": "holdout",
+      "categories": [
+        "animation",
+        "skin"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        130,
+        1920,
+        818
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "aerial-landscape",
+      "source": "forest",
+      "start_seconds": 16,
+      "split": "development",
+      "categories": [
+        "natural-landscape",
+        "camera-pan"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "aerial-foliage",
+      "source": "forest",
+      "start_seconds": 26,
+      "split": "holdout",
+      "categories": [
+        "natural-foliage",
+        "fine-texture"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "ground-forest",
+      "source": "forest",
+      "start_seconds": 38,
+      "split": "holdout",
+      "categories": [
+        "natural-foliage",
+        "camera-pan"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "starfield",
+      "source": "night",
+      "start_seconds": 12,
+      "split": "development",
+      "categories": [
+        "low-light",
+        "fine-texture"
+      ],
+      "geometry": "center-crop",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "night-silhouettes",
+      "source": "night",
+      "start_seconds": 22,
+      "split": "holdout",
+      "categories": [
+        "low-light",
+        "fine-texture"
+      ],
+      "geometry": "center-crop",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "ui-horizontal",
+      "source": null,
+      "start_seconds": 0,
+      "split": "development",
+      "categories": [
+        "text",
+        "ui",
+        "camera-pan"
+      ],
+      "geometry": "synthetic-ui",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "ui-vertical",
+      "source": null,
+      "start_seconds": 0,
+      "split": "holdout",
+      "categories": [
+        "text",
+        "ui",
+        "camera-pan"
+      ],
+      "geometry": "synthetic-ui-vertical",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "moving-texture",
+      "source": null,
+      "start_seconds": 0,
+      "split": "development",
+      "categories": [
+        "synthetic",
+        "fine-texture"
+      ],
+      "geometry": "synthetic-texture",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "compressed-faces",
+      "source": "tos",
+      "start_seconds": 32,
+      "split": "development",
+      "categories": [
+        "faces",
+        "compression-artifacts"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 60,
+      "lr_crf": 26
+    },
+    {
+      "identifier": "compressed-foliage",
+      "source": "forest",
+      "start_seconds": 26,
+      "split": "holdout",
+      "categories": [
+        "foliage",
+        "compression-artifacts"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 60,
+      "lr_crf": 26
+    }
+  ]
+}

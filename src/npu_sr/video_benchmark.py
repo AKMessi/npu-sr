@@ -200,12 +200,33 @@ def evaluate_video(
 
 
 def measure_vmaf(
-    output: Path, reference: Path, ffmpeg: Path, stride: int = 12, frame_count: int | None = None
+    output: Path,
+    reference: Path,
+    ffmpeg: Path,
+    stride: int = 12,
+    frame_count: int | None = None,
+    *,
+    roi: tuple[int, int, int, int] | None = None,
+    model: str = "vmaf_v0.6.1",
 ) -> dict:
     """Use FFmpeg's native libvmaf with an explicit built-in 1080p model."""
     from .ffmpeg import run_tool
 
-    fps = probe(output, ffmpeg).fps
+    if model not in {"vmaf_v0.6.1", "vmaf_v0.6.1neg", "vmaf_v1.0.16"} or stride < 1:
+        raise SRException("Unsupported VMAF model or invalid sampling stride.")
+    info = probe(output, ffmpeg)
+    fps = info.fps
+    crop = ""
+    if roi is not None:
+        x, y, width, height = roi
+        if (
+            min(x, y) < 0
+            or min(width, height) <= 0
+            or x + width > info.width
+            or y + height > info.height
+        ):
+            raise SRException("VMAF ROI exceeds the decoded frame.")
+        crop = f"crop={width}:{height}:{x}:{y},"
     pts = f"N*{fps.denominator}/({fps.numerator}*TB)"
     with tempfile.TemporaryDirectory(prefix="npu-sr-vmaf-") as directory:
         run_tool(
@@ -219,8 +240,9 @@ def measure_vmaf(
                 "-i",
                 str(reference.resolve()),
                 "-filter_complex",
-                f"[0:v]settb=AVTB,setpts={pts}[d];[1:v]settb=AVTB,setpts={pts}[r];"
-                f"[d][r]libvmaf=model=version=vmaf_v0.6.1:n_threads=2:n_subsample={stride}:"
+                f"[0:v]{crop}settb=AVTB,setpts={pts}[d];"
+                f"[1:v]{crop}settb=AVTB,setpts={pts}[r];"
+                f"[d][r]libvmaf=model=version={model}:n_threads=2:n_subsample={stride}:"
                 "shortest=1:repeatlast=0:log_fmt=json:log_path=metrics.json",
                 "-an",
                 "-f",
@@ -235,7 +257,7 @@ def measure_vmaf(
             raise SRException("VMAF sample count disagrees with the aligned decoded frames.")
         return {
             "mean": data["pooled_metrics"]["vmaf"]["mean"],
-            "model": "vmaf_v0.6.1",
+            "model": model,
             "libvmaf_version": data["version"],
             "sample_stride": stride,
             "samples": len(data["frames"]),

@@ -39,7 +39,34 @@ Exact source SHA256 values and download URLs are in
 Parameters are not retrained. Original and exported weights remain ignored;
 their model licenses apply independently of this repository's MIT code license.
 
-## Benchmark data
+## QuickSRNet candidate checkpoints and adaptation
+
+- Qualcomm AIMET Model Zoo / AI Hub Models, QuickSRNet small and medium x2.
+- Model license: [BSD 3-Clause](licenses/AIMET-MODEL-ZOO-BSD-3-CLAUSE.txt),
+  confirmed by the official AI Hub model manifest. License/source reference:
+  AIMET Model Zoo revision `1bd2bf5b17cdda9251437c444009b29e1a25054b`.
+- Checkpoints: official `quic/aimet-model-zoo` release
+  `phase_2_january_artifacts`; URLs and pinned hashes are in `acquire_models.py`.
+- Changes: fixed NCHW ONNX export, sum the first convolution's RGB input weights
+  to evaluate neutral repeated-Y input, retain every Clip, mix clipped RGB output
+  phases with Rec.601 luminance coefficients, then pixel shuffle. These luminance
+  adaptations are not the original RGB model and do not inherit its published scores.
+- No retraining. Checkpoints, exported weights and optimizer metadata are not shipped.
+  Acquisition verifies SHA256 before an allowlisted, inert checkpoint reader runs.
+
+## Expanded video corpus
+
+The predeclared [corpus manifest](benchmarks/corpus-v1.json) records source hashes,
+license links, attribution, time ranges, active image regions and degradation.
+Big Buck Bunny, Sintel video and Tears of Steel are Blender Foundation CC BY 3.0
+works; benchmark audio is omitted. NASA source use follows its media usage
+guidelines for informational benchmarking, with no endorsement implied. NASA's
+guidelines include exceptions for third-party content and are not a blanket
+public-domain license. Source movies, prepared clips and output movies remain
+outside git and are not distributed in the package. Text/UI artwork is original
+MIT content; the moving FFmpeg test pattern is explicitly synthetic.
+
+## Image benchmark data
 
 The [BSDS300](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/) images
 are available for non-commercial research and educational use; copyright remains

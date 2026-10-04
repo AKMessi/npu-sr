@@ -278,6 +278,11 @@ def encode_args(
     pixel_format: str = "rgb24",
     software_av1: str = "libaom-av1",
 ) -> list[str]:
+    colors = []
+    if pixel_format == "nv12":
+        colors += ["-color_range", "tv"]
+        if info.color_space != "unknown":
+            colors += ["-colorspace", info.color_space]
     args = [
         "-loglevel",
         "verbose",
@@ -291,6 +296,9 @@ def encode_args(
         f"{info.width * scale}x{info.height * scale}",
         "-framerate",
         str(info.fps),
+        # Raw pipes carry no color metadata. Tag input as well as output to
+        # prevent an unintended matrix conversion during filter negotiation.
+        *colors,
         "-i",
         "pipe:0",
     ]
@@ -298,11 +306,6 @@ def encode_args(
         args += ["-i", str(source.resolve()), "-map", "0:v:0", "-map", "1:a:0", "-c:a", "copy"]
     else:
         args += ["-map", "0:v:0", "-an"]
-    colors = []
-    if pixel_format == "nv12":
-        colors += ["-color_range", "tv"]
-        if info.color_space != "unknown":
-            colors += ["-colorspace", info.color_space]
     return (
         args
         + codec_args(codec, hardware, bitrate, quality, software_av1)

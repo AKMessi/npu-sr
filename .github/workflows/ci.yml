@@ -54,6 +54,8 @@ jobs:
           npu-sr models download fsrcnn-x2
           npu-sr models download lapsrn-x2
           npu-sr models download dncnn-25
+          npu-sr models download quicksrnet-small-y-x2
+          npu-sr models download quicksrnet-medium-y-x2
       - name: Test CPU and failure paths (no NPU expected)
         run: python -m pytest -m "not npu and not video_hw"
       - name: Build and validate public artifacts
