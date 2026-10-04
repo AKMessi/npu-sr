@@ -195,7 +195,22 @@ def codec_args(codec: str, hardware: bool, bitrate: str, quality: int) -> list[s
     if not 0 <= quality <= 51:
         raise SRException("Quality must be between 0 and 51 (lower is better, software only).")
     if hardware:
-        return ["-c:v", codec + "_mf", "-hw_encoding", "1", "-b:v", bitrate, "-pix_fmt", "nv12"]
+        # Default vendor rate control dropped frames at scene cuts in local tests.
+        # FFmpeg documents camera_record as CFR; output is still verified afterward.
+        return [
+            "-c:v",
+            codec + "_mf",
+            "-hw_encoding",
+            "1",
+            "-rate_control",
+            "u_vbr",
+            "-scenario",
+            "camera_record",
+            "-b:v",
+            bitrate,
+            "-pix_fmt",
+            "nv12",
+        ]
     encoder = {"h264": "libx264", "hevc": "libx265", "av1": "libaom-av1"}[codec]
     extra = ["-preset", "veryfast"] if codec != "av1" else ["-cpu-used", "8", "-b:v", "0"]
     return ["-c:v", encoder, "-crf", str(quality), *extra, "-pix_fmt", "yuv420p"]

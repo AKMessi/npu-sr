@@ -77,6 +77,8 @@ def test_strict_hardware_command(codec, tmp_path):
         Path("source.mp4"), tmp_path / "result.mp4", info, 2, codec, True, "copy", "8M", 20
     )
     assert args[args.index("-hw_encoding") + 1] == "1"
+    assert args[args.index("-rate_control") + 1] == "u_vbr"
+    assert args[args.index("-scenario") + 1] == "camera_record"
     assert args[args.index("-c:v") + 1] == codec + "_mf"
     assert "1:a:0" in args and "copy" in args
     assert "128x96" in args and "30000/1001" in args

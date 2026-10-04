@@ -72,9 +72,13 @@ Video API research and implementation belong to the subsequent gated releases.
   and [FFmpeg's filter source](https://github.com/FFmpeg/FFmpeg/blob/master/libavfilter/vf_libvmaf.c)
   define distorted/reference order, sampling and model selection. Full release
   quality numbers come from actual delivered outputs, not the sanity score.
-- A direct FFmpeg H.264-MF bicubic transcode lost two display frames at a scene
-  cut (118 instead of 120, with a timestamp gap), despite an exit code of zero.
-  For the same clip, HEVC and AV1 delivered all 120. The quality suite therefore
-  compares AV1 hardware outputs. This is an observed path-specific failure;
-  its internal driver cause is not established. Project video output always
-  checks actual encoded-frame count and rejects such loss.
+- Default H.264-MF rate control lost two display frames at a scene cut (118
+  instead of 120), despite exit code zero. The application rejected the output.
+  Explicit unconstrained VBR preserved all 120; increasing the target to 40M
+  also worked, while `archive` scenario alone did not. Default AV1 rate control
+  measured 34.18 dB on the face clip; unconstrained VBR measured 39.23 dB on a
+  two-frame diagnostic sample (different sample counts, not headline scores).
+  The [current FFmpeg encoder source](https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/libavcodec/mfenc.c)
+  documents Qualcomm frame dropping and `camera_record` for CFR. The project
+  uses explicit `u_vbr` / `camera_record`, then validates encoded counts and
+  actual timestamp cadence. Final quality measurements use the explicit settings.

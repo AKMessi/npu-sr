@@ -93,6 +93,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
             complete=True,
             methodology=(
                 "delivered AV1 hardware output at 8M vs aligned FFV1 HR; "
+                "unconstrained VBR, camera_record scenario; "
                 "full-range Rec601 Y, shave2, every12th frame; temporal residual everyframe"
             ),
         )

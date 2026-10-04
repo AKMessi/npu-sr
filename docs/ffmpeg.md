@@ -26,6 +26,10 @@ distribution's native FFmpeg package. `--ffmpeg path/to/ffmpeg` or
 - Encode requests `h264_mf`, `hevc_mf` or `av1_mf` with `-hw_encoding 1`.
   FFmpeg's source enumerates hardware-only Media Foundation transforms for that
   option. The application requires successful output and the activated MFT name.
+  It explicitly selects `u_vbr` rate control and `camera_record` scenario.
+  Vendor defaults lost two frames at a scene cut and degraded AV1 quality locally.
+  Encoded counts and actual timestamp cadence are checked before publishing output;
+  bitrate is a VBR target, not a guaranteed maximum.
 - `hardware` fails on any missing proof. `auto` tries a real initialization probe,
   prints a software fallback when necessary, and never changes codecs midstream.
 - `software` is explicit: libx264, libx265 or libaom-av1. Availability depends on

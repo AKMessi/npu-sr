@@ -221,10 +221,18 @@ def process_video(
         if hardware_encode:
             codec_evidence["encode"] = encode_evidence(encoder.evidence_log)
         # Count the final encoded frames: passthrough must not skip or duplicate frames.
-        actual = probe(temporary, ffmpeg, count_frames=True)
+        try:
+            actual = probe(temporary, ffmpeg, count_frames=True)
+            encoded_frames = validate_cfr(temporary, ffmpeg, actual)
+        except SRException as exc:
+            raise SRException(
+                "Encoded output failed validation; no output published. "
+                "Try another codec or explicit software encode. " + str(exc)
+            ) from exc
         expected_size = (info.width * 2, info.height * 2)
         if (
             actual.frames != completed
+            or encoded_frames != completed
             or actual.fps != info.fps
             or (actual.width, actual.height) != expected_size
         ):
@@ -258,6 +266,8 @@ def process_video(
             "output": actual.public(),
             "frames_processed": completed,
             "input_timestamps_validated": True,
+            "output_timestamps_validated": True,
+            "hardware_rate_control": "u_vbr / camera_record" if hardware_encode else None,
             "dropped_frames": 0,
             "startup_ms": startup_ms,
             "neural_startup_ms": runtime.startup_ms,

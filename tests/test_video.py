@@ -84,6 +84,7 @@ def test_cpu_video_preserves_frames_audio_duration_and_order(video_source, tmp_p
         decoder.close()
     assert len(means) == 6 and np.all(np.diff(means) > 10)
     assert report["end_to_end_fps"] > 0
+    assert report["output_timestamps_validated"]
     from npu_sr.video_benchmark import evaluate_video
 
     quality = evaluate_video(output, output, ffmpeg, stride=2)
@@ -127,6 +128,22 @@ def test_output_collision_and_corrupt_input(video_source, tmp_path):
     bad.write_bytes(b"not a video")
     with pytest.raises(SRException, match="Video tool failed"):
         process_video(bad, tmp_path / "bad-result.mp4", cpu_settings(ffmpeg))
+
+
+def test_encoder_output_validation_failure_never_publishes(video_source, tmp_path, monkeypatch):
+    source, ffmpeg = video_source
+    from npu_sr.video import validate_cfr
+
+    def fail_output(path, tool, info):
+        if ".partial" in path.name:
+            raise SRException("Variable or reordered frame timestamps are unsupported.")
+        return validate_cfr(path, tool, info)
+
+    monkeypatch.setattr("npu_sr.video.validate_cfr", fail_output)
+    output = tmp_path / "invalid.mp4"
+    with pytest.raises(SRException, match="Encoded output failed validation"):
+        process_video(source, output, cpu_settings(ffmpeg))
+    assert not output.exists() and not list(tmp_path.glob("*.partial.mp4"))
 
 
 @pytest.mark.video_hw
