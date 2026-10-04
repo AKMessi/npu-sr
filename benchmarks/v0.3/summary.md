@@ -6,13 +6,15 @@ Measured on Snapdragon X Plus X1P-42-100, Windows ARM64 build 26200. Native FFmp
 
 Each row is the median of three complete 120-frame, four-second, 30 FPS face-clip trials. ESPCN-256, H.264 hardware encoding at target 8M with explicit unconstrained VBR / camera_record. Timing includes codec startup, transfers, preprocessing, inference, reconstruction and encoder flush; neural/provider startup and final output validation are separate. All outputs preserve 120 frames, 30 FPS, 2x size, expected duration and audio.
 
-| Input → output | CPU FPS | NPU FPS | NPU real-time factor | Battery condition |
-| --- | ---: | ---: | ---: | --- |
-| 640×360 → 1280×720 | 12.33 | 21.77 | 1.38 | 22%, before saver |
-| 960×540 → 1920×1080 | 5.51 | 5.59 | 5.36 | 21–20%, saver activated mid NPU trials |
-| 1280×720 → 2560×1440 | 1.68 | 2.83 | 10.59 | 19–18%, saver active |
+| Input → output | CPU FPS | NPU FPS | NPU real-time factor |
+| --- | ---: | ---: | ---: |
+| 640×360 → 1280×720 | 12.41 | 21.20 | 1.42 |
+| 960×540 → 1920×1080 | 5.41 | 9.06 | 3.31 |
+| 1280×720 → 2560×1440 | 2.93 | 4.42 | 6.79 |
 
-These battery conditions are not a controlled cross-resolution speed comparison. Balanced scheme stayed selected, but Windows reported energy saver after crossing 20%; it was not sampled per frame. The individual 540p NPU trials were 9.08, 5.45 and 5.59 FPS. All trials are retained; no fastest-trial headline. **No sustained real-time claim.**
+Final performance trials ran plugged in, Balanced scheme, with energy saver off. Individual trials and power state are retained. **No sustained real-time claim.**
+
+The supplementary video-performance-battery.json retains the earlier battery run. Saver activated at 20% during its 540p trials and reduced throughput; those mixed conditions are not used for the headline. Quality and image regression ran on battery as recorded, and do not support speed claims under AC power.
 
 The 540p hot path is dominated by validated neural calls and CPU RGB reconstruction. v0.4 must optimize those phases and demonstrate sustained end-to-end throughput. Standalone codec tests include CPU transfer/conversion and cannot be added together as a pipeline decomposition. Python peak working set is cumulative for the benchmark process and excludes codec children.
 
@@ -50,6 +52,6 @@ python scripts/run_video_benchmarks.py --trials 3
 python scripts/run_video_benchmarks.py --quality
 ```
 
-Use stable power conditions for a new comparison. The historical release was run on battery as disclosed. JSON identifies measured clean commit bd389bb and source hash; subsequent documentation/energy-saver reporting changes do not alter the enhancement or codec settings. Image regression uses three trials, five runs and three warmups at 256×160 across CPU/DirectML/NPU for ESPCN baseline/larger tiles, FSRCNN and DnCNN; it is not video throughput. v0.2 quality model data remains applicable because the models and image algorithms are unchanged.
+Use stable power conditions for a new comparison. Final video-performance JSON identifies clean commit b062566; quality/image JSON identifies clean commit bd389bb and source hash; subsequent documentation/energy-saver reporting changes do not alter the enhancement or codec settings. Image regression uses three trials, five runs and three warmups at 256×160 across CPU/DirectML/NPU for ESPCN baseline/larger tiles, FSRCNN and DnCNN; it is not video throughput. v0.2 quality model data remains applicable because the models and image algorithms are unchanged.
 
 Validation: 85 ordinary tests, 18 local NPU/video hardware tests, Ruff, wheel/sdist build, metadata and fresh wheel installation. Generic CI runs real software video integration without an NPU.

@@ -159,7 +159,9 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
     for argument in ("-version", "-hwaccels", "-encoders"):
         completed = run_tool([str(ffmpeg), "-hide_banner", argument])
         capabilities.append(completed.stdout.decode("utf-8", "replace"))
-    (reports / "ffmpeg-capabilities.txt").write_text("\n".join(capabilities), encoding="utf-8")
+    (reports / "ffmpeg-capabilities.txt").write_text(
+        "\n".join(capabilities).replace("\r\n", "\n"), encoding="utf-8", newline="\n"
+    )
 
 
 if __name__ == "__main__":

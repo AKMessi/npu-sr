@@ -14,10 +14,10 @@ An NPU is a processor designed to run neural networks efficiently.
 This project makes custom ONNX inference reproducible on Snapdragon laptops and
 provides a CPU comparison for future work on video enhancement.
 
-v0.3 complete-video result: **360p → 720p at 21.8 FPS NPU versus 12.3 FPS CPU**,
+v0.3 complete-video result: **360p → 720p at 21.2 FPS NPU versus 12.4 FPS CPU**,
 with verified hardware codecs, preserved frames/audio and three four-second trials.
-This is below 30 FPS and does not establish sustained real time. Battery saver
-activated during larger-resolution tests. Delivered quality improves on the face
+This is below 30 FPS and does not establish sustained real time. The final
+performance matrix ran plugged in with battery saver off. Delivered quality improves on the face
 clip but can regress on other content. See the [v0.3 results](benchmarks/v0.3/summary.md)
 for every trial, quality comparison and power-condition caveat.
 

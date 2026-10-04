@@ -1,9 +1,9 @@
 {
   "npu_sr_version": "0.3.0",
-  "timestamp": "2026-10-04T01:00:43.666559+00:00",
-  "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+  "timestamp": "2026-10-04T03:26:11.282506+00:00",
+  "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
   "working_tree_dirty": false,
-  "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+  "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
   "os": "Windows",
   "architecture": "ARM64",
   "python": "3.12.0",
@@ -19,9 +19,10 @@
   "power": "not measured",
   "background_processes": "uncontrolled",
   "power_state": {
-    "ac_line": "battery",
+    "ac_line": "plugged in",
     "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-    "battery_percent": 15
+    "battery_percent": 18,
+    "energy_saver": false
   },
   "qnn_catalog_package": "2.2480.53.0",
   "windows_build": 26200,

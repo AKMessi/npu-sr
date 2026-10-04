@@ -2,10 +2,10 @@
   "schema_version": 3,
   "environment": {
     "npu_sr_version": "0.3.0",
-    "timestamp": "2026-10-04T00:37:00.567452+00:00",
-    "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+    "timestamp": "2026-10-04T03:18:25.627971+00:00",
+    "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
     "working_tree_dirty": false,
-    "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+    "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
     "os": "Windows",
     "architecture": "ARM64",
     "python": "3.12.0",
@@ -21,11 +21,12 @@
     "power": "not measured",
     "background_processes": "uncontrolled",
     "power_state": {
-      "ac_line": "battery",
+      "ac_line": "plugged in",
       "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-      "battery_percent": 23
+      "battery_percent": 14,
+      "energy_saver": false
     },
-    "qnn_catalog_package": "2.2480.53.0",
+    "qnn_catalog_package": "unavailable",
     "windows_build": 26200,
     "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
     "npu_driver": "30.0.219.1000"
@@ -131,10 +132,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:37:14.008628+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:18:39.126767+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -150,11 +151,12 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 14,
+              "energy_saver": false
             },
-            "qnn_catalog_package": "2.2480.53.0",
+            "qnn_catalog_package": "unavailable",
             "windows_build": 26200,
             "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
             "npu_driver": "30.0.219.1000"
@@ -213,69 +215,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 538.9202999649569,
-          "neural_startup_ms": 2.4018000112846494,
+          "startup_ms": 525.650100025814,
+          "neural_startup_ms": 5.401700036600232,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 9.794767100014724,
-          "end_to_end_fps": 12.251439853002692,
-          "real_time_factor": 2.448691775003681,
-          "process_cpu_seconds": 37.734375,
+          "processing_seconds": 9.672252399963327,
+          "end_to_end_fps": 12.406624128259411,
+          "real_time_factor": 2.4180630999908317,
+          "process_cpu_seconds": 39.03125,
           "process_memory": {
-            "working_set_bytes": 163414016,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 145489920,
+            "peak_process_working_set_bytes": 185761792
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.359249996719882,
-              "mean_ms": 3.5642775027857474,
-              "p95_ms": 5.349970047245733,
-              "p99_ms": 6.549898014054635
+              "median_ms": 3.7258000229485333,
+              "mean_ms": 3.831392498977948,
+              "p95_ms": 5.421179952099919,
+              "p99_ms": 6.462511022109539
             },
             "tile_extraction_ms": {
-              "median_ms": 0.19654998322948813,
-              "mean_ms": 0.20118998606146002,
-              "p95_ms": 0.22996000479906797,
-              "p99_ms": 0.2825599838979543
+              "median_ms": 0.20655000116676092,
+              "mean_ms": 0.21324749298704168,
+              "p95_ms": 0.2581050415756181,
+              "p99_ms": 0.29322092654183507
             },
             "inference_ms": {
-              "median_ms": 51.432550069876015,
-              "mean_ms": 52.89705167815555,
-              "p95_ms": 63.50211999961175,
-              "p99_ms": 68.10459193424322
+              "median_ms": 47.82005000743084,
+              "mean_ms": 49.424560004263185,
+              "p95_ms": 60.38886000460479,
+              "p99_ms": 65.6455289880978
             },
             "stitching_ms": {
-              "median_ms": 0.815250095911324,
-              "mean_ms": 0.6916233386922007,
-              "p95_ms": 0.9309249755460768,
-              "p99_ms": 1.0430890374118462
+              "median_ms": 0.8801499498076737,
+              "mean_ms": 0.8083641727959426,
+              "p95_ms": 1.1647350154817104,
+              "p99_ms": 1.3710789487231523
             },
             "postprocessing_ms": {
-              "median_ms": 21.29895001417026,
-              "mean_ms": 21.52806333033368,
-              "p95_ms": 25.03770501643885,
-              "p99_ms": 25.654862008523196
+              "median_ms": 23.407550004776567,
+              "mean_ms": 23.813638331193943,
+              "p95_ms": 27.052035025553778,
+              "p99_ms": 28.725959974690344
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.16309999045915902,
-              "mean_ms": 0.49003999689981964,
-              "p95_ms": 0.3049399878364056,
-              "p99_ms": 0.3898780111921951
+              "median_ms": 0.17079999088309705,
+              "mean_ms": 0.3928208355015765,
+              "p95_ms": 0.3594349982449785,
+              "p99_ms": 0.41659699287265545
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.5230999959167093,
-              "mean_ms": 1.241648329111437,
-              "p95_ms": 0.7858899829443544,
-              "p99_ms": 0.9198689553886654
+              "median_ms": 0.5830499867442995,
+              "mean_ms": 1.0983825001555185,
+              "p95_ms": 0.9826950292335823,
+              "p99_ms": 1.1439439846435564
             },
             "frame_total_ms": {
-              "median_ms": 79.03424996766262,
-              "mean_ms": 81.21255249279784,
-              "p95_ms": 94.7658149554627,
-              "p99_ms": 118.74931698024744
+              "median_ms": 78.29469998250715,
+              "mean_ms": 80.17739249723188,
+              "p95_ms": 95.90891505649779,
+              "p99_ms": 103.92308398499154
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 18.90464531150725,
+          "inference_only_theoretical_fps": 20.232855890143355,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -284,10 +286,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:37:27.439387+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:18:51.650818+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -303,11 +305,12 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 14,
+              "energy_saver": false
             },
-            "qnn_catalog_package": "2.2480.53.0",
+            "qnn_catalog_package": "unavailable",
             "windows_build": 26200,
             "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
             "npu_driver": "30.0.219.1000"
@@ -366,69 +369,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 547.759999986738,
-          "neural_startup_ms": 2.302000008057803,
+          "startup_ms": 496.54850002843887,
+          "neural_startup_ms": 2.195900015067309,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 9.734953499981202,
-          "end_to_end_fps": 12.326715274010473,
-          "real_time_factor": 2.4337383749953005,
-          "process_cpu_seconds": 38.71875,
+          "processing_seconds": 8.89799420000054,
+          "end_to_end_fps": 13.486185459639064,
+          "real_time_factor": 2.224498550000135,
+          "process_cpu_seconds": 39.65625,
           "process_memory": {
-            "working_set_bytes": 163622912,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 146751488,
+            "peak_process_working_set_bytes": 187039744
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.3608500089030713,
-              "mean_ms": 3.4841075059375726,
-              "p95_ms": 5.188929988071322,
-              "p99_ms": 6.3458670454565445
+              "median_ms": 3.337000001920387,
+              "mean_ms": 3.4791833333050213,
+              "p95_ms": 5.494985016412102,
+              "p99_ms": 6.29384997242596
             },
             "tile_extraction_ms": {
-              "median_ms": 0.19800005247816443,
-              "mean_ms": 0.20288333762437105,
-              "p95_ms": 0.22533007722813636,
-              "p99_ms": 0.2728049457073212
+              "median_ms": 0.19470005645416677,
+              "mean_ms": 0.1955149908705304,
+              "p95_ms": 0.20843495440203696,
+              "p99_ms": 0.21363404404837638
             },
             "inference_ms": {
-              "median_ms": 51.55570004717447,
-              "mean_ms": 52.51009082809711,
-              "p95_ms": 64.97989501222037,
-              "p99_ms": 69.50652013823856
+              "median_ms": 44.71950003062375,
+              "mean_ms": 45.72847417051283,
+              "p95_ms": 52.3778549162671,
+              "p99_ms": 56.2998649966903
             },
             "stitching_ms": {
-              "median_ms": 0.7272500079125166,
-              "mean_ms": 0.6920016705407761,
-              "p95_ms": 0.9553099924232811,
-              "p99_ms": 1.0437899956014007
+              "median_ms": 0.5361499497666955,
+              "mean_ms": 0.6159649977538114,
+              "p95_ms": 0.8626099937828258,
+              "p99_ms": 0.9025739569915459
             },
             "postprocessing_ms": {
-              "median_ms": 21.544899995205924,
-              "mean_ms": 21.784610001001663,
-              "p95_ms": 25.082394984201528,
-              "p99_ms": 26.054050985258073
+              "median_ms": 21.712500019930303,
+              "mean_ms": 21.739824999531265,
+              "p95_ms": 24.968860027729534,
+              "p99_ms": 26.079258029931225
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.15904998872429132,
-              "mean_ms": 0.2508516685338691,
-              "p95_ms": 0.30322998063638806,
-              "p99_ms": 0.37957702123094367
+              "median_ms": 0.1551500172354281,
+              "mean_ms": 0.4410291667833614,
+              "p95_ms": 0.2923750114860013,
+              "p99_ms": 0.3243779891636223
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.5402000097092241,
-              "mean_ms": 1.2353716641276453,
-              "p95_ms": 0.7817750127287582,
-              "p99_ms": 0.9179540019249545
+              "median_ms": 0.5699500034097582,
+              "mean_ms": 0.9943933332882201,
+              "p95_ms": 0.7885800063377246,
+              "p99_ms": 0.8204340300289914
             },
             "frame_total_ms": {
-              "median_ms": 79.34654998825863,
-              "mean_ms": 80.74195082541944,
-              "p95_ms": 94.0531249740161,
-              "p99_ms": 96.48306698771194
+              "median_ms": 72.32434998149984,
+              "mean_ms": 73.7517566633566,
+              "p95_ms": 79.38592003483791,
+              "p99_ms": 105.20138995721938
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 19.043958679746172,
+          "inference_only_theoretical_fps": 21.868212708589162,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -437,10 +440,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:37:40.697026+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:19:05.564694+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -456,11 +459,12 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 14,
+              "energy_saver": false
             },
-            "qnn_catalog_package": "2.2480.53.0",
+            "qnn_catalog_package": "unavailable",
             "windows_build": 26200,
             "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
             "npu_driver": "30.0.219.1000"
@@ -519,76 +523,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 544.3607000051998,
-          "neural_startup_ms": 2.1570000099018216,
+          "startup_ms": 541.4354000240564,
+          "neural_startup_ms": 2.2572000161744654,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 9.585460999980569,
-          "end_to_end_fps": 12.51895970368491,
-          "real_time_factor": 2.396365249995142,
-          "process_cpu_seconds": 38.484375,
+          "processing_seconds": 10.046965199988335,
+          "end_to_end_fps": 11.943905210315581,
+          "real_time_factor": 2.511741299997084,
+          "process_cpu_seconds": 39.359375,
           "process_memory": {
-            "working_set_bytes": 163545088,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 146919424,
+            "peak_process_working_set_bytes": 188215296
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.2982499978970736,
-              "mean_ms": 3.43869833353286,
-              "p95_ms": 4.944505012826994,
-              "p99_ms": 6.153527990099976
+              "median_ms": 3.6635999858845025,
+              "mean_ms": 3.845844996491602,
+              "p95_ms": 5.937840006663464,
+              "p99_ms": 6.34209000156261
             },
             "tile_extraction_ms": {
-              "median_ms": 0.1968500146176666,
-              "mean_ms": 0.20286666258471087,
-              "p95_ms": 0.23376997269224373,
-              "p99_ms": 0.31210096203722076
+              "median_ms": 0.2248499949928373,
+              "mean_ms": 0.2346816710390461,
+              "p95_ms": 0.29428002308122814,
+              "p99_ms": 0.41821601625997573
             },
             "inference_ms": {
-              "median_ms": 50.165650056442246,
-              "mean_ms": 51.25369749924479,
-              "p95_ms": 60.421485066763125,
-              "p99_ms": 64.02886596799362
+              "median_ms": 50.46175007009879,
+              "mean_ms": 52.29564665642101,
+              "p95_ms": 67.69768500817008,
+              "p99_ms": 71.576423914521
             },
             "stitching_ms": {
-              "median_ms": 0.6352500640787184,
-              "mean_ms": 0.6568608364129128,
-              "p95_ms": 0.9203650173731148,
-              "p99_ms": 0.9913239924935624
+              "median_ms": 0.7867000240366906,
+              "mean_ms": 0.7439966677338816,
+              "p95_ms": 1.0469000466400757,
+              "p99_ms": 1.112848975462839
             },
             "postprocessing_ms": {
-              "median_ms": 21.631900017382577,
-              "mean_ms": 21.541965833845705,
-              "p95_ms": 24.133280033129267,
-              "p99_ms": 24.838999024941586
+              "median_ms": 23.874799982877448,
+              "mean_ms": 23.776623330680497,
+              "p95_ms": 27.19113997882232,
+              "p99_ms": 28.607650002813898
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.16124997637234628,
-              "mean_ms": 0.48362833719390136,
-              "p95_ms": 0.2900149935157969,
-              "p99_ms": 0.3257249994203449
+              "median_ms": 0.16769999638199806,
+              "mean_ms": 0.41870917242097977,
+              "p95_ms": 0.3038899856619537,
+              "p99_ms": 0.3480199945624918
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.5602999881375581,
-              "mean_ms": 1.3629033351511073,
-              "p95_ms": 0.7989250239916146,
-              "p99_ms": 0.9117910242639483
+              "median_ms": 0.5194999976083636,
+              "mean_ms": 1.2836858363395247,
+              "p95_ms": 0.7751550176180899,
+              "p99_ms": 0.8516889769816771
             },
             "frame_total_ms": {
-              "median_ms": 77.27460001478903,
-              "mean_ms": 79.51867333661842,
-              "p95_ms": 89.6447600069223,
-              "p99_ms": 113.34737103432423
+              "median_ms": 81.38789999065921,
+              "mean_ms": 83.18459833438585,
+              "p95_ms": 98.93336993409321,
+              "p99_ms": 108.18005901353901
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 19.510787490302235,
+          "inference_only_theoretical_fps": 19.122050570861752,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 12.326715274010473,
-      "median_trial_real_time_factor": 2.4337383749953005,
+      "median_trial_end_to_end_fps": 12.406624128259411,
+      "median_trial_real_time_factor": 2.4180630999908317,
       "aggregation": "median across complete measured trials; startup separate"
     },
     {
@@ -604,10 +608,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:37:50.146812+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:19:18.017789+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -623,9 +627,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 15,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -695,69 +700,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 704.0589000098407,
-          "neural_startup_ms": 191.7263999930583,
+          "startup_ms": 3405.024300038349,
+          "neural_startup_ms": 2868.6747000319883,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 5.588812100002542,
-          "end_to_end_fps": 21.471467970795693,
-          "real_time_factor": 1.3972030250006355,
+          "processing_seconds": 5.77355839998927,
+          "end_to_end_fps": 20.78440914362675,
+          "real_time_factor": 1.4433895999973174,
           "process_cpu_seconds": 3.5,
           "process_memory": {
-            "working_set_bytes": 122482688,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 122556416,
+            "peak_process_working_set_bytes": 188215296
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.262400015955791,
-              "mean_ms": 3.2803533351398073,
-              "p95_ms": 4.548589981277473,
-              "p99_ms": 5.178216983913444
+              "median_ms": 3.3520999713800848,
+              "mean_ms": 3.4618791643879376,
+              "p95_ms": 5.107825002050959,
+              "p99_ms": 5.9433680126676345
             },
             "tile_extraction_ms": {
-              "median_ms": 0.18594998982734978,
-              "mean_ms": 0.18547250122840828,
-              "p95_ms": 0.22124495008029044,
-              "p99_ms": 0.2422730042599142
+              "median_ms": 0.201850023586303,
+              "mean_ms": 0.2107408334268257,
+              "p95_ms": 0.2700600161915645,
+              "p99_ms": 0.33947004587389534
             },
             "inference_ms": {
-              "median_ms": 17.749349994119257,
-              "mean_ms": 17.825823326711543,
-              "p95_ms": 18.609089963138103,
-              "p99_ms": 18.837759971502237
+              "median_ms": 17.764050018740818,
+              "mean_ms": 17.821836665583152,
+              "p95_ms": 18.516249977983534,
+              "p99_ms": 18.952094024280086
             },
             "stitching_ms": {
-              "median_ms": 0.6809500337112695,
-              "mean_ms": 0.6606808431873409,
-              "p95_ms": 0.9407498844666407,
-              "p99_ms": 1.1058680049609395
+              "median_ms": 0.8752499707043171,
+              "mean_ms": 0.7795541770368194,
+              "p95_ms": 1.1131050327094272,
+              "p99_ms": 1.3433170114876705
             },
             "postprocessing_ms": {
-              "median_ms": 21.114150003995746,
-              "mean_ms": 21.405946666103166,
-              "p95_ms": 24.953600025037304,
-              "p99_ms": 26.88839200010989
+              "median_ms": 22.626849968219176,
+              "mean_ms": 22.821108333785862,
+              "p95_ms": 26.188949975767173,
+              "p99_ms": 27.442483008489944
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.14874999760650098,
-              "mean_ms": 1.0180999956598196,
-              "p95_ms": 0.28710997430607677,
-              "p99_ms": 0.3614309552358464
+              "median_ms": 0.17584997112862766,
+              "mean_ms": 0.8047858330731591,
+              "p95_ms": 0.3322199656395241,
+              "p99_ms": 0.4291280190227553
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.46544999349862337,
-              "mean_ms": 1.2674566663918085,
-              "p95_ms": 0.6705799722112714,
-              "p99_ms": 1.1832750070607292
+              "median_ms": 0.5052500055171549,
+              "mean_ms": 1.2746466663278018,
+              "p95_ms": 0.8143350278260186,
+              "p99_ms": 1.130209018592723
             },
             "frame_total_ms": {
-              "median_ms": 44.49444997590035,
-              "mean_ms": 46.181851666672934,
-              "p95_ms": 49.50672501290683,
-              "p99_ms": 118.97964696108849
+              "median_ms": 46.131450013490394,
+              "mean_ms": 47.699869166050725,
+              "p95_ms": 50.77580000506714,
+              "p99_ms": 111.57814497884846
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 56.09839061411124,
+          "inference_only_theoretical_fps": 56.110939560520244,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -766,10 +771,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:37:59.560185+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:19:27.654268+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -785,9 +790,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 15,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -857,69 +863,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 717.2713999752887,
-          "neural_startup_ms": 191.85360003029928,
+          "startup_ms": 719.3693000008352,
+          "neural_startup_ms": 195.0580999837257,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 5.511179999972228,
-          "end_to_end_fps": 21.77392137447964,
-          "real_time_factor": 1.377794999993057,
-          "process_cpu_seconds": 3.296875,
+          "processing_seconds": 5.66053130000364,
+          "end_to_end_fps": 21.199423453399653,
+          "real_time_factor": 1.41513282500091,
+          "process_cpu_seconds": 3.390625,
           "process_memory": {
-            "working_set_bytes": 122576896,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 122826752,
+            "peak_process_working_set_bytes": 188215296
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.0602000188082457,
-              "mean_ms": 3.2004766675527208,
-              "p95_ms": 4.612699965946376,
-              "p99_ms": 5.498750985716471
+              "median_ms": 3.2562999986112118,
+              "mean_ms": 3.4044541656233682,
+              "p95_ms": 4.985424995538779,
+              "p99_ms": 6.016205003252253
             },
             "tile_extraction_ms": {
-              "median_ms": 0.1824999926611781,
-              "mean_ms": 0.18868500337703153,
-              "p95_ms": 0.23709010856691745,
-              "p99_ms": 0.30366903112735605
+              "median_ms": 0.1936500775627792,
+              "mean_ms": 0.2055616772850044,
+              "p95_ms": 0.2703600097447633,
+              "p99_ms": 0.37723497836850606
             },
             "inference_ms": {
-              "median_ms": 17.830850061727688,
-              "mean_ms": 17.899413336029586,
-              "p95_ms": 18.62505498866085,
-              "p99_ms": 18.84962095413357
+              "median_ms": 17.759600013960153,
+              "mean_ms": 17.803254164755344,
+              "p95_ms": 18.50362501863856,
+              "p99_ms": 18.89489102701191
             },
             "stitching_ms": {
-              "median_ms": 0.6493499677162617,
-              "mean_ms": 0.6588508321632011,
-              "p95_ms": 0.9418550063855946,
-              "p99_ms": 1.2311639473773541
+              "median_ms": 0.7607000588905066,
+              "mean_ms": 0.7169124903157353,
+              "p95_ms": 1.0441849182825536,
+              "p99_ms": 1.1801789503078908
             },
             "postprocessing_ms": {
-              "median_ms": 20.61264999792911,
-              "mean_ms": 21.064165833134513,
-              "p95_ms": 24.97911997779738,
-              "p99_ms": 26.53567299246788
+              "median_ms": 21.84610001859255,
+              "mean_ms": 22.072892501212966,
+              "p95_ms": 25.083659993833862,
+              "p99_ms": 28.27717498352286
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.14504999853670597,
-              "mean_ms": 0.7682875031605363,
-              "p95_ms": 0.3064299788093192,
-              "p99_ms": 0.4743249999592082
+              "median_ms": 0.1715999678708613,
+              "mean_ms": 0.8021991661128899,
+              "p95_ms": 0.2753749926341697,
+              "p99_ms": 0.38710097607690847
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.4694499948527664,
-              "mean_ms": 1.2387383302363257,
-              "p95_ms": 0.6789849867345765,
-              "p99_ms": 0.750233994331211
+              "median_ms": 0.4899499472230673,
+              "mean_ms": 1.2609633296960965,
+              "p95_ms": 0.8507900056429206,
+              "p99_ms": 0.9870580153074117
             },
             "frame_total_ms": {
-              "median_ms": 43.83554999367334,
-              "mean_ms": 45.52554999827407,
-              "p95_ms": 48.92269999545533,
-              "p99_ms": 107.53642098337893
+              "median_ms": 44.977900019148365,
+              "mean_ms": 46.79392166581238,
+              "p95_ms": 50.11559996637516,
+              "p99_ms": 112.736429051147
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 55.86775282668667,
+          "inference_only_theoretical_fps": 56.1695064703213,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -928,10 +934,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:38:08.866503+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:19:36.895191+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -947,9 +953,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 15,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1019,76 +1026,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 709.4515999779105,
-          "neural_startup_ms": 188.09489998966455,
+          "startup_ms": 696.086700016167,
+          "neural_startup_ms": 191.72589998925105,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 5.407716099987738,
-          "end_to_end_fps": 22.19051403239754,
-          "real_time_factor": 1.3519290249969345,
-          "process_cpu_seconds": 3.265625,
+          "processing_seconds": 5.41277519997675,
+          "end_to_end_fps": 22.169773464916013,
+          "real_time_factor": 1.3531937999941874,
+          "process_cpu_seconds": 3.171875,
           "process_memory": {
-            "working_set_bytes": 123416576,
-            "peak_process_working_set_bytes": 225636352
+            "working_set_bytes": 122765312,
+            "peak_process_working_set_bytes": 188215296
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 3.0236000020522624,
-              "mean_ms": 3.200507498695515,
-              "p95_ms": 4.783444979693741,
-              "p99_ms": 5.523114964598791
+              "median_ms": 3.036000009160489,
+              "mean_ms": 3.185815833179125,
+              "p95_ms": 4.536800031200982,
+              "p99_ms": 6.268268973217347
             },
             "tile_extraction_ms": {
-              "median_ms": 0.17454996122978628,
-              "mean_ms": 0.17887167390047884,
-              "p95_ms": 0.21410495101008564,
-              "p99_ms": 0.24606104416307067
+              "median_ms": 0.17520005349069834,
+              "mean_ms": 0.17933333923186487,
+              "p95_ms": 0.21380499529186636,
+              "p99_ms": 0.2288911130744964
             },
             "inference_ms": {
-              "median_ms": 17.6297000143677,
-              "mean_ms": 17.733721669355873,
-              "p95_ms": 18.512910074787214,
-              "p99_ms": 18.988136979169212
+              "median_ms": 17.51594996312633,
+              "mean_ms": 17.594172502867877,
+              "p95_ms": 18.41586994123645,
+              "p99_ms": 18.67680497642141
             },
             "stitching_ms": {
-              "median_ms": 0.5615999980363995,
-              "mean_ms": 0.6251716525487913,
-              "p95_ms": 0.8802800643024966,
-              "p99_ms": 0.9678330353926867
+              "median_ms": 0.5328999541234225,
+              "mean_ms": 0.6132216634190021,
+              "p95_ms": 0.8977950084954499,
+              "p99_ms": 1.0424629104090857
             },
             "postprocessing_ms": {
-              "median_ms": 20.16685000853613,
-              "mean_ms": 20.327781667583622,
-              "p95_ms": 23.238190030679107,
-              "p99_ms": 24.558315984904766
+              "median_ms": 20.416549989022315,
+              "mean_ms": 20.505320002848748,
+              "p95_ms": 23.89143499021884,
+              "p99_ms": 25.516542948316786
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.1453000004403293,
-              "mean_ms": 0.90034750464838,
-              "p95_ms": 0.2608699491247535,
-              "p99_ms": 0.42814998363610374
+              "median_ms": 0.14585000462830067,
+              "mean_ms": 0.698900836869143,
+              "p95_ms": 0.24651000858284527,
+              "p99_ms": 0.46380300831515364
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 0.47149998135864735,
-              "mean_ms": 1.1868549991049804,
-              "p95_ms": 0.6723950267769394,
-              "p99_ms": 1.0023430205183106
+              "median_ms": 0.6387000030372292,
+              "mean_ms": 1.4059949957299978,
+              "p95_ms": 0.859849966946058,
+              "p99_ms": 0.892865999485366
             },
             "frame_total_ms": {
-              "median_ms": 42.954649979947135,
-              "mean_ms": 44.6614200011633,
-              "p95_ms": 46.90669996780343,
-              "p99_ms": 112.18488804122916
+              "median_ms": 43.20014998666011,
+              "mean_ms": 44.70963249380778,
+              "p95_ms": 47.90617998223752,
+              "p99_ms": 102.37685599538977
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 56.38974258449169,
+          "inference_only_theoretical_fps": 56.83700099206135,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 21.77392137447964,
-      "median_trial_real_time_factor": 1.377794999993057,
+      "median_trial_end_to_end_fps": 21.199423453399653,
+      "median_trial_real_time_factor": 1.41513282500091,
       "aggregation": "median across complete measured trials; startup separate"
     },
     {
@@ -1104,10 +1111,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:38:41.654028+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:20:08.292222+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1123,9 +1130,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 22
+              "battery_percent": 15,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1186,69 +1194,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 749.041999981273,
-          "neural_startup_ms": 2.5621000095270574,
+          "startup_ms": 743.6137000331655,
+          "neural_startup_ms": 2.5664999848231673,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 23.46981159999268,
-          "end_to_end_fps": 5.112951141032483,
-          "real_time_factor": 5.86745289999817,
-          "process_cpu_seconds": 80.21875,
+          "processing_seconds": 22.193024500040337,
+          "end_to_end_fps": 5.407104380918513,
+          "real_time_factor": 5.548256125010084,
+          "process_cpu_seconds": 79.390625,
           "process_memory": {
-            "working_set_bytes": 183517184,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 183738368,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 10.186799976509064,
-              "mean_ms": 10.26857999919836,
-              "p95_ms": 14.353149989619851,
-              "p99_ms": 15.441555009456353
+              "median_ms": 8.52874998236075,
+              "mean_ms": 9.100814166110164,
+              "p95_ms": 13.402540012612006,
+              "p99_ms": 14.553483002237046
             },
             "tile_extraction_ms": {
-              "median_ms": 0.6249500729609281,
-              "mean_ms": 0.6367608347015145,
-              "p95_ms": 0.7866299943998456,
-              "p99_ms": 0.9056039410643281
+              "median_ms": 0.5536500830203295,
+              "mean_ms": 0.5630349793743031,
+              "p95_ms": 0.6249048630706965,
+              "p99_ms": 0.7197930093389004
             },
             "inference_ms": {
-              "median_ms": 114.84070008737035,
-              "mean_ms": 116.24349998892285,
-              "p95_ms": 142.2081500000786,
-              "p99_ms": 148.78301084041595
+              "median_ms": 110.34089993336238,
+              "mean_ms": 112.81278751121135,
+              "p95_ms": 131.25928004446905,
+              "p99_ms": 135.55471404804848
             },
             "stitching_ms": {
-              "median_ms": 2.6059499359689653,
-              "mean_ms": 2.3044908351342506,
-              "p95_ms": 2.9454299598000944,
-              "p99_ms": 3.057295071193949
+              "median_ms": 2.209500002209097,
+              "mean_ms": 1.9067583401920274,
+              "p95_ms": 2.7297250635456294,
+              "p99_ms": 2.798048084951006
             },
             "postprocessing_ms": {
-              "median_ms": 60.38880001869984,
-              "mean_ms": 61.48780166549841,
-              "p95_ms": 70.72895998135209,
-              "p99_ms": 75.7647449983051
+              "median_ms": 56.41545000253245,
+              "mean_ms": 56.1809866616386,
+              "p95_ms": 63.97650500875898,
+              "p99_ms": 67.96813399007078
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.3825000021606684,
-              "mean_ms": 0.4332925032940693,
-              "p95_ms": 0.6839000212494284,
-              "p99_ms": 0.772075011045672
+              "median_ms": 0.35955000203102827,
+              "mean_ms": 0.41465000006913516,
+              "p95_ms": 0.6514199572848156,
+              "p99_ms": 0.748517003376037
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.1458500230219215,
-              "mean_ms": 2.108968333535207,
-              "p95_ms": 1.9288149982457978,
-              "p99_ms": 2.7627820079214884
+              "median_ms": 1.2027500197291374,
+              "mean_ms": 2.0117266709955097,
+              "p95_ms": 2.1808150078868493,
+              "p99_ms": 2.4956769886193797
             },
             "frame_total_ms": {
-              "median_ms": 195.32404997153208,
-              "mean_ms": 194.90841166552855,
-              "p95_ms": 226.63102497172076,
-              "p99_ms": 233.46022202458698
+              "median_ms": 184.0832500020042,
+              "mean_ms": 184.30209416837897,
+              "p95_ms": 205.3877899888903,
+              "p99_ms": 213.37574099015913
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 8.60263154580938,
+          "inference_only_theoretical_fps": 8.864243336781477,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -1257,10 +1265,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:39:07.096867+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:20:34.858977+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1276,9 +1284,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 21
+              "battery_percent": 15,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1339,69 +1348,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 747.3057999741286,
-          "neural_startup_ms": 2.4284999817609787,
+          "startup_ms": 742.4961000215262,
+          "neural_startup_ms": 2.414399990811944,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 21.03468799998518,
-          "end_to_end_fps": 5.704862368297763,
-          "real_time_factor": 5.258671999996295,
-          "process_cpu_seconds": 77.9375,
+          "processing_seconds": 22.194179099984467,
+          "end_to_end_fps": 5.406823089036169,
+          "real_time_factor": 5.548544774996117,
+          "process_cpu_seconds": 78.984375,
           "process_memory": {
-            "working_set_bytes": 183361536,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 183635968,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 8.649250026792288,
-              "mean_ms": 8.981859166912423,
-              "p95_ms": 12.856175017077476,
-              "p99_ms": 13.56304899265524
+              "median_ms": 8.712050010217354,
+              "mean_ms": 9.037303334237853,
+              "p95_ms": 12.886769970646128,
+              "p99_ms": 13.897078984300608
             },
             "tile_extraction_ms": {
-              "median_ms": 0.5596500413957983,
-              "mean_ms": 0.5628233363192218,
-              "p95_ms": 0.6274400046095252,
-              "p99_ms": 0.6613780080806464
+              "median_ms": 0.551699980860576,
+              "mean_ms": 0.5636708456828879,
+              "p95_ms": 0.6106599437771365,
+              "p99_ms": 0.7586290384642783
             },
             "inference_ms": {
-              "median_ms": 102.49879994080402,
-              "mean_ms": 104.00866916994953,
-              "p95_ms": 120.3485448786523,
-              "p99_ms": 126.52689388371073
+              "median_ms": 112.04764991998672,
+              "mean_ms": 113.97876165962468,
+              "p95_ms": 134.40522497694474,
+              "p99_ms": 137.3556620196905
             },
             "stitching_ms": {
-              "median_ms": 2.3311000841204077,
-              "mean_ms": 2.0608816586900502,
-              "p95_ms": 2.6573849172564223,
-              "p99_ms": 2.7422009367728606
+              "median_ms": 2.3197500267997384,
+              "mean_ms": 2.0574558361355835,
+              "p95_ms": 2.5868399621685967,
+              "p99_ms": 2.768057981156744
             },
             "postprocessing_ms": {
-              "median_ms": 55.54709999705665,
-              "mean_ms": 55.186211664113216,
-              "p95_ms": 62.544190025073476,
-              "p99_ms": 63.889037979533896
+              "median_ms": 55.485949997091666,
+              "mean_ms": 54.91070416755974,
+              "p95_ms": 63.57518999138847,
+              "p99_ms": 67.95578796241898
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.35509999725036323,
-              "mean_ms": 0.39863166409001377,
-              "p95_ms": 0.5791249830508605,
-              "p99_ms": 0.7152510050218553
+              "median_ms": 0.35325001226738095,
+              "mean_ms": 0.40462166847040254,
+              "p95_ms": 0.6393950345227495,
+              "p99_ms": 0.6928640371188521
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.106799958506599,
-              "mean_ms": 2.1338833311650283,
-              "p95_ms": 1.9929950329242274,
-              "p99_ms": 2.499362007365563
+              "median_ms": 1.2617499742191285,
+              "mean_ms": 2.0518891644314863,
+              "p95_ms": 2.088279993040487,
+              "p99_ms": 2.2326490451814607
             },
             "frame_total_ms": {
-              "median_ms": 173.6506000161171,
-              "mean_ms": 174.65706583025167,
-              "p95_ms": 194.18116995948367,
-              "p99_ms": 206.8286650266964
+              "median_ms": 185.411899961764,
+              "mean_ms": 184.32061999871317,
+              "p95_ms": 204.2148699372774,
+              "p99_ms": 215.1503060216783
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 9.614583168697276,
+          "inference_only_theoretical_fps": 8.773564350403321,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -1410,10 +1419,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:39:33.228497+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:21:02.692841+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1429,9 +1438,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 21
+              "battery_percent": 16,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1492,76 +1502,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 749.336700013373,
-          "neural_startup_ms": 2.4959000293165445,
+          "startup_ms": 736.1646000063047,
+          "neural_startup_ms": 2.3286999785341322,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 21.780732000013813,
-          "end_to_end_fps": 5.509456706961175,
-          "real_time_factor": 5.445183000003453,
-          "process_cpu_seconds": 78.046875,
+          "processing_seconds": 23.407195700041484,
+          "end_to_end_fps": 5.126628646070034,
+          "real_time_factor": 5.851798925010371,
+          "process_cpu_seconds": 82.203125,
           "process_memory": {
-            "working_set_bytes": 183476224,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 183574528,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 9.835700009716675,
-              "mean_ms": 9.782985834074983,
-              "p95_ms": 11.69202501187101,
-              "p99_ms": 12.71748201455921
+              "median_ms": 9.464799979468808,
+              "mean_ms": 9.975304165467,
+              "p95_ms": 14.838209984009154,
+              "p99_ms": 15.54722199740354
             },
             "tile_extraction_ms": {
-              "median_ms": 0.5524499283637851,
-              "mean_ms": 0.559374175403112,
-              "p95_ms": 0.6170950946398079,
-              "p99_ms": 0.656334919622168
+              "median_ms": 0.5965499149169773,
+              "mean_ms": 0.59983332369787,
+              "p95_ms": 0.6851349753560498,
+              "p99_ms": 0.7404448505258188
             },
             "inference_ms": {
-              "median_ms": 105.33890000078827,
-              "mean_ms": 106.05481499563514,
-              "p95_ms": 119.59566008008551,
-              "p99_ms": 135.1829089911189
+              "median_ms": 112.79614988598041,
+              "mean_ms": 116.66451749964229,
+              "p95_ms": 149.44018991664052,
+              "p99_ms": 158.4332959650783
             },
             "stitching_ms": {
-              "median_ms": 2.403350023087114,
-              "mean_ms": 2.3525933177249194,
-              "p95_ms": 2.6835850614588708,
-              "p99_ms": 2.7310219319770113
+              "median_ms": 2.3518000380136073,
+              "mean_ms": 2.116330008720979,
+              "p95_ms": 2.823765022912994,
+              "p99_ms": 2.8573619766393676
             },
             "postprocessing_ms": {
-              "median_ms": 57.72755001089536,
-              "mean_ms": 57.322370831874046,
-              "p95_ms": 61.21032499941066,
-              "p99_ms": 62.734254977549426
+              "median_ms": 59.89315002807416,
+              "mean_ms": 60.29426916696442,
+              "p95_ms": 71.3257550203707,
+              "p99_ms": 76.08994798909407
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.34149998100474477,
-              "mean_ms": 0.4057850029009084,
-              "p95_ms": 0.6086499721277505,
-              "p99_ms": 0.694323045318015
+              "median_ms": 0.3653000167105347,
+              "mean_ms": 0.4209116649387094,
+              "p95_ms": 0.6620700209168716,
+              "p99_ms": 0.8416199916973711
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.4012500178068876,
-              "mean_ms": 2.230976667973058,
-              "p95_ms": 2.293410000856966,
-              "p99_ms": 2.5185930024599656
+              "median_ms": 1.3084000092931092,
+              "mean_ms": 2.227904169315783,
+              "p95_ms": 2.02956996508874,
+              "p99_ms": 2.487328024581075
             },
             "frame_total_ms": {
-              "median_ms": 180.04094998468645,
-              "mean_ms": 180.74531499975515,
-              "p95_ms": 196.5832949586911,
-              "p99_ms": 214.94074302201625
+              "median_ms": 190.22785004926845,
+              "mean_ms": 193.77456750031948,
+              "p95_ms": 228.69849007402078,
+              "p99_ms": 254.55509706109297
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 9.42908627053997,
+          "inference_only_theoretical_fps": 8.571586472322796,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 5.509456706961175,
-      "median_trial_real_time_factor": 5.445183000003453,
+      "median_trial_end_to_end_fps": 5.406823089036169,
+      "median_trial_real_time_factor": 5.548544774996117,
       "aggregation": "median across complete measured trials; startup separate"
     },
     {
@@ -1577,10 +1587,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:39:50.966517+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:21:20.338814+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1596,9 +1606,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 21
+              "battery_percent": 16,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1668,69 +1679,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 907.9061999800615,
-          "neural_startup_ms": 191.59880001097918,
+          "startup_ms": 987.8167000133544,
+          "neural_startup_ms": 201.18460000958294,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 13.214022399974056,
-          "end_to_end_fps": 9.081262038744207,
-          "real_time_factor": 3.303505599993514,
-          "process_cpu_seconds": 8.890625,
+          "processing_seconds": 13.04236810002476,
+          "end_to_end_fps": 9.200783100100677,
+          "real_time_factor": 3.26059202500619,
+          "process_cpu_seconds": 8.859375,
           "process_memory": {
-            "working_set_bytes": 143814656,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 143765504,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 9.023099963087589,
-              "mean_ms": 9.27682000231774,
-              "p95_ms": 13.393609985359944,
-              "p99_ms": 14.90410099970177
+              "median_ms": 9.163999988231808,
+              "mean_ms": 9.325801667485697,
+              "p95_ms": 13.219935007509775,
+              "p99_ms": 15.448324983590286
             },
             "tile_extraction_ms": {
-              "median_ms": 0.539000058779493,
-              "mean_ms": 0.5549033283993291,
-              "p95_ms": 0.7478250976419076,
-              "p99_ms": 0.8180201170034707
+              "median_ms": 0.5286499799694866,
+              "mean_ms": 0.5326341663021594,
+              "p95_ms": 0.5988199613057077,
+              "p99_ms": 0.6343980575911701
             },
             "inference_ms": {
-              "median_ms": 35.54345003794879,
-              "mean_ms": 35.67176583407369,
-              "p95_ms": 36.84433009184431,
-              "p99_ms": 39.04022492875811
+              "median_ms": 35.23194999434054,
+              "mean_ms": 35.40970834098213,
+              "p95_ms": 36.444325020420365,
+              "p99_ms": 37.601880938746035
             },
             "stitching_ms": {
-              "median_ms": 2.22669992945157,
-              "mean_ms": 1.998629997736619,
-              "p95_ms": 2.7003699564374983,
-              "p99_ms": 2.8836069628596306
+              "median_ms": 2.236899978015572,
+              "mean_ms": 2.0157074953507013,
+              "p95_ms": 2.790739998454228,
+              "p99_ms": 2.8367409692145884
             },
             "postprocessing_ms": {
-              "median_ms": 57.0208000135608,
-              "mean_ms": 58.14437333804866,
-              "p95_ms": 69.05345002305694,
-              "p99_ms": 72.94964800588788
+              "median_ms": 56.76609999500215,
+              "mean_ms": 56.74692166843064,
+              "p95_ms": 66.70964500517584,
+              "p99_ms": 70.05925902572926
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.3524000057950616,
-              "mean_ms": 0.3743108342556904,
-              "p95_ms": 0.5623899720376357,
-              "p99_ms": 0.6004069844493642
+              "median_ms": 0.34314999356865883,
+              "mean_ms": 0.376932500997403,
+              "p95_ms": 0.5601700046099721,
+              "p99_ms": 0.6468670221511276
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.058999972883612,
-              "mean_ms": 2.0475783307726183,
-              "p95_ms": 2.319200013880618,
-              "p99_ms": 3.0554570053936927
+              "median_ms": 1.274050009669736,
+              "mean_ms": 2.230701664908944,
+              "p95_ms": 1.944829963031225,
+              "p99_ms": 2.655709033133463
             },
             "frame_total_ms": {
-              "median_ms": 107.80314999283291,
-              "mean_ms": 109.50152249570237,
-              "p95_ms": 122.96952506003436,
-              "p99_ms": 130.39066400495358
+              "median_ms": 106.47935001179576,
+              "mean_ms": 108.05447666740899,
+              "p95_ms": 119.2054550134344,
+              "p99_ms": 122.47975605656393
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 28.033375321296806,
+          "inference_only_theoretical_fps": 28.240842606507158,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -1739,10 +1750,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:40:19.383452+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:21:38.079529+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1758,9 +1769,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 20
+              "battery_percent": 16,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1830,69 +1842,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 916.715600003954,
-          "neural_startup_ms": 192.87599995732307,
+          "startup_ms": 900.0544999726117,
+          "neural_startup_ms": 190.6903999624774,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 22.019789099984337,
-          "end_to_end_fps": 5.44964347547204,
-          "real_time_factor": 5.504947274996084,
-          "process_cpu_seconds": 16.21875,
+          "processing_seconds": 13.245843600016087,
+          "end_to_end_fps": 9.059445636203515,
+          "real_time_factor": 3.311460900004022,
+          "process_cpu_seconds": 8.859375,
           "process_memory": {
-            "working_set_bytes": 143347712,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 143880192,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 15.413499990245327,
-              "mean_ms": 16.359120833415847,
-              "p95_ms": 25.64950000378303,
-              "p99_ms": 30.105788013897836
+              "median_ms": 8.649199997307733,
+              "mean_ms": 9.385030829677513,
+              "p95_ms": 13.899204999324866,
+              "p99_ms": 15.830113966367211
             },
             "tile_extraction_ms": {
-              "median_ms": 0.7098499627318233,
-              "mean_ms": 0.7740866703291734,
-              "p95_ms": 0.9121000039158388,
-              "p99_ms": 2.590393064892854
+              "median_ms": 0.5542000290006399,
+              "mean_ms": 0.5657474748052967,
+              "p95_ms": 0.7272348913829774,
+              "p99_ms": 0.8225268463138492
             },
             "inference_ms": {
-              "median_ms": 39.16190008749254,
-              "mean_ms": 39.89781831332948,
-              "p95_ms": 42.95019488490652,
-              "p99_ms": 46.917259996407665
+              "median_ms": 35.17415007809177,
+              "mean_ms": 35.22060667940726,
+              "p95_ms": 36.12840006244369,
+              "p99_ms": 36.53815295314416
             },
             "stitching_ms": {
-              "median_ms": 3.5953500191681087,
-              "mean_ms": 3.277206681862784,
-              "p95_ms": 5.136840042541734,
-              "p99_ms": 6.620926983305254
+              "median_ms": 2.2684500145260245,
+              "mean_ms": 2.0104383380385116,
+              "p95_ms": 2.7707451314199716,
+              "p99_ms": 2.999781046528369
             },
             "postprocessing_ms": {
-              "median_ms": 111.7058499949053,
-              "mean_ms": 115.20629000054517,
-              "p95_ms": 152.9198149801232,
-              "p99_ms": 189.64143902878283
+              "median_ms": 58.46309999469668,
+              "mean_ms": 58.51069666678086,
+              "p95_ms": 66.42217996995896,
+              "p99_ms": 71.09511699585711
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.44010000419802964,
-              "mean_ms": 1.4094191676122136,
-              "p95_ms": 1.1075400165282188,
-              "p99_ms": 2.5800050044199487
+              "median_ms": 0.3653500461950898,
+              "mean_ms": 0.4050416687581067,
+              "p95_ms": 0.6007049756590277,
+              "p99_ms": 0.7464519987115638
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.8903500167652965,
-              "mean_ms": 2.88778167256775,
-              "p95_ms": 3.662370011443272,
-              "p99_ms": 5.1640290196519345
+              "median_ms": 1.2709000147879124,
+              "mean_ms": 2.1636041696183383,
+              "p95_ms": 1.9189000013284385,
+              "p99_ms": 2.0072430197615176
             },
             "frame_total_ms": {
-              "median_ms": 179.411400022218,
-              "mean_ms": 182.4935000089075,
-              "p95_ms": 219.2100200190907,
-              "p99_ms": 275.1775919814827
+              "median_ms": 108.60519998823293,
+              "mean_ms": 109.68836000295899,
+              "p95_ms": 119.67793499061372,
+              "p99_ms": 123.39260399749037
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 25.064027114131942,
+          "inference_only_theoretical_fps": 28.3924694739764,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -1901,10 +1913,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:40:51.543019+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:21:55.994833+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -1920,9 +1932,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 20
+              "battery_percent": 16,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -1992,76 +2005,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 1923.9777000038885,
-          "neural_startup_ms": 418.8463000464253,
+          "startup_ms": 897.1537000034004,
+          "neural_startup_ms": 187.4054999789223,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 21.454322799982037,
-          "end_to_end_fps": 5.593278385841219,
-          "real_time_factor": 5.363580699995509,
-          "process_cpu_seconds": 16.34375,
+          "processing_seconds": 13.43893190001836,
+          "end_to_end_fps": 8.929281053938226,
+          "real_time_factor": 3.35973297500459,
+          "process_cpu_seconds": 9.015625,
           "process_memory": {
-            "working_set_bytes": 143290368,
-            "peak_process_working_set_bytes": 268337152
+            "working_set_bytes": 145051648,
+            "peak_process_working_set_bytes": 268890112
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 15.195499989204109,
-              "mean_ms": 15.996117496009296,
-              "p95_ms": 24.26395500660874,
-              "p99_ms": 27.569103988935243
+              "median_ms": 9.076099988305941,
+              "mean_ms": 9.503563335359408,
+              "p95_ms": 14.754830015590414,
+              "p99_ms": 16.147262001177296
             },
             "tile_extraction_ms": {
-              "median_ms": 0.7070499414112419,
-              "mean_ms": 0.7429333199979737,
-              "p95_ms": 0.8731998415896669,
-              "p99_ms": 1.4406669832533239
+              "median_ms": 0.5588500062003732,
+              "mean_ms": 0.5797258379364697,
+              "p95_ms": 0.7763099682051687,
+              "p99_ms": 0.8507599448785187
             },
             "inference_ms": {
-              "median_ms": 38.97009996580891,
-              "mean_ms": 38.95128001119398,
-              "p95_ms": 41.09658989473246,
-              "p99_ms": 42.65333990682848
+              "median_ms": 35.3695499652531,
+              "mean_ms": 35.36435665882891,
+              "p95_ms": 36.478434974560514,
+              "p99_ms": 37.02821694838349
             },
             "stitching_ms": {
-              "median_ms": 3.516699973260984,
-              "mean_ms": 3.1375533382136687,
-              "p95_ms": 4.459960001986474,
-              "p99_ms": 5.298995940829628
+              "median_ms": 2.43140003294684,
+              "mean_ms": 2.1547249979145513,
+              "p95_ms": 2.763194963335991,
+              "p99_ms": 3.0510089843301107
             },
             "postprocessing_ms": {
-              "median_ms": 108.67279997910373,
-              "mean_ms": 111.85828333206398,
-              "p95_ms": 145.07474497077055,
-              "p99_ms": 184.22821397485683
+              "median_ms": 60.33790000947192,
+              "mean_ms": 59.77646583439006,
+              "p95_ms": 67.69413997826632,
+              "p99_ms": 69.56138899433427
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 0.43050001841038465,
-              "mean_ms": 0.5439941654913127,
-              "p95_ms": 1.0299250337993726,
-              "p99_ms": 1.609988982090727
+              "median_ms": 0.3615999885369092,
+              "mean_ms": 0.39813083421904594,
+              "p95_ms": 0.5945799901382998,
+              "p99_ms": 0.6776180013548583
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 1.828249980462715,
-              "mean_ms": 3.6426191674157358,
-              "p95_ms": 4.040940024424344,
-              "p99_ms": 4.736337988870219
+              "median_ms": 1.2375999940559268,
+              "mean_ms": 2.126157498181177,
+              "p95_ms": 2.0514199801255013,
+              "p99_ms": 2.467906996025704
             },
             "frame_total_ms": {
-              "median_ms": 173.94839995540679,
-              "mean_ms": 177.58748083433602,
-              "p95_ms": 209.5366450259462,
-              "p99_ms": 258.99339596799115
+              "median_ms": 111.46265000570565,
+              "mean_ms": 111.2936749952496,
+              "p95_ms": 120.84221492696088,
+              "p99_ms": 122.62206003419124
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 25.673097256691328,
+          "inference_only_theoretical_fps": 28.27705900738744,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 5.593278385841219,
-      "median_trial_real_time_factor": 5.363580699995509,
+      "median_trial_end_to_end_fps": 9.059445636203515,
+      "median_trial_real_time_factor": 3.311460900004022,
       "aggregation": "median across complete measured trials; startup separate"
     },
     {
@@ -2077,10 +2090,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:42:25.060026+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:22:46.167979+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2096,9 +2109,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 19
+              "battery_percent": 17,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2159,69 +2173,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 2091.449300001841,
-          "neural_startup_ms": 5.474400008097291,
+          "startup_ms": 1241.8109999853186,
+          "neural_startup_ms": 2.9984000138938427,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 72.42273469996871,
-          "end_to_end_fps": 1.6569382597485902,
-          "real_time_factor": 18.10568367499218,
-          "process_cpu_seconds": 188.96875,
+          "processing_seconds": 38.249175400007516,
+          "end_to_end_fps": 3.137322536892558,
+          "real_time_factor": 9.562293850001879,
+          "process_cpu_seconds": 113.1875,
           "process_memory": {
-            "working_set_bytes": 210194432,
-            "peak_process_working_set_bytes": 331984896
+            "working_set_bytes": 210370560,
+            "peak_process_working_set_bytes": 331821056
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 38.07154999230988,
-              "mean_ms": 38.43358416828172,
-              "p95_ms": 46.702945019933395,
-              "p99_ms": 49.95473799877801
+              "median_ms": 25.48165002372116,
+              "mean_ms": 25.724175835299928,
+              "p95_ms": 28.521400032332167,
+              "p99_ms": 35.57013498095331
             },
             "tile_extraction_ms": {
-              "median_ms": 1.0760000732261688,
-              "mean_ms": 1.0986383208849777,
-              "p95_ms": 1.2616448773769662,
-              "p99_ms": 1.6287020966410644
+              "median_ms": 0.7699000125285238,
+              "mean_ms": 0.7862666568447215,
+              "p95_ms": 0.899795038276352,
+              "p99_ms": 0.9602909168461338
             },
             "inference_ms": {
-              "median_ms": 303.7809001398273,
-              "mean_ms": 305.67938916744123,
-              "p95_ms": 326.9793899380602,
-              "p99_ms": 333.8083091034787
+              "median_ms": 128.46250002621673,
+              "mean_ms": 130.83912918227725,
+              "p95_ms": 156.00183487986214,
+              "p99_ms": 173.3568220259622
             },
             "stitching_ms": {
-              "median_ms": 7.019599841441959,
-              "mean_ms": 7.02324334270088,
-              "p95_ms": 7.492870005080476,
-              "p99_ms": 7.703037864412181
+              "median_ms": 4.495850007515401,
+              "mean_ms": 4.557758335431572,
+              "p95_ms": 5.037669918965548,
+              "p99_ms": 5.525546940043569
             },
             "postprocessing_ms": {
-              "median_ms": 229.51074998127297,
-              "mean_ms": 237.253590830854,
-              "p95_ms": 281.2605850107502,
-              "p99_ms": 386.62762903084524
+              "median_ms": 147.51219999743626,
+              "mean_ms": 147.86566083542616,
+              "p95_ms": 154.42326995835174,
+              "p99_ms": 166.3637319946429
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.79494998883456,
-              "mean_ms": 2.020069998980034,
-              "p95_ms": 2.983355001197195,
-              "p99_ms": 5.054356001783167
+              "median_ms": 1.280649972613901,
+              "mean_ms": 1.2845466636160079,
+              "p95_ms": 1.5212099940981716,
+              "p99_ms": 1.6311449609929696
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 3.9732000150252134,
-              "mean_ms": 5.41374833410373,
-              "p95_ms": 5.979549992480315,
-              "p99_ms": 9.660329000325882
+              "median_ms": 2.506800025003031,
+              "mean_ms": 3.5308408337490014,
+              "p95_ms": 3.272154994192533,
+              "p99_ms": 3.832822975236923
             },
             "frame_total_ms": {
-              "median_ms": 591.1400000040885,
-              "mean_ms": 601.6104641680917,
-              "p95_ms": 670.8617050258908,
-              "p99_ms": 768.4938650432741
+              "median_ms": 313.14695000764914,
+              "mean_ms": 317.39060000060516,
+              "p95_ms": 346.0181699541863,
+              "p99_ms": 396.1257580242819
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 3.2714014599532995,
+          "inference_only_theoretical_fps": 7.64297352214,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -2230,10 +2244,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:43:49.900850+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:23:33.169120+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2249,9 +2263,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 19
+              "battery_percent": 17,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2312,69 +2327,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 3257.2221000446007,
-          "neural_startup_ms": 5.080099974293262,
+          "startup_ms": 1079.6056999824941,
+          "neural_startup_ms": 2.873399993404746,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 71.25709139998071,
-          "end_to_end_fps": 1.6840429161838129,
-          "real_time_factor": 17.814272849995177,
-          "process_cpu_seconds": 187.703125,
+          "processing_seconds": 41.37467609997839,
+          "end_to_end_fps": 2.900324819704454,
+          "real_time_factor": 10.343669024994597,
+          "process_cpu_seconds": 120.828125,
           "process_memory": {
-            "working_set_bytes": 210341888,
-            "peak_process_working_set_bytes": 332951552
+            "working_set_bytes": 210653184,
+            "peak_process_working_set_bytes": 332722176
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 38.66344998823479,
-              "mean_ms": 40.03972499825371,
-              "p95_ms": 56.96662998525426,
-              "p99_ms": 61.48986398125999
+              "median_ms": 26.326649996917695,
+              "mean_ms": 26.869834167397737,
+              "p95_ms": 30.261705032899044,
+              "p99_ms": 44.029435011907516
             },
             "tile_extraction_ms": {
-              "median_ms": 1.0728000197559595,
-              "mean_ms": 1.0785341626615264,
-              "p95_ms": 1.2060750421369448,
-              "p99_ms": 1.2641480326419696
+              "median_ms": 0.8124500454869121,
+              "mean_ms": 0.8309366559842601,
+              "p95_ms": 1.0265049029840156,
+              "p99_ms": 1.144848964177072
             },
             "inference_ms": {
-              "median_ms": 303.91545000020415,
-              "mean_ms": 304.5431183306694,
-              "p95_ms": 326.4432900585234,
-              "p99_ms": 339.76281491224654
+              "median_ms": 142.38630002364516,
+              "mean_ms": 148.1500775073073,
+              "p95_ms": 195.02719493757465,
+              "p99_ms": 225.93036706559366
             },
             "stitching_ms": {
-              "median_ms": 7.180150045314804,
-              "mean_ms": 7.265968343805677,
-              "p95_ms": 8.204275130992755,
-              "p99_ms": 9.112730901106262
+              "median_ms": 4.648799978895113,
+              "mean_ms": 4.754228331633688,
+              "p95_ms": 5.371250066673383,
+              "p99_ms": 6.04754301311914
             },
             "postprocessing_ms": {
-              "median_ms": 222.3369499843102,
-              "mean_ms": 226.52619333772842,
-              "p95_ms": 263.38668002863415,
-              "p99_ms": 282.5993259967072
+              "median_ms": 155.22789998794906,
+              "mean_ms": 154.92362583124,
+              "p95_ms": 173.23467496898957,
+              "p99_ms": 184.00470698426943
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.6995999903883785,
-              "mean_ms": 1.806426666250142,
-              "p95_ms": 2.493574991240166,
-              "p99_ms": 4.118241004762241
+              "median_ms": 1.3374999980442226,
+              "mean_ms": 1.3784166682550374,
+              "p95_ms": 1.7815350060118358,
+              "p99_ms": 3.3179599657887615
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 4.464950005058199,
-              "mean_ms": 6.0929883339364705,
-              "p95_ms": 7.01047002512496,
-              "p99_ms": 7.922008989844472
+              "median_ms": 2.5696500088088214,
+              "mean_ms": 3.6157549989487356,
+              "p95_ms": 3.6537800420774147,
+              "p99_ms": 4.285731978015975
             },
             "frame_total_ms": {
-              "median_ms": 588.4678000002168,
-              "mean_ms": 591.961185002098,
-              "p95_ms": 643.3441950386623,
-              "p99_ms": 682.3881569836522
+              "median_ms": 337.4670499470085,
+              "mean_ms": 343.452054997033,
+              "p95_ms": 410.7919300120557,
+              "p99_ms": 441.444723008317
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 3.283607278606149,
+          "inference_only_theoretical_fps": 6.749912094718118,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -2383,10 +2398,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:45:14.310656+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:24:19.836895+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2402,9 +2417,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 19
+              "battery_percent": 17,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2465,76 +2481,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 2685.4438000009395,
-          "neural_startup_ms": 5.9766999911516905,
+          "startup_ms": 1199.6414000168443,
+          "neural_startup_ms": 2.695399976801127,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 70.8680413000402,
-          "end_to_end_fps": 1.6932879447301998,
-          "real_time_factor": 17.71701032501005,
-          "process_cpu_seconds": 187.546875,
+          "processing_seconds": 40.96981580002466,
+          "end_to_end_fps": 2.9289855874804243,
+          "real_time_factor": 10.242453950006166,
+          "process_cpu_seconds": 122.625,
           "process_memory": {
-            "working_set_bytes": 209993728,
-            "peak_process_working_set_bytes": 332951552
+            "working_set_bytes": 210554880,
+            "peak_process_working_set_bytes": 332804096
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 36.918750003678724,
-              "mean_ms": 38.34844666416757,
-              "p95_ms": 50.780814985046156,
-              "p99_ms": 61.99034501914866
+              "median_ms": 26.183499983744696,
+              "mean_ms": 26.030707499497414,
+              "p95_ms": 29.472835038905032,
+              "p99_ms": 30.97860301437322
             },
             "tile_extraction_ms": {
-              "median_ms": 1.0635500075295568,
-              "mean_ms": 1.0935224903126557,
-              "p95_ms": 1.2051449244609103,
-              "p99_ms": 1.8973919097334162
+              "median_ms": 0.792799866758287,
+              "mean_ms": 0.7990800052842436,
+              "p95_ms": 0.8995300886454061,
+              "p99_ms": 0.949543034657836
             },
             "inference_ms": {
-              "median_ms": 301.0812501015607,
-              "mean_ms": 302.5478925187296,
-              "p95_ms": 321.06081506062765,
-              "p99_ms": 339.5881701237522
+              "median_ms": 143.49644994945265,
+              "mean_ms": 145.49951665782524,
+              "p95_ms": 174.32762486569118,
+              "p99_ms": 196.49234991346023
             },
             "stitching_ms": {
-              "median_ms": 7.121650065528229,
-              "mean_ms": 7.214174995412274,
-              "p95_ms": 7.885970105417073,
-              "p99_ms": 8.386691011255607
+              "median_ms": 4.653299984056503,
+              "mean_ms": 4.800773336319253,
+              "p95_ms": 5.170170034398325,
+              "p99_ms": 5.4026950494153425
             },
             "postprocessing_ms": {
-              "median_ms": 220.798750029644,
-              "mean_ms": 226.89536500450535,
-              "p95_ms": 279.074860032415,
-              "p99_ms": 308.3104650262976
+              "median_ms": 154.68720000353642,
+              "mean_ms": 155.40691583155422,
+              "p95_ms": 173.1298099446576,
+              "p99_ms": 203.41729796258736
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.6482500068377703,
-              "mean_ms": 1.7946374990666907,
-              "p95_ms": 2.6099799666553736,
-              "p99_ms": 4.056556003633889
+              "median_ms": 1.355199987301603,
+              "mean_ms": 1.4634266636373165,
+              "p95_ms": 1.7417900060536338,
+              "p99_ms": 3.5841889999574055
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 4.542350012343377,
-              "mean_ms": 6.093763335472128,
-              "p95_ms": 7.161210014601238,
-              "p99_ms": 10.449341989005925
+              "median_ms": 2.369549998547882,
+              "mean_ms": 3.3795200006958717,
+              "p95_ms": 3.409329993883148,
+              "p99_ms": 4.210894978023136
             },
             "frame_total_ms": {
-              "median_ms": 579.2267499782611,
-              "mean_ms": 588.8077600034497,
-              "p95_ms": 662.8562700352632,
-              "p99_ms": 686.7988780076848
+              "median_ms": 337.2440999664832,
+              "mean_ms": 340.05189083448687,
+              "p95_ms": 394.24392993678333,
+              "p99_ms": 430.2147939760471
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 3.3052618270612935,
+          "inference_only_theoretical_fps": 6.87287506495107,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 1.6840429161838129,
-      "median_trial_real_time_factor": 17.814272849995177,
+      "median_trial_end_to_end_fps": 2.9289855874804243,
+      "median_trial_real_time_factor": 10.242453950006166,
       "aggregation": "median across complete measured trials; startup separate"
     },
     {
@@ -2550,10 +2566,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:46:10.785905+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:24:52.566609+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2569,9 +2585,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 18
+              "battery_percent": 17,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2641,69 +2658,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 2558.6586999706924,
-          "neural_startup_ms": 491.85079999733716,
+          "startup_ms": 1422.4711999995634,
+          "neural_startup_ms": 262.1299000456929,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 44.107175300014205,
-          "end_to_end_fps": 2.720645772116841,
-          "real_time_factor": 11.026793825003551,
-          "process_cpu_seconds": 36.9375,
+          "processing_seconds": 27.086048099969048,
+          "end_to_end_fps": 4.430325145887086,
+          "real_time_factor": 6.771512024992262,
+          "process_cpu_seconds": 21.328125,
           "process_memory": {
-            "working_set_bytes": 169906176,
-            "peak_process_working_set_bytes": 332951552
+            "working_set_bytes": 170414080,
+            "peak_process_working_set_bytes": 332804096
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 34.9391000054311,
-              "mean_ms": 36.48085250024451,
-              "p95_ms": 52.021839978988275,
-              "p99_ms": 64.42207198590042
+              "median_ms": 23.233550018630922,
+              "mean_ms": 23.514189167084016,
+              "p95_ms": 26.731295028002933,
+              "p99_ms": 29.09243101428729
             },
             "tile_extraction_ms": {
-              "median_ms": 0.9815000521484762,
-              "mean_ms": 1.0910100027103908,
-              "p95_ms": 1.5756899287225676,
-              "p99_ms": 3.0129539943300188
+              "median_ms": 0.7768000068608671,
+              "mean_ms": 0.8072274906832414,
+              "p95_ms": 0.9667300008004529,
+              "p99_ms": 1.1154899094253778
             },
             "inference_ms": {
-              "median_ms": 49.92895000032149,
-              "mean_ms": 50.297729155863635,
-              "p95_ms": 54.74183498881757,
-              "p99_ms": 59.253004003548995
+              "median_ms": 45.22735008504242,
+              "mean_ms": 45.587970833003055,
+              "p95_ms": 47.444864953286014,
+              "p99_ms": 57.568221078254304
             },
             "stitching_ms": {
-              "median_ms": 7.565050036646426,
-              "mean_ms": 8.05740500218235,
-              "p95_ms": 12.188664980931208,
-              "p99_ms": 16.44023015804124
+              "median_ms": 4.012350080301985,
+              "mean_ms": 4.078677513947089,
+              "p95_ms": 4.708345251856372,
+              "p99_ms": 5.4297280055470765
             },
             "postprocessing_ms": {
-              "median_ms": 239.11255001439713,
-              "mean_ms": 256.37573249793303,
-              "p95_ms": 342.94876500498503,
-              "p99_ms": 486.80199900816666
+              "median_ms": 142.37869999487884,
+              "mean_ms": 143.50669999839738,
+              "p95_ms": 152.61212000332307,
+              "p99_ms": 175.14579602342565
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.6866000078152865,
-              "mean_ms": 1.8933216657994005,
-              "p95_ms": 2.725885025574825,
-              "p99_ms": 6.121133009437473
+              "median_ms": 1.2900499859824777,
+              "mean_ms": 1.324060834303964,
+              "p95_ms": 1.6294350090902299,
+              "p99_ms": 2.0877979614306246
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 4.497749992879108,
-              "mean_ms": 6.486776671954431,
-              "p95_ms": 6.881465011974794,
-              "p99_ms": 13.164515010430483
+              "median_ms": 2.3510000319220126,
+              "mean_ms": 3.5883691719694375,
+              "p95_ms": 3.2466900098370384,
+              "p99_ms": 3.9003069669706756
             },
             "frame_total_ms": {
-              "median_ms": 347.71650002221577,
-              "mean_ms": 365.76608334047097,
-              "p95_ms": 502.8840600280091,
-              "p99_ms": 621.8655500089518
+              "median_ms": 221.138749999227,
+              "mean_ms": 224.69594917347422,
+              "p95_ms": 242.0777800143696,
+              "p99_ms": 268.6087659950136
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 19.881613281211553,
+          "inference_only_theoretical_fps": 21.935611121257843,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 1
@@ -2712,10 +2729,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:47:06.308076+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:25:25.002575+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2731,9 +2748,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 18
+              "battery_percent": 18,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2803,69 +2821,69 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 2760.339699976612,
-          "neural_startup_ms": 478.54240000015125,
+          "startup_ms": 1289.4256000290625,
+          "neural_startup_ms": 206.05789998080581,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 41.725461499998346,
-          "end_to_end_fps": 2.875941827509919,
-          "real_time_factor": 10.431365374999586,
-          "process_cpu_seconds": 34.4375,
+          "processing_seconds": 27.140032799972687,
+          "end_to_end_fps": 4.421512710924976,
+          "real_time_factor": 6.785008199993172,
+          "process_cpu_seconds": 21.234375,
           "process_memory": {
-            "working_set_bytes": 170344448,
-            "peak_process_working_set_bytes": 332951552
+            "working_set_bytes": 170569728,
+            "peak_process_working_set_bytes": 332804096
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 34.78200003155507,
-              "mean_ms": 35.0530616681984,
-              "p95_ms": 44.883079949067906,
-              "p99_ms": 49.384737988584675
+              "median_ms": 23.711949965218082,
+              "mean_ms": 24.285276666341815,
+              "p95_ms": 28.102320025209337,
+              "p99_ms": 45.68874598538972
             },
             "tile_extraction_ms": {
-              "median_ms": 0.9687000419944525,
-              "mean_ms": 1.0045300058360833,
-              "p95_ms": 1.2227799859829247,
-              "p99_ms": 1.4484509994508703
+              "median_ms": 0.7924500096123666,
+              "mean_ms": 0.8194474978760505,
+              "p95_ms": 1.0318399901734665,
+              "p99_ms": 1.099756108596921
             },
             "inference_ms": {
-              "median_ms": 50.369500037049875,
-              "mean_ms": 50.63667499052826,
-              "p95_ms": 54.180810117395595,
-              "p99_ms": 55.26925100770313
+              "median_ms": 45.15455011278391,
+              "mean_ms": 45.49278165359283,
+              "p95_ms": 47.13105992414057,
+              "p99_ms": 48.108310026000254
             },
             "stitching_ms": {
-              "median_ms": 7.201200089184567,
-              "mean_ms": 7.583177502480491,
-              "p95_ms": 10.211105170310475,
-              "p99_ms": 11.132417935878038
+              "median_ms": 3.9816000207792968,
+              "mean_ms": 4.06056667076579,
+              "p95_ms": 4.549245006637648,
+              "p99_ms": 4.734826103085652
             },
             "postprocessing_ms": {
-              "median_ms": 233.76320002716966,
-              "mean_ms": 238.2320475007873,
-              "p95_ms": 294.22682501899544,
-              "p99_ms": 337.40975199209066
+              "median_ms": 142.81230003689416,
+              "mean_ms": 143.51419833352944,
+              "p95_ms": 150.26748997624964,
+              "p99_ms": 173.45618099207059
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.5902500017546117,
-              "mean_ms": 1.6382991670980118,
-              "p95_ms": 2.1827299991855393,
-              "p99_ms": 3.8632469746517035
+              "median_ms": 1.3113499735482037,
+              "mean_ms": 1.3201758338254876,
+              "p95_ms": 1.5930450172163546,
+              "p99_ms": 1.7666539701167494
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 4.61895001353696,
-              "mean_ms": 6.2469658301173085,
-              "p95_ms": 6.560035009169951,
-              "p99_ms": 8.392411975655708
+              "median_ms": 2.33349998597987,
+              "mean_ms": 3.3865758343987786,
+              "p95_ms": 3.3200499776285137,
+              "p99_ms": 4.117864997242578
             },
             "frame_total_ms": {
-              "median_ms": 338.35189999081194,
-              "mean_ms": 345.2702658289733,
-              "p95_ms": 400.05327003309503,
-              "p99_ms": 458.94558695203165
+              "median_ms": 222.4073999968823,
+              "mean_ms": 225.2094925022296,
+              "p95_ms": 247.06396498950198,
+              "p99_ms": 261.45658598747104
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 19.74853207061982,
+          "inference_only_theoretical_fps": 21.981509234026454,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 2
@@ -2874,10 +2892,10 @@
           "schema_version": 3,
           "environment": {
             "npu_sr_version": "0.3.0",
-            "timestamp": "2026-10-04T00:48:01.926535+00:00",
-            "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+            "timestamp": "2026-10-04T03:25:57.696969+00:00",
+            "git_commit": "b06256696beccd3aeb022c1ce5d9ecfceb2ea4fd",
             "working_tree_dirty": false,
-            "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+            "python_source_sha256": "9391ac582e54250806bc729b38d29647a6e4bded2a0c835375062c45eb83beee",
             "os": "Windows",
             "architecture": "ARM64",
             "python": "3.12.0",
@@ -2893,9 +2911,10 @@
             "power": "not measured",
             "background_processes": "uncontrolled",
             "power_state": {
-              "ac_line": "battery",
+              "ac_line": "plugged in",
               "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
-              "battery_percent": 18
+              "battery_percent": 18,
+              "energy_saver": false
             },
             "qnn_catalog_package": "2.2480.53.0",
             "windows_build": 26200,
@@ -2965,76 +2984,76 @@
           "output_timestamps_validated": true,
           "hardware_rate_control": "u_vbr / camera_record",
           "dropped_frames": 0,
-          "startup_ms": 2519.6810999768786,
-          "neural_startup_ms": 462.30169996852055,
+          "startup_ms": 1267.714099958539,
+          "neural_startup_ms": 194.8046999750659,
           "warmup_tensor_runs": 3,
-          "processing_seconds": 42.36061620002147,
-          "end_to_end_fps": 2.832819981498267,
-          "real_time_factor": 10.590154050005367,
-          "process_cpu_seconds": 35.0,
+          "processing_seconds": 27.224386499961838,
+          "end_to_end_fps": 4.407812826201546,
+          "real_time_factor": 6.8060966249904595,
+          "process_cpu_seconds": 21.109375,
           "process_memory": {
-            "working_set_bytes": 170188800,
-            "peak_process_working_set_bytes": 332951552
+            "working_set_bytes": 170602496,
+            "peak_process_working_set_bytes": 332804096
           },
           "phase_statistics": {
             "preprocessing_ms": {
-              "median_ms": 35.92870000284165,
-              "mean_ms": 36.377116668154486,
-              "p95_ms": 46.27014997531659,
-              "p99_ms": 52.391245977487415
+              "median_ms": 23.50439998554066,
+              "mean_ms": 23.788671664563783,
+              "p95_ms": 28.147824984625913,
+              "p99_ms": 31.085729019250724
             },
             "tile_extraction_ms": {
-              "median_ms": 0.985199905699119,
-              "mean_ms": 1.0582458329736255,
-              "p95_ms": 1.24149996554479,
-              "p99_ms": 2.9339079849887644
+              "median_ms": 0.7917499751783907,
+              "mean_ms": 0.8041591689107008,
+              "p95_ms": 0.8967600646428764,
+              "p99_ms": 1.0542730614542963
             },
             "inference_ms": {
-              "median_ms": 50.31400010921061,
-              "mean_ms": 50.42775749995295,
-              "p95_ms": 53.4944849438034,
-              "p99_ms": 54.85512895451393
+              "median_ms": 44.884800096042454,
+              "mean_ms": 45.08975833208145,
+              "p95_ms": 46.71039995737374,
+              "p99_ms": 47.24513289111201
             },
             "stitching_ms": {
-              "median_ms": 7.2311000258196145,
-              "mean_ms": 7.605784995151528,
-              "p95_ms": 10.082405069260856,
-              "p99_ms": 11.211568948347121
+              "median_ms": 4.001399996923283,
+              "mean_ms": 4.061992498463951,
+              "p95_ms": 4.63015008426737,
+              "p99_ms": 5.114225939032623
             },
             "postprocessing_ms": {
-              "median_ms": 234.6057000104338,
-              "mean_ms": 242.28078499969948,
-              "p95_ms": 303.4536400053184,
-              "p99_ms": 332.5396880111657
+              "median_ms": 143.60154999303631,
+              "mean_ms": 144.61743583281836,
+              "p95_ms": 152.678850031225,
+              "p99_ms": 174.39088999351952
             },
             "encoder_pipe_wait_ms": {
-              "median_ms": 1.7199499707203358,
-              "mean_ms": 1.757514166335265,
-              "p95_ms": 2.6202949928119774,
-              "p99_ms": 3.1390480120899156
+              "median_ms": 1.306549966102466,
+              "mean_ms": 1.3417499974214782,
+              "p95_ms": 1.622094993945211,
+              "p99_ms": 1.8008640088373795
             },
             "decoder_pipe_wait_ms": {
-              "median_ms": 4.770199971972033,
-              "mean_ms": 6.309142498260674,
-              "p95_ms": 6.901310032117179,
-              "p99_ms": 8.790397002594547
+              "median_ms": 2.305449976120144,
+              "mean_ms": 3.3398408306917795,
+              "p95_ms": 3.3645100193098183,
+              "p99_ms": 4.0011919557582605
             },
             "frame_total_ms": {
-              "median_ms": 342.637250025291,
-              "mean_ms": 350.71712500115,
-              "p95_ms": 413.59485998982564,
-              "p99_ms": 444.6377049689181
+              "median_ms": 223.18584995809942,
+              "mean_ms": 225.447523330998,
+              "p95_ms": 246.10397491778713,
+              "p99_ms": 269.4553990161512
             }
           },
           "phase_sample_scope": "last 120 frames; bounded storage",
-          "inference_only_theoretical_fps": 19.83034839494762,
+          "inference_only_theoretical_fps": 22.17798535612239,
           "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
           "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
           "trial": 3
         }
       ],
-      "median_trial_end_to_end_fps": 2.832819981498267,
-      "median_trial_real_time_factor": 10.590154050005367,
+      "median_trial_end_to_end_fps": 4.421512710924976,
+      "median_trial_real_time_factor": 6.785008199993172,
       "aggregation": "median across complete measured trials; startup separate"
     }
   ],
@@ -3047,8 +3066,8 @@
       "trial": 1,
       "decode": {
         "frames": 120,
-        "seconds": 0.2576721999794245,
-        "fps": 465.70798095247443,
+        "seconds": 0.25936200004071,
+        "fps": 462.67379177043887,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3058,8 +3077,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 0.8725716000190005,
-        "fps": 137.52453093521146,
+        "seconds": 0.8955390999908559,
+        "fps": 133.99749938470055,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3077,8 +3096,8 @@
       "trial": 2,
       "decode": {
         "frames": 120,
-        "seconds": 0.26152459997683764,
-        "fps": 458.8478483883658,
+        "seconds": 0.2643425000132993,
+        "fps": 453.95651472601907,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3088,8 +3107,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 0.8692665999988094,
-        "fps": 138.04740686017888,
+        "seconds": 0.8712663999758661,
+        "fps": 137.73054946606914,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3107,8 +3126,8 @@
       "trial": 3,
       "decode": {
         "frames": 120,
-        "seconds": 0.2661179000278935,
-        "fps": 450.9279533147603,
+        "seconds": 0.2583590999711305,
+        "fps": 464.4698019671419,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3118,8 +3137,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 0.877569800009951,
-        "fps": 136.74125978200172,
+        "seconds": 0.8724890999728814,
+        "fps": 137.53753485714586,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3137,8 +3156,8 @@
       "trial": 1,
       "decode": {
         "frames": 120,
-        "seconds": 0.46629830001620576,
-        "fps": 257.3459950332856,
+        "seconds": 0.3742622999707237,
+        "fps": 320.6307448262539,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3148,8 +3167,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 1.181939100031741,
-        "fps": 101.52807365182977,
+        "seconds": 1.126981400011573,
+        "fps": 106.47913088784581,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3167,8 +3186,8 @@
       "trial": 2,
       "decode": {
         "frames": 120,
-        "seconds": 0.4605231999885291,
-        "fps": 260.5731915416835,
+        "seconds": 0.3738061999902129,
+        "fps": 321.0219627259844,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3178,8 +3197,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 1.205120500002522,
-        "fps": 99.5751047299825,
+        "seconds": 1.1079341000295244,
+        "fps": 108.30969097963698,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3197,8 +3216,8 @@
       "trial": 3,
       "decode": {
         "frames": 120,
-        "seconds": 0.46162970003206283,
-        "fps": 259.94861247373234,
+        "seconds": 0.39005200000246987,
+        "fps": 307.6512875186902,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3208,8 +3227,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 1.2010770000051707,
-        "fps": 99.91033047796552,
+        "seconds": 1.1165436999872327,
+        "fps": 107.47452159854753,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3227,8 +3246,8 @@
       "trial": 1,
       "decode": {
         "frames": 120,
-        "seconds": 0.5557408999884501,
-        "fps": 215.92796211776738,
+        "seconds": 0.48116500000469387,
+        "fps": 249.3946982819394,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3238,8 +3257,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 2.1689657000242732,
-        "fps": 55.325909487022805,
+        "seconds": 2.06746499997098,
+        "fps": 58.0420950302348,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3257,8 +3276,8 @@
       "trial": 2,
       "decode": {
         "frames": 120,
-        "seconds": 0.5720370000344701,
-        "fps": 209.7766403095761,
+        "seconds": 0.48626099998364225,
+        "fps": 246.78104969149652,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3268,8 +3287,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 2.171054400037974,
-        "fps": 55.272682249648405,
+        "seconds": 2.062979499984067,
+        "fps": 58.16829493503295,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
@@ -3287,8 +3306,8 @@
       "trial": 3,
       "decode": {
         "frames": 120,
-        "seconds": 0.5673955999664031,
-        "fps": 211.4926517003401,
+        "seconds": 0.4860766000347212,
+        "fps": 246.87466953033373,
         "evidence": {
           "method": "D3D11VA hardware",
           "hardware_format_selected": "d3d11",
@@ -3298,8 +3317,8 @@
       },
       "encode": {
         "frames": 120,
-        "seconds": 2.211088100040797,
-        "fps": 54.27192159271531,
+        "seconds": 2.074323499982711,
+        "fps": 57.85018585625635,
         "evidence": {
           "method": "Media Foundation hardware",
           "forced_hardware_enumeration": true,
