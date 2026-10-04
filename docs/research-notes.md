@@ -82,3 +82,6 @@ Video API research and implementation belong to the subsequent gated releases.
   documents Qualcomm frame dropping and `camera_record` for CFR. The project
   uses explicit `u_vbr` / `camera_record`, then validates encoded counts and
   actual timestamp cadence. Final quality measurements use the explicit settings.
+- Balanced power scheme alone does not describe Windows energy saver. The
+  [SYSTEM_POWER_STATUS SystemStatusFlag](https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status)
+  reports that separately; new environment reports record it without estimating watts.

@@ -48,7 +48,7 @@ def power_state() -> dict[str, str | int | None]:
             ("ac", ctypes.c_ubyte),
             ("flags", ctypes.c_ubyte),
             ("percent", ctypes.c_ubyte),
-            ("reserved", ctypes.c_ubyte),
+            ("saver", ctypes.c_ubyte),
             ("life", ctypes.c_ulong),
             ("full_life", ctypes.c_ulong),
         ]
@@ -73,4 +73,5 @@ def power_state() -> dict[str, str | int | None]:
         "ac_line": ac,
         "active_power_scheme": scheme,
         "battery_percent": status.percent if known and status.percent != 255 else None,
+        "energy_saver": bool(status.saver) if known else None,
     }

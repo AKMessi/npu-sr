@@ -1,0 +1,161 @@
+{
+  "schema_version": 3,
+  "environment": {
+    "npu_sr_version": "0.3.0",
+    "timestamp": "2026-10-04T00:36:56.952689+00:00",
+    "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+    "working_tree_dirty": false,
+    "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+    "os": "Windows",
+    "architecture": "ARM64",
+    "python": "3.12.0",
+    "software_versions": {
+      "npu-sr": "0.3.0",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "onnx": "1.23.1",
+      "onnxruntime-windowsml": "1.25.2.202605110140",
+      "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+      "winrt-runtime": "3.2.1"
+    },
+    "power": "not measured",
+    "background_processes": "uncontrolled",
+    "power_state": {
+      "ac_line": "battery",
+      "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+      "battery_percent": 23
+    },
+    "qnn_catalog_package": "2.2480.53.0",
+    "windows_build": 26200,
+    "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+    "npu_driver": "30.0.219.1000"
+  },
+  "ffmpeg_version": "ffmpeg version n9.0.2-22-g46d8f462ee-20261003 Copyright (c) 2000-2026 the FFmpeg developers",
+  "ffmpeg_sha256": "7b864ad34b2aed471358573de83966e2787d88461c50e4ed6bf7d8d610017684",
+  "input_sha256": "8d0e936d6bef3d266df275dcdb4f1af44cfc65cc90ab928b4f15ee11b14b8bf5",
+  "model": "espcn-x2-256",
+  "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+  "backend": "npu",
+  "execution_evidence": {
+    "device_type": "NPU",
+    "cpu_fallback_disabled": true,
+    "executed_kernel_counts": {
+      "QNNExecutionProvider": 1
+    },
+    "providers": [
+      "QNNExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "qnn_backend": "htp",
+    "qnn_package_version": "2.2480.53.0",
+    "context_cache": "hit"
+  },
+  "codec_evidence": {
+    "decode": {
+      "method": "D3D11VA hardware",
+      "hardware_format_selected": "d3d11",
+      "explicit_hwdownload": true
+    },
+    "encode": {
+      "method": "Media Foundation hardware",
+      "forced_hardware_enumeration": true,
+      "transform": "QCOM Hardware Encoder - H264"
+    }
+  },
+  "codec": "h264",
+  "bitrate": "8M",
+  "software_quality_crf": null,
+  "audio": "copy",
+  "input": {
+    "resolution": [
+      960,
+      540
+    ],
+    "frame_rate": "30",
+    "duration_seconds": 4.0,
+    "reported_frames": 120,
+    "audio": true,
+    "codec": "h264"
+  },
+  "output": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "frame_rate": "30",
+    "duration_seconds": 4.0,
+    "reported_frames": 120,
+    "audio": true,
+    "codec": "h264"
+  },
+  "frames_processed": 120,
+  "input_timestamps_validated": true,
+  "output_timestamps_validated": true,
+  "hardware_rate_control": "u_vbr / camera_record",
+  "dropped_frames": 0,
+  "startup_ms": 3680.8979000197724,
+  "neural_startup_ms": 2810.5033000465482,
+  "warmup_tensor_runs": 3,
+  "processing_seconds": 12.972133299976122,
+  "end_to_end_fps": 9.250598743093466,
+  "real_time_factor": 3.2430333249940304,
+  "process_cpu_seconds": 8.765625,
+  "process_memory": {
+    "working_set_bytes": 140435456,
+    "peak_process_working_set_bytes": 225636352
+  },
+  "phase_statistics": {
+    "preprocessing_ms": {
+      "median_ms": 8.177899988368154,
+      "mean_ms": 8.624084997669948,
+      "p95_ms": 12.143564998405054,
+      "p99_ms": 13.941297024139205
+    },
+    "tile_extraction_ms": {
+      "median_ms": 0.5029499588999897,
+      "mean_ms": 0.5156124815888082,
+      "p95_ms": 0.6070899631595239,
+      "p99_ms": 0.6547148851677775
+    },
+    "inference_ms": {
+      "median_ms": 35.474150034133345,
+      "mean_ms": 35.56075584153101,
+      "p95_ms": 36.42121993761975,
+      "p99_ms": 37.1652450109832
+    },
+    "stitching_ms": {
+      "median_ms": 2.228699915576726,
+      "mean_ms": 1.9916741647951615,
+      "p95_ms": 2.552329981699586,
+      "p99_ms": 2.6868389389710505
+    },
+    "postprocessing_ms": {
+      "median_ms": 56.858700001612306,
+      "mean_ms": 56.961318335379474,
+      "p95_ms": 64.07412499538623,
+      "p99_ms": 68.22290499287192
+    },
+    "encoder_pipe_wait_ms": {
+      "median_ms": 0.3383999865036458,
+      "mean_ms": 0.3810233320109546,
+      "p95_ms": 0.5447400122648105,
+      "p99_ms": 0.6442010158207268
+    },
+    "decoder_pipe_wait_ms": {
+      "median_ms": 1.1829999857582152,
+      "mean_ms": 2.0206366660810695,
+      "p95_ms": 2.063014986924827,
+      "p99_ms": 2.333771964185871
+    },
+    "frame_total_ms": {
+      "median_ms": 106.84530000435188,
+      "mean_ms": 107.46512916715194,
+      "p95_ms": 114.62257001549006,
+      "p99_ms": 119.46110400836915
+    }
+  },
+  "phase_sample_scope": "last 120 frames; bounded storage",
+  "inference_only_theoretical_fps": 28.120887094084512,
+  "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
+  "pipe_timings": "read/write blocking time, not isolated hardware codec execution time"
+}

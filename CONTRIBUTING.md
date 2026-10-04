@@ -1,6 +1,6 @@
 # Contributing
 
-Keep changes focused on reproducible single-image inference. Include actual local
+Keep changes focused on reproducible image and video enhancement. Include actual local
 evidence for claims about NPU assignment, speed, quality, or compatibility.
 
 ## Development
@@ -24,6 +24,8 @@ test skips if weights are absent. NPU tests are separate and require the real mo
 ```powershell
 python scripts/download_model.py
 python -m pytest -m npu
+python scripts/download_ffmpeg.py
+python -m pytest -m video_hw
 npu-sr doctor
 npu-sr upscale examples/input.png -o outputs/npu.png --device npu --verbose
 npu-sr benchmark examples/input.png --runs 30 --json outputs/results.json

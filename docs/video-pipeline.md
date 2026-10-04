@@ -30,6 +30,7 @@ The output is written to a unique sibling temporary file. Success requires:
 - Encoded frame count equals the number processed; metadata count and source
   duration are checked when available.
 - Resolution is exactly twice the input, with the same framerate and expected duration.
+- Actual output timestamps retain the source cadence, without gaps or reordering.
 - Copied audio survives when the source has audio.
 
 Only then is the output published. An existing output requires `--overwrite`;

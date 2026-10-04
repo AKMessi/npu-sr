@@ -1,0 +1,1523 @@
+{
+  "schema_version": 3,
+  "environment": {
+    "npu_sr_version": "0.3.0",
+    "timestamp": "2026-10-04T00:48:33.680506+00:00",
+    "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+    "working_tree_dirty": false,
+    "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+    "os": "Windows",
+    "architecture": "ARM64",
+    "python": "3.12.0",
+    "software_versions": {
+      "npu-sr": "0.3.0",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "onnx": "1.23.1",
+      "onnxruntime-windowsml": "1.25.2.202605110140",
+      "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+      "winrt-runtime": "3.2.1"
+    },
+    "power": "not measured",
+    "background_processes": "uncontrolled",
+    "power_state": {
+      "ac_line": "battery",
+      "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+      "battery_percent": 18
+    },
+    "qnn_catalog_package": "2.2480.53.0",
+    "windows_build": 26200,
+    "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+    "npu_driver": "30.0.219.1000"
+  },
+  "provenance": {
+    "source": "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.mov.zip",
+    "source_sha256": "d87a41de040d3814dbde143e9ab85ef122caf22265f660b0bebf476cd8b357a5",
+    "attribution": "Blender Foundation / mango.blender.org",
+    "license": "CC-BY-3.0",
+    "duration_seconds": 4,
+    "preparation": "24 FPS -> 30 FPS by 1.25x retiming; center crop after aspect-preserving scale; FFV1 reference, H264 CRF10 LR",
+    "clips": [
+      {
+        "name": "faces",
+        "source_start_seconds": 32,
+        "reference_sha256": "1e431adf123d13730ee93b64e9f4007b612f4b394852e56cfe9838974b328aa2",
+        "inputs": {
+          "640x360": {
+            "file": "faces-640x360.mp4",
+            "sha256": "9489171bae082448189c72860c6f7348f9b31bae339d05add3fc3f4be02d4a1a"
+          },
+          "960x540": {
+            "file": "faces-960x540.mp4",
+            "sha256": "4fd3ee7f031d9dad5779da248c29e82e5529b4ad2c8830087b0c24ce56ecd14e"
+          },
+          "1280x720": {
+            "file": "faces-1280x720.mp4",
+            "sha256": "0e8a7d1be194902f299a0648dc2999ec45733b025033b0cb314afffc6347f0af"
+          }
+        }
+      },
+      {
+        "name": "scene",
+        "source_start_seconds": 10,
+        "reference_sha256": "90d9d75a0fa38786ea698f75b3a1d25a5c95e0ea70d6ddf38848eb4e546d1708",
+        "inputs": {
+          "640x360": {
+            "file": "scene-640x360.mp4",
+            "sha256": "e579bde2692dc9e136c465b70f8e52f0ca9321d26bf956807b2d63819ec52490"
+          },
+          "960x540": {
+            "file": "scene-960x540.mp4",
+            "sha256": "8d0e936d6bef3d266df275dcdb4f1af44cfc65cc90ab928b4f15ee11b14b8bf5"
+          },
+          "1280x720": {
+            "file": "scene-1280x720.mp4",
+            "sha256": "3fea30119a28a8db40580663161fe316497b298718fd494c2e8486ff152bb799"
+          }
+        }
+      },
+      {
+        "name": "motion",
+        "source_start_seconds": 124,
+        "reference_sha256": "701e358cc43fa837d89a1d8a5cf0477c59a36b39acc2bd855d84e27ad159437c",
+        "inputs": {
+          "640x360": {
+            "file": "motion-640x360.mp4",
+            "sha256": "99ed0e17f7a8ca0633a4f04886321bd1b5b288c17a70c90ad750e2b7364554c3"
+          },
+          "960x540": {
+            "file": "motion-960x540.mp4",
+            "sha256": "e10a8d39572af4b8e983d145bcdd5d144c60efbed7c7e8f0e7944e216f3de509"
+          },
+          "1280x720": {
+            "file": "motion-1280x720.mp4",
+            "sha256": "bc39d51eb4b7405a7ceac531b087d0966959864fd1dfd6d55efb809bedd40b84"
+          }
+        }
+      },
+      {
+        "name": "texture",
+        "source_start_seconds": null,
+        "reference_sha256": "0b3c7aa7bea3a437017ba5ebb7ad5e69971c4cf15e3f436c1894b02f46703f4e",
+        "inputs": {
+          "640x360": {
+            "file": "texture-640x360.mp4",
+            "sha256": "20dcc3ad127d61e1b056f94b4d8e76d3792be8eeac68dfa5bf99efdc54a39bea"
+          },
+          "960x540": {
+            "file": "texture-960x540.mp4",
+            "sha256": "d090af03f438358223f228b6bd5653d6667a10d75e7224b8ee1d3dfd71b7a52e"
+          },
+          "1280x720": {
+            "file": "texture-1280x720.mp4",
+            "sha256": "447b609fb51271e9a6d2d0d7a6eb3a616a960dd6519747bd7f1590a76bd8d1e9"
+          }
+        }
+      }
+    ]
+  },
+  "complete": true,
+  "results": [
+    {
+      "clip": "faces",
+      "model": "bicubic",
+      "execution": {
+        "method": "FFmpeg bicubic",
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "schema_version": 3,
+      "output_sha256": "63e57e7e4450d87caee3f984550836960b096018675ea16ad10fc1ae5f93d045",
+      "reference_sha256": "1e431adf123d13730ee93b64e9f4007b612f4b394852e56cfe9838974b328aa2",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 39.41047658980267,
+          "ssim_y": 0.9699814586186499,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 39.12527534939752,
+          "ssim_y": 0.9638215205692547,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 39.72273069307148,
+          "ssim_y": 0.9710376851525284,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 39.70039157215878,
+          "ssim_y": 0.9710046391445906,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 38.52257463693104,
+          "ssim_y": 0.9594735480004358,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 39.2059847018763,
+          "ssim_y": 0.9678249126714781,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 39.23694146883817,
+          "ssim_y": 0.9685527773870243,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 38.48099430688241,
+          "ssim_y": 0.9594501738914459,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 39.265848375965945,
+          "ssim_y": 0.9685427748461505,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 39.368898491369826,
+          "ssim_y": 0.9689605033589634,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 39.204011618629416,
+      "mean_ssim_y": 0.9668649993640521,
+      "temporal_residual_change": 0.0018292489837285007,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 89.960156,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "faces",
+      "model": "espcn-x2-256",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "end_to_end_fps": 4.347281085965747
+      },
+      "schema_version": 3,
+      "output_sha256": "ed7135ff29956736135148f682f20969013d4a0e1d69c6dbc5ce9de09d2b90a4",
+      "reference_sha256": "1e431adf123d13730ee93b64e9f4007b612f4b394852e56cfe9838974b328aa2",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 39.78418080266939,
+          "ssim_y": 0.9705766630905582,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 39.324992165814926,
+          "ssim_y": 0.9633325561141023,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 40.09300515124339,
+          "ssim_y": 0.9715446011233168,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 40.04550674018607,
+          "ssim_y": 0.9710130462335638,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 38.88425625823765,
+          "ssim_y": 0.9601384111566788,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 39.58485030592592,
+          "ssim_y": 0.9680248263803509,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 39.702222757484094,
+          "ssim_y": 0.9692829783113276,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 38.83564148464505,
+          "ssim_y": 0.9595182206028428,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 39.661759041078206,
+          "ssim_y": 0.9687921718662539,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 39.77739251371829,
+          "ssim_y": 0.9691443850403691,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 39.56938072210029,
+      "mean_ssim_y": 0.9671367859919364,
+      "temporal_residual_change": 0.0018546343255184028,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 90.739036,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "faces",
+      "model": "fsrcnn-x2",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "end_to_end_fps": 3.329693229450373
+      },
+      "schema_version": 3,
+      "output_sha256": "af4e722aecb36bfca18b9e5f8ba7e7b672097728941a3b8f78ecfc1b8fe028f3",
+      "reference_sha256": "1e431adf123d13730ee93b64e9f4007b612f4b394852e56cfe9838974b328aa2",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 39.720218509078805,
+          "ssim_y": 0.9709376712210763,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 39.24264639389476,
+          "ssim_y": 0.963547757753142,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 39.95409418933214,
+          "ssim_y": 0.9711378339630665,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 39.96200166786535,
+          "ssim_y": 0.9710643539320609,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 38.812377762503864,
+          "ssim_y": 0.9597074888793619,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 39.59999458932499,
+          "ssim_y": 0.9681091881967218,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 39.71170623899856,
+          "ssim_y": 0.9692100608640751,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 38.855992943293764,
+          "ssim_y": 0.9598093093777555,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 39.65030712230086,
+          "ssim_y": 0.968906470587464,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 39.7736421847941,
+          "ssim_y": 0.9691738251933013,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 39.52829816013872,
+      "mean_ssim_y": 0.9671603959968026,
+      "temporal_residual_change": 0.0018484931283583705,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 91.690497,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "scene",
+      "model": "bicubic",
+      "execution": {
+        "method": "FFmpeg bicubic",
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "schema_version": 3,
+      "output_sha256": "1e9f3e78f1e5f49a33dd42ef89c900e01156874a381b715384fdc906675eb93f",
+      "reference_sha256": "90d9d75a0fa38786ea698f75b3a1d25a5c95e0ea70d6ddf38848eb4e546d1708",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 41.893538186054435,
+          "ssim_y": 0.9725610947258596,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 41.89709634015994,
+          "ssim_y": 0.9726412429404544,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 42.37530257894597,
+          "ssim_y": 0.9767499607370382,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 45.030374064125866,
+          "ssim_y": 0.9882358475514448,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 45.39642419322994,
+          "ssim_y": 0.9881441666059317,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 45.70975493018382,
+          "ssim_y": 0.9919357260475388,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 45.03131552555754,
+          "ssim_y": 0.9925801433239845,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 44.453313725405074,
+          "ssim_y": 0.9803444898811107,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 43.54091104521845,
+          "ssim_y": 0.9776198740284159,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 42.521406264441836,
+          "ssim_y": 0.9724943775415003,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 43.78494368533229,
+      "mean_ssim_y": 0.9813306923383278,
+      "temporal_residual_change": 0.001794858773268295,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 94.887226,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "scene",
+      "model": "espcn-x2-256",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "end_to_end_fps": 5.084362238059414
+      },
+      "schema_version": 3,
+      "output_sha256": "c9937587b2927f2b2116a1e342e2acb53f47486ee1993014d0f354d2dd278894",
+      "reference_sha256": "90d9d75a0fa38786ea698f75b3a1d25a5c95e0ea70d6ddf38848eb4e546d1708",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 41.824379445173314,
+          "ssim_y": 0.972276720184569,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 41.71016066142158,
+          "ssim_y": 0.9719657025755568,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 42.11243353963346,
+          "ssim_y": 0.9762886547128053,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 43.86811066962239,
+          "ssim_y": 0.9877552263035891,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 44.05589706662618,
+          "ssim_y": 0.9877948062651211,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 44.028014801521635,
+          "ssim_y": 0.9916354121019764,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 43.84617746757443,
+          "ssim_y": 0.9924273567347348,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 43.88792001061834,
+          "ssim_y": 0.9791403397083572,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 43.03239141648211,
+          "ssim_y": 0.976322770110979,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 42.22073340397918,
+          "ssim_y": 0.971651650068159,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 43.05862184826527,
+      "mean_ssim_y": 0.9807258638765848,
+      "temporal_residual_change": 0.001981461539374737,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 93.025912,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "scene",
+      "model": "fsrcnn-x2",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "end_to_end_fps": 3.0122708392043314
+      },
+      "schema_version": 3,
+      "output_sha256": "2c1f6f77b55726d43ce7d0a434bbd4a461bae4229be582ae7d8c156b57208398",
+      "reference_sha256": "90d9d75a0fa38786ea698f75b3a1d25a5c95e0ea70d6ddf38848eb4e546d1708",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 41.84982931078985,
+          "ssim_y": 0.9730212321323122,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 41.46546500211543,
+          "ssim_y": 0.9714708655160641,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 42.16771739751493,
+          "ssim_y": 0.9769718095977797,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 43.9591864547894,
+          "ssim_y": 0.9873775361727577,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 44.184404047875944,
+          "ssim_y": 0.9875120906645254,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 44.180724545445926,
+          "ssim_y": 0.9913328482288014,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 44.20234604217923,
+          "ssim_y": 0.9916971804124094,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 43.7586878186208,
+          "ssim_y": 0.9787280044120313,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 43.10962427882128,
+          "ssim_y": 0.976774533905553,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 42.486063554906025,
+          "ssim_y": 0.9727475400112131,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 43.13640484530588,
+      "mean_ssim_y": 0.9807633641053448,
+      "temporal_residual_change": 0.002022188771724987,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 94.497716,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "motion",
+      "model": "bicubic",
+      "execution": {
+        "method": "FFmpeg bicubic",
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "schema_version": 3,
+      "output_sha256": "ec2c0bd675448367b60889e17cbea1ed93dac9264ab5a7bd4eeb5d964658d64e",
+      "reference_sha256": "701e358cc43fa837d89a1d8a5cf0477c59a36b39acc2bd855d84e27ad159437c",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 45.43445291055795,
+          "ssim_y": 0.9866685495222796,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 45.773398812042515,
+          "ssim_y": 0.9877846333169159,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 45.1590721738678,
+          "ssim_y": 0.9846351402830434,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 46.31136800029588,
+          "ssim_y": 0.9871585303874262,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 45.90837631691004,
+          "ssim_y": 0.9861944976009546,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 45.13099067497778,
+          "ssim_y": 0.9830734070454329,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 46.507130950327905,
+          "ssim_y": 0.9868270809715998,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 46.9366434746297,
+          "ssim_y": 0.9886711260597988,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 45.81664285400847,
+          "ssim_y": 0.9861669830938247,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 45.965253608309226,
+          "ssim_y": 0.9864162818433103,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 45.894332977592725,
+      "mean_ssim_y": 0.9863596230124585,
+      "temporal_residual_change": 0.001810753686303975,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 96.79221,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "motion",
+      "model": "espcn-x2-256",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "end_to_end_fps": 5.319879570699176
+      },
+      "schema_version": 3,
+      "output_sha256": "9bba803f7c98dd9cdc1c3437ee6ed24d14ba23c1bdacb2fffd944b0c68ebebbe",
+      "reference_sha256": "701e358cc43fa837d89a1d8a5cf0477c59a36b39acc2bd855d84e27ad159437c",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 45.20278643064848,
+          "ssim_y": 0.9865347268154896,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 45.51415113945434,
+          "ssim_y": 0.9876470266591234,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 44.91046777251078,
+          "ssim_y": 0.9844420423385735,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 45.81777643272221,
+          "ssim_y": 0.9866186201110007,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 45.539498848504834,
+          "ssim_y": 0.9859383758744598,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 44.864901014887685,
+          "ssim_y": 0.9828743030675192,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 46.074164796408894,
+          "ssim_y": 0.9863922304602061,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 46.447408874515254,
+          "ssim_y": 0.9882584835516993,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 45.51200988060011,
+          "ssim_y": 0.9859436245031699,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 45.62021184793881,
+          "ssim_y": 0.9861868810141834,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 45.55033770381914,
+      "mean_ssim_y": 0.9860836314395425,
+      "temporal_residual_change": 0.0019378387726618424,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 96.549652,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "motion",
+      "model": "fsrcnn-x2",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "end_to_end_fps": 3.397855003792504
+      },
+      "schema_version": 3,
+      "output_sha256": "3abe1ca3c36ce004b42e8ab55618bf1d0f5315810f773137beac087f0f552ad8",
+      "reference_sha256": "701e358cc43fa837d89a1d8a5cf0477c59a36b39acc2bd855d84e27ad159437c",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.023,
+        "reported_frames": null,
+        "audio": true,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 44.99826598312458,
+          "ssim_y": 0.9864310612251801,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 45.23054217787784,
+          "ssim_y": 0.9875623659821048,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 44.54786578628174,
+          "ssim_y": 0.9839068396924001,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 45.37124593577154,
+          "ssim_y": 0.9863818386781844,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 45.104265703356894,
+          "ssim_y": 0.9854129574969338,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 44.44503486541393,
+          "ssim_y": 0.9823890133638837,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 45.60794576810798,
+          "ssim_y": 0.9861711507790327,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 45.80536153812061,
+          "ssim_y": 0.9877987077457386,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 44.89702465943263,
+          "ssim_y": 0.9854381182052532,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 44.99206233709736,
+          "ssim_y": 0.9856268143099163,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 45.099961475458514,
+      "mean_ssim_y": 0.9857118867478629,
+      "temporal_residual_change": 0.0019463113976953123,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 96.950163,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "texture",
+      "model": "bicubic",
+      "execution": {
+        "method": "FFmpeg bicubic",
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "schema_version": 3,
+      "output_sha256": "6774009b4c9d53cbfb5efb5eb9c9d5b26cbe9ebd5637cf7a2e58113155116ba5",
+      "reference_sha256": "0b3c7aa7bea3a437017ba5ebb7ad5e69971c4cf15e3f436c1894b02f46703f4e",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": null,
+        "audio": false,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 35.41397721796598,
+          "ssim_y": 0.990838130296023,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 35.37152651639512,
+          "ssim_y": 0.9909933732720373,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 35.34541118056579,
+          "ssim_y": 0.9908176998725322,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 36.236593739065704,
+          "ssim_y": 0.9907860685395824,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 36.276551552856546,
+          "ssim_y": 0.9906579408442288,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 35.589494385635746,
+          "ssim_y": 0.9905199662479139,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 35.57534335510922,
+          "ssim_y": 0.9908900939042087,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 35.546381057887736,
+          "ssim_y": 0.9910503501361259,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 35.50301419373132,
+          "ssim_y": 0.9908833475007928,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 35.514427175690734,
+          "ssim_y": 0.9907833764581041,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 35.63727203749039,
+      "mean_ssim_y": 0.9908220347071548,
+      "temporal_residual_change": 0.00020868286371942648,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 85.66554,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "texture",
+      "model": "espcn-x2-256",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "e6072581504e7384162179cff4e6bbcd19eea4b5a01382b6a71c5e48183fb422",
+        "end_to_end_fps": 5.239362182403141
+      },
+      "schema_version": 3,
+      "output_sha256": "ffb003314f0e60fe08c17e378af7a1b512495eb5bc96db5501bce2d0398d262e",
+      "reference_sha256": "0b3c7aa7bea3a437017ba5ebb7ad5e69971c4cf15e3f436c1894b02f46703f4e",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": null,
+        "audio": false,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 36.337767064986,
+          "ssim_y": 0.9762710916332844,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 36.35196358000376,
+          "ssim_y": 0.9765947317982664,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 36.1990950526637,
+          "ssim_y": 0.976354177703597,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 36.92404379711804,
+          "ssim_y": 0.975713338078893,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 36.888840298103325,
+          "ssim_y": 0.9753097751593396,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 36.29154798417766,
+          "ssim_y": 0.9754967803528757,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 36.37078224887384,
+          "ssim_y": 0.9761450933509069,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 36.45271082826505,
+          "ssim_y": 0.9766024980091563,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 36.46185606768736,
+          "ssim_y": 0.9765331761526352,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 36.432544787269016,
+          "ssim_y": 0.9763095420240502,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 36.47111517091478,
+      "mean_ssim_y": 0.9761330204263003,
+      "temporal_residual_change": 0.00031978988950563664,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 78.361939,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    },
+    {
+      "clip": "texture",
+      "model": "fsrcnn-x2",
+      "execution": {
+        "neural": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "context_cache": "hit"
+        },
+        "codecs": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "model_sha256": "006f4bdb7c952f5849edb5987fa00141ace5e8dc7a92872cf15b7a3e4efb8252",
+        "end_to_end_fps": 3.1823325974470538
+      },
+      "schema_version": 3,
+      "output_sha256": "30da7e4dd35598005dc42f8a219a883a56a336e40e58ca4d3777a07f80d80242",
+      "reference_sha256": "0b3c7aa7bea3a437017ba5ebb7ad5e69971c4cf15e3f436c1894b02f46703f4e",
+      "properties": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": null,
+        "audio": false,
+        "codec": "ffv1"
+      },
+      "decoded_frames": 120,
+      "sample_stride": 12,
+      "samples": [
+        {
+          "frame": 0,
+          "psnr_y_db": 36.66284869226483,
+          "ssim_y": 0.9905597314920354,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 12,
+          "psnr_y_db": 36.64677520561158,
+          "ssim_y": 0.9879674589408604,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 24,
+          "psnr_y_db": 36.46897991488739,
+          "ssim_y": 0.9875067353086968,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 36,
+          "psnr_y_db": 37.23161459296427,
+          "ssim_y": 0.9881250183258926,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 48,
+          "psnr_y_db": 37.20004774715959,
+          "ssim_y": 0.9882643052408595,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 60,
+          "psnr_y_db": 36.601755155966366,
+          "ssim_y": 0.9881858154288172,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 72,
+          "psnr_y_db": 36.697000400755016,
+          "ssim_y": 0.9870402519574757,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 84,
+          "psnr_y_db": 36.82906222752018,
+          "ssim_y": 0.9877461479453199,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 96,
+          "psnr_y_db": 36.86842798271855,
+          "ssim_y": 0.9868979600829082,
+          "border_hr_pixels": 2
+        },
+        {
+          "frame": 108,
+          "psnr_y_db": 36.82541005337207,
+          "ssim_y": 0.9875231758165741,
+          "border_hr_pixels": 2
+        }
+      ],
+      "sample_scope": "up to last 8192 sampled frames",
+      "mean_psnr_y_db": 36.80319219732199,
+      "mean_ssim_y": 0.9879816600539438,
+      "temporal_residual_change": 0.00041478542103626616,
+      "temporal_metric": "mean absolute consecutive reconstruction-residual change /255 at 256x144; unregistered, no motion compensation",
+      "vmaf": {
+        "mean": 79.188956,
+        "model": "vmaf_v0.6.1",
+        "libvmaf_version": "86da14d",
+        "sample_stride": 12,
+        "samples": 11
+      }
+    }
+  ],
+  "methodology": "delivered AV1 hardware output at 8M vs aligned FFV1 HR; unconstrained VBR, camera_record scenario; full-range Rec601 Y, shave2, every12th frame; temporal residual everyframe"
+}

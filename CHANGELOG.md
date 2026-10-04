@@ -9,6 +9,9 @@
 - Actual CFR timestamp validation, frame-count/framerate/duration/resolution checks and bounded diagnostics.
 - Complete-video trials, aligned delivered-video PSNR/SSIM and a documented temporal residual diagnostic.
 - Ordinary CPU video integration and separate Snapdragon video hardware tests.
+- Explicit Media Foundation unconstrained VBR / camera_record avoids observed scene-cut frame loss;
+  delivered AV1 quality, native VMAF, three-trial video data and image regression are published.
+- Battery saver activation is disclosed with individual trials; no energy claims.
 - No sustained real-time claim; that remains the v0.4 acceptance gate.
 
 ## 0.2.0 — 2026-10-04

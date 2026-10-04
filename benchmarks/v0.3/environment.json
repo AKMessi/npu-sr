@@ -1,0 +1,32 @@
+{
+  "npu_sr_version": "0.3.0",
+  "timestamp": "2026-10-04T01:00:43.666559+00:00",
+  "git_commit": "bd389bb3750b8ddda02c12eee92d6ae85bc5abee",
+  "working_tree_dirty": false,
+  "python_source_sha256": "cd5c96ff136cf5ca89c799deb1790f1fb869767f998c3def6dce7fb10915b44c",
+  "os": "Windows",
+  "architecture": "ARM64",
+  "python": "3.12.0",
+  "software_versions": {
+    "npu-sr": "0.3.0",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0",
+    "onnx": "1.23.1",
+    "onnxruntime-windowsml": "1.25.2.202605110140",
+    "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+    "winrt-runtime": "3.2.1"
+  },
+  "power": "not measured",
+  "background_processes": "uncontrolled",
+  "power_state": {
+    "ac_line": "battery",
+    "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "battery_percent": 15
+  },
+  "qnn_catalog_package": "2.2480.53.0",
+  "windows_build": 26200,
+  "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+  "npu_driver": "30.0.219.1000",
+  "ffmpeg_version": "ffmpeg version n9.0.2-22-g46d8f462ee-20261003 Copyright (c) 2000-2026 the FFmpeg developers",
+  "ffmpeg_sha256": "7b864ad34b2aed471358573de83966e2787d88461c50e4ed6bf7d8d610017684"
+}
