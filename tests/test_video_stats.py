@@ -60,7 +60,8 @@ def test_presets_materialize_and_explicit_options_override():
     realtime = settings_for_preset("realtime", {})
     assert realtime.device == "npu" and realtime.encode == "hardware" and realtime.codec == "av1"
     assert realtime.frame_format == "nv12" and realtime.pipeline_depth == 2
-    assert realtime.neural_strength == 0.5 and realtime.npu_performance == "burst"
+    assert realtime.neural_strength == 1.0 and realtime.npu_performance == "burst"
+    assert realtime.model == "quicksrnet-small-y-x2"
     overridden = settings_for_preset("realtime", {"codec": "hevc", "frame_format": "rgb24"})
     assert overridden.codec == "hevc" and overridden.frame_format == "rgb24"
 

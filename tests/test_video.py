@@ -239,7 +239,8 @@ def test_realtime_planar_context_reuse_and_cancellation(video_source, tmp_path, 
         assert report["output_timestamps_validated"] and report["dropped_frames"] == 0
         assert report["frame_format"] == "nv12"
         assert report["npu_performance_requested"] == "burst"
-        assert report["neural_strength"] == 0.5
+        assert report["model"] == "quicksrnet-small-y-x2"
+        assert report["neural_strength"] == 1.0
         assert max(report["observed_queue_peaks"].values()) <= 2
         if index:
             assert report["execution_evidence"]["context_cache"] == "hit"

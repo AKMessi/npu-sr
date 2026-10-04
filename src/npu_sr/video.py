@@ -76,10 +76,10 @@ PRESETS = {
         "pipeline_depth": 2,
     },
     "realtime": {
-        "model": "espcn-x2-256",
+        "model": "quicksrnet-small-y-x2",
         "frame_format": "nv12",
         "npu_performance": "burst",
-        "neural_strength": 0.5,
+        "neural_strength": 1.0,
         "pipeline_depth": 2,
         "device": "npu",
         "decode": "hardware",

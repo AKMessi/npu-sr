@@ -11,14 +11,18 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**v0.4 adds sustained realtime video processing.** Its final measured configuration
-and quality tradeoffs are in the [v0.4 report](benchmarks/v0.4/summary.md).
+**v0.5 improves delivered video quality with QuickSRNet Small**, a luminance
+adaptation without a bicubic blend.
 
-**960×540 → 1920×1080 @ 30 FPS: 34.3 FPS sustained**,
-three 120-second sources / about 105 seconds processing each, no lost frames.
-QNN and hardware codecs verified. Fixed 0.5 neural blend, AV1 8M, two-frame queues.
-Streaming processing excludes the separately disclosed post-encode file audit,
-which makes total CLI elapsed time longer than the source. Power is not measured.
+**960×540 → 1920×1080 @ 30 FPS: 52.6 FPS median streaming throughput**,
+three 120-second sources, every frame enhanced, strict QNN and hardware codecs
+verified. On 24 predeclared clips, including 12 untouched holdout clips, it beats
+bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF** on average.
+See the [v0.5 report](benchmarks/v0.5/summary.md) for per-clip results and settings.
+
+The expensive final audit remains: whole-command time is about 149–156 seconds
+for a 120-second source. Streaming throughput is not yet whole-command realtime.
+Results are from one laptop/model/corpus; power is not measured.
 
 ## Results and examples
 
@@ -28,9 +32,9 @@ The included MIT test card and actual QNN outputs:
 | --- | --- | --- |
 | ![Input](examples/input.png) | ![Bicubic](examples/bicubic_2x.png) | ![NPU result](examples/npu_sr_2x.png) |
 
-Actual video output crops (input / bicubic / QNN realtime):
+Measured v0.5 crops (reference / input / bicubic / QuickSRNet QNN):
 
-![Measured video comparison](examples/realtime-comparison.gif)
+![Measured video comparison](examples/quality-v05.gif)
 
 This is a 6 FPS preview of the measured 30 FPS outputs; the input is enlarged
 with nearest-neighbor sampling for display. Source: *Tears of Steel*, Blender
@@ -42,15 +46,17 @@ Crop, retiming, enhancement and GIF conversion are adaptations.
 Lightweight models sharpen some edges but can ring, blur texture or flicker.
 No missing-detail reconstruction or state-of-the-art quality is promised.
 
-The realtime network beats bicubic on the five-image BSDS research subset:
-**28.31 dB / 0.8463 SSIM**, versus **27.95 dB / 0.8399**. FSRCNN reaches
-**28.48 dB / 0.8517**. Delivered video quality is content dependent; consult the
-paired PSNR/SSIM/VMAF results before choosing a preset. Power is **not measured**.
+The v0.5 delivered-video corpus averages **39.87 dB / 0.97103 SSIM / 91.57 VMAF**
+for QuickSRNet Small, versus **37.87 dB / 0.96191 / 85.62** for bicubic, with the
+same AV1 hardware encoding. The reference-based temporal residual diagnostic
+increases 2.17%; it is a project diagnostic, not a perceptual metric. Per-frame
+models can still flicker. The pinned VMAF NEG check also favors the new model.
 
 All results describe one machine, declared models/inputs/settings, and three
 performance trials; they are not general Snapdragon claims. Historical reports:
 [v0.1](benchmarks/snapdragon-x-plus.json) · [v0.2](benchmarks/v0.2/summary.md) ·
-[v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md).
+[v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md) ·
+[v0.5](benchmarks/v0.5/summary.md).
 
 ## Hardware and prerequisites
 
@@ -89,7 +95,7 @@ py -3.12-arm64 -m venv .venv
 python -m pip install --upgrade pip
 python -m pip install -e .
 python scripts/download_model.py
-npu-sr models download espcn-x2-256
+npu-sr models download quicksrnet-small-y-x2
 npu-sr doctor
 npu-sr upscale examples/input.png -o output.png --device npu
 ```
@@ -210,10 +216,14 @@ Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.
 - [x] v0.2: improved models, denoising, tiled inference, strict GPU comparison, quality suite
 - [x] v0.3: in-memory video, FFmpeg, proven hardware decode/encode, audio and output validation
 - [x] v0.4: sustained realtime video, bounded pipeline, measured quality/speed tradeoffs
+- [x] v0.5: expanded quality corpus, QuickSRNet, improved delivered quality
+- [ ] v0.6: cheaper default validation and CPU/memory profiling
+- [ ] v0.7–v1: temporal research, installation UX and long-run reliability
 - [ ] Future: temporal models, live sources, perceptual preprocessing, further codec/NPU experiments
 
 Our code is [MIT](LICENSE). ESPCN/FSRCNN/LapSRN upstream weights are Apache-2.0;
-KAIR DnCNN is MIT. Weights are not committed. Microsoft, Qualcomm and FFmpeg
+KAIR DnCNN is MIT; Qualcomm QuickSRNet checkpoints are BSD-3-Clause.
+Weights are not committed. Microsoft, Qualcomm and FFmpeg
 retain their own terms. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 [Contributing](CONTRIBUTING.md) · [security reporting](SECURITY.md)

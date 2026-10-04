@@ -9,9 +9,9 @@ are reported separately, alongside total function elapsed time. Model-only throu
 
 ```powershell
 python scripts/download_ffmpeg.py
-npu-sr models download espcn-x2-256
+npu-sr models download quicksrnet-small-y-x2
 python scripts/download_video_benchmarks.py --sustained --duration 120
-python scripts/run_realtime_benchmarks.py --trials 3
+python scripts/run_selected_sustained.py --directory <prepared-directory> --output-directory <output-directory> --json outputs/sustained.json
 python scripts/download_benchmarks.py
 npu-sr models download fsrcnn-x2
 python scripts/download_video_benchmarks.py
@@ -43,11 +43,11 @@ counts and validated timestamp cadence. Short clips cannot pass this gate.
 ## Presets
 
 All settings are printed; explicit options override them. Consult the release
-[quality/speed report](../benchmarks/v0.4/summary.md) before choosing one.
+[quality/speed report](../benchmarks/v0.5/summary.md) before choosing one.
 
 | Preset | Model | Frame path | NPU mode | Queue depth |
 | --- | --- | --- | --- | ---: |
-| realtime | ESPCN 256-pixel cores | native NV12, fixed 0.5 neural strength | burst | 2 |
+| realtime | QuickSRNet Small Y, 256-pixel cores | native NV12, unblended | burst | 2 |
 | balanced | ESPCN 256-pixel cores | RGB | sustained_high_performance | 2 |
 | quality | FSRCNN | RGB | sustained_high_performance | 2 |
 
@@ -67,9 +67,12 @@ bicubic baseline (0 < strength <= 1). Every tile still runs through the network.
 This experimental override has separate quality and speed costs; it must not be
 represented by a benchmark obtained at another strength. It uses float buffers,
 replicated edges and no intermediate uint8 rounding, which differ slightly from
-Pillow/FFmpeg bicubic. The preset selects fixed strength 0.5; strength 1 is unblended. The selection
-recovers mean PSNR/SSIM on the delivered four-clip suite at a measured compute cost;
-VMAF still favors bicubic on average. No universal perceptual gain is claimed.
+Pillow/FFmpeg bicubic. The v0.5 preset selects strength 1 (unblended). The locked 24-clip suite improves
+mean PSNR/SSIM/VMAF over equally encoded bicubic. Strength 0.5 and 0.75 had lower
+development scores than 1. Historical v0.4 used ESPCN at strength 0.5 and lost
+average VMAF on its smaller corpus; those reports and tags remain unchanged.
+The v0.5 native coded-Y protocol differs from v0.4 RGB metrics, so absolute
+scores across these releases are not directly comparable.
 
 ## Parallelism and measurements
 

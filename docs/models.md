@@ -12,6 +12,8 @@ before session creation. No model weights are included in git or wheels.
 | fsrcnn-small-x2 | 2x SR | 256 | 4 | Small subpixel FSRCNN candidate |
 | fsrcnn-x2 | 2x SR | 256 | 6 | Modest quality improvement in the tested subset |
 | lapsrn-x2 | 2x SR | 256 | 12 | Residual Laplacian candidate; slower, not recommended over FSRCNN |
+| quicksrnet-small-y-x2 | 2x SR | 256 | 4 | v0.5 realtime default, neutral-RGB luminance adaptation |
+| quicksrnet-medium-y-x2 | 2x SR | 256 | 7 | Higher quality, roughly twice small model compute |
 | dncnn-25 | Denoise | 256 | 17 | 17 layers; luminance, Gaussian sigma 25/255 |
 
 All use normalized full-range luminance, float32 ONNX, batch one, and opset 13.
@@ -43,14 +45,12 @@ reader only accepts its known legacy float storage layout and an explicit
 allowlist of pickle globals; acquisition verifies the exact hash first.
 
 
-v0.4 keeps these exact model files and hashes. Larger 512-core/full-frame graphs
-were tested with strict QNN proof but slower than 256-core ESPCN on the declared
-540p workload; they are not additional downloads. The realtime preset uses the
-existing ESPCN network on native video luminance with declared fixed blending.
-The highest image-subset scorer is not automatically the fastest or best delivered
-video path. See [realtime](realtime.md) for the measured preset choices.
+The v0.5 realtime preset selects the small QuickSRNet adaptation after locked
+holdout evaluation. Image commands retain their existing ESPCN default; explicit
+`--model` selects any registry option. Balanced/quality presets retain historical
+RGB settings and are not advertised as beating the new realtime model on video.
 
-## Development candidates (not preset defaults)
+## QuickSRNet luminance exports
 
 `quicksrnet-small-y-x2` and `quicksrnet-medium-y-x2` are reproducible neutral-RGB
 luminance adaptations of Qualcomm's BSD 3-Clause x2 checkpoints. Download with
@@ -65,5 +65,8 @@ input identically to the original network. A NumPy reference test independently
 checks convolution, Clip order and RGB pixel-shuffle phases against ONNX CPU.
 No PyTorch dependency is added. Strict QNN tests still apply to every candidate.
 
-These candidates do not change the v0.4 realtime preset. Expanded development
-and holdout quality evaluation must pass before selecting a new default.
+Small has 22,860 parameters in the original RGB checkpoint. Folding repeated-Y
+input leaves 22,284 learned values, plus 48 fixed luminance mixing coefficients
+and two Clip constants. Medium has 50,604 original parameters. Model provenance,
+export hashes, comparative results and limitations are in the
+[v0.5 report](../benchmarks/v0.5/summary.md).

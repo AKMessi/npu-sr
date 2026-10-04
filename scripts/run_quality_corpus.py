@@ -25,6 +25,7 @@ def run(args: argparse.Namespace) -> None:
         selection = json.loads(args.selection_lock.read_text(encoding="utf-8"))
         if (
             args.models != ["bicubic", selection["model"]]
+            or sha256(args.manifest) != selection["corpus_definition_sha256"]
             or args.strength != selection["settings"]["neural_strength"]
             or args.frame_format != selection["settings"]["frame_format"]
             or sha256(resolve_model(selection["model"])) != selection["model_sha256"]

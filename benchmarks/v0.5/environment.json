@@ -1,0 +1,320 @@
+{
+  "scope": "actual development measurements; versions and dirty/source hashes retained",
+  "runtime": {
+    "npu_sr_version": "0.4.0",
+    "timestamp": "2026-10-04T09:59:25.220374+00:00",
+    "git_commit": "e8d657cd37c029d67153620d0413d777d9e8aaac",
+    "working_tree_dirty": true,
+    "python_source_sha256": "22657cafd5ed25f2b7386c27fe8857746af17297537be89dc10553f37facb571",
+    "os": "Windows",
+    "architecture": "ARM64",
+    "python": "3.12.0",
+    "software_versions": {
+      "npu-sr": "0.4.0",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "onnx": "1.23.1",
+      "onnxruntime-windowsml": "1.25.2.202605110140",
+      "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+      "winrt-runtime": "3.2.1"
+    },
+    "power": "not measured",
+    "background_processes": "uncontrolled",
+    "power_state": {
+      "ac_line": "battery",
+      "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+      "battery_percent": 40,
+      "energy_saver": false
+    },
+    "qnn_catalog_package": "2.2480.53.0",
+    "windows_build": 26200,
+    "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+    "npu_driver": "30.0.219.1000"
+  },
+  "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+  "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+  "power_not_measured": true,
+  "quality_measurement_environments": {
+    "selected-development": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:13:13.998893+00:00",
+      "git_commit": "886e23fdcc583066b91c4a5e74bbef0afb9114e7",
+      "working_tree_dirty": true,
+      "python_source_sha256": "bfe64493a81d0c1b9e8986017d2cf7cf87c5ef8047947d41106572d6975ae7b2",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 67,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "unavailable",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "selected-holdout": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:42:34.343871+00:00",
+      "git_commit": "e8d657cd37c029d67153620d0413d777d9e8aaac",
+      "working_tree_dirty": false,
+      "python_source_sha256": "22657cafd5ed25f2b7386c27fe8857746af17297537be89dc10553f37facb571",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 49,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "unavailable",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "other-models": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:18:27.172010+00:00",
+      "git_commit": "886e23fdcc583066b91c4a5e74bbef0afb9114e7",
+      "working_tree_dirty": true,
+      "python_source_sha256": "d59b1aed92818d245228f4a632741e3219c963f875bb2006e516bd21c4499bfb",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 64,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "unavailable",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "published-espcn-blend": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:26:13.657730+00:00",
+      "git_commit": "886e23fdcc583066b91c4a5e74bbef0afb9114e7",
+      "working_tree_dirty": true,
+      "python_source_sha256": "d59b1aed92818d245228f4a632741e3219c963f875bb2006e516bd21c4499bfb",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 59,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "unavailable",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "small-strength-0.5": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:17:40.674104+00:00",
+      "git_commit": "886e23fdcc583066b91c4a5e74bbef0afb9114e7",
+      "working_tree_dirty": true,
+      "python_source_sha256": "f054ae5a0f9623e69b450ce14825fd86852f79838eb9800a01c95aa6d5d92f54",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 65,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "unavailable",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "small-strength-0.75": {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:26:41.936655+00:00",
+      "git_commit": "886e23fdcc583066b91c4a5e74bbef0afb9114e7",
+      "working_tree_dirty": true,
+      "python_source_sha256": "d59b1aed92818d245228f4a632741e3219c963f875bb2006e516bd21c4499bfb",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 59,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    }
+  },
+  "performance_trial_environments": [
+    {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T09:59:25.220374+00:00",
+      "git_commit": "e8d657cd37c029d67153620d0413d777d9e8aaac",
+      "working_tree_dirty": true,
+      "python_source_sha256": "22657cafd5ed25f2b7386c27fe8857746af17297537be89dc10553f37facb571",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 40,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T10:01:55.047487+00:00",
+      "git_commit": "e8d657cd37c029d67153620d0413d777d9e8aaac",
+      "working_tree_dirty": true,
+      "python_source_sha256": "22657cafd5ed25f2b7386c27fe8857746af17297537be89dc10553f37facb571",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 40,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    {
+      "npu_sr_version": "0.4.0",
+      "timestamp": "2026-10-04T10:04:25.806048+00:00",
+      "git_commit": "e8d657cd37c029d67153620d0413d777d9e8aaac",
+      "working_tree_dirty": true,
+      "python_source_sha256": "22657cafd5ed25f2b7386c27fe8857746af17297537be89dc10553f37facb571",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "0.4.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "battery",
+        "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+        "battery_percent": 38,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    }
+  ]
+}

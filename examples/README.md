@@ -52,3 +52,22 @@ python scripts/create_video_example.py --report outputs/v04-validation/quality.j
 The script checks the input and delivered output hashes against the supplied
 measurement report. It writes an ignored GIF and first-frame PNG for inspection.
 The published asset was made from `benchmarks/v0.4/quality.json`'s measured files.
+
+## Measured quality comparison (v0.5)
+
+`quality-v05.gif` and its PNG show the same 360×240 crop of the lossless 1080p
+reference, 540p input enlarged with nearest-neighbor, equally AV1-encoded bicubic,
+and unblended QuickSRNet Small Y / strict QNN. The two-second `conversation`
+clip is declared in the 24-clip corpus. Processing retains all 60 frames; the
+preview samples 6 FPS. No extra sharpening or unequal zoom is applied.
+
+Source: *Tears of Steel*, Blender Foundation / mango.blender.org, CC BY 3.0.
+The preview is a CC BY 3.0 adaptation, separately from the MIT code. Changes:
+retiming, crop, downscale, enhancement, labeled comparison and GIF conversion.
+
+```powershell
+python scripts/create_quality_example.py --directory <prepared-quality-directory> --output outputs/quality-v05.gif
+```
+
+The script verifies reference, input and delivered hashes against
+`benchmarks/v0.5/quality.json`. The earlier v0.4 preview remains historical.

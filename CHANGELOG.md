@@ -1,13 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.5.0 — 2026-10-04
 
-- Reproducible BSD-licensed QuickSRNet small/medium neutral-Y candidate exports;
-  existing presets remain unchanged while release quality/performance gates run.
+- Reproducible BSD-licensed QuickSRNet small/medium neutral-Y exports. Realtime
+  now selects unblended small after frozen development/holdout validation.
 - Predeclared 24-clip development/holdout video corpus, native-Y paired quality
   evaluation, secondary VMAF NEG and complete-pair acceptance summaries.
 - Preserve color range/matrix on raw NV12 encoder input as well as output,
   avoiding unintended color conversion when source BT709 metadata is known.
+- All 24 declared clips: average +2.00 dB PSNR, +0.00912 SSIM and +5.95 VMAF
+  versus bicubic; holdout alone +1.81 dB / +0.00869 / +5.47. Secondary NEG also wins.
+- Three 120-second sustained sources: about 52.6 FPS median, strict QNN,
+  D3D11VA and QCOM AV1, no application drops, 43,200 neural calls per trial.
+- Median postprocessing about 7 ms without the old quality-compromise blend.
+  Whole-command time still includes an expensive full-file audit; not yet v1.
 
 ## 0.4.0 — 2026-10-04
 

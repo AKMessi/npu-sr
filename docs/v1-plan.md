@@ -1,7 +1,6 @@
 # v1 engineering gates
 
-This is a temporary working record, not a release promise. Published v0.4 stays
-the default until the stronger quality gates pass. Earlier tags remain immutable.
+This is a temporary working record, not a release promise. The v0.5 realtime selection follows the stronger quality gates. Earlier tags remain immutable.
 
 ## Reproduced baseline (2026-10-04)
 
@@ -14,7 +13,7 @@ the default until the stronger quality gates pass. Earlier tags remain immutable
 - Median postprocessing 16.75 ms, inference 10.87 ms; forensic output audit 72.5 s.
 - [Raw baseline](../benchmarks/v0.5/baseline-v0.4.json).
 
-## A / v0.5 — quality first (active)
+## A / v0.5 — quality first (validation complete; release checks active)
 
 1. Predeclare a diverse legal corpus and development/holdout split before candidate
    scoring. Preserve source hashes, native references, crop/time, degradation,
@@ -91,3 +90,16 @@ the default until the stronger quality gates pass. Earlier tags remain immutable
 - [Qualcomm QuickSRNetSmall source and checkpoint](https://github.com/qualcomm/ai-hub-models/blob/main/src/qai_hub_models/models/quicksrnetsmall/model.py)
 - [QuickSRNet paper](https://openaccess.thecvf.com/content/CVPR2023W/MobileAI/papers/Berger_QuickSRNet_Plain_Single-Image_Super-Resolution_Architecture_for_Faster_Inference_on_Mobile_CVPRW_2023_paper.pdf)
 - [Netflix VMAF and enhancement-gain caveat](https://github.com/Netflix/vmaf)
+
+## Locked selection results
+
+- All 24 clips: +2.004 dB PSNR, +0.009123 SSIM, +5.9496 VMAF versus bicubic.
+- Holdout alone: +1.813 dB, +0.008691 SSIM, +5.4721 VMAF.
+- VMAF NEG improves; temporal residual diagnostic increases 2.17% on average,
+  maximum individual ratio 1.064. Preserve this limitation and inspect sequences.
+- Three sustained trials: 52.63, 52.66, 52.15 FPS, 3,600 frames each, zero lost
+  frames, strict QNN and hardware codecs. Postprocessing medians 7.07/7.00/7.09 ms.
+- Removing the blend was selected for quality and also removes its CPU cost.
+  No native extension is justified to meet the <=8 ms postprocessing goal.
+- Whole-command times 155.58/149.35/151.00 seconds remain dominated by the final
+  audit. v0.6 must separate lightweight validation from explicit forensic decode.
