@@ -36,9 +36,13 @@ def tool_path(explicit: Path | None = None) -> Path:
     raise SRException("FFmpeg unavailable. See docs/ffmpeg.md or supply --ffmpeg.")
 
 
-def run_tool(arguments: list[str], timeout: float = 60) -> subprocess.CompletedProcess:
+def run_tool(
+    arguments: list[str], timeout: float = 60, cwd: Path | None = None
+) -> subprocess.CompletedProcess:
     try:
-        result = subprocess.run(arguments, capture_output=True, timeout=timeout, check=False)
+        result = subprocess.run(
+            arguments, capture_output=True, timeout=timeout, check=False, cwd=cwd
+        )
     except (OSError, subprocess.SubprocessError) as exc:
         raise SRException(f"Video tool failed: {exc}") from exc
     if result.returncode:

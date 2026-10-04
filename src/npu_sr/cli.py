@@ -106,6 +106,9 @@ def parser() -> argparse.ArgumentParser:
     video_quality.add_argument("--stride", type=positive, default=12)
     video_quality.add_argument("--json", type=Path, required=True)
     video_quality.add_argument("--verbose", action="store_true")
+    video_quality.add_argument(
+        "--vmaf", action="store_true", help="Require native libvmaf measurement"
+    )
     return root
 
 
@@ -361,7 +364,7 @@ def _video_quality(args: argparse.Namespace) -> int:
 
     if args.json.resolve() in {args.input.resolve(), args.reference.resolve()}:
         raise SRException("Quality JSON would overwrite video input.")
-    report = evaluate_video(args.input, args.reference, args.ffmpeg, args.stride)
+    report = evaluate_video(args.input, args.reference, args.ffmpeg, args.stride, args.vmaf)
     save_report(report, args.json)
     print(f"PSNR Y: {report['mean_psnr_y_db']} dB; SSIM Y: {report['mean_ssim_y']:.4f}")
     return 0

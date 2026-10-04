@@ -82,7 +82,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool) -> None:
                         "model_sha256": result["model_sha256"],
                         "end_to_end_fps": result["end_to_end_fps"],
                     }
-                metrics = evaluate_video(output, reference, ffmpeg, stride=12)
+                metrics = evaluate_video(output, reference, ffmpeg, stride=12, vmaf=True)
                 report["results"].append(
                     {"clip": name, "model": model, "execution": execution, **metrics}
                 )

@@ -1,5 +1,7 @@
 """Measured video trials and aligned decoded-frame quality comparisons."""
 
+import json
+import tempfile
 from collections import deque
 from pathlib import Path
 from time import perf_counter
@@ -51,7 +53,7 @@ def benchmark_video(
 
 
 def evaluate_video(
-    output: Path, reference: Path, ffmpeg: Path | None = None, stride: int = 12
+    output: Path, reference: Path, ffmpeg: Path | None = None, stride: int = 12, vmaf: bool = False
 ) -> dict:
     """Compare delivered video against matching HR frames, with bounded memory.
 
@@ -117,8 +119,45 @@ def evaluate_video(
             "mean absolute consecutive reconstruction-residual change /255 at 256x144; "
             "unregistered, no motion compensation"
         ),
-        "vmaf": "not measured",
+        "vmaf": measure_vmaf(output, reference, ffmpeg, stride) if vmaf else "not measured",
     }
+
+
+def measure_vmaf(output: Path, reference: Path, ffmpeg: Path, stride: int = 12) -> dict:
+    """Use FFmpeg's native libvmaf with an explicit built-in 1080p model."""
+    from .ffmpeg import run_tool
+
+    with tempfile.TemporaryDirectory(prefix="npu-sr-vmaf-") as directory:
+        run_tool(
+            [
+                str(ffmpeg.resolve()),
+                "-v",
+                "error",
+                "-nostats",
+                "-i",
+                str(output.resolve()),
+                "-i",
+                str(reference.resolve()),
+                "-filter_complex",
+                "[0:v]setpts=PTS-STARTPTS[d];[1:v]setpts=PTS-STARTPTS[r];"
+                f"[d][r]libvmaf=model=version=vmaf_v0.6.1:n_threads=2:n_subsample={stride}:"
+                "log_fmt=json:log_path=metrics.json",
+                "-an",
+                "-f",
+                "null",
+                "-",
+            ],
+            timeout=300,
+            cwd=Path(directory),
+        )
+        data = json.loads((Path(directory) / "metrics.json").read_text())
+        return {
+            "mean": data["pooled_metrics"]["vmaf"]["mean"],
+            "model": "vmaf_v0.6.1",
+            "libvmaf_version": data["version"],
+            "sample_stride": stride,
+            "samples": len(data["frames"]),
+        }
 
 
 def decode_throughput(source: Path, ffmpeg: Path, hardware: bool) -> dict:

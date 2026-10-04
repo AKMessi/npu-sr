@@ -66,3 +66,9 @@ Video API research and implementation belong to the subsequent gated releases.
   `QCOM Hardware Encoder` transforms. D3D11VA H.264 decode completed with
   selected `d3d11` frames and explicit download. The driver rejected a 64×48
   fixture, while 640×360 worked; strict mode rejected that failure.
+- Native libvmaf executed using the explicit `vmaf_v0.6.1` built-in model; a
+  same-reference sanity run measured 99.39267 over ten sampled frames.
+  [Netflix's integration documentation](https://github.com/Netflix/vmaf/blob/master/resource/doc/ffmpeg.md)
+  and [FFmpeg's filter source](https://github.com/FFmpeg/FFmpeg/blob/master/libavfilter/vf_libvmaf.c)
+  define distorted/reference order, sampling and model selection. Full release
+  quality numbers come from actual delivered outputs, not the sanity score.

@@ -115,7 +115,7 @@ python scripts/download_video_benchmarks.py
 python scripts/run_video_benchmarks.py --trials 3
 python scripts/run_video_benchmarks.py --quality
 npu-sr benchmark-video input.mp4 -o outputs/trials --device npu --trials 3 --json outputs/video.json
-npu-sr evaluate-video enhanced.mp4 high-reference.mkv --json outputs/video-quality.json
+npu-sr evaluate-video enhanced.mp4 high-reference.mkv --vmaf --json outputs/video-quality.json
 ```
 
 The small suite uses three four-second CC BY Tears of Steel clips (faces, outdoor
@@ -143,6 +143,9 @@ not only isolated network architecture. Results include codec artifacts.
 The temporal diagnostic is mean absolute consecutive change in reconstruction
 residual at 256×144, divided by 255. It is not a standard perceptual metric, is
 not motion compensated, and can reward smoothing. Scene motion/cuts affect it.
-Inspect flicker visually too. VMAF is optional; no VMAF claim is made unless
-actually measured. Four-second results cannot establish sustained real-time
+Inspect flicker visually too. `--vmaf` requires the FFmpeg libvmaf filter and uses
+the explicit built-in `vmaf_v0.6.1` model, two worker threads and the same sampling
+stride. JSON records the actual library version, sample count and measured mean.
+The validated native ARM64 build runs it; other builds may not include the filter.
+Four-second results cannot establish sustained real-time
 behavior; v0.4 requires at least sixty seconds of measured useful processing.
