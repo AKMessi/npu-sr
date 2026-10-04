@@ -28,3 +28,27 @@ subset; it is not redistributed here. Noise is explicitly synthetic Gaussian
 sigma 25 with seed 2026. This visual example does not establish performance on
 arbitrary real camera noise. Substitute your own noisy photo with
 `npu-sr denoise your-photo.png --comparison-dir outputs/your-comparison`.
+
+## Measured video crop preview (v0.4)
+
+`realtime-comparison.gif` displays a two-second crop of the actual measured
+four-second `faces` outputs: low-resolution input enlarged with nearest-neighbor
+sampling, FFmpeg bicubic, and QNN realtime at fixed neural strength 0.5.
+The GIF samples six frames per second for presentation; processing and benchmark
+outputs retain every frame at 30 FPS. No artificial sharpening is added.
+
+Film: *Tears of Steel*, Blender Foundation / [mango.blender.org](https://mango.blender.org/),
+[Creative Commons Attribution 3.0](https://creativecommons.org/licenses/by/3.0/).
+This GIF is an adaptation under CC BY 3.0, independently of the code's MIT license.
+Changes: retiming, crop, downscaling, enhancement, labeled comparison and GIF conversion.
+Source acquisition and hashes are in `scripts/download_video_benchmarks.py`.
+
+After reproducing the [v0.4 quality suite](../docs/realtime.md):
+
+```powershell
+python scripts/create_video_example.py --report outputs/v04-validation/quality.json
+```
+
+The script checks the input and delivered output hashes against the supplied
+measurement report. It writes an ignored GIF and first-frame PNG for inspection.
+The published asset was made from `benchmarks/v0.4/quality.json`'s measured files.

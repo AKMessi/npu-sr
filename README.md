@@ -14,7 +14,7 @@ models, strict execution checks and measurements rather than utilization claims.
 **v0.4 adds sustained realtime video processing.** Its final measured configuration
 and quality tradeoffs are in the [v0.4 report](benchmarks/v0.4/summary.md).
 
-**960×540 → 1920×1080 @ 30 FPS: 34.2 FPS sustained**,
+**960×540 → 1920×1080 @ 30 FPS: 34.3 FPS sustained**,
 three 120-second sources / about 105 seconds processing each, no lost frames.
 QNN and hardware codecs verified. Fixed 0.5 neural blend, AV1 8M, two-frame queues.
 Streaming processing excludes the separately disclosed post-encode file audit,
@@ -27,6 +27,17 @@ The included MIT test card and actual QNN outputs:
 | Input | Bicubic 2× | ESPCN 2×, QNN NPU |
 | --- | --- | --- |
 | ![Input](examples/input.png) | ![Bicubic](examples/bicubic_2x.png) | ![NPU result](examples/npu_sr_2x.png) |
+
+Actual video output crops (input / bicubic / QNN realtime):
+
+![Measured video comparison](examples/realtime-comparison.gif)
+
+This is a 6 FPS preview of the measured 30 FPS outputs; the input is enlarged
+with nearest-neighbor sampling for display. Source: *Tears of Steel*, Blender
+Foundation / [mango.blender.org](https://mango.blender.org/),
+[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+Crop, retiming, enhancement and GIF conversion are adaptations.
+[Reproduction and attribution](examples/README.md).
 
 Lightweight models sharpen some edges but can ring, blur texture or flicker.
 No missing-detail reconstruction or state-of-the-art quality is promised.

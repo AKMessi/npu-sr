@@ -4,7 +4,7 @@
 All three trials processed a 120-second, 30 FPS source without skipped/duplicated application frames.
 Each completed 3,600 frames and 43,200 neural tile calls, with matching delivered frame counts, cadence and audio.
 
-Headline: **34.2 FPS**, real-time factor **0.878** (processing/source duration).
+Headline: **34.3 FPS**, real-time factor **0.876** (processing/source duration).
 Actual hardware decode/download, preprocessing, every neural tile, stitching, postprocessing, encode and flush are included.
 Provider/input inspection startup and the final full-file safety audit are separate. This is a file-processing pipeline, not a live player.
 
@@ -16,14 +16,16 @@ Pinned native FFmpeg n9.0.1-11-ge47273f4d9, ESPCN x2 256-core/halo4, 264×264 gr
 AV1 hardware encoding at 8M unconstrained VBR / camera_record, three tensor warmups.
 Every frame still receives all neural calls; the fixed CPU Catmull–Rom blend is disclosed and not adaptive.
 AC power, Balanced scheme, energy saver off; background processes uncontrolled.
+All sustained trials recorded AC power. The standalone environment snapshot was
+taken later on battery; per-trial power states are authoritative for each measurement.
 
 ## Sustained trials
 
 | Trial | Processing s | Actual FPS | Min rolling 10s FPS | First/final 10s FPS | Handoff p50/p95 ms | Sampled peak MB |
 | --- | ---: | ---: | ---: | --- | --- | ---: |
-| 1 | 105.3 | 34.17 | 33.8 | 33.8 / 34.0 | 116.9 / 119.1 | 361.6 |
-| 2 | 105.0 | 34.30 | 33.8 | 33.8 / 34.0 | 116.4 / 118.2 | 364.7 |
-| 3 | 105.5 | 34.11 | 33.7 | 33.7 / 34.1 | 117.1 / 119.7 | 374.0 |
+| 1 | 105.0 | 34.27 | 33.7 | 33.7 / 34.3 | 116.5 / 119.0 | 763.6 |
+| 2 | 105.1 | 34.25 | 33.4 | 33.4 / 34.3 | 116.5 / 118.9 | 479.4 |
+| 3 | 106.4 | 33.82 | 33.2 | 33.2 / 33.9 | 118.0 / 120.3 | 469.5 |
 
 Frame handoff latency is decoder read start → encoder pipe submission, including queues. It is **not** encoder/display latency.
 Minimum rolling rates use submissions on one-second boundaries; complete processing FPS includes actual encoder flush.
@@ -31,9 +33,9 @@ Queues peaked at two frames. OS samples cover Python and codec children, not dri
 
 | Trial | Startup/input inspection s | Post-encode audit s | Total function elapsed s | Process CPU share of 8 logical CPUs |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | 12.7 | 68.4 | 189.6 | 14.0% |
-| 2 | 10.0 | 68.5 | 186.6 | 14.0% |
-| 3 | 9.9 | 68.4 | 187.1 | 14.0% |
+| 1 | 14.5 | 68.7 | 191.5 | 13.9% |
+| 2 | 10.0 | 68.4 | 186.7 | 14.1% |
+| 3 | 10.0 | 68.6 | 188.2 | 13.8% |
 
 **The whole CLI takes longer than the source duration because it decodes the finished file again to audit counts and timestamps.**
 The realtime claim covers the sustained decode-to-encode pipeline, excluding that post-encode audit. Both times are reported.
@@ -54,14 +56,17 @@ RGB and native-Y paths, interpolation kernels and codec loss differ; these compa
 
 | Preset / pipeline | Mean Y PSNR dB | Mean Y SSIM | Mean VMAF | 4s clip median FPS (3 trials) |
 | --- | ---: | ---: | ---: | ---: |
-| bicubic | 41.130 | 0.981344 | 91.59 | 105.4 |
-| realtime | 41.217 | 0.981538 | 90.17 | 32.6 |
-| balanced | 41.162 | 0.977520 | 89.35 | 11.9 |
-| quality | 41.142 | 0.980404 | 90.34 | 9.1 |
+| bicubic | 41.130 | 0.981344 | 91.59 | 104.4 |
+| realtime | 41.217 | 0.981538 | 90.17 | 32.8 |
+| balanced | 41.162 | 0.977520 | 89.35 | 10.5 |
+| quality | 41.142 | 0.980404 | 90.34 | 8.8 |
 
 The realtime blend modestly improves aggregate PSNR/SSIM, while **bicubic wins average VMAF**. Outdoor scene/detail can regress.
 Faces improve; synthetic texture can ring. No universal perceptual improvement is claimed. Quality preset names reflect image scores.
 The short speed table includes codec startup and is not the long sustained gate; bicubic uses efficient FFmpeg CPU scaling with the same hardware codecs.
+Realtime short trials were on AC; balanced, quality and bicubic timings were on
+battery (99–100%), all Balanced with energy saver off. These are observed preset
+timings, not a controlled comparison of power states. Each trial records its state.
 
 ### Standard image-model regression
 
@@ -91,9 +96,9 @@ All six prior model hashes and image/denoising behavior are preserved. See the [
 
 ## Validation and limits
 
-- 115 ordinary tests and 19 local hardware tests (15 NPU, 4 video hardware) passed; generic CI excludes hardware.
+- 116 ordinary tests and 19 local hardware tests (15 NPU, 4 video hardware) passed; generic CI excludes hardware.
 - Strict planar cache reuse, all three hardware encoders, temporal ordering, cancellation and neural-call counting passed.
-- Publication requires package build, metadata, fresh installation and main/tag CI; outcomes are recorded in release notes.
+- Package build, metadata, fresh installation and main/tag CI are release gates; outcomes are recorded in the GitHub release.
 - One laptop/runtime/configuration and a small content suite; not a general Snapdragon performance or quality claim.
 - No HDR, variable framerate, live preview/player, zero-copy or temporal neural model. No energy-efficiency conclusion.
 - Post-encode full-file audit adds substantial elapsed time; source FPS is preserved and every neural frame is processed.

@@ -2,6 +2,9 @@
 
 ## 0.4.0 — 2026-10-04
 
+- Primary 960×540 → 1920×1080 at 30 FPS sustained 34.3 FPS across three 120-second
+  sources, with strict QNN and hardware AV1 encoding; post-encode audit is timed separately.
+
 - Persistent native NV12 luminance enhancement with reusable buffers and declared fixed neural/bicubic blending.
 - Bounded ordered decoder/enhancer/encoder overlap, with cancellation and output validation preserved.
 - Transparent quality/balanced/realtime presets, measured QNN performance modes and mode-aware context caches.

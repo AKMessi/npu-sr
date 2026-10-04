@@ -82,3 +82,10 @@ Creative Commons Attribution 3.0. The pinned source is downloaded from Blender's
 official server. Prepared research clips, audio and reference videos remain
 outside git. Scripts document retiming, crop, degradation and source hash.
 The generated FFmpeg test pattern is a separate synthetic workload.
+
+The small `examples/realtime-comparison.gif` is a redistributed adaptation of
+*Tears of Steel*, Blender Foundation / [mango.blender.org](https://mango.blender.org/),
+under [Creative Commons Attribution 3.0](https://creativecommons.org/licenses/by/3.0/).
+It retains attribution in the image and adjacent documentation. Changes include
+retiming, crop, degradation, neural enhancement, labels and GIF conversion.
+Its license is CC BY 3.0; the repository's MIT license does not replace it.

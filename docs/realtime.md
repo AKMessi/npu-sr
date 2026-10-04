@@ -23,6 +23,10 @@ use ignored `outputs/v04-validation`. Source movie and generated inputs are hash
 verified. The 24 FPS film is explicitly retimed to a 30 FPS benchmark fixture;
 no runtime frames are skipped, intentionally duplicated or conditionally bypassed.
 A 120-second source gives at least 60 seconds of wall processing on this machine.
+Preparation records the pinned FFmpeg version and executable hash, and uses
+bitexact codec/container output. The release inputs were prepared with the same
+August monthly build used for processing; byte identity across different FFmpeg
+versions or encoders is not promised.
 
 For another CFR source:
 
