@@ -26,6 +26,7 @@ from .ffmpeg import (
     probe,
     read_frame,
     run_tool,
+    software_av1_encoder,
     tool_path,
     validate_cfr,
     write_frame,
@@ -58,6 +59,7 @@ class VideoSettings:
     npu_performance: str = "default"
     pipeline_depth: int = 0
     preset: str | None = None
+    neural_strength: float = 1.0
 
 
 PRESETS = {
@@ -76,7 +78,8 @@ PRESETS = {
     "realtime": {
         "model": "espcn-x2-256",
         "frame_format": "nv12",
-        "npu_performance": "sustained_high_performance",
+        "npu_performance": "burst",
+        "neural_strength": 0.5,
         "pipeline_depth": 2,
         "device": "npu",
         "decode": "hardware",
@@ -178,17 +181,23 @@ def process_video(
         settings.npu_performance,
     )
     if runtime.spec.task != "upscale" or runtime.spec.scale != 2:
-        raise SRException("Video v0.3 requires a 2x super-resolution model.")
+        raise SRException("Video requires a 2x super-resolution model.")
     planar = None
     if settings.frame_format == "nv12":
         from .planar import NV12Enhancer
 
-        planar = NV12Enhancer(info, runtime)
+        planar = NV12Enhancer(info, runtime, settings.neural_strength)
     elif settings.frame_format != "rgb24":
         raise SRException("Frame format must be rgb24 or nv12.")
+    elif settings.neural_strength != 1:
+        raise SRException("Neural blending requires --frame-format nv12.")
     hardware_decode, hardware_encode, codec_evidence = select_codecs(
         ffmpeg, source, info, settings, 2
     )
+    software_av1 = "libaom-av1"
+    if not hardware_encode and settings.codec == "av1":
+        software_av1 = software_av1_encoder(ffmpeg)
+        codec_evidence["encode"]["encoder"] = software_av1
     version = (
         run_tool([str(ffmpeg), "-version"]).stdout.decode("utf-8", errors="replace").splitlines()[0]
     )
@@ -275,6 +284,7 @@ def process_video(
                 settings.bitrate,
                 settings.quality,
                 settings.frame_format,
+                software_av1,
             ),
             input_pipe=True,
         )
@@ -348,6 +358,7 @@ def process_video(
             "codec": settings.codec,
             "bitrate": settings.bitrate if hardware_encode else None,
             "frame_format": settings.frame_format,
+            "neural_strength": settings.neural_strength,
             "preset": settings.preset,
             "pipeline_depth": settings.pipeline_depth,
             "observed_queue_peaks": queue_peaks,

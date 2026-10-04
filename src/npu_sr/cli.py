@@ -99,6 +99,9 @@ def parser() -> argparse.ArgumentParser:
         choices=["default", "sustained_high_performance", "burst"],
     )
     video.add_argument("--pipeline-depth", type=int, choices=range(5))
+    video.add_argument(
+        "--neural-strength", type=float, help="Fixed NV12 neural/bicubic blend (0 < x <= 1)"
+    )
     video_bench = commands.add_parser(
         "benchmark-video",
         parents=[video],
@@ -347,7 +350,8 @@ def _video(args: argparse.Namespace) -> int:
     )
     print(
         f"Configuration: {settings.preset or 'custom/default'}; model={settings.model}; "
-        f"frames={settings.frame_format}; pipeline={settings.pipeline_depth}; "
+        f"frames={settings.frame_format}; neural strength={settings.neural_strength}; "
+        f"pipeline={settings.pipeline_depth}; "
         f"NPU mode={settings.npu_performance}; decode={settings.decode}; "
         f"encode={settings.encode}; codec={settings.codec}"
     )
@@ -376,7 +380,12 @@ def _video(args: argparse.Namespace) -> int:
     print(f"Input:       {width} × {height} @ {report['input']['frame_rate']} FPS")
     print(f"Output:      {out_width} × {out_height} @ {report['output']['frame_rate']} FPS")
     print(f"Frames:      {report['frames_processed']}")
-    print(f"SR backend:  {report['backend']} ({report['model']})")
+    backend = {
+        "npu": "Qualcomm QNN / Hexagon NPU",
+        "gpu": "ONNX Runtime DirectML / GPU",
+        "cpu": "ONNX Runtime CPU",
+    }[report["backend"]]
+    print(f"SR backend:  {backend} ({report['model']})")
     for kind in ("decode", "encode"):
         print(f"{kind.title()}:      {report['codec_evidence'][kind]}")
     print(f"End-to-end:  {report['end_to_end_fps']:.1f} FPS")

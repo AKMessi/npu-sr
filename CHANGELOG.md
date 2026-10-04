@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — 2026-10-04
+
+- Persistent native NV12 luminance enhancement with reusable buffers and declared fixed neural/bicubic blending.
+- Bounded ordered decoder/enhancer/encoder overlap, with cancellation and output validation preserved.
+- Transparent quality/balanced/realtime presets, measured QNN performance modes and mode-aware context caches.
+- Three-trial sustained acceptance gates, rolling rates, scoped frame handoff latency and process CPU/memory samples.
+- Paired image quality regression gate, delivered preset quality/speed suite and corrected VMAF clock alignment.
+- Native software AV1 selection, strict planar hardware/cache/cancellation tests and realtime reproduction docs.
+- Power, accelerator utilization and temperature are not measured.
+
 ## 0.3.0 — 2026-10-04
 
 - In-memory ordered video streaming with one persistent strict enhancement session.

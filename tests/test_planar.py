@@ -43,6 +43,55 @@ def test_planar_rejects_explicit_full_range():
         NV12Enhancer(info, NearestRuntime())
 
 
+@pytest.mark.parametrize("strength", [0, -1, 1.1, float("nan")])
+def test_planar_rejects_invalid_neural_strength(strength):
+    info = VideoInfo(20, 12, Fraction(30), 1, 30, False, "h264", "tv")
+    with pytest.raises(SRException, match="strength"):
+        NV12Enhancer(info, NearestRuntime(), strength)
+
+
+def test_fixed_blend_still_infers_every_tile():
+    from PIL import Image
+
+    info = VideoInfo(20, 12, Fraction(30), 1, 30, False, "h264", "tv")
+
+    class CountingRuntime(NearestRuntime):
+        calls = 0
+
+        def run(self, tensor):
+            self.calls += 1
+            return super().run(tensor)
+
+    runtime = CountingRuntime()
+    y = np.random.default_rng(5).integers(16, 236, (12, 20), np.uint8)
+    raw = y.tobytes() + bytes([128] * 120)
+    result, _ = NV12Enhancer(info, runtime, 0.5).process(raw)
+    baseline = np.asarray(
+        Image.fromarray(y.astype(np.float32)).resize((40, 24), Image.Resampling.BICUBIC)
+    )
+    expected = np.rint(0.5 * y.repeat(2, 0).repeat(2, 1).astype(np.float32) + 0.5 * baseline)
+    expected = np.clip(expected, 16, 235)
+    np.testing.assert_allclose(
+        np.frombuffer(result, np.uint8)[:960].reshape(24, 40)[4:-4, 4:-4],
+        expected[4:-4, 4:-4],
+        atol=1,
+    )
+    assert runtime.calls == 4
+
+
+def test_cubic_matches_independent_float_resampler_interior_and_preserves_constant():
+    from PIL import Image
+
+    from npu_sr.planar import Cubic2x
+
+    source = np.random.default_rng(4).random((20, 30), dtype=np.float32)
+    cubic = Cubic2x(30, 20)
+    actual = cubic.resize(np.pad(source, 2, mode="edge"))
+    expected = np.asarray(Image.fromarray(source).resize((60, 40), Image.Resampling.BICUBIC))
+    np.testing.assert_allclose(actual[4:-4, 4:-4], expected[4:-4, 4:-4], atol=3e-7)
+    np.testing.assert_allclose(cubic.resize(np.full((24, 34), 0.5, np.float32)), 0.5)
+
+
 def test_rectangular_tiles_preserve_edges_and_reusable_output():
     from PIL import Image
 

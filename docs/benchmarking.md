@@ -52,7 +52,7 @@ npu-sr evaluate low.png high_ground_truth.png --device npu
 ```
 
 Evaluation computes unweighted full-image RGB PSNR for both SR and bicubic output.
-It requires exactly 2Ã— dimensions and opaque images. No border cropping or alignment
+It requires exactly 2× dimensions and opaque images. No border cropping or alignment
 is performed. This is a metric with a specific definition, not a perceptual score.
 Do not use the low-resolution source as ground truth. v0.2 also reports full-range
 Rec.601 luminance PSNR and SSIM after a two-HR-pixel border shave. SSIM uses
@@ -149,3 +149,33 @@ stride. JSON records the actual library version, sample count and measured mean.
 The validated native ARM64 build runs it; other builds may not include the filter.
 Four-second results cannot establish sustained real-time
 behavior; v0.4 requires at least sixty seconds of measured useful processing.
+
+
+## Sustained video (v0.4)
+
+See [realtime reproduction](realtime.md). Three long trials use the median of
+complete-video trial FPS, retain every result, and require >=60 seconds wall
+processing each. Processing includes decoder launch through encoder flush;
+provider startup/proof, final output inspection and hashes are separate. A
+120-second source does not imply a 120-second benchmark when faster than real time.
+No frame pacing, skipping or model bypass is used.
+
+Headline measurements record AC line, Balanced scheme and energy saver off.
+First/final and minimum rolling ten-second rates detect a throughput drop without
+claiming temperature or power measurement. One-second process CPU/working-set
+samples cover Python and its codec children; queue/sample storage is bounded.
+Completion intervals and read-to-encoder-submission latency are reported with
+their limited scope, independently of end-to-end FPS.
+
+Delivered video quality compares the same codec/rate with FFV1 HR references.
+Native-Y and RGB paths are explicitly distinguished. VMAF now assigns CFR frame
+ordinals on a shared AVTB clock, disables repeat-last frames and checks the
+expected sample count. Historical v0.3 VMAF used its original framesync setup;
+v0.4 recomputes all baselines, rather than mixing those protocols. PSNR/SSIM
+already compare frame ordinals. Different metrics/content can disagree.
+
+The realtime network also passes a paired five-image quality regression gate:
+mean luminance PSNR and SSIM must exceed bicubic, with strict QNN proof. This
+isolated image-model check does not promise universal delivered-video gains.
+Performance thresholds apply only to the declared local hardware/workload;
+generic CI tests gate logic and correctness, without tight timing thresholds.

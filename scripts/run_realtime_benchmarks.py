@@ -10,7 +10,12 @@ from npu_sr.ffmpeg import codec_args, encode_evidence, run_tool, tool_path
 from npu_sr.model import sha256
 from npu_sr.suite import environment, quality_suite
 from npu_sr.video import process_video, settings_for_preset
-from npu_sr.video_benchmark import benchmark_video, evaluate_video, realtime_acceptance
+from npu_sr.video_benchmark import (
+    benchmark_video,
+    evaluate_video,
+    image_quality_acceptance,
+    realtime_acceptance,
+)
 
 
 def run(directory: Path, reports: Path, trials: int, quality: bool, images: Path) -> None:
@@ -125,6 +130,7 @@ def run(directory: Path, reports: Path, trials: int, quality: bool, images: Path
                             "execution_evidence",
                             "codec_evidence",
                             "frame_format",
+                            "neural_strength",
                             "npu_performance_requested",
                             "end_to_end_fps",
                         )
@@ -147,8 +153,11 @@ def run(directory: Path, reports: Path, trials: int, quality: bool, images: Path
         report["image"] = quality_suite(
             images, ["espcn-x2-256", "fsrcnn-x2"], ["cpu", "npu", "gpu"]
         )
+        report["image_quality_acceptance"] = image_quality_acceptance(report["image"])
         report["complete"] = True
         save_report(report, reports / "quality.json")
+        if not report["image_quality_acceptance"]["passed"]:
+            raise ValueError(f"Image quality regression: {report['image_quality_acceptance']}")
     save_report(
         environment()
         | {

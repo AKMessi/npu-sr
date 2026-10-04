@@ -116,3 +116,16 @@ Video API research and implementation belong to the subsequent gated releases.
   and [GetProcessMemoryInfo](https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo)
   provide process CPU and working set for Python and codec children. One-second
   samples exclude other apps; they are not system energy or accelerator telemetry.
+
+- Unblended NV12 reached about 45 FPS in three long trials, but the four-clip
+  delivered suite lost average SSIM versus bicubic. Fixed strengths 0.25/0.5/0.75
+  all run neural inference on every frame. Strength 0.5 improves average paired
+  PSNR and SSIM in that suite; VMAF still favors bicubic. It is a disclosed quality
+  compromise, not a general perceptual improvement. Pillow baseline resizing
+  cost about 10.6 ms at 540p; reusable separable float Catmull–Rom buffers measured
+  about 6.9 ms in a 50-call CPU experiment. Edge/rounding semantics differ and
+  are independently tested against Pillow's float resampler in the interior.
+  Final sustained release trials remeasure the selected blend and QNN mode.
+- Native FFmpeg includes SVT-AV1 but no libaom. Software AV1 now selects an
+  installed implementation, recording the actual encoder; the native CPU
+  integration test completed with SVT. This is explicitly software encoding.

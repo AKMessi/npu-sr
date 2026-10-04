@@ -41,3 +41,11 @@ Sources, immutable revisions, licenses and SHA256 values are in
 fold biases and replace equivalent activations without retraining. The DnCNN
 reader only accepts its known legacy float storage layout and an explicit
 allowlist of pickle globals; acquisition verifies the exact hash first.
+
+
+v0.4 keeps these exact model files and hashes. Larger 512-core/full-frame graphs
+were tested with strict QNN proof but slower than 256-core ESPCN on the declared
+540p workload; they are not additional downloads. The realtime preset uses the
+existing ESPCN network on native video luminance with declared fixed blending.
+The highest image-subset scorer is not automatically the fastest or best delivered
+video path. See [realtime](realtime.md) for the measured preset choices.

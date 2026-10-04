@@ -92,3 +92,14 @@ Do not copy QAIRT SDK folders, QNN DLLs or NPU drivers into the repository.
 The application obtains the provider through Microsoft's catalog. Microsoft and
 Qualcomm packages retain their own licenses. Windows driver updates go through
 Windows Update or the laptop vendor. No Qualcomm AI Hub account is required.
+
+
+## Performance modes in v0.4
+
+The installed provider accepts `htp_performance_mode` via Windows ML device
+session options. Video exposes default, burst and sustained_high_performance;
+the selected request is recorded. Cache identities include nondefault modes, so
+a context from another configuration is not silently reused. Every cache load
+still performs strict assignment/profile proof. Mode names do not establish power
+consumption; actual throughput is measured independently. No provider/runtime
+upgrade was needed for the validated path.

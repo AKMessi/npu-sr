@@ -70,6 +70,27 @@ def test_hardware_evidence_requires_executed_path():
     )
 
 
+def test_software_av1_selection_uses_installed_encoder(monkeypatch):
+    from types import SimpleNamespace
+
+    from npu_sr.ffmpeg import software_av1_encoder
+
+    monkeypatch.setattr(
+        "npu_sr.ffmpeg.run_tool",
+        lambda _: SimpleNamespace(stdout=b" V..... libsvtav1 software AV1\n"),
+    )
+    assert software_av1_encoder(Path("ffmpeg")) == "libsvtav1"
+    args = codec_args("av1", False, "8M", 20, "libsvtav1")
+    assert "libsvtav1" in args and "10" in args and "-cpu-used" not in args
+    monkeypatch.setattr(
+        "npu_sr.ffmpeg.run_tool", lambda _: SimpleNamespace(stdout=b" V..... libaom-av1 AV1\n")
+    )
+    assert software_av1_encoder(Path("ffmpeg")) == "libaom-av1"
+    monkeypatch.setattr("npu_sr.ffmpeg.run_tool", lambda _: SimpleNamespace(stdout=b""))
+    with pytest.raises(SRException, match="neither"):
+        software_av1_encoder(Path("ffmpeg"))
+
+
 @pytest.mark.parametrize("codec", ["h264", "hevc", "av1"])
 def test_strict_hardware_command(codec, tmp_path):
     info = VideoInfo(64, 48, Fraction(30000, 1001), 1.0, 30, True, "h264")

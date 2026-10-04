@@ -11,6 +11,50 @@ from .image import LuminanceInput, infer_y
 from .runtime import Runtime
 
 
+class Cubic2x:
+    """Separable Catmull–Rom 2x interpolation with reusable float buffers.
+
+    Four source neighbors per phase, replicated edges; no intermediate uint8
+    rounding. It is a declared bicubic implementation, not identical to every
+    library's edge and integer-rounding rules.
+    """
+
+    def __init__(self, width: int, height: int):
+        self.width, self.height = width, height
+        self.vertical = np.empty((height * 2, width + 4), np.float32)
+        self.output = np.empty((height * 2, width * 2), np.float32)
+        self.row_scratch = np.empty((height, width + 4), np.float32)
+        self.column_scratch = np.empty((height * 2, width), np.float32)
+
+    def resize(self, padded: np.ndarray) -> np.ndarray:
+        weights = (-3 / 128, 29 / 128, 111 / 128, -9 / 128)
+        for phase in range(2):
+            coefficients = weights if phase == 0 else weights[::-1]
+            target = self.vertical[phase::2]
+            for index, coefficient in enumerate(coefficients):
+                start = index + phase
+                np.multiply(padded[start : start + self.height], coefficient, out=self.row_scratch)
+                if index == 0:
+                    target[:] = self.row_scratch
+                else:
+                    np.add(target, self.row_scratch, out=target)
+        for phase in range(2):
+            coefficients = weights if phase == 0 else weights[::-1]
+            target = self.output[:, phase::2]
+            for index, coefficient in enumerate(coefficients):
+                start = index + phase
+                np.multiply(
+                    self.vertical[:, start : start + self.width],
+                    coefficient,
+                    out=self.column_scratch,
+                )
+                if index == 0:
+                    target[:] = self.column_scratch
+                else:
+                    np.add(target, self.column_scratch, out=target)
+        return self.output
+
+
 class NV12Enhancer:
     """One video's buffers. Returned bytes own their data, including in a queue.
 
@@ -20,12 +64,16 @@ class NV12Enhancer:
     explicitly full-range sources require the RGB path.
     """
 
-    def __init__(self, info: VideoInfo, runtime: Runtime):
+    def __init__(self, info: VideoInfo, runtime: Runtime, strength: float = 1.0):
+        if not 0 < strength <= 1:
+            raise SRException("Neural strength must be greater than zero and at most one.")
         if info.color_range not in {"unknown", "tv"}:
             raise SRException(
                 "NV12 enhancement requires limited-range SDR; use --frame-format rgb24."
             )
         self.info, self.runtime = info, runtime
+        self.strength = strength
+        self.cubic = Cubic2x(info.width, info.height) if strength < 1 else None
         spec = runtime.spec
         height = info.height + (-info.height % spec.height) + 2 * spec.halo
         width = info.width + (-info.width % spec.core) + 2 * spec.halo
@@ -62,6 +110,18 @@ class NV12Enhancer:
         started = perf_counter()
         if not np.isfinite(self.y).all():
             raise SRException("Invalid planar luminance output.")
+        if self.cubic is not None:
+            # A fixed, declared blend reduces ringing; inference still runs on every tile.
+            if halo >= 2:
+                context = padded[
+                    halo - 2 : halo + info.height + 2, halo - 2 : halo + info.width + 2
+                ]
+            else:
+                context = np.pad(core, 2, mode="edge")
+            baseline = self.cubic.resize(context)
+            self.y *= self.strength
+            baseline *= 1 - self.strength
+            self.y += baseline
         self.y *= 219
         self.y += 16
         np.clip(self.y, 16, 235, out=self.y)

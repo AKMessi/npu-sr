@@ -70,3 +70,18 @@ Argparse usage errors return 2. Auto fallback is printed explicitly.
 - The research dataset downloader requires access to Berkeley's official server.
   It refuses changed archives rather than using unverified data. Dataset images
   are research-only and excluded from git; benchmark your own aligned images if needed.
+
+
+## Realtime validation fails
+
+Use AC power, record Windows energy saver separately from Balanced power mode,
+and check the exact preset, source dimensions/FPS, codec and model hashes.
+The gate needs three trials and >=60 seconds measured processing per trial, not
+merely a 60-second source. Use a 120-second fixture. Review minimum rolling FPS,
+phase timings and queue peaks. Short or overridden configurations are not covered
+by the release benchmark. NPU/GPU/codec failures remain strict; do not suppress
+proof or count checks to obtain a faster number.
+
+NV12 rejects explicitly full-range sources; use `--frame-format rgb24` and
+`--neural-strength 1` for the supported RGB alternative. Fixed blending adds CPU
+work and changes quality; its setting must accompany comparisons.

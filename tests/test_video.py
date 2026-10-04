@@ -134,6 +134,15 @@ def test_broken_encoder_is_clean_error(video_source, tmp_path, monkeypatch):
         process_video(source, tmp_path / "failed.mp4", cpu_settings(ffmpeg))
 
 
+def test_software_av1_video_on_installed_build(video_source, tmp_path):
+    source, ffmpeg = video_source
+    settings = replace(cpu_settings(ffmpeg), codec="av1")
+    report = process_video(source, tmp_path / "software-av1.mp4", settings)
+    assert report["frames_processed"] == 6 and report["output"]["codec"] == "av1"
+    assert report["codec_evidence"]["encode"]["encoder"] in {"libsvtav1", "libaom-av1"}
+    assert report["output"]["audio"]
+
+
 def test_output_collision_and_corrupt_input(video_source, tmp_path):
     source, ffmpeg = video_source
     with pytest.raises(SRException, match="overwrite its input"):
@@ -194,3 +203,59 @@ def test_real_snapdragon_video_hardware(video_source, tmp_path, codec):
     assert report["codec_evidence"]["decode"]["hardware_format_selected"] == "d3d11"
     assert "QCOM Hardware Encoder" in report["codec_evidence"]["encode"]["transform"]
     assert report["frames_processed"] == 6 and report["output"]["audio"]
+
+
+@pytest.mark.video_hw
+def test_realtime_planar_context_reuse_and_cancellation(video_source, tmp_path, monkeypatch):
+    from npu_sr.ffmpeg import run_tool
+    from npu_sr.video import settings_for_preset
+
+    original, ffmpeg = video_source
+    source = tmp_path / "planar-source.mp4"
+    run_tool(
+        [
+            str(ffmpeg),
+            "-v",
+            "error",
+            "-i",
+            str(original),
+            "-vf",
+            "scale=960:540",
+            "-c:v",
+            "libx264",
+            "-crf",
+            "10",
+            "-c:a",
+            "copy",
+            str(source),
+        ]
+    )
+    settings = settings_for_preset("realtime", {"ffmpeg": ffmpeg, "cache_dir": tmp_path / "cache"})
+    for index in range(2):
+        report = process_video(source, tmp_path / f"reuse-{index}.mp4", settings)
+        assert report["execution_evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+        assert report["frames_processed"] == 6 and report["output"]["audio"]
+        assert report["output_timestamps_validated"] and report["dropped_frames"] == 0
+        assert report["frame_format"] == "nv12"
+        assert report["npu_performance_requested"] == "burst"
+        assert report["neural_strength"] == 0.5
+        assert max(report["observed_queue_peaks"].values()) <= 2
+        if index:
+            assert report["execution_evidence"]["context_cache"] == "hit"
+
+    children = []
+
+    def record(*args, **kwargs):
+        child = PipeProcess(*args, **kwargs)
+        children.append(child)
+        return child
+
+    def interrupt(frame):
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr("npu_sr.video.PipeProcess", record)
+    with pytest.raises(KeyboardInterrupt):
+        process_video(source, tmp_path / "cancelled-hardware.mp4", settings, interrupt)
+    assert len(children) == 2 and all(c.process.poll() is not None for c in children)
+    assert not list(tmp_path.glob("*.partial.mp4"))
+    assert not (tmp_path / "cancelled-hardware.mp4").exists()

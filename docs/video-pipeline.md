@@ -3,14 +3,14 @@
 ```mermaid
 flowchart LR
     I[Compressed file] --> D[FFmpeg decoder]
-    D --> P[Bounded RGB pipe / CPU memory]
+    D --> P[Bounded NV12 or RGB pipe / CPU memory]
     P --> R[Persistent verified ORT / QNN session]
-    R --> S[CPU stitching and RGB reconstruction]
-    S --> E[Bounded RGB pipe / FFmpeg encoder]
+    R --> S[CPU stitching and native chroma or RGB reconstruction]
+    S --> E[Bounded frame pipe / FFmpeg encoder]
     E --> O[Enhanced video with copied audio]
 ```
 
-v0.3 handles constant-framerate, square-pixel SDR video with positive even
+The video pipeline handles constant-framerate, square-pixel SDR video with positive even
 dimensions. It preserves input framerate and processes every decoded frame in
 order. HDR, rotation metadata, anamorphic input and detected variable framerates
 fail with an explanation. Convert those explicitly before enhancement. No
@@ -18,10 +18,11 @@ webcam, seeking, GUI, or frame-rate conversion is exposed in this release.
 
 One model/session lives for the whole file. Strict assignment/profiling happens
 at initialization; three tensor warmups follow. Image preprocessing and tiling
-are reused. Frames are not written to PNG files. Python holds one source and one
-enhanced frame; pipes and FFmpeg's demux queue apply backpressure. Diagnostic
-text and timing samples have fixed bounds. v0.3 is sequential Python orchestration;
-FFmpeg codec processes can overlap work through their pipes.
+are reused. Frames are not written to PNG files. The default remains sequential RGB processing. v0.4 adds native NV12 buffers and
+bounded reader/writer queues (depth 0–4); preset depth 2 overlaps decode, neural
+enhancement and encode. One worker owns the model and reusable tensors. Each
+queued frame owns its bytes. Pipes and queues apply backpressure; diagnostics,
+timing and resource samples have fixed bounds.
 
 The output is written to a unique sibling temporary file. Success requires:
 
@@ -60,3 +61,10 @@ less than one is faster than real time. A short fast clip does not establish
 sustained real-time performance.
 
 See [FFmpeg evidence](ffmpeg.md) and [benchmarking](benchmarking.md).
+
+
+The realtime preset chooses a declared native-Y path and fixed neural strength;
+explicit overrides do not inherit its measured performance claim. First/final/
+minimum rolling throughput and queue depth supplement actual complete-video FPS.
+Frame handoff latency ends at encoder pipe submission, not display or encoder
+completion. See [realtime](realtime.md) for settings, gates and reproducibility.

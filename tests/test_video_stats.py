@@ -3,7 +3,7 @@
 from copy import deepcopy
 
 from npu_sr.video import settings_for_preset
-from npu_sr.video_benchmark import realtime_acceptance
+from npu_sr.video_benchmark import image_quality_acceptance, realtime_acceptance
 from npu_sr.video_stats import SustainedStatistics
 
 
@@ -55,5 +55,29 @@ def test_presets_materialize_and_explicit_options_override():
     realtime = settings_for_preset("realtime", {})
     assert realtime.device == "npu" and realtime.encode == "hardware" and realtime.codec == "av1"
     assert realtime.frame_format == "nv12" and realtime.pipeline_depth == 2
+    assert realtime.neural_strength == 0.5 and realtime.npu_performance == "burst"
     overridden = settings_for_preset("realtime", {"codec": "hevc", "frame_format": "rgb24"})
     assert overridden.codec == "hevc" and overridden.frame_format == "rgb24"
+
+
+def test_image_quality_gate_rejects_quality_collapse_and_cpu_fallback():
+    rows = [
+        {
+            "model": "espcn-x2-256",
+            "backend": "npu",
+            "image": str(index),
+            "metrics": {"psnr_y_db": 31, "ssim_y": 0.91},
+            "baseline_metrics": {"psnr_y_db": 30, "ssim_y": 0.9},
+            "evidence": {
+                "executed_kernel_counts": {"QNNExecutionProvider": 1},
+                "cpu_fallback_disabled": True,
+            },
+        }
+        for index in range(5)
+    ]
+    assert image_quality_acceptance({"results": rows})["passed"]
+    rows[0]["metrics"]["psnr_y_db"] = 20
+    assert not image_quality_acceptance({"results": rows})["passed"]
+    rows[0]["metrics"]["psnr_y_db"] = 31
+    rows[0]["evidence"]["executed_kernel_counts"]["CPUExecutionProvider"] = 1
+    assert not image_quality_acceptance({"results": rows})["passed"]

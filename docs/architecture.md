@@ -69,4 +69,23 @@ One Runtime can serve many images. QNN contexts can be cached locally using
 Integrity checks precede loading, and strict proof follows every cache load.
 DirectML provides a separately verified GPU comparison. See [models](models.md),
 [image pipeline](image-pipeline.md) and [research notes](research-notes.md).
-Video belongs to the next gated release and is not implemented in v0.2.
+Video reuses that same Runtime for an entire stream; image behavior is preserved.
+
+
+## v0.4 frame stream
+
+`stream.py` owns bounded FIFO overlap and cancellation; `Frame` carries ordered,
+owned data from a sequential source without seeking or requiring a known length.
+The file adapter validates CFR/counts separately. Future pipe/live sources can
+supply the iterator without changing enhancement/sink contracts.
+
+`planar.py` owns reusable native limited-range NV12 buffers. `video.py` materializes
+presets, keeps one strict runtime alive and validates actual encoded output before
+atomic publication. `video_stats.py` and `monitoring.py` retain bounded timing,
+queue and OS process samples. `video_benchmark.py` implements sustained gates,
+aligned delivered quality and the isolated-model quality regression gate.
+
+Reader/writer threads overlap decode/encode; the main thread alone runs ORT and
+owns model tensors. No concurrent invocation on one QNN session, tile batching,
+model bypass or unbounded queue is introduced. See [realtime](realtime.md) and
+[video pipeline](video-pipeline.md) for scopes and settings.

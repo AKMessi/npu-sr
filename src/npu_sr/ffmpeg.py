@@ -3,6 +3,7 @@
 import json
 import math
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -28,6 +29,12 @@ def tool_path(explicit: Path | None = None) -> Path:
     if os.name == "nt":
         root = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "npu-sr" / "tools"
         cached = sorted(root.glob("ffmpeg-*/extracted/*/bin/ffmpeg.exe"))
+        architecture = "arm64" if platform.machine().lower() in {"arm64", "aarch64"} else "x64"
+        cached = [
+            path
+            for path in cached
+            if f"ffmpeg-{architecture}-" in str(path.parent.parent.parent.parent.name)
+        ]
         if cached:
             return cached[-1]
     found = shutil.which("ffmpeg")
@@ -207,7 +214,19 @@ def decode_args(
     return args + ["-fps_mode", "passthrough", "-pix_fmt", pixel_format, "-f", "rawvideo", "pipe:1"]
 
 
-def codec_args(codec: str, hardware: bool, bitrate: str, quality: int) -> list[str]:
+def software_av1_encoder(ffmpeg: Path) -> str:
+    """Select a real software implementation included in this FFmpeg build."""
+    listing = run_tool([str(ffmpeg), "-hide_banner", "-encoders"]).stdout.decode("utf-8", "replace")
+    names = {line.split()[1] for line in listing.splitlines() if len(line.split()) >= 2}
+    for name in ("libsvtav1", "libaom-av1"):
+        if name in names:
+            return name
+    raise SRException("This FFmpeg build has neither libsvtav1 nor libaom-av1 for software AV1.")
+
+
+def codec_args(
+    codec: str, hardware: bool, bitrate: str, quality: int, software_av1: str = "libaom-av1"
+) -> list[str]:
     if codec not in {"h264", "hevc", "av1"}:
         raise SRException(f"Unsupported output codec: {codec}")
     if not re.fullmatch(r"[1-9][0-9]*(?:\.[0-9]+)?[kKmM]?", bitrate):
@@ -231,8 +250,10 @@ def codec_args(codec: str, hardware: bool, bitrate: str, quality: int) -> list[s
             "-pix_fmt",
             "nv12",
         ]
-    encoder = {"h264": "libx264", "hevc": "libx265", "av1": "libaom-av1"}[codec]
+    encoder = {"h264": "libx264", "hevc": "libx265", "av1": software_av1}[codec]
     extra = ["-preset", "veryfast"] if codec != "av1" else ["-cpu-used", "8", "-b:v", "0"]
+    if codec == "av1" and software_av1 == "libsvtav1":
+        extra = ["-preset", "10"]
     return ["-c:v", encoder, "-crf", str(quality), *extra, "-pix_fmt", "yuv420p"]
 
 
@@ -247,6 +268,7 @@ def encode_args(
     bitrate: str,
     quality: int,
     pixel_format: str = "rgb24",
+    software_av1: str = "libaom-av1",
 ) -> list[str]:
     args = [
         "-loglevel",
@@ -275,7 +297,7 @@ def encode_args(
             colors += ["-colorspace", info.color_space]
     return (
         args
-        + codec_args(codec, hardware, bitrate, quality)
+        + codec_args(codec, hardware, bitrate, quality, software_av1)
         + colors
         + [
             "-fps_mode",

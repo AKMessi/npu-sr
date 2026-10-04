@@ -18,6 +18,32 @@ from .model import sha256
 from .video import VideoSettings, process_video
 
 
+def image_quality_acceptance(report: dict, model: str = "espcn-x2-256") -> dict:
+    """Require paired standard-subset quality gains for the realtime network.
+
+    This gates the isolated image model, not a universal delivered-video gain.
+    The separately reported video comparisons include colorspace and codec loss.
+    """
+    rows = [row for row in report["results"] if row["model"] == model and row["backend"] == "npu"]
+    failures = []
+    if len({row["image"] for row in rows}) < 5:
+        failures.append("requires at least five distinct paired reference images")
+    gains = {}
+    for metric in ("psnr_y_db", "ssim_y"):
+        values = [row["metrics"][metric] - row["baseline_metrics"][metric] for row in rows]
+        gain = float(np.mean(values)) if values else None
+        gains[metric] = gain
+        if gain is None or not np.isfinite(gain) or gain <= 0:
+            failures.append(f"mean {metric} must exceed bicubic")
+    if any(
+        set(row["evidence"].get("executed_kernel_counts", {})) != {"QNNExecutionProvider"}
+        or not row["evidence"].get("cpu_fallback_disabled")
+        for row in rows
+    ):
+        failures.append("strict QNN quality evidence missing")
+    return {"passed": not failures, "failures": failures, "model": model, "mean_gain": gains}
+
+
 def realtime_acceptance(report: dict) -> dict:
     """Gate measured useful sustained video, rather than model-only throughput."""
     failures = []
