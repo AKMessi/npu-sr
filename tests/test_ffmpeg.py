@@ -1,6 +1,8 @@
 """Pipe framing and strict evidence checks work without accelerator hardware."""
 
+import hashlib
 import io
+import json
 from fractions import Fraction
 from pathlib import Path
 
@@ -89,6 +91,64 @@ def test_software_av1_selection_uses_installed_encoder(monkeypatch):
     monkeypatch.setattr("npu_sr.ffmpeg.run_tool", lambda _: SimpleNamespace(stdout=b""))
     with pytest.raises(SRException, match="neither"):
         software_av1_encoder(Path("ffmpeg"))
+
+
+def test_cached_tool_requires_native_architecture_and_verified_marker(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+
+    from npu_sr.ffmpeg import tool_path
+
+    root = tmp_path / "npu-sr/tools"
+    for architecture in ("arm64", "x64"):
+        directory = root / f"ffmpeg-{architecture}-test"
+        binary = directory / "extracted/test/bin/ffmpeg.exe"
+        binary.parent.mkdir(parents=True)
+        binary.write_bytes(architecture.encode())
+        (directory / "ready.json").write_text(
+            json.dumps(
+                {
+                    "executable": binary.name,
+                    "sha256": hashlib.sha256(binary.read_bytes()).hexdigest(),
+                }
+            )
+        )
+    monkeypatch.setattr(
+        "npu_sr.ffmpeg.os", SimpleNamespace(name="nt", environ={"LOCALAPPDATA": str(tmp_path)})
+    )
+    monkeypatch.setattr("npu_sr.ffmpeg.platform.machine", lambda: "ARM64")
+    monkeypatch.setattr("npu_sr.ffmpeg.shutil.which", lambda _: None)
+    selected = tool_path()
+    assert "ffmpeg-arm64-test" in str(selected)
+    selected.write_bytes(b"tampered")
+    with pytest.raises(SRException, match="unavailable"):
+        tool_path()
+
+
+@pytest.mark.parametrize("exit_code", [0, 0xC0000005])
+def test_acquisition_checks_startup_before_accepting_cache(tmp_path, monkeypatch, exit_code):
+    import importlib.util
+    import zipfile
+    from types import SimpleNamespace
+
+    spec = importlib.util.spec_from_file_location(
+        "download_ffmpeg", Path(__file__).parents[1] / "scripts/download_ffmpeg.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    name = f"ffmpeg-{module.VERSION}-winarm64-gpl-shared-9.0.zip"
+    with zipfile.ZipFile(tmp_path / name, "w") as archive:
+        archive.writestr(name.removesuffix(".zip") + "/bin/ffmpeg.exe", b"logic fixture")
+    module.HASHES["arm64"] = hashlib.sha256((tmp_path / name).read_bytes()).hexdigest()
+    monkeypatch.setattr(
+        module.subprocess, "run", lambda *a, **kw: SimpleNamespace(returncode=exit_code)
+    )
+    if exit_code:
+        with pytest.raises(ValueError, match="failed startup"):
+            module.download("arm64", tmp_path)
+        assert not (tmp_path / "ready.json").exists()
+    else:
+        assert module.download("arm64", tmp_path).is_file()
+        assert (tmp_path / "ready.json").is_file()
 
 
 @pytest.mark.parametrize("codec", ["h264", "hevc", "av1"])

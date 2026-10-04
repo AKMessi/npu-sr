@@ -2,8 +2,8 @@
 
 The acceptance gate measures sustained **end-to-end** throughput, including
 codec startup, transfers, preprocessing, every neural tile, stitching, chroma,
-pipe waits and encoder flush. Provider/model startup and final validation/hashing
-are reported separately. Model-only throughput is not video FPS.
+pipe waits and encoder flush. Provider/model startup, final validation and report/hash preparation
+are reported separately, alongside total function elapsed time. Model-only throughput is not video FPS.
 
 ## Reproduce
 
@@ -87,3 +87,11 @@ normalized process CPU time and simultaneous working sets. They exclude other
 applications and drivers. Queue/timing/diagnostic/sample storage is bounded.
 Temperature, accelerator utilization and power are **not measured**; throughput
 stability is evidence of sustained performance, not a thermal sensor reading.
+
+
+The report records successful neural tile calls separately from three warmups.
+Publication fails if those calls do not equal every frame times its tile count;
+the sustained gate checks this too. Output validation performs an additional
+full-file decode and timestamp inspection after encoding, which can add substantial
+elapsed time. It is a safety audit, excluded from the measured streaming frame
+budget and disclosed in `output_validation_seconds` / `total_seconds`.

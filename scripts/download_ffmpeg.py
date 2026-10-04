@@ -7,17 +7,19 @@ does not link its libraries, and does not redistribute its binaries.
 
 import argparse
 import hashlib
+import json
 import os
 import platform
+import subprocess
 import urllib.request
 import zipfile
 from pathlib import Path
 
-RELEASE = "autobuild-2026-10-03-18-14"
-VERSION = "n9.0.2-22-g46d8f462ee"
+RELEASE = "autobuild-2026-08-31-13-27"
+VERSION = "n9.0.1-11-ge47273f4d9"
 HASHES = {
-    "arm64": "82b7eef78a79fdc93a2835154e753b4b175797712f707cc4f419405c0e9f6a2c",
-    "x64": "6b2621d2f833cd94ae56371ce154bd0cab4aa504d802d661431093753a5f031f",
+    "arm64": "4419887ac2c5585d909d532944843756f67e430d4f3822e9062bff1455498abc",
+    "x64": "00d78694632f17a1de325c639d0acf04a6b3ab8f20ce0a2e5bedd2d5e21e3adb",
 }
 
 
@@ -46,7 +48,19 @@ def download(architecture: str, directory: Path) -> Path:
             if not path.resolve().is_relative_to(target.resolve()):
                 raise ValueError("Unsafe FFmpeg archive path")
         bundle.extractall(target)
-    return target / name.removesuffix(".zip") / "bin" / "ffmpeg.exe"
+    executable = target / name.removesuffix(".zip") / "bin" / "ffmpeg.exe"
+    # A matching archive hash does not guarantee a working upstream build.
+    ready = directory / "ready.json"
+    ready.unlink(missing_ok=True)
+    result = subprocess.run([str(executable), "-version"], capture_output=True, timeout=15)
+    if result.returncode:
+        raise ValueError(
+            f"Pinned FFmpeg failed startup (exit {result.returncode:#x}); not selected"
+        )
+    with executable.open("rb") as stream:
+        executable_hash = hashlib.file_digest(stream, "sha256").hexdigest()
+    ready.write_text(json.dumps({"executable": executable.name, "sha256": executable_hash}) + "\n")
+    return executable
 
 
 if __name__ == "__main__":
@@ -67,6 +81,9 @@ if __name__ == "__main__":
         or Path(os.environ.get("LOCALAPPDATA", Path.home()))
         / "npu-sr"
         / "tools"
-        / f"ffmpeg-{args.architecture}-9.0"
+        / f"ffmpeg-{args.architecture}-monthly-202608"
     )
-    print(download(args.architecture, directory))
+    try:
+        print(download(args.architecture, directory))
+    except (OSError, ValueError, subprocess.SubprocessError) as exc:
+        parser.exit(2, f"Error: {exc}\nSee docs/ffmpeg.md; no binary was accepted.\n")

@@ -129,3 +129,13 @@ Video API research and implementation belong to the subsequent gated releases.
 - Native FFmpeg includes SVT-AV1 but no libaom. Software AV1 now selects an
   installed implementation, recording the actual encoder; the native CPU
   integration test completed with SVT. This is explicitly software encoding.
+
+- [BtbN retention policy](https://github.com/BtbN/FFmpeg-Builds#release-retention-policy)
+  keeps daily builds fourteen days and monthly builds two years. September's
+  retained 9.0/8.1 ARM64 packages crashed at `-version` (0xc0000005). The
+  [October 3 COFF stripping fix](https://github.com/BtbN/FFmpeg-Builds/commit/9acad4a9ef1583096af7836cc1e9c8cbcb4d3950)
+  explains missing COMDAT relocation symbols; the observed failure is consistent
+  with it, rather than independently proven by a native debugger. August's
+  retained `n9.0.1-11-ge47273f4d9` passed startup and hardware codec checks.
+  v0.4 uses that pinned build, adds startup/integrity cache acceptance and
+  remeasures the final workload. No failing package or vendor binary is published.

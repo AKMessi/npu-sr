@@ -8,6 +8,8 @@
 - Three-trial sustained acceptance gates, rolling rates, scoped frame handoff latency and process CPU/memory samples.
 - Paired image quality regression gate, delivered preset quality/speed suite and corrected VMAF clock alignment.
 - Native software AV1 selection, strict planar hardware/cache/cancellation tests and realtime reproduction docs.
+- Retained monthly FFmpeg pin with startup/integrity cache checks; broken September ARM64 builds rejected.
+- Actual successful neural tile-call counting and separately timed post-encode safety audits.
 - Power, accelerator utilization and temperature are not measured.
 
 ## 0.3.0 — 2026-10-04

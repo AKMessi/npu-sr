@@ -54,3 +54,20 @@ exist. Explicit paths override this preference. Software SVT-AV1 uses preset 10
 and software CRF, as described in [FFmpeg encoder documentation](https://ffmpeg.org/ffmpeg-codecs.html#libsvtav1).
 It is not a hardware encoder. The native validated build has SVT-AV1 but no libaom;
 this is why software encoder selection checks the installed build.
+
+
+## Reproducible acquisition
+
+v0.4 pins the 2026-08-31 monthly build `n9.0.1-11-ge47273f4d9`, with separate
+ARM64/x64 archive hashes. Upstream keeps monthly builds for two years but daily
+builds only fourteen days; the original v0.3 daily pin is not a long-term source.
+Keep a verified archive in its cache for offline reacquisition beyond upstream
+retention, or validate a newer build explicitly. No codec binaries are published.
+
+The September monthly 9.0 and 8.1 ARM64 builds crashed at startup with
+0xc0000005. The builder's October 3 COFF-stripping fix is consistent with this
+failure; the August build predates that regression and passed startup and hardware
+checks. The downloader now runs `-version` before writing an executable integrity
+marker. Cache selection accepts only native, marked executables with a matching
+hash; older caches require reacquisition or an explicit path. This startup check
+is not a hardware codec proof—actual decode/encode evidence is still required.

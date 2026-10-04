@@ -77,6 +77,8 @@ def realtime_acceptance(report: dict) -> dict:
             failures.append(prefix + "hardware encoder evidence missing")
         if (
             trial["dropped_frames"]
+            or trial.get("neural_tile_runs")
+            != trial["frames_processed"] * trial.get("tile_count_per_frame", 0)
             or trial["output"]["reported_frames"] != trial["frames_processed"]
             or not trial.get("input_timestamps_validated")
             or not trial.get("output_timestamps_validated")

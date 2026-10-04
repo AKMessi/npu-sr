@@ -47,6 +47,7 @@ class Runtime:
         if performance_mode not in {"default", "burst", "sustained_high_performance"}:
             raise SRException(f"Unsupported QNN performance mode: {performance_mode}")
         self.performance_mode = performance_mode
+        self.run_calls = 0
         self._loaded_context = False
         self.spec = manifest_spec(self.manifest)
         self.input_shape = self.spec.input_shape
@@ -282,4 +283,5 @@ class Runtime:
             raise SRException(f"{self.label} inference failed: {exc}") from exc
         if output.shape != tuple(self.output_shape) or not np.isfinite(output).all():
             raise SRException("Model returned an invalid tensor.")
+        self.run_calls += 1
         return output

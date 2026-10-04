@@ -309,6 +309,14 @@ def process_video(
             raise SRException("Video pipeline stalled for more than 60 seconds.")
         if not completed:
             raise SRException("Input video produced no frames.")
+        tile_count = (
+            (info.width + runtime.spec.core - 1)
+            // runtime.spec.core
+            * ((info.height + runtime.spec.height - 1) // runtime.spec.height)
+        )
+        neural_runs = runtime.run_calls - 3  # Successful calls, excluding explicit warmups.
+        if neural_runs != completed * tile_count:
+            raise SRException("Neural tile-call count does not match every decoded frame.")
         if completed != source_frames or (info.frames is not None and completed != info.frames):
             raise SRException("Decoded frame count does not match input metadata.")
         if abs(completed / float(info.fps) - info.duration) > max(0.1, 2 / float(info.fps)):
@@ -318,6 +326,7 @@ def process_video(
         if hardware_encode:
             codec_evidence["encode"] = encode_evidence(encoder.evidence_log)
         # Count the final encoded frames: passthrough must not skip or duplicate frames.
+        validation_started = perf_counter()
         try:
             actual = probe(temporary, ffmpeg, count_frames=True)
             encoded_frames = validate_cfr(temporary, ffmpeg, actual)
@@ -341,17 +350,27 @@ def process_video(
         if settings.audio == "copy" and info.audio and not actual.audio:
             raise SRException("Audio stream did not survive encoding.")
         os.replace(temporary, output)
+        validation_seconds = perf_counter() - validation_started
         from .suite import environment
 
+        report_started = perf_counter()
+        measured_environment = environment()
+        ffmpeg_hash, input_hash = sha256(ffmpeg), sha256(source)
+        report_seconds = perf_counter() - report_started
         inference_seconds = sum(phases["inference_ms"]) / 1000
         return {
             "schema_version": 3,
-            "environment": environment(),
+            "environment": measured_environment,
             "ffmpeg_version": version,
-            "ffmpeg_sha256": sha256(ffmpeg),
-            "input_sha256": sha256(source),
+            "ffmpeg_sha256": ffmpeg_hash,
+            "input_sha256": input_hash,
             "model": runtime.manifest["name"],
             "model_sha256": runtime.manifest["sha256"],
+            "model_precision": runtime.spec.precision,
+            "tile_core": [runtime.spec.core, runtime.spec.height],
+            "tile_halo": runtime.spec.halo,
+            "tile_count_per_frame": tile_count,
+            "neural_tile_runs": neural_runs,
             "backend": runtime.backend,
             "execution_evidence": runtime.evidence,
             "codec_evidence": codec_evidence,
@@ -379,6 +398,9 @@ def process_video(
             "neural_startup_ms": runtime.startup_ms,
             "warmup_tensor_runs": 3,
             "processing_seconds": processing_seconds,
+            "output_validation_seconds": validation_seconds,
+            "report_preparation_seconds": report_seconds,
+            "total_seconds": perf_counter() - initialization,
             "end_to_end_fps": completed / processing_seconds,
             "real_time_factor": processing_seconds / (completed / float(info.fps)),
             "process_cpu_seconds": cpu_seconds,

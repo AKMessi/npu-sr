@@ -389,6 +389,8 @@ def _video(args: argparse.Namespace) -> int:
     for kind in ("decode", "encode"):
         print(f"{kind.title()}:      {report['codec_evidence'][kind]}")
     print(f"End-to-end:  {report['end_to_end_fps']:.1f} FPS")
+    print(f"Validation:  {report['output_validation_seconds']:.1f} s (after codec processing)")
+    print(f"Elapsed:     {report['total_seconds']:.1f} s (including startup and validation)")
     print(f"Real-time factor: {report['real_time_factor']:.2f} (processing / source duration)")
     print(f"Saved:       {args.output}")
     if args.json:

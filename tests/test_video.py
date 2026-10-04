@@ -235,6 +235,7 @@ def test_realtime_planar_context_reuse_and_cancellation(video_source, tmp_path, 
         report = process_video(source, tmp_path / f"reuse-{index}.mp4", settings)
         assert report["execution_evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
         assert report["frames_processed"] == 6 and report["output"]["audio"]
+        assert report["neural_tile_runs"] == 72
         assert report["output_timestamps_validated"] and report["dropped_frames"] == 0
         assert report["frame_format"] == "nv12"
         assert report["npu_performance_requested"] == "burst"
@@ -242,6 +243,15 @@ def test_realtime_planar_context_reuse_and_cancellation(video_source, tmp_path, 
         assert max(report["observed_queue_peaks"].values()) <= 2
         if index:
             assert report["execution_evidence"]["context_cache"] == "hit"
+    decoder = PipeProcess(ffmpeg, decode_args(tmp_path / "reuse-1.mp4", False))
+    means = []
+    try:
+        while (raw := read_frame(decoder.process.stdout, 1920 * 1080 * 3)) is not None:
+            means.append(np.frombuffer(raw, np.uint8).mean())
+        decoder.finish()
+    finally:
+        decoder.close()
+    assert len(means) == 6 and np.all(np.diff(means) > 10)
 
     children = []
 

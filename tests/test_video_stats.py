@@ -25,6 +25,8 @@ def test_benchmark_gate_requires_duration_throughput_and_proofs():
         "output": {"resolution": [1920, 1080], "reported_frames": 3600},
         "backend": "npu",
         "frames_processed": 3600,
+        "tile_count_per_frame": 12,
+        "neural_tile_runs": 43200,
         "dropped_frames": 0,
         "input_timestamps_validated": True,
         "output_timestamps_validated": True,
@@ -46,6 +48,9 @@ def test_benchmark_gate_requires_duration_throughput_and_proofs():
     assert not realtime_acceptance(report)["passed"]
     report["trials"][0] = deepcopy(trial)
     report["trials"][0]["execution_evidence"]["executed_kernel_counts"]["CPUExecutionProvider"] = 1
+    assert not realtime_acceptance(report)["passed"]
+    report["trials"][0] = deepcopy(trial)
+    report["trials"][0]["neural_tile_runs"] -= 1
     assert not realtime_acceptance(report)["passed"]
 
 

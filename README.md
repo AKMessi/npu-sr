@@ -52,7 +52,7 @@ Tested locally on 2026-10-04:
 | Windows ML / App Runtime | wasdk 2.3.0 / installed runtime 2.5.1.0 |
 | QNN catalog package | 2.2480.53.0 |
 | GPU | Qualcomm Adreno X1-45, strict DirectML |
-| FFmpeg | native ARM64 n9.0.2-22-g46d8f462ee |
+| FFmpeg | native ARM64 n9.0.1-11-ge47273f4d9 |
 
 Install native **Python 3.12 ARM64**, the stable **ARM64 Windows App Runtime 2.x
 (version 2.3.0.0 or newer)** from Microsoft's [download page](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads),

@@ -1,5 +1,6 @@
 """FFmpeg tools, bounded stderr capture, and executed hardware codec checks."""
 
+import hashlib
 import json
 import math
 import os
@@ -35,8 +36,15 @@ def tool_path(explicit: Path | None = None) -> Path:
             for path in cached
             if f"ffmpeg-{architecture}-" in str(path.parent.parent.parent.parent.name)
         ]
-        if cached:
-            return cached[-1]
+        for candidate in reversed(cached):
+            try:
+                ready = json.loads((candidate.parents[3] / "ready.json").read_text())
+                with candidate.open("rb") as stream:
+                    digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                if ready["executable"] == candidate.name and ready["sha256"] == digest:
+                    return candidate
+            except (OSError, ValueError, KeyError, TypeError):
+                continue
     found = shutil.which("ffmpeg")
     if found:
         return Path(found)
