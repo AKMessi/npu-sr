@@ -14,6 +14,12 @@ models, strict execution checks and measurements rather than utilization claims.
 **v0.4 adds sustained realtime video processing.** Its final measured configuration
 and quality tradeoffs are in the [v0.4 report](benchmarks/v0.4/summary.md).
 
+**960×540 → 1920×1080 @ 30 FPS: 34.2 FPS sustained**,
+three 120-second sources / about 105 seconds processing each, no lost frames.
+QNN and hardware codecs verified. Fixed 0.5 neural blend, AV1 8M, two-frame queues.
+Streaming processing excludes the separately disclosed post-encode file audit,
+which makes total CLI elapsed time longer than the source. Power is not measured.
+
 ## Results and examples
 
 The included MIT test card and actual QNN outputs:

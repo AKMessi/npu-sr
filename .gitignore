@@ -13,6 +13,8 @@ outputs/
 datasets/
 .cache/
 *.dll
+*.exe
+*.zip
 *.bin
 *.onnx
 *.pb

@@ -84,13 +84,17 @@ def run(source: Path, directory: Path, reports: Path, trials: int) -> dict:
         input_sha256=sha256(source),
         complete=True,
         ffmpeg_sha256=sha256(ffmpeg),
+        ffmpeg_version=run_tool([str(ffmpeg), "-version"]).stdout.decode().splitlines()[0],
         backend="FFmpeg CPU bicubic",
         codec="av1",
         bitrate="8M",
         trials=results,
         median_trial_end_to_end_fps=float(np.median([r["end_to_end_fps"] for r in results])),
-        timing_scope="whole FFmpeg process: hardware decode/download, CPU scale, hardware encode/flush; excludes output safety audit",
-        aggregation="median across three complete short trials; not a sustained benchmark",
+        timing_scope=(
+            "whole FFmpeg process: hardware decode/download, CPU scale, hardware encode/flush; "
+            "excludes output safety audit"
+        ),
+        aggregation="median across complete short trials; not a sustained benchmark",
     )
     save_report(report, reports)
     return report

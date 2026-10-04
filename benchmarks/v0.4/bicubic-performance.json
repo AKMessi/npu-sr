@@ -1,0 +1,184 @@
+{
+  "environment": {
+    "npu_sr_version": "0.4.0",
+    "timestamp": "2026-10-04T05:31:21.595666+00:00",
+    "git_commit": "66f504dc4af74d35f0453a8a1400fa8e24db1089",
+    "working_tree_dirty": false,
+    "python_source_sha256": "cb39e9c0e6fab2303cf58f1d173c1be2a1933c764826e27d11caefdf611c5c3b",
+    "os": "Windows",
+    "architecture": "ARM64",
+    "python": "3.12.0",
+    "software_versions": {
+      "npu-sr": "0.4.0",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "onnx": "1.23.1",
+      "onnxruntime-windowsml": "1.25.2.202605110140",
+      "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+      "winrt-runtime": "3.2.1"
+    },
+    "power": "not measured",
+    "background_processes": "uncontrolled",
+    "power_state": {
+      "ac_line": "plugged in",
+      "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+      "battery_percent": 99,
+      "energy_saver": false
+    },
+    "qnn_catalog_package": "unavailable",
+    "windows_build": 26200,
+    "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+    "npu_driver": "30.0.219.1000"
+  },
+  "input_sha256": "4fd3ee7f031d9dad5779da248c29e82e5529b4ad2c8830087b0c24ce56ecd14e",
+  "complete": true,
+  "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+  "backend": "FFmpeg CPU bicubic",
+  "codec": "av1",
+  "bitrate": "8M",
+  "trials": [
+    {
+      "trial": 1,
+      "frames": 120,
+      "processing_seconds": 1.1745622000307776,
+      "end_to_end_fps": 102.16572608658407,
+      "mean_processing_budget_ms": 9.788018333589813,
+      "codec_evidence": {
+        "decode": {
+          "method": "D3D11VA hardware",
+          "hardware_format_selected": "d3d11",
+          "explicit_hwdownload": true
+        },
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "input": {
+        "resolution": [
+          960,
+          540
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "h264",
+        "color_range": "unknown",
+        "color_space": "unknown"
+      },
+      "output": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "av1",
+        "color_range": "tv",
+        "color_space": "unknown"
+      },
+      "output_sha256": "10608148bc50048e695f5e93e3c50efb337f6594a5fe28416c5e30d8ec8dd18a"
+    },
+    {
+      "trial": 2,
+      "frames": 120,
+      "processing_seconds": 1.1385938000166789,
+      "end_to_end_fps": 105.39316128213781,
+      "mean_processing_budget_ms": 9.488281666805657,
+      "codec_evidence": {
+        "decode": {
+          "method": "D3D11VA hardware",
+          "hardware_format_selected": "d3d11",
+          "explicit_hwdownload": true
+        },
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "input": {
+        "resolution": [
+          960,
+          540
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "h264",
+        "color_range": "unknown",
+        "color_space": "unknown"
+      },
+      "output": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "av1",
+        "color_range": "tv",
+        "color_space": "unknown"
+      },
+      "output_sha256": "10608148bc50048e695f5e93e3c50efb337f6594a5fe28416c5e30d8ec8dd18a"
+    },
+    {
+      "trial": 3,
+      "frames": 120,
+      "processing_seconds": 1.1388585999957286,
+      "end_to_end_fps": 105.36865595118662,
+      "mean_processing_budget_ms": 9.490488333297739,
+      "codec_evidence": {
+        "decode": {
+          "method": "D3D11VA hardware",
+          "hardware_format_selected": "d3d11",
+          "explicit_hwdownload": true
+        },
+        "encode": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1"
+        }
+      },
+      "input": {
+        "resolution": [
+          960,
+          540
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "h264",
+        "color_range": "unknown",
+        "color_space": "unknown"
+      },
+      "output": {
+        "resolution": [
+          1920,
+          1080
+        ],
+        "frame_rate": "30",
+        "duration_seconds": 4.0,
+        "reported_frames": 120,
+        "audio": true,
+        "codec": "av1",
+        "color_range": "tv",
+        "color_space": "unknown"
+      },
+      "output_sha256": "10608148bc50048e695f5e93e3c50efb337f6594a5fe28416c5e30d8ec8dd18a"
+    }
+  ],
+  "median_trial_end_to_end_fps": 105.36865595118662,
+  "timing_scope": "whole FFmpeg process: hardware decode/download, CPU scale, hardware encode/flush; excludes output safety audit",
+  "aggregation": "median across three complete short trials; not a sustained benchmark",
+  "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+  "version_verification": "Added from matching executable SHA in release environment; latency samples unchanged"
+}

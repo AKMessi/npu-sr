@@ -24,6 +24,14 @@ MOVIE_SHA256 = "99486359be7e3681168a0fe94e1cbb0284c48b57b2a3ce7df4fa75e185987a15
 CLIPS = {"faces": 32, "scene": 10, "motion": 124, "texture": None}
 
 
+def preparation_software(ffmpeg: Path) -> dict:
+    return {
+        "ffmpeg_version": run_tool([str(ffmpeg), "-version"]).stdout.decode().splitlines()[0],
+        "ffmpeg_sha256": sha256(ffmpeg),
+        "bitexact": True,
+    }
+
+
 def source_movie(directory: Path) -> Path:
     directory.mkdir(parents=True, exist_ok=True)
     archive = directory / "tears_of_steel_1080p.mov.zip"
@@ -54,6 +62,8 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
     provenance = {
         "source": SOURCE,
         "source_sha256": SHA256,
+        "movie_sha256": MOVIE_SHA256,
+        "preparation_software": preparation_software(ffmpeg),
         "attribution": "Blender Foundation / mango.blender.org",
         "license": "CC-BY-3.0",
         "duration_seconds": duration,
@@ -84,6 +94,7 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
                     "3",
                     "-pix_fmt",
                     "yuv420p",
+                    "-bitexact",
                     str(reference),
                 ],
                 timeout=300,
@@ -115,6 +126,7 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
                     "yuv420p",
                     "-c:a",
                     "aac",
+                    "-bitexact",
                     str(reference),
                 ],
                 timeout=300,
@@ -148,6 +160,7 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
                     "yuv420p",
                     "-c:a",
                     "copy",
+                    "-bitexact",
                     str(low),
                 ],
                 timeout=300,
@@ -192,6 +205,7 @@ def prepare_sustained(directory: Path, duration: int, ffmpeg: Path) -> None:
             "yuv420p",
             "-c:a",
             "aac",
+            "-bitexact",
             str(output),
         ],
         timeout=1200,
@@ -208,6 +222,7 @@ def prepare_sustained(directory: Path, duration: int, ffmpeg: Path) -> None:
                 "source": SOURCE,
                 "source_sha256": SHA256,
                 "movie_sha256": MOVIE_SHA256,
+                "preparation_software": preparation_software(ffmpeg),
                 "license": "CC-BY-3.0",
                 "attribution": "Blender Foundation / mango.blender.org",
                 "source_start_seconds": 32,
