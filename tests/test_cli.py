@@ -17,6 +17,9 @@ def test_parsing_and_version(capsys):
         parser().parse_args(["benchmark", "image.png", "--runs", "0"])
     assert parser().parse_args(["video", "in.mp4", "-o", "out.mp4"]).preset is None
     assert parser().parse_args(["benchmark-realtime", "in.mp4", "-o", "trials"]).trials == 3
+    assert not parser().parse_args(["video", "in.mp4", "-o", "out.mp4"]).verify_full
+    for command in ("video", "benchmark-video", "benchmark-realtime"):
+        assert parser().parse_args([command, "in.mp4", "-o", "out", "--verify-full"]).verify_full
 
 
 def test_cli_cpu_end_to_end(tiny_model, tmp_path: Path, capsys):

@@ -11,17 +11,20 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**v0.5 improves delivered video quality with QuickSRNet Small**, a luminance
-adaptation without a bicubic blend.
+**v0.6 retains the quality-first QuickSRNet Small preset and makes default
+video validation lightweight.** No bicubic blend or neural-frame bypass.
 
-**960×540 → 1920×1080 @ 30 FPS: 52.6 FPS median streaming throughput**,
+**960×540 → 1920×1080 @ 30 FPS: 48.7 FPS median streaming throughput**,
 three 120-second sources, every frame enhanced, strict QNN and hardware codecs
 verified. On 24 predeclared clips, including 12 untouched holdout clips, it beats
 bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF** on average.
 See the [v0.5 report](benchmarks/v0.5/summary.md) for per-clip results and settings.
 
-The expensive final audit remains: whole-command time is about 149–156 seconds
-for a 120-second source. Streaming throughput is not yet whole-command realtime.
+v0.6 measures **48.7 FPS median streaming throughput** and **76–83 seconds
+complete function time** for the same 120-second source. Default final validation
+takes about 0.2 seconds; `--verify-full` retains a slower decoded-frame audit.
+A separately timed CLI run finished in **74.7 seconds**, including launch and
+JSON output. See the [v0.6 report](benchmarks/v0.6/summary.md) for full scope.
 Results are from one laptop/model/corpus; power is not measured.
 
 ## Results and examples
@@ -56,7 +59,7 @@ All results describe one machine, declared models/inputs/settings, and three
 performance trials; they are not general Snapdragon claims. Historical reports:
 [v0.1](benchmarks/snapdragon-x-plus.json) · [v0.2](benchmarks/v0.2/summary.md) ·
 [v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md) ·
-[v0.5](benchmarks/v0.5/summary.md).
+[v0.5](benchmarks/v0.5/summary.md) · [v0.6](benchmarks/v0.6/summary.md).
 
 ## Hardware and prerequisites
 
@@ -217,7 +220,7 @@ Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.
 - [x] v0.3: in-memory video, FFmpeg, proven hardware decode/encode, audio and output validation
 - [x] v0.4: sustained realtime video, bounded pipeline, measured quality/speed tradeoffs
 - [x] v0.5: expanded quality corpus, QuickSRNet, improved delivered quality
-- [ ] v0.6: cheaper default validation and CPU/memory profiling
+- [x] v0.6: cheaper default validation and CPU/memory profiling
 - [ ] v0.7–v1: temporal research, installation UX and long-run reliability
 - [ ] Future: temporal models, live sources, perceptual preprocessing, further codec/NPU experiments
 

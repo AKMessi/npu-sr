@@ -31,7 +31,9 @@ The output is written to a unique sibling temporary file. Success requires:
 - Encoded frame count equals the number processed; metadata count and source
   duration are checked when available.
 - Resolution is exactly twice the input, with the same framerate and expected duration.
-- Actual output timestamps retain the source cadence, without gaps or reordering.
+- Every packet presentation timestamp retains CFR cadence after bounded coded-order
+  reordering, and packet count agrees with actual processed frames.
+- `--verify-full` instead audits every decoded-frame timestamp and count.
 - Copied audio survives when the source has audio.
 
 Only then is the output published. An existing output requires `--overwrite`;
@@ -68,3 +70,22 @@ explicit overrides do not inherit its measured performance claim. First/final/
 minimum rolling throughput and queue depth supplement actual complete-video FPS.
 Frame handoff latency ends at encoder pipe submission, not display or encoder
 completion. See [realtime](realtime.md) for settings, gates and reproducibility.
+
+## Validation modes (v0.6)
+
+Default input/output checks inspect all video packet timestamps and durations,
+not just nominal framerate. The bounded reorder heap handles codec B-frames.
+Bad flags, malformed PTS, duplicates, gaps or excessive reordering fail. Packet
+counts must agree with decoded/processed frame accounting; output resolution,
+framerate, duration, audio and successful encoder flush are still required.
+Strict QNN proof, hardware evidence and every expected neural tile call remain.
+
+Packet count is not universally decoded-frame count. Unusual packet layouts
+require `--verify-full`, and packet inspection cannot prove decoded pixel integrity.
+The full mode decodes every frame again and may be much slower. Both modes
+retain atomic output publication and cleanup on errors; neither accepts VFR.
+
+```powershell
+npu-sr video input.mp4 -o enhanced.mp4 --preset realtime
+npu-sr video input.mp4 -o audited.mp4 --preset realtime --verify-full
+```

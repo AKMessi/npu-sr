@@ -1,0 +1,19 @@
+[
+  {
+    "sha256": "7b2e21b698a635f792a132a1480c5d2dd1655eb3de385c185d9d6204e28e571d",
+    "fast": {
+      "method": "all packet presentation timestamps; actual pipeline frame count required",
+      "count": 3600,
+      "seconds": 0.10678679996635765,
+      "full_decode": false,
+      "limitation": "Packet inspection does not prove decoded pixel integrity."
+    },
+    "full": {
+      "method": "decoded frame timestamps (full audit)",
+      "count": 3600,
+      "seconds": 33.90582139999606,
+      "full_decode": true,
+      "limitation": null
+    }
+  }
+]

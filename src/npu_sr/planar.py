@@ -122,17 +122,24 @@ class NV12Enhancer:
             self.y *= self.strength
             baseline *= 1 - self.strength
             self.y += baseline
+        timings["fusion_and_finite_check_ms"] = (perf_counter() - started) * 1000
+        phase = perf_counter()
         self.y *= 219
         self.y += 16
         np.clip(self.y, 16, 235, out=self.y)
         np.rint(self.y, out=self.y)
         self.output[: count * 4] = self.y.ravel()
+        timings["luminance_quantization_ms"] = (perf_counter() - phase) * 1000
+        phase = perf_counter()
         target_uv = self.output[count * 4 :].reshape(info.height, info.width, 2)
         for channel in range(2):
             plane = Image.fromarray(uv[:, :, channel]).resize(
                 (info.width, info.height), Image.Resampling.BICUBIC
             )
             target_uv[:, :, channel] = np.asarray(plane)
+        timings["chroma_scaling_ms"] = (perf_counter() - phase) * 1000
+        phase = perf_counter()
         result = self.output.tobytes()
+        timings["output_copy_ms"] = (perf_counter() - phase) * 1000
         timings["postprocessing_ms"] = (perf_counter() - started) * 1000
         return result, timings

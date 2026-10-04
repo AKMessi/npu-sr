@@ -93,6 +93,36 @@ def test_cpu_video_preserves_frames_audio_duration_and_order(video_source, tmp_p
     assert quality["temporal_residual_change"] == 0
 
 
+def test_full_and_packet_audits_leave_identical_delivered_pixels(video_source, tmp_path):
+    from npu_sr.ffmpeg import run_tool
+
+    source, ffmpeg = video_source
+    hashes = []
+    for full in (False, True):
+        output = tmp_path / f"audit-{full}.mp4"
+        report = process_video(source, output, replace(cpu_settings(ffmpeg), verify_full=full))
+        assert report["verify_full"] is full
+        for timeline in report["timeline_validation"].values():
+            assert timeline["count"] == 6 and timeline["full_decode"] is full
+        hashes.append(
+            run_tool(
+                [
+                    str(ffmpeg),
+                    "-v",
+                    "error",
+                    "-i",
+                    str(output),
+                    "-map",
+                    "0:v:0",
+                    "-f",
+                    "framemd5",
+                    "pipe:1",
+                ]
+            ).stdout
+        )
+    assert hashes[0] == hashes[1]
+
+
 @pytest.mark.parametrize("depth", [0, 2])
 def test_cancellation_closes_both_children(video_source, tmp_path, monkeypatch, depth):
     source, ffmpeg = video_source
@@ -155,14 +185,14 @@ def test_output_collision_and_corrupt_input(video_source, tmp_path):
 
 def test_encoder_output_validation_failure_never_publishes(video_source, tmp_path, monkeypatch):
     source, ffmpeg = video_source
-    from npu_sr.video import validate_cfr
+    from npu_sr.video import inspect_timeline
 
-    def fail_output(path, tool, info):
+    def fail_output(path, tool, info, full=False):
         if ".partial" in path.name:
             raise SRException("Variable or reordered frame timestamps are unsupported.")
-        return validate_cfr(path, tool, info)
+        return inspect_timeline(path, tool, info, full)
 
-    monkeypatch.setattr("npu_sr.video.validate_cfr", fail_output)
+    monkeypatch.setattr("npu_sr.video.inspect_timeline", fail_output)
     output = tmp_path / "invalid.mp4"
     with pytest.raises(SRException, match="Encoded output failed validation"):
         process_video(source, output, cpu_settings(ffmpeg))
@@ -232,7 +262,10 @@ def test_realtime_planar_context_reuse_and_cancellation(video_source, tmp_path, 
     )
     settings = settings_for_preset("realtime", {"ffmpeg": ffmpeg, "cache_dir": tmp_path / "cache"})
     for index in range(2):
-        report = process_video(source, tmp_path / f"reuse-{index}.mp4", settings)
+        report = process_video(
+            source, tmp_path / f"reuse-{index}.mp4", replace(settings, verify_full=bool(index))
+        )
+        assert report["timeline_validation"]["output"]["full_decode"] is bool(index)
         assert report["execution_evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
         assert report["frames_processed"] == 6 and report["output"]["audio"]
         assert report["neural_tile_runs"] == 72

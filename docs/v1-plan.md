@@ -13,7 +13,7 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
 - Median postprocessing 16.75 ms, inference 10.87 ms; forensic output audit 72.5 s.
 - [Raw baseline](../benchmarks/v0.5/baseline-v0.4.json).
 
-## A / v0.5 — quality first (validation complete; release checks active)
+## A / v0.5 — released
 
 1. Predeclare a diverse legal corpus and development/holdout split before candidate
    scoring. Preserve source hashes, native references, crop/time, degradation,
@@ -103,3 +103,17 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
   No native extension is justified to meet the <=8 ms postprocessing goal.
 - Whole-command times 155.58/149.35/151.00 seconds remain dominated by the final
   audit. v0.6 must separate lightweight validation from explicit forensic decode.
+
+## B / v0.6 — validation complete; release checks active
+
+- Three trials: 48.73/48.34/49.90 streaming FPS, whole function times
+  82.63/78.65/76.13 seconds; 3,600 frames/43,200 neural calls each.
+- Default output checks 0.18–0.20 seconds; full decoded audit agrees on all
+  3,600 frames and takes 33.91 seconds. No frame-count assumption from nominal FPS.
+- CPU post medians 7.72/7.73/7.54 ms. First trial chroma 4.26 ms, quantization
+  2.97 ms, finite/fusion check 0.27 ms, copy 0.12 ms. Preserve this profile before
+  choosing a native kernel; target is already met without one.
+- Three selected delivered regression files are bit-identical to v0.5.
+- Packet versus decoded audit, bad cadence, corruption, reordering, process failure,
+  timeout and cancellation are tested. Strict QNN and hardware codec tests pass.
+- External CLI timing and fresh artifacts are the final release checks.

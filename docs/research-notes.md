@@ -164,3 +164,20 @@ Video API research and implementation belong to the subsequent gated releases.
   difference in the untagged three-clip probe. Adaptive residual clipping reduced
   VMAF in all three. These provisional experiments neither select a default nor
   establish a fusion ranking; correct color negotiation precedes further search.
+
+## v0.6 validation and CPU profiling
+
+- Official [FFprobe packet/frame options](https://www.ffmpeg.org/ffprobe-all.html)
+  distinguish coded packets from decoded frames. Packet PTS inspection avoids
+  neural-independent full-file decode. A local 3,600-frame H.264 input and AV1
+  output each inspected in about 0.2 seconds, before pipeline integration.
+- Default validation now inspects every packet with a bounded 64-PTS reorder
+  heap, rejects bad cadence/flags/missing timestamps, and requires counts to
+  agree with actual decoded/processed frames and container metadata when present.
+  This proves checked access-unit timing/accounting, not pixel integrity.
+- `--verify-full` explicitly decodes every frame for count/timestamp evidence.
+  One decoded pass provides both; the previous output path decoded twice, once
+  for `-count_frames` and again for timestamp inspection.
+- The new model already removes the measured blend bottleneck. Detailed timers
+  split finite/fusion checks, quantization, chroma scaling and owned output copy
+  before considering native code or a changed resampling algorithm.

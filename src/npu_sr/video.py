@@ -28,7 +28,6 @@ from .ffmpeg import (
     run_tool,
     software_av1_encoder,
     tool_path,
-    validate_cfr,
     write_frame,
 )
 from .image import infer_y, postprocess, preprocess
@@ -37,6 +36,7 @@ from .monitoring import memory_usage
 from .runtime import Runtime
 from .stream import Frame, process_stream
 from .video_stats import SustainedStatistics, resource_summary
+from .video_validation import inspect_timeline
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +60,7 @@ class VideoSettings:
     pipeline_depth: int = 0
     preset: str | None = None
     neural_strength: float = 1.0
+    verify_full: bool = False
 
 
 PRESETS = {
@@ -172,7 +173,8 @@ def process_video(
     initialization = perf_counter()
     ffmpeg = tool_path(settings.ffmpeg)
     info = probe(source, ffmpeg)
-    source_frames = validate_cfr(source, ffmpeg, info)
+    input_validation = inspect_timeline(source, ffmpeg, info, settings.verify_full)
+    source_frames = input_validation["count"]
     runtime = Runtime(
         resolve_model(settings.model),
         settings.device,
@@ -328,8 +330,9 @@ def process_video(
         # Count the final encoded frames: passthrough must not skip or duplicate frames.
         validation_started = perf_counter()
         try:
-            actual = probe(temporary, ffmpeg, count_frames=True)
-            encoded_frames = validate_cfr(temporary, ffmpeg, actual)
+            actual = probe(temporary, ffmpeg)
+            output_validation = inspect_timeline(temporary, ffmpeg, actual, settings.verify_full)
+            encoded_frames = output_validation["count"]
         except SRException as exc:
             raise SRException(
                 "Encoded output failed validation; no output published. "
@@ -337,7 +340,7 @@ def process_video(
             ) from exc
         expected_size = (info.width * 2, info.height * 2)
         if (
-            actual.frames != completed
+            (actual.frames is not None and actual.frames != completed)
             or encoded_frames != completed
             or actual.fps != info.fps
             or (actual.width, actual.height) != expected_size
@@ -349,6 +352,7 @@ def process_video(
             raise SRException("Encoded video duration does not match processed frames.")
         if settings.audio == "copy" and info.audio and not actual.audio:
             raise SRException("Audio stream did not survive encoding.")
+        actual = replace(actual, frames=encoded_frames)
         os.replace(temporary, output)
         validation_seconds = perf_counter() - validation_started
         from .suite import environment
@@ -358,8 +362,9 @@ def process_video(
         ffmpeg_hash, input_hash = sha256(ffmpeg), sha256(source)
         report_seconds = perf_counter() - report_started
         inference_seconds = sum(phases["inference_ms"]) / 1000
+        total_seconds = perf_counter() - initialization
         return {
-            "schema_version": 3,
+            "schema_version": 4,
             "environment": measured_environment,
             "ffmpeg_version": version,
             "ffmpeg_sha256": ffmpeg_hash,
@@ -391,6 +396,8 @@ def process_video(
             "output": actual.public(),
             "frames_processed": completed,
             "input_timestamps_validated": True,
+            "timeline_validation": {"input": input_validation, "output": output_validation},
+            "verify_full": settings.verify_full,
             "output_timestamps_validated": True,
             "hardware_rate_control": "u_vbr / camera_record" if hardware_encode else None,
             "dropped_frames": 0,
@@ -400,7 +407,10 @@ def process_video(
             "processing_seconds": processing_seconds,
             "output_validation_seconds": validation_seconds,
             "report_preparation_seconds": report_seconds,
-            "total_seconds": perf_counter() - initialization,
+            "total_seconds": total_seconds,
+            "total_seconds_scope": "process_video function; excludes CLI import, printing and JSON",
+            "whole_command_fps": completed / total_seconds,
+            "whole_command_real_time_factor": total_seconds / (completed / float(info.fps)),
             "end_to_end_fps": completed / processing_seconds,
             "real_time_factor": processing_seconds / (completed / float(info.fps)),
             "process_cpu_seconds": cpu_seconds,

@@ -98,7 +98,9 @@ stability is evidence of sustained performance, not a thermal sensor reading.
 
 The report records successful neural tile calls separately from three warmups.
 Publication fails if those calls do not equal every frame times its tile count;
-the sustained gate checks this too. Output validation performs an additional
-full-file decode and timestamp inspection after encoding, which can add substantial
-elapsed time. It is a safety audit, excluded from the measured streaming frame
-budget and disclosed in `output_validation_seconds` / `total_seconds`.
+the sustained gate checks this too. v0.6 default validation inspects all packet
+PTS and compares counts with actual processed frames, metadata and duration.
+`--verify-full` decodes every frame again for a slower forensic audit. Neither
+mode accepts bad cadence. Packet checks do not prove pixel integrity. Audit
+time remains separate in `output_validation_seconds` / `total_seconds`;
+[v0.6 measurements](../benchmarks/v0.6/summary.md) also time the CLI externally.

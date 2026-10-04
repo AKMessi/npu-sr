@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.0 — 2026-10-04
+
+- Validate every video packet's presentation cadence with bounded reordering;
+  compare counts with actual processed frames and container metadata.
+- Keep decoded-frame forensic audits behind `--verify-full`; avoid double decode.
+- Reduce measured 120-second-source function time from 149–156 seconds to
+  76–83 seconds. Default output validation takes about 0.2 seconds.
+- Profile chroma, quantization, fusion/finite checks and output copy separately.
+  CPU postprocessing remains below 8 ms median with the unchanged v0.5 model.
+- Preserve strict QNN, codec proof, every-frame accounting and atomic publication.
+  Three delivered-quality regressions have identical PSNR/SSIM/VMAF to v0.5.
+
 ## 0.5.0 — 2026-10-04
 
 - Reproducible BSD-licensed QuickSRNet small/medium neutral-Y exports. Realtime

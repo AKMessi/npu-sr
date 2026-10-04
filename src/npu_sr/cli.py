@@ -92,6 +92,11 @@ def parser() -> argparse.ArgumentParser:
     video.add_argument("--json", type=Path)
     video.add_argument("--overwrite", action="store_true")
     video.add_argument("--verbose", action="store_true")
+    video.add_argument(
+        "--verify-full",
+        action="store_true",
+        help="Decode every frame again for a forensic timestamp/count audit (slower)",
+    )
     video.add_argument("--preset", choices=["quality", "balanced", "realtime"])
     video.add_argument("--frame-format", choices=["rgb24", "nv12"])
     video.add_argument(
@@ -388,7 +393,9 @@ def _video(args: argparse.Namespace) -> int:
     print(f"SR backend:  {backend} ({report['model']})")
     for kind in ("decode", "encode"):
         print(f"{kind.title()}:      {report['codec_evidence'][kind]}")
-    print(f"End-to-end:  {report['end_to_end_fps']:.1f} FPS")
+    print(f"Streaming:   {report['end_to_end_fps']:.1f} FPS (decode through encode flush)")
+    print(f"Including setup/audit: {report['whole_command_fps']:.1f} FPS (function scope)")
+    print(f"Audit:       {'full decoded frames' if report['verify_full'] else 'packet timeline'}")
     print(f"Validation:  {report['output_validation_seconds']:.1f} s (after codec processing)")
     print(f"Elapsed:     {report['total_seconds']:.1f} s (including startup and validation)")
     print(f"Real-time factor: {report['real_time_factor']:.2f} (processing / source duration)")
