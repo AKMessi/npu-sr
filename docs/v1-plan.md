@@ -250,3 +250,11 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
   independent sustained trials without concurrent project training/tests. Gate
   actual >=600 seconds/trial, exact 540p30->1080p30, strict QNN, hardware encode,
   all calls/counts/cadence and bounded queues/working sets. No release claim yet.
+
+- Frozen 7082d61 completed three independent actual 678–682-second processing
+  trials at 52.81/53.06/53.05 FPS; full counts/proofs, bounded memory and queues
+  pass. Full 24-clip recheck reproduces v0.5 spatial metrics exactly. Native
+  temporal diagnostic improves 8.93% while coarse diagnostic worsens 2.17%.
+- Strengthen initialization to test the requested container and retain its proof;
+  primary MP4 neural/streaming path remains unchanged. Seven hardware video tests
+  pass afterward. H.264/HEVC MF-MKV is explicitly unsupported on this stack.

@@ -1,0 +1,15 @@
+{
+  "method": "actual generated VFR/timestamp-gap and PQ-tagged SDR fixtures; admission checks, not HDR rendering",
+  "results": [
+    {
+      "case": "variable-framerate",
+      "rejected": true,
+      "reason": "Only constant-framerate video (1\u2013240 FPS) is supported."
+    },
+    {
+      "case": "hdr-tagged",
+      "rejected": true,
+      "reason": "HDR video is unsupported. Convert to SDR explicitly first."
+    }
+  ]
+}

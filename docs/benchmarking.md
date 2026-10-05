@@ -205,3 +205,20 @@ all clips and holdout. A numeric pass does not replace artifact/temporal review
 or sustained performance validation. The temporal residual-change diagnostic is
 project-specific, does not compensate for motion and may reward smoothing;
 it is not a standard perceptual quality score.
+
+
+## Whole-run reliability
+
+`validate_longrun.py` gates ten minutes of measured processing per independent
+trial. See [realtime](realtime.md). Fixed latency histograms cover all frames;
+legacy last-window percentiles remain available separately. Resource windows
+compare the first/final sixty valid one-second samples, retaining sampled peak
+Python+codec working sets. They exclude driver allocations and other applications.
+Power state at command start/end is recorded; custom plan names/GUIDs are excluded.
+These are power **states**, not watts or energy. No accelerator utilization or
+temperature is inferred from TOPS or throughput.
+
+`validate_video_formats.py` runs tiny actual codec/framerate/orientation/audio
+cases and retains failures. Those results establish correctness only, not sustained
+performance or every cross-product. Report unsupported driver/container pairs;
+never silently weaken strict hardware settings to make the matrix pass.

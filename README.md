@@ -11,25 +11,23 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**v0.8 adds packaged setup, executed capability diagnostics and a one-command
-video preset.** Neural weights and the validated NV12 path remain unchanged.
+**v0.9 adds long-run reliability checks, audio timing fixes and executed codec/container
+validation.** Setup, diagnostics and a one-command video preset are included.
 
-**960×540 → 1920×1080 @ 30 FPS: 53.75 FPS median streaming throughput**,
-three 180-second sources, every frame enhanced, strict QNN and hardware codecs
-verified. On 24 predeclared clips, including 12 untouched holdout clips, it beats
-bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF** on average.
-See the [v0.5 report](benchmarks/v0.5/summary.md) for per-clip results and settings.
+**960×540 → 1920×1080 @ 30 FPS: 53.05 FPS median end-to-end throughput**,
+three independent trials, **678–682 seconds of actual processing each**,
+36,000 frames and 432,000 neural calls per trial, zero application drops.
+Strict QNN, D3D11VA H.264 decode and QCOM AV1 hardware encoding are verified.
+On 24 frozen clips, including twelve originally held out of model selection,
+it beats delivered bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF**
+on average. All clips were rechecked without retuning.
 
-v0.6 measures **48.7 FPS median streaming throughput** and **76–83 seconds
-complete function time** for the same 120-second source. Default final validation
-takes about 0.2 seconds; `--verify-full` retains a slower decoded-frame audit.
-A separately timed CLI run finished in **74.7 seconds**, including launch and
-JSON output. See the [v0.6 report](benchmarks/v0.6/summary.md) for full scope.
-v0.8 records **53.75 FPS** on AC across three 180-second sources, and **72.7
-seconds whole CLI time** for a separate 120-second source. See the
-[v0.8 report](benchmarks/v0.8/summary.md). Different power/input conditions
-from v0.6 do not establish a code speedup. Results describe one laptop/model/corpus;
-power is not measured.
+See the [v0.9 results](benchmarks/v0.9/summary.md) for every trial, clip, setting,
+format limitation and timing scope. AC, Balanced, saver off; other background
+processes uncontrolled; power and temperature not measured. These are results
+from one laptop and declared inputs, not general Snapdragon performance claims.
+Whole function time was 688–693 seconds; the final packet audit took under one
+second. `--verify-full` retains the slower decoded-frame forensic audit.
 
 ## Results and examples
 
@@ -64,15 +62,16 @@ performance trials; they are not general Snapdragon claims. Historical reports:
 [v0.1](benchmarks/snapdragon-x-plus.json) · [v0.2](benchmarks/v0.2/summary.md) ·
 [v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md) ·
 [v0.5](benchmarks/v0.5/summary.md) · [v0.6](benchmarks/v0.6/summary.md) ·
-[v0.8](benchmarks/v0.8/summary.md).
+[v0.8](benchmarks/v0.8/summary.md) · [v0.9](benchmarks/v0.9/summary.md).
 
 ## Hardware and prerequisites
 
 Target: Snapdragon X Plus / X Elite Windows 11 ARM64, build 26100 (24H2) or newer,
-with supported Qualcomm drivers. Other machines require local validation.
+with supported Qualcomm drivers. Only X1P-42-100 is locally verified; see the
+[hardware matrix](docs/hardware-matrix.md). Other machines require validation.
 CPU image/video processing also works on Linux; generic CI uses CPU only.
 
-Tested locally on 2026-10-04:
+Tested locally on 2026-10-05:
 
 | Component | Configuration |
 | --- | --- |

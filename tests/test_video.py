@@ -334,6 +334,35 @@ def test_broken_encoder_is_clean_error(video_source, tmp_path, monkeypatch):
         process_video(source, tmp_path / "failed.mp4", cpu_settings(ffmpeg))
 
 
+def test_strict_container_failure_happens_before_stream_and_auto_reports_fallback(
+    video_source, tmp_path, monkeypatch, caplog
+):
+    source, ffmpeg = video_source
+    started = []
+
+    def unavailable(tool, metadata, scale, codec, bitrate, container):
+        assert container == ".mkv"
+        raise SRException("Test-only hardware MKV header failure")
+
+    def child(*args, **kwargs):
+        result = PipeProcess(*args, **kwargs)
+        started.append(result)
+        return result
+
+    monkeypatch.setattr("npu_sr.video.hardware_encode_probe", unavailable)
+    monkeypatch.setattr("npu_sr.video.PipeProcess", child)
+    output = tmp_path / "existing.mkv"
+    output.write_bytes(b"existing user output")
+    settings = replace(cpu_settings(ffmpeg), overwrite=True, encode="hardware")
+    with pytest.raises(SRException, match="Strict hardware encode unavailable"):
+        process_video(source, output, settings)
+    assert not started and output.read_bytes() == b"existing user output"
+    report = process_video(source, output, replace(settings, encode="auto"))
+    assert report["frames_processed"] == 6
+    assert report["codec_evidence"]["encode"] == {"method": "software", "auto_fallback": True}
+    assert "using software" in caplog.text
+
+
 def test_software_av1_video_on_installed_build(video_source, tmp_path):
     source, ffmpeg = video_source
     settings = replace(cpu_settings(ffmpeg), codec="av1")

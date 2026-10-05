@@ -1,0 +1,120 @@
+{
+  "method": "Hash-verified measured reference/bicubic/QNN outputs; native crop contact sheets of six consecutive 30 FPS frames; human and animated faces, foliage, aerial texture, night scene and text",
+  "limitations": "Limited crop inspection, not full playback or blinded perceptual study; cannot rule out flicker elsewhere",
+  "results": [
+    {
+      "clip": "conversation",
+      "crop": [
+        900,
+        180,
+        360,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "42e2f5161756de67d7b3088e57b513432b4d5f69133c60267e371d2f3c7fb67f",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    },
+    {
+      "clip": "animated-face",
+      "crop": [
+        820,
+        120,
+        360,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "1435c9e18b87043bf3b5a99f0e880e8857cf2093228bce4c173eeb1a677ef946",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    },
+    {
+      "clip": "animated-leaves",
+      "crop": [
+        1300,
+        400,
+        360,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "1c6ef7c2d0ae18b84a2daa224cb5076fe26030ce3ae4cd3c6beab7efd232d8ea",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    },
+    {
+      "clip": "aerial-landscape",
+      "crop": [
+        800,
+        400,
+        360,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "4306aa52a4dd3267b06c5bb4214dd8d70e45999502a0a3e2b95145c3ef076584",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    },
+    {
+      "clip": "starfield",
+      "crop": [
+        800,
+        400,
+        360,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "5e5e1cb02947b7f76849f4acf6ec4a82e9d843503f61617353cadcf682ee8d2d",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    },
+    {
+      "clip": "ui-horizontal",
+      "crop": [
+        200,
+        100,
+        480,
+        240
+      ],
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "contact_sheet_sha256": "59e14576b62d40bc07808f5f3e3a0edf5af8e58250f6facc6f219db3e24495df",
+      "observation": "Sharpening/blur tradeoff observed; no severe consecutive-frame artifact in inspected crop"
+    }
+  ]
+}

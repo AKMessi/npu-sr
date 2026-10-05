@@ -2,7 +2,7 @@
 
 Strict decode requires an actual selected D3D11 hardware frame and successful
 hardware download. Strict encode requires Media Foundation hardware enumeration,
-an activated transform, and three actual encoded frames matching requested
+an activated transform, and three actual encoded frames in the requested container matching
 dimensions, framerate and count. Every completed video also checks packet cadence,
 actual processed/encoded counts, geometry and copied audio metadata.
 
@@ -22,6 +22,11 @@ Media Foundation supplies AV1 sequence headers in-band. MKV output needs FFmpeg'
 reencoding. MP4 output uses the existing path. Actual Opus/MKV and hardware AV1
 processing was tested after this fix. Short generated correctness cases do not
 establish sustained performance.
+
+H.264/HEVC Media Foundation MKV headers fail on the tested stack, including after
+trying sequence-header extraction and explicit global-header flags. Use MP4 or
+explicit software encoding for those codec/container pairs. The startup probe now
+tests the requested container so strict mode fails before processing the source.
 
 Copied audio is the first audio stream. Its timestamps are shifted relative to
 the first video frame; leading audio outside the video interval is trimmed and

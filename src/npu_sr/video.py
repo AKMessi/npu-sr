@@ -102,7 +102,12 @@ def settings_for_preset(preset: str | None, overrides: dict) -> VideoSettings:
 
 
 def select_codecs(
-    ffmpeg: Path, source: Path, info: VideoInfo, settings: VideoSettings, scale: int
+    ffmpeg: Path,
+    source: Path,
+    info: VideoInfo,
+    settings: VideoSettings,
+    scale: int,
+    container: str = ".mp4",
 ) -> tuple[bool, bool, dict]:
     evidence = {}
     selected = []
@@ -117,7 +122,7 @@ def select_codecs(
                     result = hardware_decode_probe(ffmpeg, source)
                 else:
                     result = hardware_encode_probe(
-                        ffmpeg, info, scale, settings.codec, settings.bitrate
+                        ffmpeg, info, scale, settings.codec, settings.bitrate, container
                     )
                 evidence[kind] = result
                 hardware = True
@@ -208,7 +213,7 @@ def process_video(
     elif settings.neural_strength != 1:
         raise SRException("Neural blending requires --frame-format nv12.")
     hardware_decode, hardware_encode, codec_evidence = select_codecs(
-        ffmpeg, source, info, settings, 2
+        ffmpeg, source, info, settings, 2, output.suffix.lower()
     )
     software_av1 = "libaom-av1"
     if not hardware_encode and settings.codec == "av1":
@@ -360,7 +365,9 @@ def process_video(
         if hardware_decode:
             codec_evidence["decode"] = decode_evidence(decoder.evidence_log, True)
         if hardware_encode:
-            codec_evidence["encode"] = encode_evidence(encoder.evidence_log)
+            codec_evidence["encode"] = encode_evidence(encoder.evidence_log) | {
+                "initial_probe": codec_evidence["encode"]
+            }
         # Count the final encoded frames: passthrough must not skip or duplicate frames.
         validation_started = perf_counter()
         try:

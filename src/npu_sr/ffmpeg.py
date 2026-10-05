@@ -429,10 +429,12 @@ def encode_evidence(log: str) -> dict:
 
 
 def hardware_encode_probe(
-    ffmpeg: Path, info: VideoInfo, scale: int, codec: str, bitrate: str
+    ffmpeg: Path, info: VideoInfo, scale: int, codec: str, bitrate: str, container: str = ".mp4"
 ) -> dict:
+    if container not in {".mp4", ".mkv"}:
+        raise SRException("Hardware encoder proof requires MP4 or MKV.")
     with tempfile.TemporaryDirectory(prefix="npu-sr-encoder-proof-") as directory:
-        output = Path(directory) / "proof.mp4"
+        output = Path(directory) / f"proof{container}"
         result = run_tool(
             [
                 str(ffmpeg),
@@ -447,12 +449,17 @@ def hardware_encode_probe(
                 "-frames:v",
                 "3",
                 *codec_args(codec, True, bitrate, 20),
+                *(
+                    ["-bsf:v", "extract_extradata"]
+                    if codec == "av1" and container == ".mkv"
+                    else []
+                ),
                 str(output),
             ]
         )
         evidence = encode_evidence(result.stderr.decode("utf-8", errors="replace"))
         try:
-            actual = probe(output, ffmpeg)
+            actual = probe(output, ffmpeg, count_frames=True)
         except SRException as exc:
             raise SRException(
                 "Hardware encoder output failed its format proof. "

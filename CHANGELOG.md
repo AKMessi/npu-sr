@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.9.0 — 2026-10-05
+
+- Correct copied audio timing relative to the first video frame; retain delayed
+  audio, trim leading audio, validate codec/channels/offset.
+- Executed encoder startup proof now checks dimensions, cadence, count and the
+  requested container. Extract AV1 sequence headers for MKV; reject unsupported
+  driver geometry/container paths before processing.
+- Bounded whole-run latency histograms and memory-window comparisons support
+  ten-minute validation; retain legacy timing windows separately.
+- Full decoded audits have bounded timestamp lines and a timeout. FFmpeg failures
+  retain bounded actionable errors; custom power-plan identifiers stay private.
+- Three ten-minute processing trials: 52.81/53.06/53.05 FPS, all 36,000 frames
+  and 432,000 neural calls per trial, strict QNN/hardware codecs, zero drops.
+- Rechecked all 24 quality clips: +2.00 dB PSNR/+0.00912 SSIM/+5.95 VMAF.
+  Coarse temporal diagnostic worsens 2.17%; native diagnostic improves 8.93%.
+- Expanded actual format/audio/portrait checks, disk/cancellation regressions,
+  hardware matrix and dependency auditing in Windows/Linux CI.
+
 ## 0.8.0 — 2026-10-05
 
 - Packaged `setup` acquires verified models and optional native FFmpeg, then runs

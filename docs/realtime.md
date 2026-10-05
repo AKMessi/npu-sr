@@ -107,3 +107,34 @@ PTS and compares counts with actual processed frames, metadata and duration.
 mode accepts bad cadence. Packet checks do not prove pixel integrity. Audit
 time remains separate in `output_validation_seconds` / `total_seconds`;
 [v0.6 measurements](../benchmarks/v0.6/summary.md) also time the CLI externally.
+
+
+## Ten-minute production validation
+
+The compatible `benchmark-realtime` command retains its 60-second research gate.
+For the stronger primary-profile check, use:
+
+```powershell
+python scripts/download_video_benchmarks.py --sustained --loop-source --duration 1200 --directory datasets/longrun
+python scripts/validate_longrun.py datasets/longrun/sustained-960x540-1200s.mp4 --directory outputs/longrun-video --provenance datasets/longrun/sustained-provenance.json --json outputs/longrun.json --trials 3
+```
+
+Require exact 960×540@30 input, 2× output, at least **600 seconds of actual
+processing per trial**, three complete trials, all neural calls and encoded frames,
+strict QNN, hardware encode, timestamp/audio validation, bounded depth-two queues
+and sampled working-set tolerance. Source duration alone is insufficient. The
+1,200-second input deliberately loops licensed film content; every application
+input frame still receives enhancement. Output is validated and hashed, then
+only the newly generated owned file is deleted unless `--retain-videos` is used.
+
+Whole-run statistics use fixed 0.05 ms histogram bins; p50/p95/p99 are approximate
+midpoints with up to 0.025 ms binning error. Means and extrema are exact collected
+floating samples, and all frames contribute. Values >=1,000 ms use a disclosed
+overflow bin; affected quantiles are unavailable rather than clamped. Historical
+last-8,192-frame statistics remain separate. Queue handoff latency is not display
+latency, and encoder pipe waits are not isolated hardware encode measurements.
+
+The [v0.9 report](../benchmarks/v0.9/summary.md) records three passing ten-minute
+processing trials and a separate **single-trial** 480p60 HEVC exploration. The
+latter is not ten-minute or three-trial 60 FPS qualification. Explicit codec/
+model overrides do not inherit another configuration's performance claim.
