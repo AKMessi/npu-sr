@@ -529,6 +529,14 @@ def _video_quality(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows redirected Python streams can use cp1252 while PowerShell reads
+    # UTF-8. Keep diagnostics and dimension symbols readable in pipes/log files.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="backslashreplace")
+            except (OSError, ValueError):
+                pass
     args = parser().parse_args(argv)
     logging.basicConfig(
         level=logging.INFO if args.verbose else logging.WARNING, format="%(message)s"

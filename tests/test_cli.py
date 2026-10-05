@@ -86,3 +86,35 @@ def test_diagnostic_json_cannot_overwrite_model_manifest(tiny_model, capsys):
     assert main(["doctor", "--model", str(tiny_model), "--json", str(manifest)]) == 1
     assert manifest.read_bytes() == before
     assert "overwrite" in capsys.readouterr().err
+
+
+def test_redirected_cli_dimensions_are_utf8(tiny_model, tmp_path):
+    import os
+    import subprocess
+    import sys
+
+    source, output = tmp_path / "source.png", tmp_path / "result.png"
+    Image.new("RGB", (37, 23), "gray").save(source)
+    # Reproduce a Windows-style pipe encoding even on Linux CI.
+    environment = os.environ | {"PYTHONIOENCODING": "cp1252"}
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "npu_sr.cli",
+            "upscale",
+            str(source),
+            "-o",
+            str(output),
+            "--model",
+            str(tiny_model),
+            "--device",
+            "cpu",
+        ],
+        capture_output=True,
+        env=environment,
+        timeout=30,
+    )
+    assert result.returncode == 0, result.stderr.decode("utf-8", "replace")
+    assert "37 × 23" in result.stdout.decode("utf-8", "strict")
+    assert Image.open(output).size == (74, 46)

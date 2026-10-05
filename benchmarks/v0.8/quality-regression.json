@@ -1,0 +1,1427 @@
+{
+  "complete": true,
+  "baseline_sha256": "a2a7e87d8585c2518ad18a62919bd452b8f713dbdceb8085b537c8d8bc4d0708",
+  "results": [
+    {
+      "clip": "conversation",
+      "baseline": {
+        "output_sha256": "1039b1f23ca13b2eb305465303ba44002b395bd96a2ed31f595798a9744ca34e",
+        "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          140,
+          1920,
+          800
+        ],
+        "psnr_y_db": 39.62378229584766,
+        "ssim_y": 0.9678545537002925,
+        "mean_mse_y": 7.0909125809108176,
+        "sample_stride": 3,
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.0017993581318783978,
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 92.112408,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 90.051922,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "metrics": {
+        "output_sha256": "1039b1f23ca13b2eb305465303ba44002b395bd96a2ed31f595798a9744ca34e",
+        "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          140,
+          1920,
+          800
+        ],
+        "psnr_y_db": 39.62378229584766,
+        "ssim_y": 0.9678545537002925,
+        "mean_mse_y": 7.0909125809108176,
+        "sample_stride": 3,
+        "samples": [
+          {
+            "frame": 0,
+            "mse_y": 6.855438465815507,
+            "ssim_y": 0.9704849809832181
+          },
+          {
+            "frame": 3,
+            "mse_y": 7.526195696646069,
+            "ssim_y": 0.9688721516605725
+          },
+          {
+            "frame": 6,
+            "mse_y": 7.307665021348916,
+            "ssim_y": 0.9689698877842293
+          },
+          {
+            "frame": 9,
+            "mse_y": 7.125594701062725,
+            "ssim_y": 0.968527947541283
+          },
+          {
+            "frame": 12,
+            "mse_y": 7.908484226980414,
+            "ssim_y": 0.9610048894051
+          },
+          {
+            "frame": 15,
+            "mse_y": 6.10470935051038,
+            "ssim_y": 0.9734041969103228
+          },
+          {
+            "frame": 18,
+            "mse_y": 6.764409206785493,
+            "ssim_y": 0.9705306054468563
+          },
+          {
+            "frame": 21,
+            "mse_y": 6.855625990075639,
+            "ssim_y": 0.9708062893903487
+          },
+          {
+            "frame": 24,
+            "mse_y": 6.401874980329623,
+            "ssim_y": 0.971134085063842
+          },
+          {
+            "frame": 27,
+            "mse_y": 6.664526311096191,
+            "ssim_y": 0.969038994842236
+          },
+          {
+            "frame": 30,
+            "mse_y": 8.115865076950515,
+            "ssim_y": 0.9588966265920957
+          },
+          {
+            "frame": 33,
+            "mse_y": 7.478085233054626,
+            "ssim_y": 0.9665008237516604
+          },
+          {
+            "frame": 36,
+            "mse_y": 6.559321267087001,
+            "ssim_y": 0.9702255503424841
+          },
+          {
+            "frame": 39,
+            "mse_y": 7.011537331752709,
+            "ssim_y": 0.9695761870430698
+          },
+          {
+            "frame": 42,
+            "mse_y": 6.6364717638295865,
+            "ssim_y": 0.9695261975070101
+          },
+          {
+            "frame": 45,
+            "mse_y": 7.254400919000011,
+            "ssim_y": 0.9665543986727984
+          },
+          {
+            "frame": 48,
+            "mse_y": 7.879981850798879,
+            "ssim_y": 0.9597562583936521
+          },
+          {
+            "frame": 51,
+            "mse_y": 7.351090656833227,
+            "ssim_y": 0.966331277701716
+          },
+          {
+            "frame": 54,
+            "mse_y": 6.925058486587425,
+            "ssim_y": 0.9685242967119724
+          },
+          {
+            "frame": 57,
+            "mse_y": 7.091915081671405,
+            "ssim_y": 0.9684254282613842
+          }
+        ],
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.0017993581318783978,
+        "temporal_difference_error_full_resolution": 0.005519609225533082,
+        "full_temporal_definition": "mean absolute consecutive native-Y reconstruction residual change /255; every frame, declared ROI with 2px border; no optical flow; project diagnostic, not a standard perceptual metric; retain spatial and coarse temporal metrics",
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 92.112408,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 90.051922,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "gain": {
+        "psnr_y_db": 0.0,
+        "ssim_y": 0.0,
+        "vmaf": 0.0
+      },
+      "execution": {
+        "schema_version": 4,
+        "environment": {
+          "npu_sr_version": "0.8.0",
+          "timestamp": "2026-10-05T07:36:53.825469+00:00",
+          "git_commit": "a853086d0a4b92e0ce0e1cd2189cebb9487b15d2",
+          "working_tree_dirty": false,
+          "python_source_sha256": "8d91dbcdb220cab05af74f2a5aabe954be1dc7d32ebf97d53312117712adf717",
+          "os": "Windows",
+          "architecture": "ARM64",
+          "python": "3.12.0",
+          "software_versions": {
+            "npu-sr": "0.8.0",
+            "numpy": "2.5.3",
+            "Pillow": "12.3.0",
+            "onnx": "1.23.1",
+            "onnxruntime-windowsml": "1.25.2.202605110140",
+            "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+            "winrt-runtime": "3.2.1"
+          },
+          "power": "not measured",
+          "background_processes": "uncontrolled",
+          "power_state": {
+            "ac_line": "plugged in",
+            "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+            "battery_percent": 36,
+            "energy_saver": false
+          },
+          "qnn_catalog_package": "2.2480.53.0",
+          "windows_build": 26200,
+          "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+          "npu_driver": "30.0.219.1000"
+        },
+        "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+        "input_sha256": "e47df839ba9236816d43b67d0f193563e8709e70c8fa5860591117ab8c4a65c5",
+        "model": "quicksrnet-small-y-x2",
+        "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+        "model_precision": "float32 (QNN HTP uses float16 math)",
+        "tile_core": [
+          256,
+          256
+        ],
+        "tile_halo": 4,
+        "tile_count_per_frame": 12,
+        "neural_tile_runs": 720,
+        "backend": "npu",
+        "execution_evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "htp_performance_mode_requested": "burst",
+          "context_cache": "hit"
+        },
+        "temporal_state": null,
+        "codec_evidence": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "codec": "av1",
+        "bitrate": "8M",
+        "frame_format": "nv12",
+        "neural_strength": 1.0,
+        "preset": null,
+        "pipeline_depth": 2,
+        "observed_queue_peaks": {
+          "decode_queue": 2,
+          "encode_queue": 2
+        },
+        "frame_latency_scope": "raw read start through encoder pipe submission; excludes encoder completion",
+        "npu_performance_requested": "burst",
+        "software_quality_crf": null,
+        "audio": "none",
+        "input": {
+          "resolution": [
+            960,
+            540
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "h264",
+          "color_range": "tv",
+          "color_space": "bt709"
+        },
+        "output": {
+          "resolution": [
+            1920,
+            1080
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "av1",
+          "color_range": "tv",
+          "color_space": "unknown"
+        },
+        "frames_processed": 60,
+        "input_timestamps_validated": true,
+        "timeline_validation": {
+          "input": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.0344692999497056,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          },
+          "output": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.04004660004284233,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          }
+        },
+        "verify_full": false,
+        "output_timestamps_validated": true,
+        "hardware_rate_control": "u_vbr / camera_record",
+        "dropped_frames": 0,
+        "startup_ms": 3026.5212999656796,
+        "neural_startup_ms": 2638.3683000458404,
+        "warmup_tensor_runs": 3,
+        "processing_seconds": 1.337099299998954,
+        "output_validation_seconds": 0.07993540004827082,
+        "report_preparation_seconds": 2.1930444999597967,
+        "total_seconds": 6.637626699986868,
+        "total_seconds_scope": "process_video function; excludes CLI import, printing and JSON",
+        "whole_command_fps": 9.039375474387361,
+        "whole_command_real_time_factor": 3.318813349993434,
+        "end_to_end_fps": 44.8732566085757,
+        "real_time_factor": 0.668549649999477,
+        "process_cpu_seconds": 1.1875,
+        "process_memory": {
+          "working_set_bytes": 120905728,
+          "peak_process_working_set_bytes": 144293888,
+          "cpu_seconds": 1.75
+        },
+        "resource_samples": [
+          {
+            "elapsed_seconds": 1.0217610999243334,
+            "processes": {
+              "python": {
+                "working_set_bytes": 137637888,
+                "peak_process_working_set_bytes": 144293888,
+                "cpu_seconds": 1.4375
+              },
+              "decoder": {
+                "working_set_bytes": 79101952,
+                "peak_process_working_set_bytes": 89780224,
+                "cpu_seconds": 0.0625
+              },
+              "encoder": {
+                "working_set_bytes": 119586816,
+                "peak_process_working_set_bytes": 119586816,
+                "cpu_seconds": 0.21875
+              }
+            }
+          }
+        ],
+        "resources": {
+          "status": "not measured"
+        },
+        "resource_sample_scope": "1s Windows process CPU/working set; last 7200 samples; no process IDs",
+        "sustained": {
+          "first_10s_fps": null,
+          "final_10s_fps": null,
+          "minimum_rolling_10s_fps": null,
+          "scope": "encoder pipe submissions, windows on 1s boundaries; first window includes codec startup, final includes flush; encoder completion timing not available",
+          "throughput_seconds": [
+            {
+              "second": 0,
+              "frames": 44
+            }
+          ],
+          "throughput_history_scope": "last 600 complete seconds; minimum retained for whole run"
+        },
+        "phase_statistics": {
+          "preprocessing_ms": {
+            "median_ms": 1.2655499740503728,
+            "mean_ms": 1.2834583292715251,
+            "p95_ms": 1.5845350513700394,
+            "p99_ms": 1.7446459957864127
+          },
+          "tile_extraction_ms": {
+            "median_ms": 0.531050085555762,
+            "mean_ms": 0.5393333694276711,
+            "p95_ms": 0.6044898356776685,
+            "p99_ms": 0.6877680192701516
+          },
+          "inference_ms": {
+            "median_ms": 8.929850009735674,
+            "mean_ms": 8.984071643014127,
+            "p95_ms": 9.293980069924144,
+            "p99_ms": 10.022257098462433
+          },
+          "stitching_ms": {
+            "median_ms": 0.8016999927349389,
+            "mean_ms": 0.8408349938690662,
+            "p95_ms": 1.0190798493567852,
+            "p99_ms": 1.6574410442262844
+          },
+          "fusion_and_finite_check_ms": {
+            "median_ms": 0.32364996150135994,
+            "mean_ms": 0.3485916667462637,
+            "p95_ms": 0.5187099857721478,
+            "p99_ms": 0.5696440243627874
+          },
+          "luminance_quantization_ms": {
+            "median_ms": 2.6273499825038016,
+            "mean_ms": 2.6584966651474438,
+            "p95_ms": 2.83080005319789,
+            "p99_ms": 3.5823399701621343
+          },
+          "chroma_scaling_ms": {
+            "median_ms": 3.979099972639233,
+            "mean_ms": 3.990544993818427,
+            "p95_ms": 4.192170023452491,
+            "p99_ms": 5.22294897702522
+          },
+          "output_copy_ms": {
+            "median_ms": 0.11470005847513676,
+            "mean_ms": 0.13690167688764632,
+            "p95_ms": 0.27199998148716986,
+            "p99_ms": 0.42301493813283636
+          },
+          "postprocessing_ms": {
+            "median_ms": 7.080150011461228,
+            "mean_ms": 7.136846667466064,
+            "p95_ms": 7.69816993852146,
+            "p99_ms": 9.33687103795818
+          },
+          "enhancement_ms": {
+            "median_ms": 18.660749949049205,
+            "mean_ms": 18.817973338688414,
+            "p95_ms": 20.032239984720945,
+            "p99_ms": 23.087405925616604
+          },
+          "encoder_pipe_wait_ms": {
+            "median_ms": 0.20035001216456294,
+            "mean_ms": 2.248894991741205,
+            "p95_ms": 0.6180400378070771,
+            "p99_ms": 49.64829699485522
+          },
+          "decoder_pipe_wait_ms": {
+            "median_ms": 0.4399499739520252,
+            "mean_ms": 1.8606733375539382,
+            "p95_ms": 0.8207299571949989,
+            "p99_ms": 34.93196005583712
+          },
+          "frame_latency_ms": {
+            "median_ms": 74.98545001726598,
+            "mean_ms": 84.44073833137129,
+            "p95_ms": 142.71630006260233,
+            "p99_ms": 184.75271595525555
+          },
+          "frame_total_ms": {
+            "median_ms": 19.401750003453344,
+            "mean_ms": 22.927541667983558,
+            "p95_ms": 21.180199924856424,
+            "p99_ms": 122.63411599211385
+          },
+          "completion_interval_ms": {
+            "median_ms": 18.621399998664856,
+            "mean_ms": 21.515928333004315,
+            "p95_ms": 19.89415498683229,
+            "p99_ms": 129.79953198926518
+          }
+        },
+        "phase_sample_scope": "last 60 frames; bounded storage",
+        "inference_only_theoretical_fps": 111.30810613888906,
+        "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
+        "pipe_timings": "read/write blocking time, not isolated hardware codec execution time"
+      },
+      "baseline_output_sha256": "1039b1f23ca13b2eb305465303ba44002b395bd96a2ed31f595798a9744ca34e",
+      "delivered_bytes_identical": true
+    },
+    {
+      "clip": "animated-leaves",
+      "baseline": {
+        "output_sha256": "40cc67e793ad707c76fe00558ddd2e2437e487b2b0238b8c6d036810eff76ba8",
+        "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "psnr_y_db": 43.500076652717254,
+        "ssim_y": 0.9854292497096193,
+        "mean_mse_y": 2.9045087931021105,
+        "sample_stride": 3,
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.00030491028380932785,
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 93.336191,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 88.026101,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "metrics": {
+        "output_sha256": "40cc67e793ad707c76fe00558ddd2e2437e487b2b0238b8c6d036810eff76ba8",
+        "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "psnr_y_db": 43.500076652717254,
+        "ssim_y": 0.9854292497096193,
+        "mean_mse_y": 2.9045087931021105,
+        "sample_stride": 3,
+        "samples": [
+          {
+            "frame": 0,
+            "mse_y": 3.131670010322,
+            "ssim_y": 0.9840947666248328
+          },
+          {
+            "frame": 3,
+            "mse_y": 3.283133231406819,
+            "ssim_y": 0.9833803258335405
+          },
+          {
+            "frame": 6,
+            "mse_y": 3.243593375293944,
+            "ssim_y": 0.9835103418798649
+          },
+          {
+            "frame": 9,
+            "mse_y": 3.11488657441541,
+            "ssim_y": 0.9841728424643568
+          },
+          {
+            "frame": 12,
+            "mse_y": 2.899785411056181,
+            "ssim_y": 0.9853656316442899
+          },
+          {
+            "frame": 15,
+            "mse_y": 2.744848701213029,
+            "ssim_y": 0.9860990546113624
+          },
+          {
+            "frame": 18,
+            "mse_y": 2.745112086828973,
+            "ssim_y": 0.986154147960614
+          },
+          {
+            "frame": 21,
+            "mse_y": 2.66214173735555,
+            "ssim_y": 0.9868621614189044
+          },
+          {
+            "frame": 24,
+            "mse_y": 2.944567271499639,
+            "ssim_y": 0.9850613308152711
+          },
+          {
+            "frame": 27,
+            "mse_y": 2.9111614384056,
+            "ssim_y": 0.9851747555538563
+          },
+          {
+            "frame": 30,
+            "mse_y": 2.8931318926512017,
+            "ssim_y": 0.9853865596872434
+          },
+          {
+            "frame": 33,
+            "mse_y": 2.846346749346144,
+            "ssim_y": 0.9856059580649813
+          },
+          {
+            "frame": 36,
+            "mse_y": 2.8732930865883852,
+            "ssim_y": 0.9856490068129855
+          },
+          {
+            "frame": 39,
+            "mse_y": 2.8432569401867274,
+            "ssim_y": 0.985604121435196
+          },
+          {
+            "frame": 42,
+            "mse_y": 2.8920565226501926,
+            "ssim_y": 0.9857480266436043
+          },
+          {
+            "frame": 45,
+            "mse_y": 2.8316956212990196,
+            "ssim_y": 0.9860467772285472
+          },
+          {
+            "frame": 48,
+            "mse_y": 2.817228814677418,
+            "ssim_y": 0.9861089909468252
+          },
+          {
+            "frame": 51,
+            "mse_y": 2.8074025424715368,
+            "ssim_y": 0.9862480725681897
+          },
+          {
+            "frame": 54,
+            "mse_y": 2.811846143995778,
+            "ssim_y": 0.986141054085903
+          },
+          {
+            "frame": 57,
+            "mse_y": 2.7930177103786544,
+            "ssim_y": 0.9861710679120153
+          }
+        ],
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.00030491028380932785,
+        "temporal_difference_error_full_resolution": 0.000712872551576914,
+        "full_temporal_definition": "mean absolute consecutive native-Y reconstruction residual change /255; every frame, declared ROI with 2px border; no optical flow; project diagnostic, not a standard perceptual metric; retain spatial and coarse temporal metrics",
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 93.336191,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 88.026101,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "gain": {
+        "psnr_y_db": 0.0,
+        "ssim_y": 0.0,
+        "vmaf": 0.0
+      },
+      "execution": {
+        "schema_version": 4,
+        "environment": {
+          "npu_sr_version": "0.8.0",
+          "timestamp": "2026-10-05T07:37:22.268689+00:00",
+          "git_commit": "a853086d0a4b92e0ce0e1cd2189cebb9487b15d2",
+          "working_tree_dirty": false,
+          "python_source_sha256": "8d91dbcdb220cab05af74f2a5aabe954be1dc7d32ebf97d53312117712adf717",
+          "os": "Windows",
+          "architecture": "ARM64",
+          "python": "3.12.0",
+          "software_versions": {
+            "npu-sr": "0.8.0",
+            "numpy": "2.5.3",
+            "Pillow": "12.3.0",
+            "onnx": "1.23.1",
+            "onnxruntime-windowsml": "1.25.2.202605110140",
+            "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+            "winrt-runtime": "3.2.1"
+          },
+          "power": "not measured",
+          "background_processes": "uncontrolled",
+          "power_state": {
+            "ac_line": "plugged in",
+            "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+            "battery_percent": 37,
+            "energy_saver": false
+          },
+          "qnn_catalog_package": "2.2480.53.0",
+          "windows_build": 26200,
+          "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+          "npu_driver": "30.0.219.1000"
+        },
+        "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+        "input_sha256": "24a37e62bfd868eb3394091f0876213d993edf6b996015cc96e4ef7baabd6934",
+        "model": "quicksrnet-small-y-x2",
+        "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+        "model_precision": "float32 (QNN HTP uses float16 math)",
+        "tile_core": [
+          256,
+          256
+        ],
+        "tile_halo": 4,
+        "tile_count_per_frame": 12,
+        "neural_tile_runs": 720,
+        "backend": "npu",
+        "execution_evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "htp_performance_mode_requested": "burst",
+          "context_cache": "hit"
+        },
+        "temporal_state": null,
+        "codec_evidence": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "codec": "av1",
+        "bitrate": "8M",
+        "frame_format": "nv12",
+        "neural_strength": 1.0,
+        "preset": null,
+        "pipeline_depth": 2,
+        "observed_queue_peaks": {
+          "decode_queue": 2,
+          "encode_queue": 2
+        },
+        "frame_latency_scope": "raw read start through encoder pipe submission; excludes encoder completion",
+        "npu_performance_requested": "burst",
+        "software_quality_crf": null,
+        "audio": "none",
+        "input": {
+          "resolution": [
+            960,
+            540
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "h264",
+          "color_range": "tv",
+          "color_space": "bt709"
+        },
+        "output": {
+          "resolution": [
+            1920,
+            1080
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "av1",
+          "color_range": "tv",
+          "color_space": "unknown"
+        },
+        "frames_processed": 60,
+        "input_timestamps_validated": true,
+        "timeline_validation": {
+          "input": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.035284999990835786,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          },
+          "output": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.040310699958354235,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          }
+        },
+        "verify_full": false,
+        "output_timestamps_validated": true,
+        "hardware_rate_control": "u_vbr / camera_record",
+        "dropped_frames": 0,
+        "startup_ms": 564.5801000064239,
+        "neural_startup_ms": 180.7538999710232,
+        "warmup_tensor_runs": 3,
+        "processing_seconds": 1.3372528000036255,
+        "output_validation_seconds": 0.08074410003609955,
+        "report_preparation_seconds": 2.2437939000083134,
+        "total_seconds": 4.226559699978679,
+        "total_seconds_scope": "process_video function; excludes CLI import, printing and JSON",
+        "whole_command_fps": 14.195942861117675,
+        "whole_command_real_time_factor": 2.1132798499893397,
+        "end_to_end_fps": 44.868105716314325,
+        "real_time_factor": 0.6686264000018127,
+        "process_cpu_seconds": 1.21875,
+        "process_memory": {
+          "working_set_bytes": 122839040,
+          "peak_process_working_set_bytes": 238501888,
+          "cpu_seconds": 23.609375
+        },
+        "resource_samples": [
+          {
+            "elapsed_seconds": 1.0242480000015348,
+            "processes": {
+              "python": {
+                "working_set_bytes": 145285120,
+                "peak_process_working_set_bytes": 238501888,
+                "cpu_seconds": 23.28125
+              },
+              "decoder": {
+                "working_set_bytes": 79802368,
+                "peak_process_working_set_bytes": 87371776,
+                "cpu_seconds": 0.09375
+              },
+              "encoder": {
+                "working_set_bytes": 119869440,
+                "peak_process_working_set_bytes": 119869440,
+                "cpu_seconds": 0.078125
+              }
+            }
+          }
+        ],
+        "resources": {
+          "status": "not measured"
+        },
+        "resource_sample_scope": "1s Windows process CPU/working set; last 7200 samples; no process IDs",
+        "sustained": {
+          "first_10s_fps": null,
+          "final_10s_fps": null,
+          "minimum_rolling_10s_fps": null,
+          "scope": "encoder pipe submissions, windows on 1s boundaries; first window includes codec startup, final includes flush; encoder completion timing not available",
+          "throughput_seconds": [
+            {
+              "second": 0,
+              "frames": 44
+            }
+          ],
+          "throughput_history_scope": "last 600 complete seconds; minimum retained for whole run"
+        },
+        "phase_statistics": {
+          "preprocessing_ms": {
+            "median_ms": 1.2589999823831022,
+            "mean_ms": 1.2773700077862788,
+            "p95_ms": 1.5319750178605318,
+            "p99_ms": 1.8115980643779022
+          },
+          "tile_extraction_ms": {
+            "median_ms": 0.5093998624943197,
+            "mean_ms": 0.5173733419117829,
+            "p95_ms": 0.5921051895711571,
+            "p99_ms": 0.6447331095114349
+          },
+          "inference_ms": {
+            "median_ms": 8.775299764238298,
+            "mean_ms": 8.836020005401224,
+            "p95_ms": 9.365074994275346,
+            "p99_ms": 9.835400753654538
+          },
+          "stitching_ms": {
+            "median_ms": 0.8408998255617917,
+            "mean_ms": 0.8808733235734204,
+            "p95_ms": 0.9689546830486504,
+            "p99_ms": 1.793239096878091
+          },
+          "fusion_and_finite_check_ms": {
+            "median_ms": 0.2499499241821468,
+            "mean_ms": 0.29572998561585945,
+            "p95_ms": 0.5205499997828156,
+            "p99_ms": 0.5707210116088389
+          },
+          "luminance_quantization_ms": {
+            "median_ms": 2.613399992696941,
+            "mean_ms": 2.6765400097550205,
+            "p95_ms": 2.9118699778337027,
+            "p99_ms": 3.583358010509979
+          },
+          "chroma_scaling_ms": {
+            "median_ms": 3.960049943998456,
+            "mean_ms": 3.95755999100705,
+            "p95_ms": 4.125194967491552,
+            "p99_ms": 4.60755601641722
+          },
+          "output_copy_ms": {
+            "median_ms": 0.12025004252791405,
+            "mean_ms": 0.1609683424855272,
+            "p95_ms": 0.30175508582033134,
+            "p99_ms": 0.6118020706344396
+          },
+          "postprocessing_ms": {
+            "median_ms": 6.997799966484308,
+            "mean_ms": 7.093026665582632,
+            "p95_ms": 7.848790008574724,
+            "p99_ms": 9.10884395940229
+          },
+          "enhancement_ms": {
+            "median_ms": 18.417000013869256,
+            "mean_ms": 18.633993334757786,
+            "p95_ms": 19.92173499893397,
+            "p99_ms": 22.971052032662545
+          },
+          "encoder_pipe_wait_ms": {
+            "median_ms": 0.22785004694014788,
+            "mean_ms": 2.0469533395953476,
+            "p95_ms": 0.5089200160000472,
+            "p99_ms": 44.54293698072397
+          },
+          "decoder_pipe_wait_ms": {
+            "median_ms": 0.46614999882876873,
+            "mean_ms": 2.265525001954908,
+            "p95_ms": 0.7477649836800992,
+            "p99_ms": 44.666239008074264
+          },
+          "frame_latency_ms": {
+            "median_ms": 73.95719998748973,
+            "mean_ms": 82.67150333073612,
+            "p95_ms": 133.64337502280247,
+            "p99_ms": 170.0174149358645
+          },
+          "frame_total_ms": {
+            "median_ms": 19.17950005736202,
+            "mean_ms": 22.94647167630804,
+            "p95_ms": 20.968120126053687,
+            "p99_ms": 129.24792785663155
+          },
+          "completion_interval_ms": {
+            "median_ms": 18.42465001391247,
+            "mean_ms": 21.517709999655683,
+            "p95_ms": 20.153219997882843,
+            "p99_ms": 134.1128970566205
+          }
+        },
+        "phase_sample_scope": "last 60 frames; bounded storage",
+        "inference_only_theoretical_fps": 113.17312538775677,
+        "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
+        "pipe_timings": "read/write blocking time, not isolated hardware codec execution time"
+      },
+      "baseline_output_sha256": "40cc67e793ad707c76fe00558ddd2e2437e487b2b0238b8c6d036810eff76ba8",
+      "delivered_bytes_identical": true
+    },
+    {
+      "clip": "aerial-landscape",
+      "baseline": {
+        "output_sha256": "77423dc22b1bd5e0e3d179123bb0244c8926a939ddd62442a58261aa192d30fe",
+        "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "psnr_y_db": 39.685942839626264,
+        "ssim_y": 0.9670583823912576,
+        "mean_mse_y": 6.99014326625327,
+        "sample_stride": 3,
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.0022572221214012984,
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 95.690232,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 92.329229,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "metrics": {
+        "output_sha256": "77423dc22b1bd5e0e3d179123bb0244c8926a939ddd62442a58261aa192d30fe",
+        "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+        "decoded_frames": 60,
+        "metric_roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "psnr_y_db": 39.685942839626264,
+        "ssim_y": 0.9670583823912576,
+        "mean_mse_y": 6.99014326625327,
+        "sample_stride": 3,
+        "samples": [
+          {
+            "frame": 0,
+            "mse_y": 2.390085738566251,
+            "ssim_y": 0.9783536605211189
+          },
+          {
+            "frame": 3,
+            "mse_y": 3.137144356660018,
+            "ssim_y": 0.9735155779735235
+          },
+          {
+            "frame": 6,
+            "mse_y": 6.877417521012642,
+            "ssim_y": 0.9678268596644304
+          },
+          {
+            "frame": 9,
+            "mse_y": 6.361683262062382,
+            "ssim_y": 0.9700098179623877
+          },
+          {
+            "frame": 12,
+            "mse_y": 7.012070628089809,
+            "ssim_y": 0.9666134546454493
+          },
+          {
+            "frame": 15,
+            "mse_y": 6.505388491358236,
+            "ssim_y": 0.9697621913131905
+          },
+          {
+            "frame": 18,
+            "mse_y": 8.650863691395488,
+            "ssim_y": 0.9604905033611142
+          },
+          {
+            "frame": 21,
+            "mse_y": 6.777716121721989,
+            "ssim_y": 0.9688014135096817
+          },
+          {
+            "frame": 24,
+            "mse_y": 7.271700452460594,
+            "ssim_y": 0.9664446284649068
+          },
+          {
+            "frame": 27,
+            "mse_y": 7.511181034683472,
+            "ssim_y": 0.9659314069400464
+          },
+          {
+            "frame": 30,
+            "mse_y": 7.714715058478397,
+            "ssim_y": 0.9645273512188097
+          },
+          {
+            "frame": 33,
+            "mse_y": 7.770225396000031,
+            "ssim_y": 0.9648704186963429
+          },
+          {
+            "frame": 36,
+            "mse_y": 6.986708970050679,
+            "ssim_y": 0.9679414446822516
+          },
+          {
+            "frame": 39,
+            "mse_y": 7.075679466981242,
+            "ssim_y": 0.968157121128422
+          },
+          {
+            "frame": 42,
+            "mse_y": 8.07653122598971,
+            "ssim_y": 0.9638630679755444
+          },
+          {
+            "frame": 45,
+            "mse_y": 7.056360641360952,
+            "ssim_y": 0.9683339176178537
+          },
+          {
+            "frame": 48,
+            "mse_y": 8.907625377373867,
+            "ssim_y": 0.9606706060653268
+          },
+          {
+            "frame": 51,
+            "mse_y": 7.496588598458684,
+            "ssim_y": 0.9665631545848475
+          },
+          {
+            "frame": 54,
+            "mse_y": 8.76640072642044,
+            "ssim_y": 0.9617116873163504
+          },
+          {
+            "frame": 57,
+            "mse_y": 7.456778565940505,
+            "ssim_y": 0.966779364183556
+          }
+        ],
+        "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; clip PSNR from mean MSE",
+        "temporal_difference_error": 0.0022572221214012984,
+        "temporal_difference_error_full_resolution": 0.010507971542657315,
+        "full_temporal_definition": "mean absolute consecutive native-Y reconstruction residual change /255; every frame, declared ROI with 2px border; no optical flow; project diagnostic, not a standard perceptual metric; retain spatial and coarse temporal metrics",
+        "temporal_definition": "project diagnostic: absolute consecutive residual change /255; ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
+        "vmaf": {
+          "mean": 95.690232,
+          "model": "vmaf_v0.6.1",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        },
+        "vmaf_neg": {
+          "mean": 92.329229,
+          "model": "vmaf_v0.6.1neg",
+          "libvmaf_version": "e80d6c5",
+          "sample_stride": 1,
+          "samples": 60,
+          "alignment": "CFR frame ordinal on shared AVTB clock; shortest, no repeated last frame"
+        }
+      },
+      "gain": {
+        "psnr_y_db": 0.0,
+        "ssim_y": 0.0,
+        "vmaf": 0.0
+      },
+      "execution": {
+        "schema_version": 4,
+        "environment": {
+          "npu_sr_version": "0.8.0",
+          "timestamp": "2026-10-05T07:37:57.449970+00:00",
+          "git_commit": "a853086d0a4b92e0ce0e1cd2189cebb9487b15d2",
+          "working_tree_dirty": false,
+          "python_source_sha256": "8d91dbcdb220cab05af74f2a5aabe954be1dc7d32ebf97d53312117712adf717",
+          "os": "Windows",
+          "architecture": "ARM64",
+          "python": "3.12.0",
+          "software_versions": {
+            "npu-sr": "0.8.0",
+            "numpy": "2.5.3",
+            "Pillow": "12.3.0",
+            "onnx": "1.23.1",
+            "onnxruntime-windowsml": "1.25.2.202605110140",
+            "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+            "winrt-runtime": "3.2.1"
+          },
+          "power": "not measured",
+          "background_processes": "uncontrolled",
+          "power_state": {
+            "ac_line": "plugged in",
+            "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+            "battery_percent": 37,
+            "energy_saver": false
+          },
+          "qnn_catalog_package": "2.2480.53.0",
+          "windows_build": 26200,
+          "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+          "npu_driver": "30.0.219.1000"
+        },
+        "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+        "input_sha256": "b55de377cb6bf1985807d4a38fe8fef76588c12f904e8353d6d14bb04727f606",
+        "model": "quicksrnet-small-y-x2",
+        "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+        "model_precision": "float32 (QNN HTP uses float16 math)",
+        "tile_core": [
+          256,
+          256
+        ],
+        "tile_halo": 4,
+        "tile_count_per_frame": 12,
+        "neural_tile_runs": 720,
+        "backend": "npu",
+        "execution_evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "htp_performance_mode_requested": "burst",
+          "context_cache": "hit"
+        },
+        "temporal_state": null,
+        "codec_evidence": {
+          "decode": {
+            "method": "D3D11VA hardware",
+            "hardware_format_selected": "d3d11",
+            "explicit_hwdownload": true
+          },
+          "encode": {
+            "method": "Media Foundation hardware",
+            "forced_hardware_enumeration": true,
+            "transform": "QCOM Hardware Encoder - AV1"
+          }
+        },
+        "codec": "av1",
+        "bitrate": "8M",
+        "frame_format": "nv12",
+        "neural_strength": 1.0,
+        "preset": null,
+        "pipeline_depth": 2,
+        "observed_queue_peaks": {
+          "decode_queue": 2,
+          "encode_queue": 2
+        },
+        "frame_latency_scope": "raw read start through encoder pipe submission; excludes encoder completion",
+        "npu_performance_requested": "burst",
+        "software_quality_crf": null,
+        "audio": "none",
+        "input": {
+          "resolution": [
+            960,
+            540
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "h264",
+          "color_range": "tv",
+          "color_space": "bt709"
+        },
+        "output": {
+          "resolution": [
+            1920,
+            1080
+          ],
+          "frame_rate": "30",
+          "duration_seconds": 2.0,
+          "reported_frames": 60,
+          "audio": false,
+          "codec": "av1",
+          "color_range": "tv",
+          "color_space": "unknown"
+        },
+        "frames_processed": 60,
+        "input_timestamps_validated": true,
+        "timeline_validation": {
+          "input": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.03379859996493906,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          },
+          "output": {
+            "method": "all packet presentation timestamps; actual pipeline frame count required",
+            "count": 60,
+            "seconds": 0.038693200098350644,
+            "full_decode": false,
+            "limitation": "Packet inspection does not prove decoded pixel integrity."
+          }
+        },
+        "verify_full": false,
+        "output_timestamps_validated": true,
+        "hardware_rate_control": "u_vbr / camera_record",
+        "dropped_frames": 0,
+        "startup_ms": 575.3852999769151,
+        "neural_startup_ms": 186.1211999785155,
+        "warmup_tensor_runs": 3,
+        "processing_seconds": 1.3573039000621065,
+        "output_validation_seconds": 0.07617369992658496,
+        "report_preparation_seconds": 2.2033093000063673,
+        "total_seconds": 4.212320600054227,
+        "total_seconds_scope": "process_video function; excludes CLI import, printing and JSON",
+        "whole_command_fps": 14.243930055852728,
+        "whole_command_real_time_factor": 2.1061603000271134,
+        "end_to_end_fps": 44.205280775554066,
+        "real_time_factor": 0.6786519500310533,
+        "process_cpu_seconds": 1.234375,
+        "process_memory": {
+          "working_set_bytes": 123097088,
+          "peak_process_working_set_bytes": 283594752,
+          "cpu_seconds": 51.890625
+        },
+        "resource_samples": [
+          {
+            "elapsed_seconds": 1.020645200042054,
+            "processes": {
+              "python": {
+                "working_set_bytes": 145969152,
+                "peak_process_working_set_bytes": 283594752,
+                "cpu_seconds": 51.59375
+              },
+              "decoder": {
+                "working_set_bytes": 83947520,
+                "peak_process_working_set_bytes": 92692480,
+                "cpu_seconds": 0.046875
+              },
+              "encoder": {
+                "working_set_bytes": 122331136,
+                "peak_process_working_set_bytes": 122331136,
+                "cpu_seconds": 0.109375
+              }
+            }
+          }
+        ],
+        "resources": {
+          "status": "not measured"
+        },
+        "resource_sample_scope": "1s Windows process CPU/working set; last 7200 samples; no process IDs",
+        "sustained": {
+          "first_10s_fps": null,
+          "final_10s_fps": null,
+          "minimum_rolling_10s_fps": null,
+          "scope": "encoder pipe submissions, windows on 1s boundaries; first window includes codec startup, final includes flush; encoder completion timing not available",
+          "throughput_seconds": [
+            {
+              "second": 0,
+              "frames": 43
+            }
+          ],
+          "throughput_history_scope": "last 600 complete seconds; minimum retained for whole run"
+        },
+        "phase_statistics": {
+          "preprocessing_ms": {
+            "median_ms": 1.2696500052697957,
+            "mean_ms": 1.3037549991471071,
+            "p95_ms": 1.6678999934811145,
+            "p99_ms": 1.9222789630293844
+          },
+          "tile_extraction_ms": {
+            "median_ms": 0.5149501957930624,
+            "mean_ms": 0.5366466861839095,
+            "p95_ms": 0.64733981853351,
+            "p99_ms": 0.7256210211198773
+          },
+          "inference_ms": {
+            "median_ms": 8.940999861806631,
+            "mean_ms": 9.006283298367634,
+            "p95_ms": 9.512640006141737,
+            "p99_ms": 9.66389995184727
+          },
+          "stitching_ms": {
+            "median_ms": 0.8112999494187534,
+            "mean_ms": 0.9060483581076065,
+            "p95_ms": 1.3444200973026454,
+            "p99_ms": 1.7844927974510933
+          },
+          "fusion_and_finite_check_ms": {
+            "median_ms": 0.2908000024035573,
+            "mean_ms": 0.3154933355593433,
+            "p95_ms": 0.5419150518719107,
+            "p99_ms": 0.6061389739625153
+          },
+          "luminance_quantization_ms": {
+            "median_ms": 2.6727000367827713,
+            "mean_ms": 2.7626700000837445,
+            "p95_ms": 3.24332500458695,
+            "p99_ms": 3.7309649516828336
+          },
+          "chroma_scaling_ms": {
+            "median_ms": 4.034949990455061,
+            "mean_ms": 4.134203330613673,
+            "p95_ms": 4.82720005675219,
+            "p99_ms": 5.127314015990123
+          },
+          "output_copy_ms": {
+            "median_ms": 0.12069998774677515,
+            "mean_ms": 0.15200666772822538,
+            "p95_ms": 0.2989500586409122,
+            "p99_ms": 0.6224510353058575
+          },
+          "postprocessing_ms": {
+            "median_ms": 7.09164998261258,
+            "mean_ms": 7.366875002238278,
+            "p95_ms": 8.539604931138456,
+            "p99_ms": 9.07893503317609
+          },
+          "enhancement_ms": {
+            "median_ms": 18.63120001507923,
+            "mean_ms": 19.151024993819494,
+            "p95_ms": 21.491249947575852,
+            "p99_ms": 22.1745720366016
+          },
+          "encoder_pipe_wait_ms": {
+            "median_ms": 0.24319998919963837,
+            "mean_ms": 2.079616663589453,
+            "p95_ms": 0.5648249585647133,
+            "p99_ms": 45.378210976486656
+          },
+          "decoder_pipe_wait_ms": {
+            "median_ms": 0.4581500543281436,
+            "mean_ms": 2.1533633349463344,
+            "p95_ms": 1.5754149528220283,
+            "p99_ms": 41.80587299400913
+          },
+          "frame_latency_ms": {
+            "median_ms": 74.72824997967109,
+            "mean_ms": 84.49854333108912,
+            "p95_ms": 135.63499510055402,
+            "p99_ms": 172.0669979811646
+          },
+          "frame_total_ms": {
+            "median_ms": 19.39385005971417,
+            "mean_ms": 23.384004992355283,
+            "p95_ms": 22.997165156993997,
+            "p99_ms": 120.70249403011978
+          },
+          "completion_interval_ms": {
+            "median_ms": 18.57974997255951,
+            "mean_ms": 21.745553333312273,
+            "p95_ms": 21.475300006568432,
+            "p99_ms": 127.26553103304467
+          }
+        },
+        "phase_sample_scope": "last 60 frames; bounded storage",
+        "inference_only_theoretical_fps": 111.03359364469996,
+        "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
+        "pipe_timings": "read/write blocking time, not isolated hardware codec execution time"
+      },
+      "baseline_output_sha256": "77423dc22b1bd5e0e3d179123bb0244c8926a939ddd62442a58261aa192d30fe",
+      "delivered_bytes_identical": true
+    }
+  ],
+  "failures": [],
+  "tolerance": "0.005 dB, 0.0001 SSIM, 0.05 VMAF (encode variation); report all differences"
+}

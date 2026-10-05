@@ -11,12 +11,11 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**Current main is the v0.8 installation/UX candidate; v0.6 remains the latest
-stable release until validation finishes.** It adds packaged setup, executed
-capability diagnostics and a one-command video preset. No neural-frame bypass.
+**v0.8 adds packaged setup, executed capability diagnostics and a one-command
+video preset.** Neural weights and the validated NV12 path remain unchanged.
 
-**960×540 → 1920×1080 @ 30 FPS: 48.7 FPS median streaming throughput**,
-three 120-second sources, every frame enhanced, strict QNN and hardware codecs
+**960×540 → 1920×1080 @ 30 FPS: 53.75 FPS median streaming throughput**,
+three 180-second sources, every frame enhanced, strict QNN and hardware codecs
 verified. On 24 predeclared clips, including 12 untouched holdout clips, it beats
 bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF** on average.
 See the [v0.5 report](benchmarks/v0.5/summary.md) for per-clip results and settings.
@@ -26,7 +25,11 @@ complete function time** for the same 120-second source. Default final validatio
 takes about 0.2 seconds; `--verify-full` retains a slower decoded-frame audit.
 A separately timed CLI run finished in **74.7 seconds**, including launch and
 JSON output. See the [v0.6 report](benchmarks/v0.6/summary.md) for full scope.
-Results are from one laptop/model/corpus; power is not measured.
+v0.8 records **53.75 FPS** on AC across three 180-second sources, and **72.7
+seconds whole CLI time** for a separate 120-second source. See the
+[v0.8 report](benchmarks/v0.8/summary.md). Different power/input conditions
+from v0.6 do not establish a code speedup. Results describe one laptop/model/corpus;
+power is not measured.
 
 ## Results and examples
 
@@ -60,7 +63,8 @@ All results describe one machine, declared models/inputs/settings, and three
 performance trials; they are not general Snapdragon claims. Historical reports:
 [v0.1](benchmarks/snapdragon-x-plus.json) · [v0.2](benchmarks/v0.2/summary.md) ·
 [v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md) ·
-[v0.5](benchmarks/v0.5/summary.md) · [v0.6](benchmarks/v0.6/summary.md).
+[v0.5](benchmarks/v0.5/summary.md) · [v0.6](benchmarks/v0.6/summary.md) ·
+[v0.8](benchmarks/v0.8/summary.md).
 
 ## Hardware and prerequisites
 

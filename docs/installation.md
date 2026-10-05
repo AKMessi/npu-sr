@@ -1,7 +1,6 @@
 # Installation
 
-The setup command is available on current main; the latest stable release is
-still v0.6.0 until the next milestone passes its tests and benchmarks.
+The setup command is included in v0.8 wheels and source installations.
 
 ## Snapdragon Windows
 

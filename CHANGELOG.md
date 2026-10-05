@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.0 — 2026-10-05
 
 - Packaged `setup` acquires verified models and optional native FFmpeg, then runs
   strict NPU proof and per-codec hardware probes; CPU-only setup remains available.
@@ -11,6 +11,10 @@
 - Balanced/quality now use Small/Medium NV12 paths; local context reuse is automatic
   for CLI video, and every cache load still requires strict execution proof.
 - Atomic hash-checked FFmpeg download rejects interrupted/oversized/unsafe archives.
+- UTF-8 redirected CLI output fixes corrupted dimension symbols on Windows.
+- Three qualified AC trials: 53.71/54.54/53.75 FPS, 5,400 frames each; normal
+  one-command 120-second source completed in 72.73 seconds. Three delivered
+  regression outputs remain byte-identical to v0.5. Conditions differ from v0.6.
 
 - Experimental original two-frame residual trained on real licensed sequences;
   fuse spatial and temporal enhancement into one static graph with full halo-7
