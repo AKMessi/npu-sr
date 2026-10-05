@@ -28,6 +28,49 @@ class PartialRead(io.BytesIO):
         return super().readinto(buffer[:2])
 
 
+@pytest.mark.parametrize("changed", ["width", "fps", "count"])
+def test_encoder_probe_rejects_driver_geometry_or_cadence_changes(monkeypatch, changed):
+    from dataclasses import replace
+    from types import SimpleNamespace
+
+    from npu_sr.ffmpeg import hardware_encode_probe
+
+    original = VideoInfo(854, 480, Fraction(60000, 1001), 1, 60, False, "h264")
+    actual = VideoInfo(1708, 960, original.fps, 3 / float(original.fps), 3, False, "av1")
+    actual = replace(
+        actual,
+        **{
+            "width": {"width": 1712},
+            "fps": {"fps": Fraction(60)},
+            "count": {"frames": 2},
+        }[changed],
+    )
+    monkeypatch.setattr(
+        "npu_sr.ffmpeg.run_tool",
+        lambda *a, **kw: SimpleNamespace(stderr=b"MFT name: 'QCOM Hardware Encoder - AV1'"),
+    )
+    monkeypatch.setattr("npu_sr.ffmpeg.probe", lambda *a, **kw: actual)
+    with pytest.raises(SRException, match="changed requested"):
+        hardware_encode_probe(Path("ffmpeg"), original, 2, "av1", "8M")
+
+
+def test_av1_matroska_extracts_sequence_header_without_reencoding(tmp_path):
+    info = VideoInfo(640, 360, Fraction(30), 1, 30, False, "h264")
+    for extension, hardware in [("mkv", True), ("mp4", True), ("mkv", False)]:
+        args = encode_args(
+            Path("in.mp4"),
+            tmp_path / f"out.{extension}",
+            info,
+            2,
+            "av1",
+            hardware,
+            "none",
+            "8M",
+            20,
+        )
+        assert ("extract_extradata" in args) == (extension == "mkv" and hardware)
+
+
 def test_planar_pipe_color_tags_both_input_and_output(tmp_path):
     info = VideoInfo(64, 48, Fraction(30), 1, 30, False, "h264", "tv", "bt709")
     args = encode_args(

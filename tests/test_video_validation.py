@@ -112,6 +112,59 @@ def test_full_mode_uses_decoded_frame_audit(monkeypatch):
     assert result["count"] == 90 and len(calls) == 1 and result["full_decode"]
 
 
+@pytest.mark.parametrize("failure", ["timeout", "oversize", "interrupt"])
+def test_full_audit_is_bounded_and_cleans_child_on_failure(monkeypatch, failure):
+    import io
+
+    from npu_sr.ffmpeg import validate_cfr
+
+    class Child:
+        stdout = io.BytesIO(b"0.0\n" if failure != "oversize" else b"1" * 150)
+        code = None
+
+        def poll(self):
+            return self.code
+
+        def kill(self):
+            self.code = -9
+
+        def wait(self, timeout):
+            self.code = self.code if self.code is not None else 0
+            return self.code
+
+    class Timer:
+        cancelled = False
+
+        def __init__(self, seconds, callback):
+            self.callback = callback
+
+        def start(self):
+            if failure == "timeout":
+                self.callback()
+
+        def cancel(self):
+            self.cancelled = True
+
+    child, timers = Child(), []
+
+    def make_timer(*args):
+        result = Timer(*args)
+        timers.append(result)
+        return result
+
+    monkeypatch.setattr("npu_sr.ffmpeg.subprocess.Popen", lambda *a, **kw: child)
+    monkeypatch.setattr("npu_sr.ffmpeg.threading.Timer", make_timer)
+    if failure == "interrupt":
+
+        def interrupt(*args):
+            raise KeyboardInterrupt
+
+        monkeypatch.setattr("npu_sr.ffmpeg.check_frame_times", interrupt)
+    with pytest.raises(KeyboardInterrupt if failure == "interrupt" else SRException):
+        validate_cfr(Path("source"), Path("ffmpeg"), info())
+    assert child.stdout.closed and child.poll() is not None and timers[0].cancelled
+
+
 @pytest.mark.parametrize("failure", ["exit", "diagnostics", "timeout", "interrupt"])
 def test_inspection_failure_and_cancellation_close_child_and_pipes(tmp_path, monkeypatch, failure):
     import io

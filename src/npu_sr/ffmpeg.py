@@ -8,6 +8,7 @@ import platform
 import re
 import shutil
 import subprocess
+import tempfile
 import threading
 from collections import deque
 from collections.abc import Iterable
@@ -83,6 +84,11 @@ class VideoInfo:
     codec: str
     color_range: str = "unknown"
     color_space: str = "unknown"
+    video_start: float = 0.0
+    format_start: float = 0.0
+    audio_start: float | None = None
+    audio_codec: str | None = None
+    audio_channels: int | None = None
 
     @property
     def frame_bytes(self) -> int:
@@ -105,6 +111,11 @@ class VideoInfo:
             "codec": self.codec,
             "color_range": self.color_range,
             "color_space": self.color_space,
+            "video_start_seconds": self.video_start,
+            "format_start_seconds": self.format_start,
+            "audio_start_seconds": self.audio_start,
+            "audio_codec": self.audio_codec,
+            "audio_channels": self.audio_channels,
         }
 
 
@@ -124,9 +135,26 @@ def probe(path: Path, ffmpeg: Path, count_frames: bool = False) -> VideoInfo:
         nominal = Fraction(video["r_frame_rate"])
         duration = float(video.get("duration", data["format"].get("duration", 0)))
         width, height = int(video["width"]), int(video["height"])
-    except (ValueError, KeyError, StopIteration, ZeroDivisionError) as exc:
+        format_start = float(data["format"].get("start_time", 0))
+        video_start = float(video.get("start_time", format_start))
+        audio = next((s for s in streams if s["codec_type"] == "audio"), None)
+        audio_start = float(audio.get("start_time", format_start)) if audio else None
+        channels = int(audio["channels"]) if audio and "channels" in audio else None
+        count = video.get("nb_read_frames" if count_frames else "nb_frames")
+        frames = int(count) if count and count != "N/A" else None
+    except (ValueError, TypeError, KeyError, StopIteration, ZeroDivisionError) as exc:
         raise SRException("Input is not a supported timed video stream.") from exc
-    if not 0 < fps <= 240 or duration <= 0 or fps != nominal:
+    if not all(
+        math.isfinite(v)
+        for v in [duration, format_start, video_start] + ([audio_start] if audio else [])
+    ):
+        raise SRException("Video timing metadata must be finite.")
+    if (
+        not 0 < fps <= 240
+        or duration <= 0
+        or fps != nominal
+        or (frames is not None and frames <= 0)
+    ):
         raise SRException("Only constant-framerate video (1–240 FPS) is supported.")
     if width <= 0 or height <= 0 or width * height > 16_000_000 or width % 2 or height % 2:
         raise SRException("Video needs positive even dimensions, at most 16 million pixels.")
@@ -137,17 +165,21 @@ def probe(path: Path, ffmpeg: Path, count_frames: bool = False) -> VideoInfo:
         raise SRException("Rotated video is unsupported; normalize orientation first.")
     if video.get("color_transfer") in {"smpte2084", "arib-std-b67"}:
         raise SRException("HDR video is unsupported. Convert to SDR explicitly first.")
-    count = video.get("nb_read_frames" if count_frames else "nb_frames")
     return VideoInfo(
         width,
         height,
         fps,
         duration,
-        int(count) if count and count != "N/A" else None,
-        any(s["codec_type"] == "audio" for s in streams),
+        frames,
+        audio is not None,
         video.get("codec_name", "unknown"),
         video.get("color_range", "unknown"),
         video.get("color_space", "unknown"),
+        video_start,
+        format_start,
+        audio_start,
+        audio.get("codec_name", "unknown") if audio else None,
+        channels,
     )
 
 
@@ -167,7 +199,7 @@ def check_frame_times(times: Iterable[float], fps: Fraction) -> int:
     return count
 
 
-def validate_cfr(source: Path, ffmpeg: Path, info: VideoInfo) -> int:
+def validate_cfr(source: Path, ffmpeg: Path, info: VideoInfo, timeout: float = 300) -> int:
     """Inspect actual input timestamps; average framerate alone cannot prove CFR."""
     ffprobe = ffmpeg.with_name("ffprobe.exe" if os.name == "nt" else "ffprobe")
     child = subprocess.Popen(
@@ -186,15 +218,36 @@ def validate_cfr(source: Path, ffmpeg: Path, info: VideoInfo) -> int:
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
     )
+    expired = threading.Event()
+
+    def terminate() -> None:
+        expired.set()
+        if child.poll() is None:
+            try:
+                child.kill()
+            except OSError:
+                pass
+
+    timer = threading.Timer(timeout, terminate)
     try:
+        timer.start()
         assert child.stdout is not None
-        count = check_frame_times((float(line) for line in child.stdout if line.strip()), info.fps)
-        if child.wait(timeout=10):
+
+        def times():
+            for line in iter(lambda: child.stdout.readline(129), b""):
+                if len(line) > 128:
+                    raise SRException("Frame timestamp exceeded bounded metadata size.")
+                if line.strip():
+                    yield float(line)
+
+        count = check_frame_times(times(), info.fps)
+        if child.wait(timeout=10) or expired.is_set():
             raise SRException("Input timestamp inspection failed.")
         return count
     except ValueError as exc:
         raise SRException("Video contains missing or malformed frame timestamps.") from exc
     finally:
+        timer.cancel()
         if child.poll() is None:
             child.kill()
             child.wait(timeout=5)
@@ -303,12 +356,34 @@ def encode_args(
         "pipe:0",
     ]
     if audio == "copy" and info.audio:
-        args += ["-i", str(source.resolve()), "-map", "0:v:0", "-map", "1:a:0", "-c:a", "copy"]
+        # The raw stream starts at the first decoded video frame, at zero.
+        # FFmpeg otherwise subtracts the source container start from copied
+        # audio. Compensate so leading audio is trimmed and delayed audio keeps
+        # its original offset relative to that first video frame.
+        args += [
+            "-itsoffset",
+            f"{info.format_start - info.video_start:.9f}",
+            "-i",
+            str(source.resolve()),
+            "-map",
+            "0:v:0",
+            "-map",
+            "1:a:0",
+            "-c:a",
+            "copy",
+        ]
     else:
         args += ["-map", "0:v:0", "-an"]
     return (
         args
         + codec_args(codec, hardware, bitrate, quality, software_av1)
+        # Media Foundation supplies the AV1 sequence header in-band. Matroska
+        # requires codec private data: extract it before muxing, without recoding.
+        + (
+            ["-bsf:v", "extract_extradata"]
+            if codec == "av1" and hardware and output.suffix.lower() == ".mkv"
+            else []
+        )
         + colors
         + [
             "-fps_mode",
@@ -356,26 +431,43 @@ def encode_evidence(log: str) -> dict:
 def hardware_encode_probe(
     ffmpeg: Path, info: VideoInfo, scale: int, codec: str, bitrate: str
 ) -> dict:
-    result = run_tool(
-        [
-            str(ffmpeg),
-            "-hide_banner",
-            "-nostdin",
-            "-loglevel",
-            "verbose",
-            "-f",
-            "lavfi",
-            "-i",
-            f"color=size={info.width * scale}x{info.height * scale}:rate={info.fps}",
-            "-frames:v",
-            "3",
-            *codec_args(codec, True, bitrate, 20),
-            "-f",
-            "null",
-            "-",
-        ]
-    )
-    return encode_evidence(result.stderr.decode("utf-8", errors="replace"))
+    with tempfile.TemporaryDirectory(prefix="npu-sr-encoder-proof-") as directory:
+        output = Path(directory) / "proof.mp4"
+        result = run_tool(
+            [
+                str(ffmpeg),
+                "-hide_banner",
+                "-nostdin",
+                "-loglevel",
+                "verbose",
+                "-f",
+                "lavfi",
+                "-i",
+                f"color=size={info.width * scale}x{info.height * scale}:rate={info.fps}",
+                "-frames:v",
+                "3",
+                *codec_args(codec, True, bitrate, 20),
+                str(output),
+            ]
+        )
+        evidence = encode_evidence(result.stderr.decode("utf-8", errors="replace"))
+        try:
+            actual = probe(output, ffmpeg)
+        except SRException as exc:
+            raise SRException(
+                "Hardware encoder output failed its format proof. "
+                "Try H.264/HEVC or software encode. " + str(exc)
+            ) from exc
+        if (
+            (actual.width, actual.height) != (info.width * scale, info.height * scale)
+            or actual.fps != info.fps
+            or actual.frames != 3
+        ):
+            raise SRException(
+                "Hardware encoder changed requested dimensions, cadence or frame count. "
+                "Try H.264/HEVC or software encode."
+            )
+        return evidence | {"encoded_probe": actual.public(), "probe_frames": 3}
 
 
 class PipeProcess:
@@ -394,16 +486,26 @@ class PipeProcess:
             raise SRException(f"Cannot start FFmpeg: {exc}") from exc
         self.tail: deque[str] = deque(maxlen=16)
         self.selected: deque[str] = deque(maxlen=16)
+        self.errors: deque[str] = deque(maxlen=8)
         self.thread = threading.Thread(target=self._drain, daemon=True)
         self.thread.start()
 
     def _drain(self) -> None:
         assert self.process.stderr is not None
-        for raw in self.process.stderr:
+        for raw in iter(lambda: self.process.stderr.readline(4097), b""):
             line = raw.decode("utf-8", errors="replace").rstrip()
             self.tail.append(line[:1000])
             if "MFT name:" in line or "Format d3d11 chosen by get_format()" in line:
                 self.selected.append(line[:1000])
+            if (
+                re.search(r"failed|error|invalid|could not", line, re.I)
+                and "0 decode errors" not in line
+            ):
+                self.errors.append(line[:1000])
+
+    @property
+    def failure_log(self) -> str:
+        return "\n".join(dict.fromkeys([*self.errors, *self.tail]))
 
     @property
     def evidence_log(self) -> str:
@@ -417,7 +519,7 @@ class PipeProcess:
             raise SRException("FFmpeg did not finish within 60 seconds.") from exc
         self.thread.join(timeout=5)
         if code:
-            raise SRException("FFmpeg process failed: " + "\n".join(self.tail))
+            raise SRException("FFmpeg process failed: " + self.failure_log)
 
     def close(self) -> None:
         if self.process.poll() is None:

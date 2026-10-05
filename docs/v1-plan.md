@@ -221,3 +221,32 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
 - Freeze candidate code, then repeat three sustained realtime trials, delivered
   regression checks, fresh wheel installation and main/tag CI before a v0.8 tag.
   Do not claim temporal v0.7 acceptance; it remains unfulfilled research.
+
+
+## E / reliability candidate
+
+- v0.8 released at 871400c8c26f5071c1220588082d959e500e4046; main CI
+  37281638670 and tag CI 37281898027 passed Windows/Linux. Downloaded wheel,
+  sdist and hash file match tested builds. Final suite 246 ordinary / 20 manual
+  NPU+DirectML / 6 video hardware tests.
+- v0.9 adds bounded whole-run timing histograms, not just last-8192-frame
+  percentiles. 0.05 ms quantile bins, actual means/extrema; overflow is explicit.
+  Start/end power snapshots; custom power-plan names/GUIDs are not serialized.
+- Real reproduction: source video began at 0.5 s, copied audio at 0.0 s. Old
+  output lost that offset. Compensate copied input timestamps by container start
+  minus first video timestamp. Trimmed decoded AAC samples match exactly.
+- Real AV1/MKV mux failure fixed by extract_extradata bitstream filter. Decoder
+  and hardware transform execution still require their existing proofs.
+- Actual QCOM AV1 1708x960 request becomes 1712x960. H.264 and HEVC preserve
+  1708x960. Encoder proof now encodes/probes three actual frames before processing;
+  reject changed geometry/cadence, offer explicit HEVC/H.264/software alternatives.
+- Generated matrix exercises H.264/HEVC/AV1 inputs, fractional and integer frame
+  rates, 360p through 1080p, portrait, stereo/surround AAC, Opus/MKV, no audio.
+  It is correctness evidence, not sustained throughput or every cross-product.
+- Prepare a hash-verified CC-BY film loop for 1200 source seconds. Content repeats;
+  every application input frame must still be processed. At ~54 FPS this should
+  exceed ten minutes of actual processing; source duration alone is insufficient.
+- Freeze candidate code after ordinary/hardware/regression checks, then run three
+  independent sustained trials without concurrent project training/tests. Gate
+  actual >=600 seconds/trial, exact 540p30->1080p30, strict QNN, hardware encode,
+  all calls/counts/cadence and bounded queues/working sets. No release claim yet.

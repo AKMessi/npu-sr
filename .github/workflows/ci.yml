@@ -37,6 +37,10 @@ jobs:
         run: |
           python -m ruff check .
           python -m ruff format --check .
+      - name: Audit installed dependencies for known advisories
+        run: |
+          python -m pip install pip-audit==2.10.1
+          python -m pip_audit --local --skip-editable
       - name: Install FFmpeg for real CPU video integration (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg

@@ -66,6 +66,164 @@ def cpu_settings(ffmpeg):
     return VideoSettings(device="cpu", decode="software", encode="software", ffmpeg=ffmpeg)
 
 
+@pytest.mark.parametrize(
+    "fps,portrait,audio,extension",
+    [
+        ("24000/1001", False, True, "mp4"),
+        ("24", False, False, "mkv"),
+        ("25", False, True, "mp4"),
+        ("30000/1001", False, True, "mkv"),
+        ("50", False, False, "mp4"),
+        ("60000/1001", False, True, "mp4"),
+        ("60", False, False, "mkv"),
+        ("30", True, True, "mp4"),
+    ],
+)
+def test_fractional_cadence_portrait_and_audio_matrix(tmp_path, fps, portrait, audio, extension):
+    from fractions import Fraction
+
+    from npu_sr.ffmpeg import run_tool
+
+    try:
+        ffmpeg = tool_path()
+    except SRException:
+        pytest.skip("FFmpeg required for generated correctness matrix")
+    width, height = (48, 64) if portrait else (64, 48)
+    source, output = tmp_path / f"source.{extension}", tmp_path / f"result.{extension}"
+    args = [
+        str(ffmpeg),
+        "-v",
+        "error",
+        "-f",
+        "lavfi",
+        "-i",
+        f"testsrc2=size={width}x{height}:rate={fps}",
+    ]
+    if audio:
+        args += ["-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000"]
+    args += [
+        "-frames:v",
+        "12",
+        "-t",
+        str(12 / float(Fraction(fps))),
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+    ]
+    args += ["-c:a", "aac"] if audio else ["-an"]
+    run_tool([*args, str(source)])
+    report = process_video(source, output, cpu_settings(ffmpeg))
+    assert report["frames_processed"] == report["output"]["reported_frames"] == 12
+    assert report["output"]["resolution"] == [width * 2, height * 2]
+    assert Fraction(report["output"]["frame_rate"]) == Fraction(fps)
+    assert report["output"]["audio"] is audio
+    if audio:
+        assert report["output"]["audio_channels"] == 2 and report["audio_validation"]
+
+
+def test_disk_write_failure_keeps_existing_output_and_cleans_children(
+    video_source, tmp_path, monkeypatch
+):
+    import errno
+
+    source, ffmpeg = video_source
+    output = tmp_path / "existing.mp4"
+    output.write_bytes(b"existing user output")
+    children = []
+
+    def child(*a, **kw):
+        result = PipeProcess(*a, **kw)
+        children.append(result)
+        return result
+
+    def full_disk(*a):
+        raise OSError(errno.ENOSPC, "No space left on device")
+
+    monkeypatch.setattr("npu_sr.video.PipeProcess", child)
+    monkeypatch.setattr("npu_sr.video.write_frame", full_disk)
+    with pytest.raises(SRException, match="No space"):
+        process_video(
+            source, output, replace(cpu_settings(ffmpeg), overwrite=True, pipeline_depth=2)
+        )
+    assert output.read_bytes() == b"existing user output"
+    assert all(c.process.poll() is not None for c in children)
+    assert not list(tmp_path.glob("*.partial.mp4"))
+
+
+@pytest.mark.parametrize("video_delay,audio_delay", [(0.5, 0), (0, 0.5), (2, 2.5)])
+def test_copied_audio_preserves_offset_from_first_video_frame(tmp_path, video_delay, audio_delay):
+    from npu_sr.ffmpeg import probe, run_tool
+
+    try:
+        ffmpeg = tool_path()
+    except SRException:
+        pytest.skip("FFmpeg required for audio timing regression")
+    source, output = tmp_path / "offset.mp4", tmp_path / "enhanced.mp4"
+    run_tool(
+        [
+            str(ffmpeg),
+            "-v",
+            "error",
+            "-itsoffset",
+            str(video_delay),
+            "-f",
+            "lavfi",
+            "-i",
+            "testsrc2=size=64x48:rate=30:duration=2",
+            "-itsoffset",
+            str(audio_delay),
+            "-f",
+            "lavfi",
+            "-i",
+            "sine=sample_rate=48000:duration=2.5",
+            "-c:v",
+            "libx264",
+            "-fps_mode",
+            "passthrough",
+            "-c:a",
+            "aac",
+            str(source),
+        ]
+    )
+    original = probe(source, ffmpeg)
+    report = process_video(source, output, cpu_settings(ffmpeg))
+    actual = probe(output, ffmpeg)
+    assert report["frames_processed"] == 60
+    assert actual.audio_codec == original.audio_codec == "aac"
+    expected_delay = max(0, original.audio_start - original.video_start)
+    assert actual.audio_start - actual.video_start == pytest.approx(expected_delay, abs=0.025)
+    assert all(row["samples"] == 60 for row in report["whole_run_phase_statistics"].values())
+    if video_delay > audio_delay:
+
+        def pcm(path):
+            return np.frombuffer(
+                run_tool(
+                    [
+                        str(ffmpeg),
+                        "-v",
+                        "error",
+                        "-i",
+                        str(path),
+                        "-map",
+                        "0:a:0",
+                        "-f",
+                        "s16le",
+                        "-ac",
+                        "1",
+                        "-ar",
+                        "48000",
+                        "pipe:1",
+                    ]
+                ).stdout,
+                np.int16,
+            )
+
+        before, after = pcm(source), pcm(output)
+        start = round((video_delay - audio_delay) * 48000)
+        assert np.array_equal(before[start : start + len(after)], after)
+
+
 @pytest.mark.video_hw
 def test_first_run_setup_proves_npu_and_hardware_codecs():
     from npu_sr.setup import prepare
@@ -308,6 +466,39 @@ def test_real_snapdragon_video_hardware(video_source, tmp_path, codec):
     assert report["codec_evidence"]["decode"]["hardware_format_selected"] == "d3d11"
     assert "QCOM Hardware Encoder" in report["codec_evidence"]["encode"]["transform"]
     assert report["frames_processed"] == 6 and report["output"]["audio"]
+
+
+@pytest.mark.video_hw
+def test_hardware_av1_matroska_copies_audio_and_retains_frame_cadence(video_source, tmp_path):
+    from npu_sr.ffmpeg import run_tool
+    from npu_sr.video import settings_for_preset
+
+    original, ffmpeg = video_source
+    source = tmp_path / "source-360p.mp4"
+    run_tool(
+        [
+            str(ffmpeg),
+            "-v",
+            "error",
+            "-i",
+            str(original),
+            "-vf",
+            "scale=640:360",
+            "-c:v",
+            "libx264",
+            "-c:a",
+            "copy",
+            str(source),
+        ]
+    )
+    settings = settings_for_preset("realtime", {"ffmpeg": ffmpeg})
+    report = process_video(source, tmp_path / "av1.mkv", settings)
+    assert report["frames_processed"] == report["output"]["reported_frames"] == 6
+    assert report["output"]["codec"] == "av1" and report["output"]["audio_codec"] == "aac"
+    assert report["audio_validation"] and report["output_timestamps_validated"]
+    assert report["execution_evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+    assert report["execution_evidence"]["cpu_fallback_disabled"]
+    assert "QCOM" in report["codec_evidence"]["encode"]["transform"]
 
 
 @pytest.mark.video_hw

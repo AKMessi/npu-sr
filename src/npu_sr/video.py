@@ -7,6 +7,7 @@ import uuid
 from collections import defaultdict, deque
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, replace
+from datetime import UTC, datetime
 from pathlib import Path
 from time import perf_counter, process_time
 
@@ -32,10 +33,10 @@ from .ffmpeg import (
 )
 from .image import infer_y, postprocess, preprocess
 from .model import resolve_model, sha256
-from .monitoring import memory_usage
+from .monitoring import memory_usage, power_state
 from .runtime import Runtime
 from .stream import Frame, process_stream
-from .video_stats import SustainedStatistics, resource_summary
+from .video_stats import LatencyHistogram, SustainedStatistics, resource_summary
 from .video_validation import inspect_timeline
 
 log = logging.getLogger(__name__)
@@ -172,6 +173,11 @@ def process_video(
     if settings.audio not in {"copy", "none"}:
         raise SRException("Audio mode must be copy or none.")
     initialization = perf_counter()
+    environment_start = {
+        "timestamp": datetime.now(UTC).isoformat(),
+        "power_state": power_state(),
+        "scope": "power state at command start; full software/hardware environment recorded at end",
+    }
     ffmpeg = tool_path(settings.ffmpeg)
     info = probe(source, ffmpeg)
     input_validation = inspect_timeline(source, ffmpeg, info, settings.verify_full)
@@ -229,6 +235,7 @@ def process_video(
             }
         )
     phases: defaultdict[str, deque[float]] = defaultdict(lambda: deque(maxlen=8192))
+    whole_phases: defaultdict[str, LatencyHistogram] = defaultdict(LatencyHistogram)
     completed, decoder, encoder = 0, None, None
     done = threading.Event()
     activity = [perf_counter()]
@@ -264,10 +271,12 @@ def process_video(
         )
         for key, value in timings.items():
             phases[key].append(value)
+            whole_phases[key].record(value)
         completed = count
         elapsed = perf_counter() - started
         timings["completion_interval_ms"] = (elapsed - previous_completion[0]) * 1000
         phases["completion_interval_ms"].append(timings["completion_interval_ms"])
+        whole_phases["completion_interval_ms"].record(timings["completion_interval_ms"])
         previous_completion[0] = elapsed
         sustained.record(elapsed)
         activity[0] = perf_counter()
@@ -377,6 +386,27 @@ def process_video(
             raise SRException("Encoded video duration does not match processed frames.")
         if settings.audio == "copy" and info.audio and not actual.audio:
             raise SRException("Audio stream did not survive encoding.")
+        audio_validation = None
+        if settings.audio == "copy" and info.audio:
+            if (
+                actual.audio_codec != info.audio_codec
+                or actual.audio_channels != info.audio_channels
+            ):
+                raise SRException("Copied audio codec or channel count changed.")
+            expected_offset = max(0, info.audio_start - info.video_start)
+            actual_offset = actual.audio_start - actual.video_start
+            # One AAC priming packet/Matroska millisecond rounding is allowed.
+            if abs(actual_offset - expected_offset) > 0.03:
+                raise SRException("Copied audio offset changed; no output published.")
+            audio_validation = {
+                "expected_offset_seconds": expected_offset,
+                "actual_offset_seconds": actual_offset,
+                "tolerance_seconds": 0.03,
+                "scope": (
+                    "first audio stream codec/channels/start relative to first video frame; "
+                    "leading audio trimmed"
+                ),
+            }
         actual = replace(actual, frames=encoded_frames)
         os.replace(temporary, output)
         validation_seconds = perf_counter() - validation_started
@@ -386,11 +416,12 @@ def process_video(
         measured_environment = environment()
         ffmpeg_hash, input_hash = sha256(ffmpeg), sha256(source)
         report_seconds = perf_counter() - report_started
-        inference_seconds = sum(phases["inference_ms"]) / 1000
+        inference_seconds = whole_phases["inference_ms"].total / 1000
         total_seconds = perf_counter() - initialization
         return {
-            "schema_version": 4,
+            "schema_version": 5,
             "environment": measured_environment,
+            "environment_start": environment_start,
             "ffmpeg_version": version,
             "ffmpeg_sha256": ffmpeg_hash,
             "input_sha256": input_hash,
@@ -418,6 +449,7 @@ def process_video(
             "npu_performance_requested": settings.npu_performance,
             "software_quality_crf": settings.quality if not hardware_encode else None,
             "audio": settings.audio,
+            "audio_validation": audio_validation,
             "input": info.public(),
             "output": actual.public(),
             "frames_processed": completed,
@@ -448,10 +480,11 @@ def process_video(
             ),
             "sustained": sustained.report(processing_seconds),
             "phase_statistics": {key: _statistics(values) for key, values in phases.items()},
+            "whole_run_phase_statistics": {
+                key: values.report() for key, values in whole_phases.items()
+            },
             "phase_sample_scope": f"last {min(completed, 8192)} frames; bounded storage",
-            "inference_only_theoretical_fps": completed / inference_seconds
-            if completed <= 8192
-            else None,
+            "inference_only_theoretical_fps": completed / inference_seconds,
             "timing_scope": (
                 "decode process start through encoder flush; excludes initialization, "
                 "output validation and hashing"
@@ -459,7 +492,9 @@ def process_video(
             "pipe_timings": "read/write blocking time, not isolated hardware codec execution time",
         }
     except (BrokenPipeError, OSError) as exc:
-        tail = "\n".join(encoder.tail) if encoder else ""
+        if encoder:
+            encoder.thread.join(timeout=1)
+        tail = encoder.failure_log if encoder else ""
         raise SRException(f"Video pipe failed: {exc}\n{tail}") from exc
     finally:
         done.set()

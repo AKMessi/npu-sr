@@ -174,7 +174,11 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
 
 
 def prepare_sustained(
-    directory: Path, duration: int, ffmpeg: Path, source: Path | None = None
+    directory: Path,
+    duration: int,
+    ffmpeg: Path,
+    source: Path | None = None,
+    loop: bool = False,
 ) -> None:
     """Prepare a varied real-film 540p input without storing a large HR reference."""
     movie = source or source_movie(directory)
@@ -190,12 +194,14 @@ def prepare_sustained(
             "-y",
             "-ss",
             "32",
+            *(["-stream_loop", "-1"] if loop else []),
             "-i",
             str(movie),
             "-vf",
-            "setpts=(PTS-STARTPTS)*0.8,scale=-2:540:flags=bicubic,crop=960:540",
+            ("setpts=N/(30*TB)" if loop else "setpts=(PTS-STARTPTS)*0.8")
+            + ",scale=-2:540:flags=bicubic,crop=960:540",
             "-af",
-            "atempo=1.25",
+            ("asetpts=N/SR/TB," if loop else "") + "atempo=1.25",
             "-r",
             "30",
             "-t",
@@ -213,7 +219,7 @@ def prepare_sustained(
             "-bitexact",
             str(output),
         ],
-        timeout=1200,
+        timeout=max(1200, duration * 2),
     )
     from npu_sr.ffmpeg import probe, validate_cfr
 
@@ -231,6 +237,13 @@ def prepare_sustained(
                 "license": "CC-BY-3.0",
                 "attribution": "Blender Foundation / mango.blender.org",
                 "source_start_seconds": 32,
+                "source_looped": loop,
+                "loop_method": (
+                    "FFmpeg stream_loop=-1; decoded consecutive frames assigned ordinal 30 FPS "
+                    "timestamps; film content repeats, application processes every input frame"
+                    if loop
+                    else None
+                ),
                 "input_file": output.name,
                 "input_sha256": sha256(output),
                 "input": info.public(),
@@ -256,11 +269,19 @@ if __name__ == "__main__":
     )
     parser.add_argument("--duration", type=int)
     parser.add_argument("--sustained", action="store_true")
+    parser.add_argument(
+        "--loop-source",
+        action="store_true",
+        help="Repeat the licensed film for long-run validation",
+    )
     parser.add_argument("--ffmpeg", type=Path)
     args = parser.parse_args()
     duration = args.duration if args.duration is not None else (120 if args.sustained else 4)
-    if not 1 <= duration <= 300:
-        parser.error("duration must be 1–300 seconds")
+    maximum = 3600 if args.loop_source else 300
+    if not 1 <= duration <= maximum:
+        parser.error(f"duration must be 1–{maximum} seconds")
+    if args.loop_source and not args.sustained:
+        parser.error("--loop-source requires --sustained")
     default = (
         Path(os.environ.get("LOCALAPPDATA", Path.home() / ".cache"))
         / "npu-sr"
@@ -271,7 +292,11 @@ if __name__ == "__main__":
         parser.error("--source-movie is only used with --sustained")
     if args.sustained:
         prepare_sustained(
-            args.directory or default, duration, tool_path(args.ffmpeg), args.source_movie
+            args.directory or default,
+            duration,
+            tool_path(args.ffmpeg),
+            args.source_movie,
+            args.loop_source,
         )
     else:
         acquire(args.directory or default, duration, tool_path(args.ffmpeg))

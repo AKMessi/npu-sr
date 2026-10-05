@@ -1,7 +1,69 @@
 """Bounded sustained-throughput and resource observations, without power estimates."""
 
+import math
 import os
+from array import array
 from collections import deque
+
+
+class LatencyHistogram:
+    """Whole-run latency quantiles with fixed storage and 0.05 ms bins.
+
+    Quantiles interpolate bin midpoints, with at most 0.025 ms binning error.
+    Samples >=1000 ms use an overflow bin: affected quantiles return None,
+    while count, actual mean and extrema still include them.
+    """
+
+    def __init__(self) -> None:
+        self.bins = array("Q", [0]) * 20001
+        self.count = 0
+        self.total = 0.0
+        self.minimum = math.inf
+        self.maximum = 0.0
+
+    def record(self, value: float) -> None:
+        if not math.isfinite(value) or value < 0:
+            raise ValueError("Latency must be finite and nonnegative.")
+        self.bins[min(int(value * 20), 20000)] += 1
+        self.count += 1
+        self.total += value
+        self.minimum = min(self.minimum, value)
+        self.maximum = max(self.maximum, value)
+
+    def quantile(self, fraction: float) -> float | None:
+        if not math.isfinite(fraction) or not 0 <= fraction <= 1:
+            raise ValueError("Quantile must be between zero and one.")
+        if not self.count:
+            return None
+        rank = (self.count - 1) * fraction
+        lower, upper = math.floor(rank), math.ceil(rank)
+        accumulated, values = 0, []
+        for index, count in enumerate(self.bins):
+            accumulated += count
+            if accumulated > lower and not values:
+                values.append(None if index == 20000 else (index + 0.5) / 20)
+            if accumulated > upper:
+                values.append(None if index == 20000 else (index + 0.5) / 20)
+                break
+        if any(value is None for value in values):
+            return None
+        return values[0] + (values[1] - values[0]) * (rank - lower)
+
+    def report(self) -> dict:
+        if not self.count:
+            return {"samples": 0}
+        return {
+            "samples": self.count,
+            "mean_ms": self.total / self.count,
+            "minimum_ms": self.minimum,
+            "maximum_ms": self.maximum,
+            "median_ms": self.quantile(0.5),
+            "p95_ms": self.quantile(0.95),
+            "p99_ms": self.quantile(0.99),
+            "overflow_samples": self.bins[-1],
+            "quantile_bin_width_ms": 0.05,
+            "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema",
+        }
 
 
 def resource_summary(samples: list[dict]) -> dict:
@@ -21,6 +83,9 @@ def resource_summary(samples: list[dict]) -> dict:
         for sample in samples
         if all("working_set_bytes" in row for row in sample["processes"].values())
     ]
+    window = min(60, len(sets) // 2)
+    first_window = sum(sets[:window]) / window if window else None
+    final_window = sum(sets[-window:]) / window if window else None
     return {
         "sample_window_seconds": seconds,
         "process_cpu_seconds": cpu,
@@ -29,6 +94,9 @@ def resource_summary(samples: list[dict]) -> dict:
         "peak_sampled_aggregate_working_set_bytes": max(sets) if sets else None,
         "first_sample_working_set_bytes": sets[0] if sets else None,
         "last_sample_working_set_bytes": sets[-1] if sets else None,
+        "first_window_mean_working_set_bytes": first_window,
+        "final_window_mean_working_set_bytes": final_window,
+        "memory_comparison_samples_per_window": window,
         "scope": (
             "Python + decoder + encoder; 1s sampled working set, CPU deltas between samples; "
             "excludes other apps"

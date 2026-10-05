@@ -1,6 +1,7 @@
 """Measured video trials and aligned decoded-frame quality comparisons."""
 
 import json
+import math
 import tempfile
 from collections import deque
 from fractions import Fraction
@@ -44,7 +45,7 @@ def image_quality_acceptance(report: dict, model: str = "espcn-x2-256") -> dict:
     return {"passed": not failures, "failures": failures, "model": model, "mean_gain": gains}
 
 
-def realtime_acceptance(report: dict) -> dict:
+def realtime_acceptance(report: dict, *, production: bool = False) -> dict:
     """Gate measured useful sustained video, rather than model-only throughput."""
     failures = []
     trials = report.get("trials", [])
@@ -55,14 +56,21 @@ def realtime_acceptance(report: dict) -> dict:
         properties = trial["input"]
         fps = float(Fraction(properties["frame_rate"]))
         width, height = properties["resolution"]
-        if fps < 30 or width < 854 or height < 480:
+        if production:
+            if fps != 30 or (width, height) != (960, 540):
+                failures.append(prefix + "production requires 960x540 at exactly 30 FPS")
+        elif fps < 30 or width < 854 or height < 480:
             failures.append(prefix + "requires at least 854x480 at 30 FPS")
-        if trial["processing_seconds"] < 60:
-            failures.append(prefix + "requires >=60 seconds measured processing")
-        if trial["end_to_end_fps"] < fps:
+        minimum_seconds = 600 if production else 60
+        if (
+            not math.isfinite(trial["processing_seconds"])
+            or trial["processing_seconds"] < minimum_seconds
+        ):
+            failures.append(prefix + f"requires >={minimum_seconds} seconds measured processing")
+        if not math.isfinite(trial["end_to_end_fps"]) or trial["end_to_end_fps"] < fps:
             failures.append(prefix + "end-to-end throughput below source framerate")
         rolling = trial.get("sustained", {}).get("minimum_rolling_10s_fps")
-        if rolling is None or rolling < fps:
+        if rolling is None or not math.isfinite(rolling) or rolling < fps:
             failures.append(prefix + "rolling 10-second throughput below source framerate")
         evidence = trial["execution_evidence"]
         kernels = evidence.get("executed_kernel_counts", {})
@@ -83,13 +91,56 @@ def realtime_acceptance(report: dict) -> dict:
             or not trial.get("input_timestamps_validated")
             or not trial.get("output_timestamps_validated")
             or trial["output"]["resolution"] != [width * 2, height * 2]
+            or Fraction(trial["output"].get("frame_rate", properties["frame_rate"]))
+            != Fraction(properties["frame_rate"])
         ):
             failures.append(prefix + "frame preservation or 2x output proof missing")
+        if production:
+            frames = trial["frames_processed"]
+            if (
+                not frames
+                or trial["processing_seconds"] <= 0
+                or not math.isclose(
+                    frames / trial["processing_seconds"], trial["end_to_end_fps"], rel_tol=1e-6
+                )
+            ):
+                failures.append(prefix + "throughput does not match actual frames and wall time")
+            statistics = trial.get("whole_run_phase_statistics", {})
+            if not {"frame_latency_ms", "inference_ms", "postprocessing_ms"}.issubset(
+                statistics
+            ) or any(
+                row.get("samples") != trial["frames_processed"] for row in statistics.values()
+            ):
+                failures.append(prefix + "whole-run frame latency accounting missing")
+            if (
+                trial.get("pipeline_depth") != 2
+                or set(trial.get("observed_queue_peaks", {})) != {"decode_queue", "encode_queue"}
+                or any(value > 2 for value in trial.get("observed_queue_peaks", {}).values())
+            ):
+                failures.append(prefix + "bounded depth-two pipeline proof missing")
+            resources = trial.get("resources", {})
+            first = resources.get("first_window_mean_working_set_bytes")
+            final = resources.get("final_window_mean_working_set_bytes")
+            peak = resources.get("peak_sampled_aggregate_working_set_bytes")
+            if (
+                first is None
+                or final is None
+                or peak is None
+                or not all(math.isfinite(value) and value > 0 for value in (first, final, peak))
+                or peak > 2_000_000_000
+                or final > first * 1.15 + 64_000_000
+            ):
+                failures.append(
+                    prefix + "bounded long-run process memory evidence missing or regressed"
+                )
+            if trial["input"].get("audio") and not trial.get("audio_validation"):
+                failures.append(prefix + "audio timing preservation proof missing")
     return {
         "passed": not failures,
         "failures": failures,
         "minimum_trials": 3,
-        "minimum_processing_seconds": 60,
+        "minimum_processing_seconds": 600 if production else 60,
+        "profile": "production 540p30" if production else "research useful realtime",
     }
 
 

@@ -1,13 +1,15 @@
 # Security
 
-Version 0.1.x is the currently supported experimental release.
+The latest published minor release receives fixes. Older experimental releases
+are retained for reproducibility and do not have a separate maintenance guarantee.
 
 For a vulnerability, use GitHub's private vulnerability reporting on the published
 repository if enabled. If it is not enabled, open an issue requesting a private
 contact without posting exploit details, secrets, or personal paths.
 
 We verify pinned model downloads with SHA256 and check local artifact manifests.
-The importer reads six float tensors and never executes downloaded Python or pickle.
+Model acquisition reads allowlisted, bounded tensor formats and does not execute
+downloaded Python or arbitrary pickle. Research NumPy checkpoints disable pickle.
 An adjacent manifest is an integrity check, not a signature or a trust guarantee
 for arbitrary third-party models. Use only models you trust.
 
@@ -20,3 +22,11 @@ Malformed images are rejected by Pillow, animation is unsupported, and images
 above the documented pixel limit are rejected before decoding. Keep Pillow,
 Windows, drivers and runtime packages current; retest strict NPU execution after
 updates. The project is not intended as an untrusted public upload service.
+
+Video runs local FFmpeg subprocesses using argument lists, never a command shell.
+Frame buffers, queues, diagnostic tails and packet reorder storage are bounded.
+Packet verification is the default; `--verify-full` adds a timeout-bounded decoded
+audit. FFmpeg and driver parsers remain separate attack surfaces: use trusted
+sources and current compatible tools. Model/tool hashes establish reproducibility,
+not immunity from defects. CI audits installed dependencies for known advisories;
+the audit cannot assess proprietary drivers or undisclosed vulnerabilities.

@@ -1,8 +1,20 @@
 """Small OS measurements. These do not estimate accelerator energy or watts."""
 
 import ctypes
+import re
 import subprocess
 import sys
+
+
+def public_power_scheme(text: str) -> str:
+    """Do not serialize a user's custom plan name or GUID into benchmarks."""
+    names = {
+        "381b4222-f694-41f0-9685-ff5bb260df2e": "Balanced",
+        "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c": "High performance",
+        "a1841308-3541-4fab-bc81-f71556f20b4a": "Power saver",
+    }
+    match = re.search(r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text.lower())
+    return names.get(match.group(), "custom") if match else "unknown"
 
 
 def memory_usage(pid: int | None = None) -> dict[str, int | float]:
@@ -83,7 +95,7 @@ def power_state() -> dict[str, str | int | None]:
             check=False,
             timeout=5,
         )
-        scheme = completed.stdout.strip() or "unknown"
+        scheme = public_power_scheme(completed.stdout)
     except (OSError, subprocess.SubprocessError):
         scheme = "unknown"
     return {
