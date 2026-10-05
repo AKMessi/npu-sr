@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "purpose": "Fresh temporal validation after independent receptive-radius correction; frozen before preparation/scoring",
+  "sources": {
+    "tos": {
+      "url": "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.mov.zip",
+      "sha256": "d87a41de040d3814dbde143e9ab85ef122caf22265f660b0bebf476cd8b357a5",
+      "member": "tears_of_steel_1080p.mov",
+      "media_sha256": "99486359be7e3681168a0fe94e1cbb0284c48b57b2a3ce7df4fa75e185987a15",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / mango.blender.org",
+      "license_url": "https://mango.blender.org/sharing/"
+    },
+    "bbb": {
+      "url": "https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4.zip",
+      "sha256": "e320fef389ec749117d0c1583945039266a40f25483881c2ff0d33207e62b362",
+      "member": "bbb_sunflower_1080p_30fps_normal.mp4",
+      "media_sha256": "ae51005850b0ff757fe60c3dd7a12d754d3cd2397d87d939b55235e457f97658",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / www.bigbuckbunny.org",
+      "license_url": "https://peach.blender.org/about/"
+    }
+  },
+  "clips": [
+    {
+      "identifier": "temporal-v2-tos-620",
+      "source": "tos",
+      "start_seconds": 620,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation-v2"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-v2-tos-640",
+      "source": "tos",
+      "start_seconds": 640,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation-v2"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-v2-bbb-465",
+      "source": "bbb",
+      "start_seconds": 465,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation-v2"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-v2-bbb-500",
+      "source": "bbb",
+      "start_seconds": 500,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation-v2"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    }
+  ]
+}

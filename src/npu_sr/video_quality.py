@@ -19,6 +19,24 @@ def validate_roi(roi: tuple[int, int, int, int], width: int, height: int) -> Non
         raise SRException("Quality ROI is invalid or exceeds the decoded frame.")
 
 
+def full_temporal_difference(current: np.ndarray, previous: np.ndarray) -> float:
+    """Native-Y reconstruction residual change /255, a project diagnostic, not flow.
+
+    Inputs are signed coded-Y errors in [-255,255]. Promote before subtraction
+    so opposite extrema differ by 510, rather than wrapping through uint8.
+    Constant reconstruction bias has zero temporal error; spatial metrics are
+    still required. This does not establish perceptual temporal quality alone.
+    """
+    if current.shape != previous.shape or current.ndim != 2 or not current.size:
+        raise SRException("Temporal residual planes must have equal nonempty geometry.")
+    if any(
+        plane.dtype != np.int16 or plane.min() < -255 or plane.max() > 255
+        for plane in (current, previous)
+    ):
+        raise SRException("Temporal residuals must be signed coded-Y errors in [-255,255].")
+    return float(np.abs(current - previous).mean()) / 255
+
+
 def evaluate_native_video(
     output: Path,
     reference: Path,
@@ -44,6 +62,8 @@ def evaluate_native_video(
     children = []
     samples = []
     previous = None
+    previous_full = None
+    full_temporal_sum = 0.0
     temporal_sum, count = 0.0, 0
     try:
         for path in (output, reference):
@@ -74,6 +94,12 @@ def evaluate_native_video(
             if previous is not None:
                 temporal_sum += float(np.abs(residual - previous).mean()) / 255
             previous = residual
+            full_error = planes[0][2:-2, 2:-2].astype(np.int16) - planes[1][2:-2, 2:-2].astype(
+                np.int16
+            )
+            if previous_full is not None:
+                full_temporal_sum += full_temporal_difference(full_error, previous_full)
+            previous_full = full_error
             count += 1
         for child in children:
             child.finish()
@@ -96,6 +122,14 @@ def evaluate_native_video(
         "metric_definition": "native decoded 8-bit coded Y, peak255, shave2; "
         "clip PSNR from mean MSE",
         "temporal_difference_error": temporal_sum / (count - 1) if count > 1 else None,
+        "temporal_difference_error_full_resolution": (
+            full_temporal_sum / (count - 1) if count > 1 else None
+        ),
+        "full_temporal_definition": (
+            "mean absolute consecutive native-Y reconstruction residual change /255; "
+            "every frame, declared ROI with 2px border; no optical flow; project diagnostic, "
+            "not a standard perceptual metric; retain spatial and coarse temporal metrics"
+        ),
         "temporal_definition": "project diagnostic: absolute consecutive residual change /255; "
         "ROI resized to 256x144, no motion compensation, every frame; may reward smoothing",
         "vmaf": measure_vmaf(output, reference, ffmpeg, 1, count, roi=roi),

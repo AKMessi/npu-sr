@@ -3,6 +3,17 @@
 NPU-SR's original code, documentation, and generated test card are MIT licensed.
 The repository's MIT license does not replace any dependency or model license.
 
+## Temporal research
+
+Training scripts use adjacent frames from Blender Foundation's *Tears of Steel*
+and *Big Buck Bunny*, CC BY 3.0; the [training definition](benchmarks/temporal-training-v1.json)
+records source URLs, hashes and attribution. Footage, prepared arrays and learned
+experimental checkpoints are not distributed. The frozen QuickSRNet teacher is
+acquired separately under BSD-3-Clause. Original correction code is MIT;
+exported graphs combining its learned arrays with the teacher require
+BSD-3-Clause AND MIT. These experiments did not justify replacing the spatial
+realtime default; no pretrained temporal model is included in the package.
+
 ## ESPCN weights
 
 - Author/upstream: Fanny Monori, [TF-ESPCN](https://github.com/fannymonori/TF-ESPCN).

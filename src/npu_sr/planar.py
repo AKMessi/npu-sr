@@ -86,6 +86,9 @@ class NV12Enhancer:
         self.y = np.empty((info.height * 2, info.width * 2), np.float32)
         self.output = np.empty(info.width * info.height * 6, np.uint8)
 
+    def prepare_history(self) -> None:
+        """Spatial inference needs no previous frame; temporal subclasses initialize it."""
+
     def process(self, raw: bytes) -> tuple[bytes, dict[str, float]]:
         info, spec = self.info, self.runtime.spec
         if len(raw) != info.bytes_for("nv12"):
@@ -105,6 +108,7 @@ class NV12Enhancer:
         rows[:, halo + info.width :] = core[:, -1:]
         padded[:halo] = padded[halo]
         padded[halo + info.height :] = padded[halo + info.height - 1]
+        self.prepare_history()
         timings = {"preprocessing_ms": (perf_counter() - started) * 1000}
         infer_y(self.input, self.runtime, timings, self.y)
         started = perf_counter()

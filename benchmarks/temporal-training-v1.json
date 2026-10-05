@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "purpose": "Predeclared two-frame residual training and unseen-time validation; not tuned on original 24-clip quality corpus",
+  "sources": {
+    "tos": {
+      "url": "https://download.blender.org/demo/movies/ToS/tears_of_steel_1080p.mov.zip",
+      "sha256": "d87a41de040d3814dbde143e9ab85ef122caf22265f660b0bebf476cd8b357a5",
+      "member": "tears_of_steel_1080p.mov",
+      "media_sha256": "99486359be7e3681168a0fe94e1cbb0284c48b57b2a3ce7df4fa75e185987a15",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / mango.blender.org",
+      "license_url": "https://mango.blender.org/sharing/"
+    },
+    "bbb": {
+      "url": "https://download.blender.org/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4.zip",
+      "sha256": "e320fef389ec749117d0c1583945039266a40f25483881c2ff0d33207e62b362",
+      "member": "bbb_sunflower_1080p_30fps_normal.mp4",
+      "media_sha256": "ae51005850b0ff757fe60c3dd7a12d754d3cd2397d87d939b55235e457f97658",
+      "license": "CC-BY-3.0",
+      "attribution": "Blender Foundation / www.bigbuckbunny.org",
+      "license_url": "https://peach.blender.org/about/"
+    }
+  },
+  "clips": [
+    {
+      "identifier": "temporal-tos-5",
+      "source": "tos",
+      "start_seconds": 5,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-55",
+      "source": "tos",
+      "start_seconds": 55,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-115",
+      "source": "tos",
+      "start_seconds": 115,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-145",
+      "source": "tos",
+      "start_seconds": 145,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-165",
+      "source": "tos",
+      "start_seconds": 165,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-235",
+      "source": "tos",
+      "start_seconds": 235,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-420",
+      "source": "tos",
+      "start_seconds": 420,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-450",
+      "source": "tos",
+      "start_seconds": 450,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-480",
+      "source": "tos",
+      "start_seconds": 480,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-500",
+      "source": "tos",
+      "start_seconds": 500,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-115",
+      "source": "bbb",
+      "start_seconds": 115,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-130",
+      "source": "bbb",
+      "start_seconds": 130,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-150",
+      "source": "bbb",
+      "start_seconds": 150,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-170",
+      "source": "bbb",
+      "start_seconds": 170,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-190",
+      "source": "bbb",
+      "start_seconds": 190,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-250",
+      "source": "bbb",
+      "start_seconds": 250,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-270",
+      "source": "bbb",
+      "start_seconds": 270,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-385",
+      "source": "bbb",
+      "start_seconds": 385,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-410",
+      "source": "bbb",
+      "start_seconds": 410,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-440",
+      "source": "bbb",
+      "start_seconds": 440,
+      "split": "development",
+      "categories": [
+        "temporal-training"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 24,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-585",
+      "source": "tos",
+      "start_seconds": 585,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-tos-600",
+      "source": "tos",
+      "start_seconds": 600,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation"
+      ],
+      "geometry": "letterbox",
+      "metric_roi": [
+        0,
+        140,
+        1920,
+        800
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-580",
+      "source": "bbb",
+      "start_seconds": 580,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    },
+    {
+      "identifier": "temporal-bbb-610",
+      "source": "bbb",
+      "start_seconds": 610,
+      "split": "holdout",
+      "categories": [
+        "temporal-validation"
+      ],
+      "geometry": "native",
+      "metric_roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "frames": 240,
+      "lr_crf": 10
+    }
+  ],
+  "training": {
+    "seed": 20261004,
+    "samples_per_triple": 4,
+    "patch_lr": 96,
+    "halo": 3,
+    "baseline": "quicksrnet-small-y-x2",
+    "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+    "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+    "parameters": 1028,
+    "initial_output": "zero residual; trained weights required for success",
+    "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+    "steps": 2500,
+    "batch_size": 8,
+    "learning_rate": 0.001,
+    "optimizer": "Adam",
+    "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+  }
+}

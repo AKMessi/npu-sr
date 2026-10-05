@@ -26,6 +26,8 @@ class LuminanceInput:
     padded_y: np.ndarray
     spec: ModelSpec = MODELS["espcn-x2"]
     buffer: np.ndarray | None = None
+    previous_y: np.ndarray | None = None
+    previous_features: np.ndarray | None = None
 
     @property
     def tile_count(self) -> int:
@@ -41,9 +43,30 @@ class LuminanceInput:
         buffer = (
             self.buffer if self.buffer is not None else np.empty(self.spec.input_shape, np.float32)
         )
+        if self.spec.input_channels in {2, 6}:
+            if self.previous_y is None or self.previous_y.shape != self.padded_y.shape:
+                raise SRException("Temporal tiling requires a matching previous-frame plane.")
+            if self.spec.input_channels == 6 and (
+                self.previous_features is None
+                or self.previous_features.shape != (4, *self.padded_y.shape)
+            ):
+                raise SRException(
+                    "Recurrent tiling requires four matching previous subpixel planes."
+                )
+        elif self.spec.input_channels != 1:
+            raise SRException("Unsupported image tile channel count.")
         for top in range(0, height, self.spec.height):
             for left in range(0, width, core):
-                buffer[0, 0] = self.padded_y[top : top + tile_h, left : left + tile_w]
+                current = self.padded_y[top : top + tile_h, left : left + tile_w]
+                if self.previous_y is not None and self.spec.input_channels in {2, 6}:
+                    buffer[0, 0] = self.previous_y[top : top + tile_h, left : left + tile_w]
+                    buffer[0, 1] = current
+                    if self.spec.input_channels == 6:
+                        buffer[0, 2:] = self.previous_features[
+                            :, top : top + tile_h, left : left + tile_w
+                        ]
+                else:
+                    buffer[0, 0] = current
                 yield left, top, buffer
 
 
@@ -94,6 +117,8 @@ def load_image(path: Path) -> Image.Image:
 
 
 def preprocess(image: Image.Image, spec: ModelSpec = MODELS["espcn-x2"]) -> PreparedImage:
+    if spec.input_channels != 1:
+        raise SRException("Temporal models require the NV12 video pipeline, not a still image.")
     rgb = image.convert("RGB")
     pixels = np.asarray(rgb, dtype=np.float32) / 255.0
     red, green, blue = pixels.transpose(2, 0, 1)

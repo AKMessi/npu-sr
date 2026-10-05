@@ -188,9 +188,16 @@ def process_video(
     if settings.frame_format == "nv12":
         from .planar import NV12Enhancer
 
-        planar = NV12Enhancer(info, runtime, settings.neural_strength)
+        if runtime.spec.input_channels in {2, 6}:
+            from .temporal import TemporalNV12Enhancer
+
+            planar = TemporalNV12Enhancer(info, runtime, settings.neural_strength)
+        else:
+            planar = NV12Enhancer(info, runtime, settings.neural_strength)
     elif settings.frame_format != "rgb24":
         raise SRException("Frame format must be rgb24 or nv12.")
+    elif runtime.spec.input_channels != 1:
+        raise SRException("Temporal models require --frame-format nv12.")
     elif settings.neural_strength != 1:
         raise SRException("Neural blending requires --frame-format nv12.")
     hardware_decode, hardware_encode, codec_evidence = select_codecs(
@@ -317,6 +324,11 @@ def process_video(
             * ((info.height + runtime.spec.height - 1) // runtime.spec.height)
         )
         neural_runs = runtime.run_calls - 3  # Successful calls, excluding explicit warmups.
+        temporal_state = (
+            planar.evidence() if runtime.spec.input_channels in {2, 6} and planar else None
+        )
+        if temporal_state is not None and temporal_state["frames_processed"] != completed:
+            raise SRException("Temporal state/frame accounting mismatch.")
         if neural_runs != completed * tile_count:
             raise SRException("Neural tile-call count does not match every decoded frame.")
         if completed != source_frames or (info.frames is not None and completed != info.frames):
@@ -378,6 +390,7 @@ def process_video(
             "neural_tile_runs": neural_runs,
             "backend": runtime.backend,
             "execution_evidence": runtime.evidence,
+            "temporal_state": temporal_state,
             "codec_evidence": codec_evidence,
             "codec": settings.codec,
             "bitrate": settings.bitrate if hardware_encode else None,

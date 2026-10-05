@@ -34,7 +34,9 @@ def test_missing_registry_model_has_specific_acquisition_command(tmp_path):
         validate_model(tmp_path / "fsrcnn-x2.onnx")
 
 
-@pytest.mark.parametrize("identifier", list(MODELS))
+@pytest.mark.parametrize(
+    "identifier", [identifier for identifier, spec in MODELS.items() if spec.input_channels == 1]
+)
 @pytest.mark.parametrize("size", [(1, 1), (271, 513)])
 def test_shape_aware_tiling_is_exact(identifier, size):
     spec = model_spec(identifier)
@@ -136,6 +138,23 @@ def test_all_models_strict_qnn_and_numerical_agreement(identifier):
         assert np.mean(np.abs(expected - actual)) < 0.003
         assert np.max(np.abs(expected - actual)) < 0.035
     assert npu.evidence["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+
+
+@pytest.mark.npu
+def test_temporal_context_reuse_retains_strict_two_plane_contract(
+    tmp_path, temporal_hardware_model
+):
+    path = temporal_hardware_model
+    tensor = np.random.default_rng(85).random((1, 2, 270, 270), dtype=np.float32)
+    cold = Runtime(path, "npu", cache_dir=tmp_path, performance_mode="burst")
+    expected = cold.run(tensor)
+    assert cold.evidence["context_cache"] == "miss"
+    del cold
+    warm = Runtime(path, "npu", cache_dir=tmp_path, performance_mode="burst")
+    assert warm.evidence["context_cache"] == "hit"
+    np.testing.assert_allclose(warm.run(tensor), expected, atol=0.001)
+    assert warm.evidence["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+    assert warm.evidence["cpu_fallback_disabled"]
 
 
 @pytest.mark.npu

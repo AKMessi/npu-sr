@@ -200,6 +200,69 @@ def test_encoder_output_validation_failure_never_publishes(video_source, tmp_pat
 
 
 @pytest.mark.video_hw
+def test_temporal_hardware_video_counts_frames_and_resets_history(
+    tmp_path, temporal_hardware_model
+):
+    from npu_sr.ffmpeg import run_tool, tool_path
+
+    ffmpeg = tool_path()
+    source = tmp_path / "temporal-scene-cut.mp4"
+    run_tool(
+        [
+            str(ffmpeg),
+            "-v",
+            "error",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=0x404040:s=640x360:r=30:d=0.2",
+            "-f",
+            "lavfi",
+            "-i",
+            "color=c=0xc0c0c0:s=640x360:r=30:d=0.2",
+            "-f",
+            "lavfi",
+            "-i",
+            "sine=frequency=500:sample_rate=48000:duration=0.4",
+            "-filter_complex",
+            "[0:v][1:v]concat=n=2:v=1:a=0[v]",
+            "-map",
+            "[v]",
+            "-map",
+            "2:a",
+            "-c:v",
+            "libx264",
+            "-crf",
+            "10",
+            "-c:a",
+            "aac",
+            str(source),
+        ]
+    )
+    settings = VideoSettings(
+        model=str(temporal_hardware_model),
+        device="npu",
+        decode="hardware",
+        encode="hardware",
+        codec="av1",
+        frame_format="nv12",
+        pipeline_depth=2,
+        npu_performance="burst",
+        ffmpeg=ffmpeg,
+    )
+    report = process_video(source, tmp_path / "temporal-result.mp4", settings)
+    assert report["frames_processed"] == 12 and report["output"]["audio"]
+    assert report["neural_tile_runs"] == 72 and report["dropped_frames"] == 0
+    assert report["temporal_state"]["frames_processed"] == 12
+    assert report["temporal_state"]["scene_reset_counts"] == {"initial": 1, "abrupt-change": 1}
+    assert report["execution_evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+    assert report["execution_evidence"]["cpu_fallback_disabled"]
+    assert report["codec_evidence"]["decode"]["hardware_format_selected"] == "d3d11"
+    assert "QCOM Hardware Encoder" in report["codec_evidence"]["encode"]["transform"]
+    assert max(report["observed_queue_peaks"].values()) <= 2
+
+
+@pytest.mark.video_hw
 @pytest.mark.parametrize("codec", ["h264", "hevc", "av1"])
 def test_real_snapdragon_video_hardware(video_source, tmp_path, codec):
     original, ffmpeg = video_source

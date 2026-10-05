@@ -1,0 +1,2677 @@
+{
+  "scope": "development experiments only; not holdout or sustained realtime evidence",
+  "temporal_definition": "project diagnostic: mean absolute consecutive native coded-Y reconstruction residual change /255; ROI shave2; no optical flow; may reward smoothing",
+  "aggregate": "equal clip mean for every score; temporal ratio is ratio of clip means",
+  "baseline": [
+    {
+      "clip": "conversation",
+      "output_sha256": "1039b1f23ca13b2eb305465303ba44002b395bd96a2ed31f595798a9744ca34e",
+      "scores": {
+        "psnr_y_db": 39.62378229584766,
+        "ssim_y": 0.9678545537002925,
+        "vmaf": 92.112408,
+        "vmaf_neg": 90.051922,
+        "temporal_coarse": 0.0017993581318783978,
+        "temporal_full": 0.005519609225533082
+      }
+    },
+    {
+      "clip": "animated-leaves",
+      "output_sha256": "40cc67e793ad707c76fe00558ddd2e2437e487b2b0238b8c6d036810eff76ba8",
+      "scores": {
+        "psnr_y_db": 43.500076652717254,
+        "ssim_y": 0.9854292497096193,
+        "vmaf": 93.336191,
+        "vmaf_neg": 88.026101,
+        "temporal_coarse": 0.00030491028380932785,
+        "temporal_full": 0.000712872551576914
+      }
+    },
+    {
+      "clip": "aerial-landscape",
+      "output_sha256": "77423dc22b1bd5e0e3d179123bb0244c8926a939ddd62442a58261aa192d30fe",
+      "scores": {
+        "psnr_y_db": 39.685942839626264,
+        "ssim_y": 0.9670583823912576,
+        "vmaf": 95.690232,
+        "vmaf_neg": 92.329229,
+        "temporal_coarse": 0.0022572221214012984,
+        "temporal_full": 0.010507971542657316
+      }
+    },
+    {
+      "clip": "ui-horizontal",
+      "output_sha256": "c8822a3979ea798deec4ae63c4be5c071a011a1a388d5b070dcf0f942d18ee52",
+      "scores": {
+        "psnr_y_db": 36.85022748242359,
+        "ssim_y": 0.9957781726958311,
+        "vmaf": 94.732935,
+        "vmaf_neg": 92.375832,
+        "temporal_coarse": 0.000189820440574594,
+        "temporal_full": 0.0039129008681658755
+      }
+    }
+  ],
+  "experiments": [
+    {
+      "model_sha256": "592588500428ba886a8816b4744003d3de68740916b0a4d2d25adb50920ee8c3",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "81fad8baf69e5028936c72df7a3d0155cf6cf001af84e51269fe003b1596e63e",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 6,
+        "architecture": "Conv(6,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+        "provenance_sha256": "4c87b53e736a30d62b358c00385e65531642d954c0a70f30b357d492b891c652",
+        "weights_sha256": "c85d40b1946a788453614c1ca715100ede4b05465bf888ab327e67bcce370308",
+        "parameters": 1316,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 66.1056738999905,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.0044627683237195015,
+            "temporal_loss": 0.002870098687708378,
+            "loss": 0.007332867011427879
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.0052380068227648735,
+            "temporal_loss": 0.0032848722767084837,
+            "loss": 0.008522879332304
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.00410888809710741,
+            "temporal_loss": 0.0034482423216104507,
+            "loss": 0.007557130418717861
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0036377618089318275,
+            "temporal_loss": 0.003222733736038208,
+            "loss": 0.0068604955449700356
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.006607416085898876,
+            "temporal_loss": 0.005210016388446093,
+            "loss": 0.011817432940006256
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.005114004015922546,
+            "temporal_loss": 0.004838214255869389,
+            "loss": 0.009952218271791935
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.004306559916585684,
+            "temporal_loss": 0.003411594545468688,
+            "loss": 0.007718154229223728
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.00437250966206193,
+            "temporal_loss": 0.0032294855918735266,
+            "loss": 0.007601995021104813
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.0048875813372433186,
+            "temporal_loss": 0.004218989051878452,
+            "loss": 0.009106570854783058
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006762354634702206,
+            "temporal_loss": 0.0030935981776565313,
+            "loss": 0.00985595304518938
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009926396422088146,
+            "temporal_loss": 0.0015323520638048649,
+            "loss": 0.011458748951554298
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T12:59:44.562426+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "68c6c4a4807e301965113f15950abacda0f562cde8c6f53a8e67f6ab3d51127f",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 78,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.88655706388979,
+        "ssim_y": 0.978569089554978,
+        "vmaf": 94.01876150000001,
+        "vmaf_neg": 90.6648765,
+        "temporal_coarse": 0.0011295423318652684,
+        "temporal_full": 0.005156536835710202
+      },
+      "deltas": {
+        "psnr_y_db": -0.02845025376389998,
+        "ssim_y": -0.00046100006927207726,
+        "vmaf": 0.05082000000001585,
+        "vmaf_neg": -0.030894499999988057,
+        "temporal_coarse": -8.285412550636034e-06,
+        "temporal_full": -6.801711273094965e-06
+      },
+      "temporal_full_ratio": 0.9986826912062412,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.60594564928231,
+            "ssim_y": 0.9676365920648738,
+            "vmaf": 92.194123,
+            "vmaf_neg": 90.081145,
+            "temporal_coarse": 0.0017927770600361691,
+            "temporal_full": 0.005493333288915368
+          },
+          "deltas": {
+            "psnr_y_db": -0.017836646565349668,
+            "ssim_y": -0.00021796163541865088,
+            "vmaf": 0.08171500000000265,
+            "vmaf_neg": 0.029223000000001775,
+            "temporal_coarse": -6.581071842228642e-06,
+            "temporal_full": -2.6275936617714026e-05
+          },
+          "temporal_full_ratio": 0.9952395295492723,
+          "output_sha256": "de000dcc5361f68c85ea001d83f4e7e6170b60b01ca520d1879d010267ae0205",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.44762261216056,
+            "ssim_y": 0.9852712200562076,
+            "vmaf": 93.178597,
+            "vmaf_neg": 87.932966,
+            "temporal_coarse": 0.0002991856311981208,
+            "temporal_full": 0.0006900338273453176
+          },
+          "deltas": {
+            "psnr_y_db": -0.05245404055669667,
+            "ssim_y": -0.0001580296534117176,
+            "vmaf": -0.15759400000000312,
+            "vmaf_neg": -0.09313500000000374,
+            "temporal_coarse": -5.724652611207074e-06,
+            "temporal_full": -2.283872423159642e-05
+          },
+          "temporal_full_ratio": 0.9679624020014855,
+          "output_sha256": "f57f549d836c2503bc4a71cbb192b6bc6e934843c2b4b5612e1047b7f51931ff",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.5674556639827,
+            "ssim_y": 0.9655466554957209,
+            "vmaf": 95.42343,
+            "vmaf_neg": 92.25434,
+            "temporal_coarse": 0.002221296553835199,
+            "temporal_full": 0.01062528477436173
+          },
+          "deltas": {
+            "psnr_y_db": -0.11848717564356548,
+            "ssim_y": -0.0015117268955366914,
+            "vmaf": -0.26680199999999843,
+            "vmaf_neg": -0.07488899999999887,
+            "temporal_coarse": -3.592556756609961e-05,
+            "temporal_full": 0.00011731323170441343
+          },
+          "temporal_full_ratio": 1.0111642129242717,
+          "output_sha256": "1227c24a5fc22e878ab80baf77eb75957c63f66de01586ee8fbad0046d155d7a",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 36.92520433013359,
+            "ssim_y": 0.9958218906031098,
+            "vmaf": 95.278896,
+            "vmaf_neg": 92.391055,
+            "temporal_coarse": 0.0002049100823915847,
+            "temporal_full": 0.0038174954522183922
+          },
+          "deltas": {
+            "psnr_y_db": 0.07497684770999768,
+            "ssim_y": 4.371790727863978e-05,
+            "vmaf": 0.5459610000000055,
+            "vmaf_neg": 0.015222999999991771,
+            "temporal_coarse": 1.5089641816990699e-05,
+            "temporal_full": -9.540541594748328e-05
+          },
+          "temporal_full_ratio": 0.9756177273174305,
+          "output_sha256": "cb57db6fb2ee5c340799466b08fa21263153dd7573477a478fe49d6f6a8403c8",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "82040964d5242eecf47c7233ed7d9b45fd03de4d63257dcfd132961f3b09c7d7",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "d15fe438cf20cd9a9c363cb7866ae9594978021d1f5af64ec4d889e52443ade6",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 6,
+        "architecture": "Conv(6,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+        "provenance_sha256": "4c87b53e736a30d62b358c00385e65531642d954c0a70f30b357d492b891c652",
+        "weights_sha256": "700ee000ac30ba6c644ef0f611865ac46f6df8d1a50a43ef0a8f1faca9922d26",
+        "parameters": 1316,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 78.81048640003428,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004471835680305958,
+            "temporal_loss": 0.0029020463116467,
+            "loss": 0.007373881991952658
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005239800550043583,
+            "temporal_loss": 0.003303699428215623,
+            "loss": 0.008543499745428562
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.0040323021821677685,
+            "temporal_loss": 0.0033714808523654938,
+            "loss": 0.007403783034533262
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0034075421281158924,
+            "temporal_loss": 0.003131850855425,
+            "loss": 0.006539393216371536
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.006568879820406437,
+            "temporal_loss": 0.005144060123711824,
+            "loss": 0.011712940409779549
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.004907189402729273,
+            "temporal_loss": 0.004672007169574499,
+            "loss": 0.009579196572303772
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.004104140214622021,
+            "temporal_loss": 0.0032920665107667446,
+            "loss": 0.007396206725388765
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.004172992892563343,
+            "temporal_loss": 0.003198822494596243,
+            "loss": 0.007371815387159586
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.004588551819324493,
+            "temporal_loss": 0.003980640321969986,
+            "loss": 0.00856919214129448
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006584919057786465,
+            "temporal_loss": 0.0030785035341978073,
+            "loss": 0.009663422591984272
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009893978014588356,
+            "temporal_loss": 0.0015815463848412037,
+            "loss": 0.011475523933768272
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T22:51:51.330471+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "68c6c4a4807e301965113f15950abacda0f562cde8c6f53a8e67f6ab3d51127f",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 56,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.89929064198177,
+        "ssim_y": 0.9786450895131963,
+        "vmaf": 94.14815175,
+        "vmaf_neg": 90.72735225000001,
+        "temporal_coarse": 0.0011301954744532877,
+        "temporal_full": 0.005148100859338323
+      },
+      "deltas": {
+        "psnr_y_db": -0.015716675671917812,
+        "ssim_y": -0.0003850001110538015,
+        "vmaf": 0.1802102500000018,
+        "vmaf_neg": 0.031581250000016325,
+        "temporal_coarse": -7.632269962616752e-06,
+        "temporal_full": -1.5237687644974358e-05
+      },
+      "temporal_full_ratio": 0.9970488691558145,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.635680127707424,
+            "ssim_y": 0.9676883495426372,
+            "vmaf": 92.299969,
+            "vmaf_neg": 90.170822,
+            "temporal_coarse": 0.0017914914736204188,
+            "temporal_full": 0.005483887629258412
+          },
+          "deltas": {
+            "psnr_y_db": 0.011897831859762675,
+            "ssim_y": -0.00016620415765533636,
+            "vmaf": 0.1875610000000023,
+            "vmaf_neg": 0.11889999999999645,
+            "temporal_coarse": -7.866658257978977e-06,
+            "temporal_full": -3.572159627467011e-05
+          },
+          "temporal_full_ratio": 0.9935282381750096,
+          "output_sha256": "dda55310b1e2c7a1aa6153f431fd91daa4095569eafde2ed25fc094d27480bdd",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.46294558029237,
+            "ssim_y": 0.9852873712092383,
+            "vmaf": 93.310026,
+            "vmaf_neg": 87.953477,
+            "temporal_coarse": 0.00029834541629897125,
+            "temporal_full": 0.0006846359832166324
+          },
+          "deltas": {
+            "psnr_y_db": -0.03713107242488434,
+            "ssim_y": -0.0001418785003810541,
+            "vmaf": -0.02616500000000599,
+            "vmaf_neg": -0.07262399999999047,
+            "temporal_coarse": -6.5648675103566006e-06,
+            "temporal_full": -2.823656836028164e-05
+          },
+          "temporal_full_ratio": 0.9603904396405489,
+          "output_sha256": "08b6a6ccf7be917bd7175f2d3cbe24b062eb940adb3cb14c35dce9b895932bcf",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.589121977468366,
+            "ssim_y": 0.9657016404656098,
+            "vmaf": 95.806488,
+            "vmaf_neg": 92.430214,
+            "temporal_coarse": 0.0022361193276909585,
+            "temporal_full": 0.010617792531246702
+          },
+          "deltas": {
+            "psnr_y_db": -0.09682086215789809,
+            "ssim_y": -0.0013567419256478308,
+            "vmaf": 0.11625600000000702,
+            "vmaf_neg": 0.10098500000000854,
+            "temporal_coarse": -2.1102793710339914e-05,
+            "temporal_full": 0.00010982098858938576
+          },
+          "temporal_full_ratio": 1.0104512072709337,
+          "output_sha256": "547481287975c40ab205c4f9c51fdb272b40da04f04705c25d4716f3d2804080",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 36.90941488245893,
+            "ssim_y": 0.9959029968353,
+            "vmaf": 95.176124,
+            "vmaf_neg": 92.354896,
+            "temporal_coarse": 0.00019482568020280227,
+            "temporal_full": 0.0038060872936315445
+          },
+          "deltas": {
+            "psnr_y_db": 0.0591874000353414,
+            "ssim_y": 0.00012482413946890425,
+            "vmaf": 0.44318900000000383,
+            "vmaf_neg": -0.02093600000000606,
+            "temporal_coarse": 5.005239628208264e-06,
+            "temporal_full": -0.00010681357453433101
+          },
+          "temporal_full_ratio": 0.9727022027561872,
+          "output_sha256": "6cbb336101c937bc60ec7597bd8a921cade48c988e5a5e0b65411bdcc5d417f1",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "57be2f49d12627b3c519a26af41a46af70d9afdc926445a4f48945cd3efc8143",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "d425d2140241e30c7c80c08aaad2f893143928a49ea75d21a73cb67b745d1287",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 6,
+        "hidden_channels": 16,
+        "architecture": "Conv(6,16,3)-Relu-Conv(16,16,3)-Relu-Conv(16,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+        "provenance_sha256": "4c87b53e736a30d62b358c00385e65531642d954c0a70f30b357d492b891c652",
+        "weights_sha256": "c010001d1a66900e9d0c719cf2663ecccd0ae7b75faca493e10abf374596ede5",
+        "parameters": 3780,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 141.10228359990288,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004471835680305958,
+            "temporal_loss": 0.0029020463116467,
+            "loss": 0.007373881991952658
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005246331915259361,
+            "temporal_loss": 0.0033074200619012117,
+            "loss": 0.00855375174432993
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.004120346158742905,
+            "temporal_loss": 0.003508086549118161,
+            "loss": 0.007628432475030422
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0036191316321492195,
+            "temporal_loss": 0.0032681261654943228,
+            "loss": 0.006887258030474186
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.0066178180277347565,
+            "temporal_loss": 0.005259254481643438,
+            "loss": 0.011877072975039482
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.004994184710085392,
+            "temporal_loss": 0.004746842198073864,
+            "loss": 0.009741026908159256
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.0041235508397221565,
+            "temporal_loss": 0.0032951049506664276,
+            "loss": 0.007418655790388584
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.004194628447294235,
+            "temporal_loss": 0.0032088386360555887,
+            "loss": 0.00740346685051918
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.004602083005011082,
+            "temporal_loss": 0.003988702315837145,
+            "loss": 0.008590785786509514
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006592793855816126,
+            "temporal_loss": 0.0030719637870788574,
+            "loss": 0.009664757177233696
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009886782616376877,
+            "temporal_loss": 0.001578095369040966,
+            "loss": 0.011464877985417843
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T22:59:03.987772+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "6a9cb7b9d98f52533e1ab95b1e838139f081fa71b4d482e674f7e6e9b84afa1a",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 51,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.94125750878393,
+        "ssim_y": 0.9786407388627177,
+        "vmaf": 94.15459675,
+        "vmaf_neg": 90.8248305,
+        "temporal_coarse": 0.0011309432934866902,
+        "temporal_full": 0.005132713572321222
+      },
+      "deltas": {
+        "psnr_y_db": 0.026250191130237965,
+        "ssim_y": -0.0003893507615323477,
+        "vmaf": 0.18665525000000116,
+        "vmaf_neg": 0.12905950000001098,
+        "temporal_coarse": -6.884450929214294e-06,
+        "temporal_full": -3.0624974662074936e-05
+      },
+      "temporal_full_ratio": 0.9940687649311766,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.63963988428893,
+            "ssim_y": 0.9676668125962526,
+            "vmaf": 92.248161,
+            "vmaf_neg": 90.153815,
+            "temporal_coarse": 0.0017899282630712496,
+            "temporal_full": 0.005477029821562264
+          },
+          "deltas": {
+            "psnr_y_db": 0.015857588441271275,
+            "ssim_y": -0.00018774110403985134,
+            "vmaf": 0.13575299999999402,
+            "vmaf_neg": 0.1018929999999898,
+            "temporal_coarse": -9.42986880714822e-06,
+            "temporal_full": -4.257940397081779e-05
+          },
+          "temporal_full_ratio": 0.9922857937525993,
+          "output_sha256": "35d734ba58c2b6b590504c3b1fb82a6aec127b9c80223dbbadd6a22b5e75ef5d",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.464478761454004,
+            "ssim_y": 0.9852943145151851,
+            "vmaf": 93.434148,
+            "vmaf_neg": 88.002125,
+            "temporal_coarse": 0.00029881961591697755,
+            "temporal_full": 0.0006798033127930445
+          },
+          "deltas": {
+            "psnr_y_db": -0.03559789126325086,
+            "ssim_y": -0.00013493519443419366,
+            "vmaf": 0.09795699999999385,
+            "vmaf_neg": -0.02397599999999045,
+            "temporal_coarse": -6.090667892350303e-06,
+            "temporal_full": -3.306923878386957e-05
+          },
+          "temporal_full_ratio": 0.9536112889874655,
+          "output_sha256": "3fd5d9e4926fac406de687f0b14e4ec8cae84dbad82c419f8df21341ca072967",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.58055122434582,
+            "ssim_y": 0.9655426428602816,
+            "vmaf": 96.045837,
+            "vmaf_neg": 92.514675,
+            "temporal_coarse": 0.002233513943100735,
+            "temporal_full": 0.010645398832592669
+          },
+          "deltas": {
+            "psnr_y_db": -0.10539161528044616,
+            "ssim_y": -0.0015157395309760568,
+            "vmaf": 0.3556050000000113,
+            "vmaf_neg": 0.1854459999999989,
+            "temporal_coarse": -2.370817830056344e-05,
+            "temporal_full": 0.0001374272899353525
+          },
+          "temporal_full_ratio": 1.013078384289248,
+          "output_sha256": "182760fd5a1dd4cec8b847b22497cbc58244be8844b9bf1a964f562b57d10934",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 37.08036016504696,
+            "ssim_y": 0.9960591854791513,
+            "vmaf": 94.890241,
+            "vmaf_neg": 92.628707,
+            "temporal_coarse": 0.00020151135185779862,
+            "temporal_full": 0.0037286223223369124
+          },
+          "deltas": {
+            "psnr_y_db": 0.2301326826233705,
+            "ssim_y": 0.0002810127833201559,
+            "vmaf": 0.1573060000000055,
+            "vmaf_neg": 0.25287500000000307,
+            "temporal_coarse": 1.1690911283204623e-05,
+            "temporal_full": -0.00018427854582896315
+          },
+          "temporal_full_ratio": 0.9529048774712912,
+          "output_sha256": "aa9ff3edae1094594a7f26d368a64ca450b4ec7146ac1914e79c54086cde0cef",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 720,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "cda5bf0aebc4da353acaa4d2b1f43e01525d6608ff84cb727c98c423039bfbe5",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "d425d2140241e30c7c80c08aaad2f893143928a49ea75d21a73cb67b745d1287",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 6,
+        "hidden_channels": 16,
+        "architecture": "Conv(6,16,3)-Relu-Conv(16,16,3)-Relu-Conv(16,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+        "provenance_sha256": "4c87b53e736a30d62b358c00385e65531642d954c0a70f30b357d492b891c652",
+        "weights_sha256": "c010001d1a66900e9d0c719cf2663ecccd0ae7b75faca493e10abf374596ede5",
+        "parameters": 3780,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 141.10228359990288,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004471835680305958,
+            "temporal_loss": 0.0029020463116467,
+            "loss": 0.007373881991952658
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005246331915259361,
+            "temporal_loss": 0.0033074200619012117,
+            "loss": 0.00855375174432993
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.004120346158742905,
+            "temporal_loss": 0.003508086549118161,
+            "loss": 0.007628432475030422
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0036191316321492195,
+            "temporal_loss": 0.0032681261654943228,
+            "loss": 0.006887258030474186
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.0066178180277347565,
+            "temporal_loss": 0.005259254481643438,
+            "loss": 0.011877072975039482
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.004994184710085392,
+            "temporal_loss": 0.004746842198073864,
+            "loss": 0.009741026908159256
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.0041235508397221565,
+            "temporal_loss": 0.0032951049506664276,
+            "loss": 0.007418655790388584
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.004194628447294235,
+            "temporal_loss": 0.0032088386360555887,
+            "loss": 0.00740346685051918
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.004602083005011082,
+            "temporal_loss": 0.003988702315837145,
+            "loss": 0.008590785786509514
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006592793855816126,
+            "temporal_loss": 0.0030719637870788574,
+            "loss": 0.009664757177233696
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009886782616376877,
+            "temporal_loss": 0.001578095369040966,
+            "loss": 0.011464877985417843
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T23:07:37.311131+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "a5e6986aad189390c8872fc6d9b84143d373e64093638a46e4418c6d49c81f9e",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 46,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.94125750878393,
+        "ssim_y": 0.9786407388627177,
+        "vmaf": 94.15459675,
+        "vmaf_neg": 90.8248305,
+        "temporal_coarse": 0.0011309432934866902,
+        "temporal_full": 0.005132713572321222
+      },
+      "deltas": {
+        "psnr_y_db": 0.026250191130237965,
+        "ssim_y": -0.0003893507615323477,
+        "vmaf": 0.18665525000000116,
+        "vmaf_neg": 0.12905950000001098,
+        "temporal_coarse": -6.884450929214294e-06,
+        "temporal_full": -3.0624974662074936e-05
+      },
+      "temporal_full_ratio": 0.9940687649311766,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.63963988428893,
+            "ssim_y": 0.9676668125962526,
+            "vmaf": 92.248161,
+            "vmaf_neg": 90.153815,
+            "temporal_coarse": 0.0017899282630712496,
+            "temporal_full": 0.005477029821562264
+          },
+          "deltas": {
+            "psnr_y_db": 0.015857588441271275,
+            "ssim_y": -0.00018774110403985134,
+            "vmaf": 0.13575299999999402,
+            "vmaf_neg": 0.1018929999999898,
+            "temporal_coarse": -9.42986880714822e-06,
+            "temporal_full": -4.257940397081779e-05
+          },
+          "temporal_full_ratio": 0.9922857937525993,
+          "output_sha256": "35d734ba58c2b6b590504c3b1fb82a6aec127b9c80223dbbadd6a22b5e75ef5d",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.464478761454004,
+            "ssim_y": 0.9852943145151851,
+            "vmaf": 93.434148,
+            "vmaf_neg": 88.002125,
+            "temporal_coarse": 0.00029881961591697755,
+            "temporal_full": 0.0006798033127930445
+          },
+          "deltas": {
+            "psnr_y_db": -0.03559789126325086,
+            "ssim_y": -0.00013493519443419366,
+            "vmaf": 0.09795699999999385,
+            "vmaf_neg": -0.02397599999999045,
+            "temporal_coarse": -6.090667892350303e-06,
+            "temporal_full": -3.306923878386957e-05
+          },
+          "temporal_full_ratio": 0.9536112889874655,
+          "output_sha256": "3fd5d9e4926fac406de687f0b14e4ec8cae84dbad82c419f8df21341ca072967",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.58055122434582,
+            "ssim_y": 0.9655426428602816,
+            "vmaf": 96.045837,
+            "vmaf_neg": 92.514675,
+            "temporal_coarse": 0.002233513943100735,
+            "temporal_full": 0.010645398832592669
+          },
+          "deltas": {
+            "psnr_y_db": -0.10539161528044616,
+            "ssim_y": -0.0015157395309760568,
+            "vmaf": 0.3556050000000113,
+            "vmaf_neg": 0.1854459999999989,
+            "temporal_coarse": -2.370817830056344e-05,
+            "temporal_full": 0.0001374272899353525
+          },
+          "temporal_full_ratio": 1.013078384289248,
+          "output_sha256": "182760fd5a1dd4cec8b847b22497cbc58244be8844b9bf1a964f562b57d10934",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 37.08036016504696,
+            "ssim_y": 0.9960591854791513,
+            "vmaf": 94.890241,
+            "vmaf_neg": 92.628707,
+            "temporal_coarse": 0.00020151135185779862,
+            "temporal_full": 0.0037286223223369124
+          },
+          "deltas": {
+            "psnr_y_db": 0.2301326826233705,
+            "ssim_y": 0.0002810127833201559,
+            "vmaf": 0.1573060000000055,
+            "vmaf_neg": 0.25287500000000307,
+            "temporal_coarse": 1.1690911283204623e-05,
+            "temporal_full": -0.00018427854582896315
+          },
+          "temporal_full_ratio": 0.9529048774712912,
+          "output_sha256": "aa9ff3edae1094594a7f26d368a64ca450b4ec7146ac1914e79c54086cde0cef",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "2465b8a26776ed12a8567b919bad7baa1e57cbdcf33fb290ebfb69b72dc4a649",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "a6cbe278a9ee3a7899b4af951a44128cc96d06fd64548fe9ef2d69181cd8fe30",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 4.0,
+        "input_channels": 6,
+        "hidden_channels": 16,
+        "architecture": "Conv(6,16,3)-Relu-Conv(16,16,3)-Relu-Conv(16,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+        "provenance_sha256": "4c87b53e736a30d62b358c00385e65531642d954c0a70f30b357d492b891c652",
+        "weights_sha256": "a86ab96117c06feee1af1f216a40f66430ef67c7946daf01c63bb6ddd338aa59",
+        "parameters": 3780,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 127.02613090001978,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004471835680305958,
+            "temporal_loss": 0.0029020463116467,
+            "loss": 0.016080021858215332
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005246743559837341,
+            "temporal_loss": 0.0033074815291911364,
+            "loss": 0.018476668745279312
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.004120391793549061,
+            "temporal_loss": 0.003509298199787736,
+            "loss": 0.018157584592700005
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.003436833620071411,
+            "temporal_loss": 0.0031525788363069296,
+            "loss": 0.016047149896621704
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.0066177500411868095,
+            "temporal_loss": 0.005160491447895765,
+            "loss": 0.027259714901447296
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.0048915366642177105,
+            "temporal_loss": 0.004628992173820734,
+            "loss": 0.023407505825161934
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.0041099367663264275,
+            "temporal_loss": 0.003269456559792161,
+            "loss": 0.01718776300549507
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.0041886307299137115,
+            "temporal_loss": 0.0031985403038561344,
+            "loss": 0.01698279194533825
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.004585246555507183,
+            "temporal_loss": 0.0039641885086894035,
+            "loss": 0.020442001521587372
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006595592945814133,
+            "temporal_loss": 0.003066936507821083,
+            "loss": 0.018863338977098465
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009922655299305916,
+            "temporal_loss": 0.001577229704707861,
+            "loss": 0.01623157411813736
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T23:12:36.831633+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "a5e6986aad189390c8872fc6d9b84143d373e64093638a46e4418c6d49c81f9e",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 43,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.8378521421533,
+        "ssim_y": 0.9785515418168866,
+        "vmaf": 93.8301945,
+        "vmaf_neg": 90.569605,
+        "temporal_coarse": 0.001140190632602193,
+        "temporal_full": 0.005183338777829927
+      },
+      "deltas": {
+        "psnr_y_db": -0.07715517550038697,
+        "ssim_y": -0.0004785478073634497,
+        "vmaf": -0.1377469999999903,
+        "vmaf_neg": -0.12616599999999778,
+        "temporal_coarse": 2.3628881862885164e-06,
+        "temporal_full": 2.000023084663006e-05
+      },
+      "temporal_full_ratio": 1.0038735075503262,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.60882650002038,
+            "ssim_y": 0.9676101151716752,
+            "vmaf": 92.226842,
+            "vmaf_neg": 90.12683,
+            "temporal_coarse": 0.0017948144929834518,
+            "temporal_full": 0.00547662277310632
+          },
+          "deltas": {
+            "psnr_y_db": -0.01495579582728368,
+            "ssim_y": -0.00024443852861733006,
+            "vmaf": 0.11443400000000281,
+            "vmaf_neg": 0.07490799999999354,
+            "temporal_coarse": -4.543638894945927e-06,
+            "temporal_full": -4.298645242676192e-05
+          },
+          "temporal_full_ratio": 0.9922120478696369,
+          "output_sha256": "8634117a8145f75cf4816a612887c661912e214b94d4aeba51cfe3c95f10f9f1",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.454732428985494,
+            "ssim_y": 0.9852823310811022,
+            "vmaf": 93.418983,
+            "vmaf_neg": 87.969926,
+            "temporal_coarse": 0.00029915678254509743,
+            "temporal_full": 0.0006791096612091791
+          },
+          "deltas": {
+            "psnr_y_db": -0.04534422373176028,
+            "ssim_y": -0.00014691862851712312,
+            "vmaf": 0.08279199999999776,
+            "vmaf_neg": -0.05617499999999609,
+            "temporal_coarse": -5.753501264230425e-06,
+            "temporal_full": -3.376289036773495e-05
+          },
+          "temporal_full_ratio": 0.9526382516860138,
+          "output_sha256": "7a047b25c05ef630f34503f2fa67e57bef74a93909b03153886b512f7836271a",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.53783251174654,
+            "ssim_y": 0.9656216983711928,
+            "vmaf": 96.15537,
+            "vmaf_neg": 92.540981,
+            "temporal_coarse": 0.0022478030364986427,
+            "temporal_full": 0.010648219381456927
+          },
+          "deltas": {
+            "psnr_y_db": -0.14811032787972778,
+            "ssim_y": -0.0014366840200648046,
+            "vmaf": 0.46513800000001027,
+            "vmaf_neg": 0.21175200000000416,
+            "temporal_coarse": -9.419084902655746e-06,
+            "temporal_full": 0.00014024783879961096
+          },
+          "temporal_full_ratio": 1.0133468042076696,
+          "output_sha256": "afd66b7ebe4cb5f29bcc9d2e0e58a7b9f2b0f9541d8ef49810f26a7f75cf3814",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 36.75001712786081,
+            "ssim_y": 0.9956920226435766,
+            "vmaf": 93.519583,
+            "vmaf_neg": 91.640683,
+            "temporal_coarse": 0.00021898821838158,
+            "temporal_full": 0.003929403295547283
+          },
+          "deltas": {
+            "psnr_y_db": -0.10021035456278327,
+            "ssim_y": -8.615005225454109e-05,
+            "vmaf": -1.2133520000000004,
+            "vmaf_neg": -0.7351490000000069,
+            "temporal_coarse": 2.9167777806986e-05,
+            "temporal_full": 1.6502427381407878e-05
+          },
+          "temporal_full_ratio": 1.0042174407012625,
+          "output_sha256": "8a6acb625e502f1993a821a2e7a69921a7db71d5394d5c86dacdcda4a156b04a",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "9e4fddddef2ee9f05cc5da06fff843a059ed6ed4853a725d72b5b61a7e80053e",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "0843f61b5df43e77627249bf795ed726ffa5b4cd7a96ec08e24c6b39e8f7b996",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 6,
+        "hidden_channels": 16,
+        "architecture": "Conv(6,16,3)-Relu-Conv(16,16,3)-Relu-Conv(16,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; loss excludes 6 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "e112637071b82277204ead156e38a2c9f7c0485c5e1bb4f65f83ba0d25691c0c",
+        "training_teacher": "Qualcomm QNN / Hexagon NPU",
+        "teacher_execution_evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "htp_performance_mode_requested": "burst",
+          "context_cache": "disabled"
+        },
+        "provenance_sha256": "84cddfd59f9623d2ef7699a83d7c1088d65d96bd90d2fcb6889dac8c11837b11",
+        "weights_sha256": "9e70151e549761a0fa86f9dca695b62053605a4c5638db9772c21611f98de7e4",
+        "parameters": 3780,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 203.75375679996796,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004473744425922632,
+            "temporal_loss": 0.0029039776418358088,
+            "loss": 0.007377722300589085
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005245841108262539,
+            "temporal_loss": 0.003308816347271204,
+            "loss": 0.00855465792119503
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.0041192383505403996,
+            "temporal_loss": 0.00350709306076169,
+            "loss": 0.00762633141130209
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0036190073005855083,
+            "temporal_loss": 0.0032710125669837,
+            "loss": 0.006890019867569208
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.006616117432713509,
+            "temporal_loss": 0.00525764049962163,
+            "loss": 0.011873757466673851
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.005103369243443012,
+            "temporal_loss": 0.004872534424066544,
+            "loss": 0.009975903667509556
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.004152828827500343,
+            "temporal_loss": 0.003341380041092634,
+            "loss": 0.0074942088685929775
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.004222024232149124,
+            "temporal_loss": 0.003215183736756444,
+            "loss": 0.0074372077360749245
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.0046541085466742516,
+            "temporal_loss": 0.004037532955408096,
+            "loss": 0.008691641502082348
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006661733612418175,
+            "temporal_loss": 0.0030983160249888897,
+            "loss": 0.009760050103068352
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.009922980330884457,
+            "temporal_loss": 0.0015804278664290905,
+            "loss": 0.01150340773165226
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-04T23:21:49.255220+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "a5e6986aad189390c8872fc6d9b84143d373e64093638a46e4418c6d49c81f9e",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 36,
+          "energy_saver": false
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.93434618338586,
+        "ssim_y": 0.9784584992746452,
+        "vmaf": 93.926615,
+        "vmaf_neg": 90.695173,
+        "temporal_coarse": 0.001142338500659939,
+        "temporal_full": 0.005114557136259013
+      },
+      "deltas": {
+        "psnr_y_db": 0.01933886573217336,
+        "ssim_y": -0.0005715903496048558,
+        "vmaf": -0.04132649999999671,
+        "vmaf_neg": -0.0005979999999965457,
+        "temporal_coarse": 4.5107562440345125e-06,
+        "temporal_full": -4.878141072428392e-05
+      },
+      "temporal_full_ratio": 0.9905523509100939,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.60045726457566,
+            "ssim_y": 0.9674986225584172,
+            "vmaf": 92.21371,
+            "vmaf_neg": 90.095295,
+            "temporal_coarse": 0.001791314783188227,
+            "temporal_full": 0.005494012545578575
+          },
+          "deltas": {
+            "psnr_y_db": -0.023325031272001695,
+            "ssim_y": -0.0003559311418752653,
+            "vmaf": 0.101302000000004,
+            "vmaf_neg": 0.04337299999998834,
+            "temporal_coarse": -8.043348690170817e-06,
+            "temporal_full": -2.5596679954506887e-05
+          },
+          "temporal_full_ratio": 0.9953625920045028,
+          "output_sha256": "ed18fdc35c09ef7bfaccd1ac7d071414fd087f02c9840db2a5d80ddde2d2de20",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.43025937817334,
+            "ssim_y": 0.9851289062322947,
+            "vmaf": 93.177833,
+            "vmaf_neg": 87.883712,
+            "temporal_coarse": 0.00029766927524316596,
+            "temporal_full": 0.0006837769707694789
+          },
+          "deltas": {
+            "psnr_y_db": -0.06981727454391518,
+            "ssim_y": -0.0003003434773246605,
+            "vmaf": -0.15835799999999267,
+            "vmaf_neg": -0.14238899999999433,
+            "temporal_coarse": -7.241008566161893e-06,
+            "temporal_full": -2.9095580807435165e-05
+          },
+          "temporal_full_ratio": 0.9591854382062065,
+          "output_sha256": "0a1b5435df1a9ae7a0e0304647a121a35c53badcc4e6b71a7fbde3d74e177451",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.556164911999716,
+            "ssim_y": 0.9651837061233952,
+            "vmaf": 95.841235,
+            "vmaf_neg": 92.407158,
+            "temporal_coarse": 0.0022343703839976196,
+            "temporal_full": 0.010654135231627816
+          },
+          "deltas": {
+            "psnr_y_db": -0.12977792762654872,
+            "ssim_y": -0.0018746762678624185,
+            "vmaf": 0.15100300000000288,
+            "vmaf_neg": 0.07792899999999747,
+            "temporal_coarse": -2.2851737403678865e-05,
+            "temporal_full": 0.00014616368897049994
+          },
+          "temporal_full_ratio": 1.01390979109309,
+          "output_sha256": "48b41ae4fc2cd187e032079024bc7cf8144e66aaa70af70b6a8a5a04c442c410",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 37.15050317879473,
+            "ssim_y": 0.9960227621844737,
+            "vmaf": 94.473682,
+            "vmaf_neg": 92.394527,
+            "temporal_coarse": 0.00024599956021074357,
+            "temporal_full": 0.003626303797060184
+          },
+          "deltas": {
+            "psnr_y_db": 0.3002756963711377,
+            "ssim_y": 0.0002445894886425881,
+            "vmaf": -0.25925300000000107,
+            "vmaf_neg": 0.01869499999999391,
+            "temporal_coarse": 5.617911963614957e-05,
+            "temporal_full": -0.00028659707110569163
+          },
+          "temporal_full_ratio": 0.9267558569046932,
+          "output_sha256": "bfa0ca1f5096bf6f627ae4511ccf6b4f6ecb0f30c19c77e9fca04c25d9ac24f1",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model_sha256": "e7b856e92062eeaf2dd36fd451956886d497caec3091a892ecb054c95a567841",
+      "training": {
+        "complete": true,
+        "trainer_sha256": "afec9d01419f95cd65cc581a5b220bcb5c917726625a35efdec463789df81542",
+        "seed": 20261004,
+        "configuration": {
+          "seed": 20261004,
+          "samples_per_triple": 4,
+          "patch_lr": 96,
+          "halo": 3,
+          "baseline": "quicksrnet-small-y-x2",
+          "baseline_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+          "architecture": "Conv(2,8,3)-Relu-Conv(8,8,3)-Relu-Conv(8,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+          "parameters": 1028,
+          "initial_output": "zero residual; trained weights required for success",
+          "loss": "Charbonnier spatial plus reference-residual temporal difference; compare temporal weights 0 and 0.25",
+          "steps": 2500,
+          "batch_size": 8,
+          "learning_rate": 0.001,
+          "optimizer": "Adam",
+          "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause"
+        },
+        "temporal_weight": 1.0,
+        "input_channels": 10,
+        "hidden_channels": 16,
+        "architecture": "Conv(10,16,3)-Relu-Conv(16,16,3)-Relu-Conv(16,4,3)-Clip(-0.05,0.05)-DepthToSpace(2)",
+        "teacher_features": true,
+        "recurrent_state": true,
+        "recurrent_unroll_frames": 2,
+        "output_rounding": true,
+        "output_rounding_definition": "straight-through round/clamp to limited-range 8-bit Y; inference graph remains FP32, QNN HTP uses FP16 math",
+        "teacher_feature_boundary": "replicate padded; recurrent loss excludes 12 HR pixels",
+        "samples": 880,
+        "dataset_sha256": "8833cc751c3efb8c5769bb42ac1ab3c5a4d93ada40ded397b1ba99c209520958",
+        "training_teacher": "Qualcomm QNN / Hexagon NPU",
+        "teacher_execution_evidence": {
+          "device_type": "NPU",
+          "cpu_fallback_disabled": true,
+          "executed_kernel_counts": {
+            "QNNExecutionProvider": 1
+          },
+          "providers": [
+            "QNNExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "qnn_backend": "htp",
+          "qnn_package_version": "2.2480.53.0",
+          "htp_performance_mode_requested": "burst",
+          "context_cache": "disabled"
+        },
+        "provenance_sha256": "94ffd9cb8d8e99a3e987e9d03d60496155d8712b0c983a3e9000bb433605065c",
+        "weights_sha256": "9dcd5d3afdef2ca609298bcb4d132dccfcb33030a5c2779eec65da81af9867f4",
+        "parameters": 4356,
+        "torch": "2.9.1+cpu",
+        "numpy": "2.2.4",
+        "device": "CPU",
+        "process_architecture": "ARM64",
+        "os": "Windows",
+        "python": "3.13.2",
+        "threads": 4,
+        "training_seconds": 147.98954700003378,
+        "loss_log": [
+          {
+            "step": 1,
+            "spatial_loss": 0.004469225183129311,
+            "temporal_loss": 0.0029133621137589216,
+            "loss": 0.007382587529718876
+          },
+          {
+            "step": 251,
+            "spatial_loss": 0.005281670484691858,
+            "temporal_loss": 0.0033449740149080753,
+            "loss": 0.008626644499599934
+          },
+          {
+            "step": 501,
+            "spatial_loss": 0.00411603506654501,
+            "temporal_loss": 0.0034960017073899508,
+            "loss": 0.007612036541104317
+          },
+          {
+            "step": 751,
+            "spatial_loss": 0.0036277268081903458,
+            "temporal_loss": 0.003306961851194501,
+            "loss": 0.006934688426554203
+          },
+          {
+            "step": 1001,
+            "spatial_loss": 0.006603818386793137,
+            "temporal_loss": 0.005210554227232933,
+            "loss": 0.01181437261402607
+          },
+          {
+            "step": 1251,
+            "spatial_loss": 0.005151146091520786,
+            "temporal_loss": 0.004921638406813145,
+            "loss": 0.010072784498333931
+          },
+          {
+            "step": 1501,
+            "spatial_loss": 0.00428995955735445,
+            "temporal_loss": 0.0034217757638543844,
+            "loss": 0.007711735554039478
+          },
+          {
+            "step": 1751,
+            "spatial_loss": 0.004415903240442276,
+            "temporal_loss": 0.00332553219050169,
+            "loss": 0.007741435430943966
+          },
+          {
+            "step": 2001,
+            "spatial_loss": 0.004927271045744419,
+            "temporal_loss": 0.004283136688172817,
+            "loss": 0.009210407733917236
+          },
+          {
+            "step": 2251,
+            "spatial_loss": 0.006884629838168621,
+            "temporal_loss": 0.003241104306653142,
+            "loss": 0.01012573391199112
+          },
+          {
+            "step": 2500,
+            "spatial_loss": 0.010140705853700638,
+            "temporal_loss": 0.001646094606257975,
+            "loss": 0.011786800809204578
+          }
+        ],
+        "checkpoint_license": "MIT for original learned weights; Blender CC BY 3.0 training footage attributed; teacher BSD-3-Clause",
+        "status": "trained experiment only; no quality or NPU success claimed"
+      },
+      "environment_at_start": {
+        "npu_sr_version": "0.6.0",
+        "timestamp": "2026-10-05T06:46:05.690950+00:00",
+        "git_commit": "bc690694eca8e49256f23d9e872d9f08ef859097",
+        "working_tree_dirty": true,
+        "python_source_sha256": "2b618e4e4b4b2bd8e634aad25c30f748fc8ff395c968a3d88c86160725e90641",
+        "os": "Windows",
+        "architecture": "ARM64",
+        "python": "3.12.0",
+        "software_versions": {
+          "npu-sr": "0.6.0",
+          "numpy": "2.5.3",
+          "Pillow": "12.3.0",
+          "onnx": "1.23.1",
+          "onnxruntime-windowsml": "1.25.2.202605110140",
+          "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+          "winrt-runtime": "3.2.1"
+        },
+        "power": "not measured",
+        "background_processes": "uncontrolled",
+        "power_state": {
+          "ac_line": "battery",
+          "active_power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+          "battery_percent": 20,
+          "energy_saver": true
+        },
+        "qnn_catalog_package": "unavailable",
+        "windows_build": 26200,
+        "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+        "npu_driver": "30.0.219.1000"
+      },
+      "scores": {
+        "psnr_y_db": 39.93228231649094,
+        "ssim_y": 0.9790348885779082,
+        "vmaf": 93.85108600000001,
+        "vmaf_neg": 90.6602985,
+        "temporal_coarse": 0.0011354292539248894,
+        "temporal_full": 0.005156103278054666
+      },
+      "deltas": {
+        "psnr_y_db": 0.017274998837251587,
+        "ssim_y": 4.798953658124994e-06,
+        "vmaf": -0.11685549999998557,
+        "vmaf_neg": -0.03547249999999735,
+        "temporal_coarse": -2.3984904910150182e-06,
+        "temporal_full": -7.235268928631501e-06
+      },
+      "temporal_full_ratio": 0.998598722732822,
+      "clips": [
+        {
+          "clip": "conversation",
+          "scores": {
+            "psnr_y_db": 39.62603563159138,
+            "ssim_y": 0.9678514218714357,
+            "vmaf": 92.032466,
+            "vmaf_neg": 90.003394,
+            "temporal_coarse": 0.0017921838521878166,
+            "temporal_full": 0.005523464506101576
+          },
+          "deltas": {
+            "psnr_y_db": 0.002253335743716889,
+            "ssim_y": -3.1318288568060737e-06,
+            "vmaf": -0.07994200000000262,
+            "vmaf_neg": -0.04852800000000457,
+            "temporal_coarse": -7.1742796905812246e-06,
+            "temporal_full": 3.85528056849431e-06
+          },
+          "temporal_full_ratio": 1.0006984698392525,
+          "output_sha256": "b05339f608ab14dfe5cc9a2c7c3895b0dc870a9fc811d99dcd1b7bd58e531cfa",
+          "reference_sha256": "9989cee8406456f8fec303c3d22068123508fdb506fd00d0d0771d56b6bb18f5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "miss"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "animated-leaves",
+          "scores": {
+            "psnr_y_db": 43.50855201728267,
+            "ssim_y": 0.9854322529814701,
+            "vmaf": 93.28734,
+            "vmaf_neg": 88.01955,
+            "temporal_coarse": 0.00030204344834252125,
+            "temporal_full": 0.0007157855980658088
+          },
+          "deltas": {
+            "psnr_y_db": 0.008475364565413201,
+            "ssim_y": 3.003271850765543e-06,
+            "vmaf": -0.04885099999999909,
+            "vmaf_neg": -0.00655100000000175,
+            "temporal_coarse": -2.8668354668065998e-06,
+            "temporal_full": 2.913046488894769e-06
+          },
+          "temporal_full_ratio": 1.004086349632134,
+          "output_sha256": "79984c936fc1d3c94dfb67d31311cbb0fa16fdd20c16038674a053ab115d31b4",
+          "reference_sha256": "01750085733a106c60242ba384e3770d37eb04f92c8cbe32797fefdf56923be6",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "aerial-landscape",
+          "scores": {
+            "psnr_y_db": 39.6946151771341,
+            "ssim_y": 0.96704619944956,
+            "vmaf": 95.699859,
+            "vmaf_neg": 92.335063,
+            "temporal_coarse": 0.00225333116029972,
+            "temporal_full": 0.010510198352847694
+          },
+          "deltas": {
+            "psnr_y_db": 0.00867233750783214,
+            "ssim_y": -1.2182941697580496e-05,
+            "vmaf": 0.009627000000008934,
+            "vmaf_neg": 0.005834000000007222,
+            "temporal_coarse": -3.890961101578414e-06,
+            "temporal_full": 2.2268101903775983e-06
+          },
+          "temporal_full_ratio": 1.0002119162753094,
+          "output_sha256": "fea98a04259360ef90de65cf622ccbea6b8e414287a63846364a27778d6f596f",
+          "reference_sha256": "a43601646ad6a348b1e2d00806bd0e273e895d67032b2a414731ba4b4f9f00b5",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        },
+        {
+          "clip": "ui-horizontal",
+          "scores": {
+            "psnr_y_db": 36.899926439955614,
+            "ssim_y": 0.9958096800091673,
+            "vmaf": 94.384679,
+            "vmaf_neg": 92.283187,
+            "temporal_coarse": 0.00019415855486950006,
+            "temporal_full": 0.003874964655203585
+          },
+          "deltas": {
+            "psnr_y_db": 0.0496989575320228,
+            "ssim_y": 3.1507313336121e-05,
+            "vmaf": -0.3482559999999921,
+            "vmaf_neg": -0.09264500000000453,
+            "temporal_coarse": 4.338114294906057e-06,
+            "temporal_full": -3.793621296229073e-05
+          },
+          "temporal_full_ratio": 0.99030483668244,
+          "output_sha256": "371e4ffb22bdc5c0521a67b9ae899d37dbe47923df1c66f2bbed2a410b821cf3",
+          "reference_sha256": "1dc941544547deaed99b97311af385f1ca2f0ca7ae38f913a832e681bd2f7fbd",
+          "frames": 60,
+          "execution_evidence": {
+            "device_type": "NPU",
+            "cpu_fallback_disabled": true,
+            "executed_kernel_counts": {
+              "QNNExecutionProvider": 1
+            },
+            "providers": [
+              "QNNExecutionProvider",
+              "CPUExecutionProvider"
+            ],
+            "qnn_backend": "htp",
+            "qnn_package_version": "2.2480.53.0",
+            "htp_performance_mode_requested": "burst",
+            "context_cache": "hit"
+          },
+          "neural_tile_runs": 360,
+          "codec_evidence": {
+            "decode": {
+              "method": "D3D11VA hardware",
+              "hardware_format_selected": "d3d11",
+              "explicit_hwdownload": true
+            },
+            "encode": {
+              "method": "Media Foundation hardware",
+              "forced_hardware_enumeration": true,
+              "transform": "QCOM Hardware Encoder - AV1"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

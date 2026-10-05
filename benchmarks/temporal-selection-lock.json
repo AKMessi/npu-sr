@@ -1,0 +1,16 @@
+{
+  "status": "experimental candidate locked before new temporal validation preparation; not a release pass",
+  "model": "quicksrnet-temporal-feature-experiment",
+  "model_sha256": "205ca4e0c9fbf7c4e5535bddd4dd9a3d51c416e2d7577d468a8e5ba39b805e53",
+  "spatial_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+  "correction_weights_sha256": "cb6bb83f4b4dd9e86a28c7020952774bb0afc9326664f48c35330c3acf872eea",
+  "training_dataset_sha256": "5787a4a8aa70744794248455ca6402d06786f098391c1c9a834673bcb8c3db26",
+  "selection_data": "four original development clips: conversation, animated-leaves, aerial-landscape, ui-horizontal",
+  "validation_definition": "benchmarks/temporal-training-v1.json",
+  "validation_clips": ["temporal-tos-585", "temporal-tos-600", "temporal-bbb-580", "temporal-bbb-610"],
+  "training": {"seed": 20261004, "steps": 2500, "batch_size": 8, "temporal_weight": 0.25, "parameters": 1316},
+  "settings": {"frame_format": "nv12", "tile_core": 256, "halo": 4, "neural_strength": 1.0, "npu_performance": "burst", "pipeline_depth": 2, "decode": "hardware", "encode": "hardware", "codec": "av1", "bitrate": "8M"},
+  "scene_reset": {"initial": true, "black_mean_threshold": 0.015, "large_difference": 0.45, "histogram_difference": 0.25, "histogram_mean_difference": 0.18, "decorrelated_difference": 0.12, "correlation_threshold": 0.1},
+  "rationale": "Six-input correction gains VMAF on four development clips; spatial quality and temporal diagnostic disagree. Keep experimental and assess unseen-time validation without further tuning. Fused CPU useful-core output matches unfused graph exactly; installed QNN proof succeeds. Do not infer a temporal quality success from graph proof.",
+  "required_next": ["all four new validation clips, paired bicubic/spatial/temporal", "scene and artifact review", "sustained actual video throughput", "reproducible export and licensing", "release tests"]
+}

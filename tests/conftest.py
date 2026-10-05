@@ -45,3 +45,23 @@ def tiny_model(tmp_path: Path) -> Path:
         )
     )
     return path
+
+
+@pytest.fixture
+def temporal_hardware_model(tmp_path, monkeypatch):
+    """Seeded test correction: verifies execution/state, never a quality model."""
+    from npu_sr.model import MODELS, ModelSpec
+    from npu_sr.temporal_model import SHAPES, fuse_temporal
+
+    spec = ModelSpec("test-temporal-hardware", "test-temporal", halo=7, input_channels=2)
+    monkeypatch.setitem(MODELS, spec.identifier, spec)
+    values = {
+        key: np.random.default_rng(index).normal(0, 0.001, shape).astype(np.float32)
+        for index, (key, shape) in enumerate(SHAPES.items())
+    }
+    path = tmp_path / "test-temporal.onnx"
+    fuse_temporal(model_path(identifier="quicksrnet-small-y-x2"), values, spec, path)
+    path.with_suffix(".json").write_text(
+        json.dumps(spec.info() | {"name": spec.identifier, "sha256": sha256(path)})
+    )
+    return path

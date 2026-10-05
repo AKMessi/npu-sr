@@ -61,7 +61,12 @@ def parser() -> argparse.ArgumentParser:
         "input", type=Path, help="Image directory for quality, image file for performance"
     )
     suite.add_argument("--quality", action="store_true")
-    suite.add_argument("--models", nargs="+", choices=list(MODELS), default=list(MODELS))
+    suite.add_argument(
+        "--models",
+        nargs="+",
+        choices=list(MODELS),
+        default=[name for name, spec in MODELS.items() if spec.input_channels == 1],
+    )
     suite.add_argument(
         "--devices", nargs="+", choices=["cpu", "npu", "gpu"], default=["cpu", "npu", "gpu"]
     )

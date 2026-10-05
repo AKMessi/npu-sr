@@ -32,10 +32,11 @@ class ModelSpec:
     color_space: str = "luminance"
     opset: int = 13
     precision: str = "float32 (QNN HTP uses float16 math)"
+    input_channels: int = 1
 
     @property
     def input_shape(self) -> list[int]:
-        return [1, 1, self.height + self.halo * 2, self.core + self.halo * 2]
+        return [1, self.input_channels, self.height + self.halo * 2, self.core + self.halo * 2]
 
     @property
     def height(self) -> int:

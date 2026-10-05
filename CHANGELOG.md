@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Experimental original two-frame residual trained on real licensed sequences;
+  fuse spatial and temporal enhancement into one static graph with full halo-7
+  context. The published spatial realtime default remains unchanged.
+- Bounded previous-frame planes, tested first-frame and scene-cut/black resets,
+  direct shared tile submission, and temporal frame/state accounting.
+- Reproducible preparation, training and export scripts; original MIT correction
+  checkpoints remain outside the package, separate from acquired BSD spatial weights.
+- Temporal candidates did not clear development quality gates; retain all paired
+  metrics and keep the spatial default. No v0.7 release or temporal quality claim.
+
 ## 0.6.0 — 2026-10-04
 
 - Validate every video packet's presentation cadence with bounded reordering;
