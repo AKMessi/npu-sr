@@ -65,14 +65,14 @@ class VideoSettings:
 
 PRESETS = {
     "quality": {
-        "model": "fsrcnn-x2",
-        "frame_format": "rgb24",
+        "model": "quicksrnet-medium-y-x2",
+        "frame_format": "nv12",
         "npu_performance": "sustained_high_performance",
         "pipeline_depth": 2,
     },
     "balanced": {
-        "model": "espcn-x2-256",
-        "frame_format": "rgb24",
+        "model": "quicksrnet-small-y-x2",
+        "frame_format": "nv12",
         "npu_performance": "sustained_high_performance",
         "pipeline_depth": 2,
     },
@@ -159,6 +159,7 @@ def process_video(
     output: Path,
     settings: VideoSettings,
     progress: Callable[[int], None] | None = None,
+    initialized: Callable[[dict], None] | None = None,
 ) -> dict:
     if not source.is_file():
         raise SRException("Input video is missing.")
@@ -215,6 +216,18 @@ def process_video(
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_name(f".{output.stem}-{uuid.uuid4().hex}.partial{output.suffix}")
     startup_ms = (perf_counter() - initialization) * 1000
+    if initialized:
+        initialized(
+            {
+                "input": info.public(),
+                "source_frames": source_frames,
+                "model": runtime.spec.identifier,
+                "backend": runtime.label,
+                "codec_evidence": codec_evidence,
+                "codec": settings.codec,
+                "output_resolution": [info.width * 2, info.height * 2],
+            }
+        )
     phases: defaultdict[str, deque[float]] = defaultdict(lambda: deque(maxlen=8192))
     completed, decoder, encoder = 0, None, None
     done = threading.Event()

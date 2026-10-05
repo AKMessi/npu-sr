@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import os
 import sys
 from pathlib import Path
 from time import perf_counter
@@ -25,6 +26,30 @@ def parser() -> argparse.ArgumentParser:
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command", required=True)
     doctor = commands.add_parser("doctor", help="Check system and run strict NPU proof inference")
+    doctor.add_argument("--ffmpeg", type=Path)
+    doctor.add_argument("--json", type=Path)
+    doctor.add_argument(
+        "--image-only", action="store_true", help="Skip executed video codec probes"
+    )
+    doctor.add_argument("--gpu", action="store_true", help="Also run a strict GPU proof")
+    setup = commands.add_parser(
+        "setup", help="Acquire verified models and prove local capabilities"
+    )
+    setup.add_argument(
+        "--models",
+        nargs="+",
+        choices=list(MODELS),
+        default=["quicksrnet-small-y-x2", "quicksrnet-medium-y-x2"],
+    )
+    setup.add_argument("--device", choices=["npu", "cpu"], default="npu")
+    setup.add_argument(
+        "--download-ffmpeg",
+        action="store_true",
+        help="Acquire pinned GPL FFmpeg from its upstream builder (Windows)",
+    )
+    setup.add_argument("--ffmpeg", type=Path)
+    setup.add_argument("--json", type=Path)
+    setup.add_argument("--verbose", action="store_true")
     upscale = commands.add_parser("upscale", help="Create a 2x image")
     denoise = commands.add_parser("denoise", help="Clean luminance Gaussian noise (sigma 25/255)")
     models = commands.add_parser("models", help="List, inspect or download a model")
@@ -143,7 +168,24 @@ def parser() -> argparse.ArgumentParser:
 def _doctor(args: argparse.Namespace) -> int:
     from .diagnostics import diagnose
 
-    report = diagnose(resolve_model(args.model), args.verbose)
+    path = resolve_model(args.model or "quicksrnet-small-y-x2")
+    _protect_report(args.json, [path, path.with_suffix(".json"), args.ffmpeg])
+    report = diagnose(
+        path,
+        args.verbose,
+        video=not args.image_only,
+        ffmpeg=args.ffmpeg,
+        gpu=args.gpu,
+    )
+    _print_diagnostics(report)
+    if args.json:
+        from .benchmark import save_report
+
+        save_report(report, args.json)
+    return 0 if report["ready"] else 1
+
+
+def _print_diagnostics(report: dict) -> None:
     print("NPU-SR diagnostics\n")
     fields = [
         ("OS", report["os"]),
@@ -160,6 +202,18 @@ def _doctor(args: argparse.Namespace) -> int:
     ]
     for label, value in fields:
         print(f"{label}: {value}")
+    if "gpu" in report:
+        print(f"GPU proof: {report['gpu']['status']}")
+    if "video" in report:
+        video = report["video"]
+        print(f"FFmpeg: {video.get('ffmpeg_version', 'unavailable')}")
+        for kind in ("decode", "encode"):
+            for codec, result in video[kind].items():
+                print(f"{codec.upper()} hardware {kind}: {result['status']}")
+        for error in video["errors"]:
+            print(f"  Video: {error}")
+    for model, result in report.get("models", {}).items():
+        print(f"Model {model}: {result['status']}")
     if report["ready"]:
         print("\nResult: system ready for NPU inference (strict QNN proof passed)")
     else:
@@ -168,7 +222,36 @@ def _doctor(args: argparse.Namespace) -> int:
         print(f"  Error: {error}")
     if not report["ready"]:
         print("See: docs/troubleshooting.md")
-    return 0 if report["ready"] else 1
+
+
+def _setup(args: argparse.Namespace) -> int:
+    from .benchmark import save_report
+    from .setup import prepare
+
+    models = [resolve_model(name) for name in args.models]
+    _protect_report(
+        args.json, [*models, *(path.with_suffix(".json") for path in models), args.ffmpeg]
+    )
+
+    if args.download_ffmpeg:
+        print("Acquiring the pinned upstream GPL FFmpeg build; licenses remain in its cache.")
+    print("Preparing models and proving capabilities. First-time provider setup may take a minute.")
+    report = prepare(args.models, args.device, args.download_ffmpeg, args.ffmpeg, args.verbose)
+    _print_diagnostics(report)
+    if args.json:
+        save_report(report, args.json)
+    if report["setup_ready"]:
+        print(f"\nSetup ready ({args.device}).")
+    else:
+        print("\nVideo setup incomplete; inspect the diagnostics above. See docs/installation.md")
+    return 0 if report["setup_ready"] else 1
+
+
+def _protect_report(destination: Path | None, sources: list[Path | None]) -> None:
+    if destination is not None and destination.resolve() in {
+        path.resolve() for path in sources if path is not None
+    }:
+        raise SRException("Diagnostic JSON would overwrite a model, manifest or executable.")
 
 
 def _upscale(args: argparse.Namespace) -> int:
@@ -354,10 +437,30 @@ def _video(args: argparse.Namespace) -> int:
 
     if args.json and args.json.resolve() in {args.input.resolve(), args.output.resolve()}:
         raise SRException("Video JSON would overwrite input or output.")
+    preset = args.preset
+    if preset is None:
+        if args.command == "benchmark-realtime":
+            preset = "realtime"
+        elif args.command == "video" and not any(
+            getattr(args, field) is not None
+            for field in ("model", "frame_format", "npu_performance", "neural_strength")
+        ):
+            from .qnn import platform_problem
+
+            preset = (
+                "realtime"
+                if platform_problem() is None and args.device not in {"cpu", "gpu"}
+                else "balanced"
+            )
     settings = settings_for_preset(
-        args.preset or ("realtime" if args.command == "benchmark-realtime" else None),
+        preset,
         {key: getattr(args, key) for key in VideoSettings.__dataclass_fields__ if key != "preset"},
     )
+    if settings.cache_dir is None and settings.device != "cpu":
+        from dataclasses import replace
+
+        root = Path(os.environ.get("LOCALAPPDATA", Path.home() / ".cache"))
+        settings = replace(settings, cache_dir=root / "npu-sr" / "contexts")
     print(
         f"Configuration: {settings.preset or 'custom/default'}; model={settings.model}; "
         f"frames={settings.frame_format}; neural strength={settings.neural_strength}; "
@@ -366,9 +469,9 @@ def _video(args: argparse.Namespace) -> int:
         f"encode={settings.encode}; codec={settings.codec}"
     )
 
-    def progress(frames: int) -> None:
-        if frames % 30 == 0:
-            print(f"Processed {frames} frames", file=sys.stderr)
+    from .progress import VideoProgress
+
+    progress = VideoProgress()
 
     if args.command in {"benchmark-video", "benchmark-realtime"}:
         from .video_benchmark import benchmark_video
@@ -384,7 +487,7 @@ def _video(args: argparse.Namespace) -> int:
             print(f"Sustained real-time gate: {report['realtime_acceptance']}")
             return 0 if report["realtime_acceptance"]["passed"] else 1
         return 0
-    report = process_video(args.input, args.output, settings, progress)
+    report = process_video(args.input, args.output, settings, progress, progress.initialize)
     width, height = report["input"]["resolution"]
     out_width, out_height = report["output"]["resolution"]
     print(f"Input:       {width} × {height} @ {report['input']['frame_rate']} FPS")
@@ -397,7 +500,10 @@ def _video(args: argparse.Namespace) -> int:
     }[report["backend"]]
     print(f"SR backend:  {backend} ({report['model']})")
     for kind in ("decode", "encode"):
-        print(f"{kind.title()}:      {report['codec_evidence'][kind]}")
+        evidence = report["codec_evidence"][kind]
+        print(f"{kind.title()}:      {evidence['method']}")
+        if args.verbose:
+            print(evidence)
     print(f"Streaming:   {report['end_to_end_fps']:.1f} FPS (decode through encode flush)")
     print(f"Including setup/audit: {report['whole_command_fps']:.1f} FPS (function scope)")
     print(f"Audit:       {'full decoded frames' if report['verify_full'] else 'packet timeline'}")
@@ -430,6 +536,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         return {
             "doctor": _doctor,
+            "setup": _setup,
             "upscale": _upscale,
             "denoise": _upscale,
             "models": _models,

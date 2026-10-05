@@ -37,7 +37,15 @@ def hardware_info() -> dict[str, Any]:
     return result
 
 
-def diagnose(path: Path, verbose: bool = False) -> dict[str, Any]:
+def diagnose(
+    path: Path,
+    verbose: bool = False,
+    *,
+    video: bool = False,
+    ffmpeg: Path | None = None,
+    gpu: bool = False,
+    npu: bool = True,
+) -> dict[str, Any]:
     report: dict[str, Any] = {
         "os": platform.system(),
         "architecture": platform.machine(),
@@ -67,7 +75,9 @@ def diagnose(path: Path, verbose: bool = False) -> dict[str, Any]:
         report["model_status"] = "ready"
     except SRException as exc:
         report["errors"].append(str(exc))
-    if problem := platform_problem():
+    if not npu:
+        report["qnn_status"] = "not requested"
+    elif problem := platform_problem():
         report["errors"].append(problem)
     else:
         try:
@@ -84,4 +94,15 @@ def diagnose(path: Path, verbose: bool = False) -> dict[str, Any]:
                 report["ready"] = True
         except SRException as exc:
             report["errors"].append(str(exc))
+    from .capabilities import gpu_capability, model_inventory, video_capabilities
+
+    report["models"] = model_inventory()
+    if video:
+        report["video"] = video_capabilities(ffmpeg)
+    if gpu:
+        report["gpu"] = (
+            gpu_capability(path, verbose)
+            if report["model_status"] == "ready"
+            else {"status": "not proven", "reason": "model missing or invalid"}
+        )
     return report

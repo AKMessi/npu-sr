@@ -173,9 +173,14 @@ def acquire(directory: Path, duration: int, ffmpeg: Path) -> None:
     print(f"Aligned clips prepared: {directory}")
 
 
-def prepare_sustained(directory: Path, duration: int, ffmpeg: Path) -> None:
+def prepare_sustained(
+    directory: Path, duration: int, ffmpeg: Path, source: Path | None = None
+) -> None:
     """Prepare a varied real-film 540p input without storing a large HR reference."""
-    movie = source_movie(directory)
+    movie = source or source_movie(directory)
+    if sha256(movie) != MOVIE_SHA256:
+        raise ValueError("Sustained source movie SHA256 changed")
+    directory.mkdir(parents=True, exist_ok=True)
     output = directory / f"sustained-960x540-{duration}s.mp4"
     run_tool(
         [
@@ -246,6 +251,9 @@ def prepare_sustained(directory: Path, duration: int, ffmpeg: Path) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", type=Path)
+    parser.add_argument(
+        "--source-movie", type=Path, help="Reuse a hash-verified movie for sustained input"
+    )
     parser.add_argument("--duration", type=int)
     parser.add_argument("--sustained", action="store_true")
     parser.add_argument("--ffmpeg", type=Path)
@@ -259,5 +267,11 @@ if __name__ == "__main__":
         / "benchmarks"
         / "video"
     )
-    operation = prepare_sustained if args.sustained else acquire
-    operation(args.directory or default, duration, tool_path(args.ffmpeg))
+    if args.source_movie and not args.sustained:
+        parser.error("--source-movie is only used with --sustained")
+    if args.sustained:
+        prepare_sustained(
+            args.directory or default, duration, tool_path(args.ffmpeg), args.source_movie
+        )
+    else:
+        acquire(args.directory or default, duration, tool_path(args.ffmpeg))

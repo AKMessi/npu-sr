@@ -13,7 +13,7 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
 - Median postprocessing 16.75 ms, inference 10.87 ms; forensic output audit 72.5 s.
 - [Raw baseline](../benchmarks/v0.5/baseline-v0.4.json).
 
-## A / v0.5 â€” released
+## A / v0.5 — released
 
 1. Predeclare a diverse legal corpus and development/holdout split before candidate
    scoring. Preserve source hashes, native references, crop/time, degradation,
@@ -32,7 +32,7 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
 7. Release only if aggregate PSNR, SSIM and VMAF all beat bicubic, temporal behavior
    has no severe regression and measured neural cost leaves a credible 30 FPS budget.
 
-## Later gates â€” sequential, not concurrent implementation
+## Later gates — sequential, not concurrent implementation
 
 - v0.6: profile CPU phases, reduce postprocessing <=8 ms, preserve quality; move
   forensic audit behind `--verify-full` with meaningful streaming/lightweight checks.
@@ -104,11 +104,11 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
 - Whole-command times 155.58/149.35/151.00 seconds remain dominated by the final
   audit. v0.6 must separate lightweight validation from explicit forensic decode.
 
-## B / v0.6 â€” released
+## B / v0.6 — released
 
 - Three trials: 48.73/48.34/49.90 streaming FPS, whole function times
   82.63/78.65/76.13 seconds; 3,600 frames/43,200 neural calls each.
-- Default output checks 0.18â€“0.20 seconds; full decoded audit agrees on all
+- Default output checks 0.18–0.20 seconds; full decoded audit agrees on all
   3,600 frames and takes 33.91 seconds. No frame-count assumption from nominal FPS.
 - CPU post medians 7.72/7.73/7.54 ms. First trial chroma 4.26 ms, quantization
   2.97 ms, finite/fusion check 0.27 ms, copy 0.12 ms. Preserve this profile before
@@ -120,7 +120,7 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
   source. Fresh installation, downloaded artifact hashes, Windows/Linux main
   and tag CI, strict hardware tests and publication review passed.
 
-## C / temporal experiments â€” not a release pass
+## C / temporal experiments — not a release pass
 
 - Predeclared 20 training snippets from CC BY 3.0 Blender films, separated in
   time from the original quality corpus; 880 real adjacent-frame patch triples.
@@ -202,3 +202,22 @@ This is a temporary working record, not a release promise. The v0.5 realtime sel
   test hardware paths with seeded test-only corrections, never as quality evidence.
 - Proceed to installation/capability/preset/reliability work. Temporal acceptance
   remains unfulfilled; do not claim a release pass merely to fill a version number.
+
+
+## D / productization candidate — release pending
+
+- Packaged setup acquires verified Small/Medium and optional pinned native FFmpeg;
+  CPU setup performs CPU inference and does not request NPU. System App Runtime
+  remains an explicit official prerequisite, not copied DLLs.
+- Doctor now reports executed hardware H.264 decode and H.264/HEVC/AV1 encode,
+  optional strict DirectML proof, model inventory and JSON. Probe scope is explicit.
+- Windows ARM64 one-command video chooses realtime; CPU/non-ARM defaults use
+  balanced Small NV12. Explicit legacy model/frame options preserve custom usage.
+  Quality now uses the measured Medium NV12 path; no generic power-saving claim.
+- Throttled progress reports submitted frames; final throughput includes flush.
+  Context reuse is automatic locally and every loaded context still requires proof.
+- 245 ordinary / 20 manual NPU+DirectML / 6 video hardware tests passed before
+  version promotion. Lint passes; actual setup and doctor proofs pass on AC.
+- Freeze candidate code, then repeat three sustained realtime trials, delivered
+  regression checks, fresh wheel installation and main/tag CI before a v0.8 tag.
+  Do not claim temporal v0.7 acceptance; it remains unfulfilled research.

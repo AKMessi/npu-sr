@@ -48,13 +48,16 @@ All settings are printed; explicit options override them. Consult the release
 | Preset | Model | Frame path | NPU mode | Queue depth |
 | --- | --- | --- | --- | ---: |
 | realtime | QuickSRNet Small Y, 256-pixel cores | native NV12, unblended | burst | 2 |
-| balanced | ESPCN 256-pixel cores | RGB | sustained_high_performance | 2 |
-| quality | FSRCNN | RGB | sustained_high_performance | 2 |
+| balanced | QuickSRNet Small Y | native NV12, unblended | sustained_high_performance | 2 |
+| quality | QuickSRNet Medium Y | native NV12, unblended | sustained_high_performance | 2 |
 
 Realtime additionally requires NPU, hardware decode, hardware AV1 encode. Other
 presets retain the default auto device/codecs unless explicitly selected. The
-quality name reflects the model's image-subset score, not universal video quality.
-Unspecified presets preserve the v0.3 RGB/default-performance/serial behavior.
+quality model has modestly higher development-video scores and higher compute
+cost, not universal superiority. An ordinary Windows ARM64 video command selects
+realtime; CPU/non-ARM commands select balanced. Explicit legacy model/frame-path
+options preserve custom historical behavior. API VideoSettings defaults remain
+unchanged.
 No automatic per-frame model switch, dropped frame or dynamically disabled SR exists.
 
 NV12 receives native limited-range Y (16–235 normalized to 0–1), avoiding the

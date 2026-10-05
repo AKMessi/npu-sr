@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Packaged `setup` acquires verified models and optional native FFmpeg, then runs
+  strict NPU proof and per-codec hardware probes; CPU-only setup remains available.
+- Expanded doctor includes model inventory, executed video codec status, optional
+  strict GPU proof and JSON output. Diagnostic reports cannot overwrite artifacts.
+- One-command Windows ARM64 video selects the validated realtime preset; CPU and
+  legacy explicit model usage remain available. Throttle measured progress output.
+- Balanced/quality now use Small/Medium NV12 paths; local context reuse is automatic
+  for CLI video, and every cache load still requires strict execution proof.
+- Atomic hash-checked FFmpeg download rejects interrupted/oversized/unsafe archives.
+
 - Experimental original two-frame residual trained on real licensed sequences;
   fuse spatial and temporal enhancement into one static graph with full halo-7
   context. The published spatial realtime default remains unchanged.

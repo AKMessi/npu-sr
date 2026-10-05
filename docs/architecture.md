@@ -89,3 +89,13 @@ Reader/writer threads overlap decode/encode; the main thread alone runs ORT and
 owns model tensors. No concurrent invocation on one QNN session, tile batching,
 model bypass or unbounded queue is introduced. See [realtime](realtime.md) and
 [video pipeline](video-pipeline.md) for scopes and settings.
+
+## Installation and capability UX
+
+`setup.py` acquires verified models and optional pinned FFmpeg; `install_ffmpeg.py`
+contains the same installer used by the clone-compatible script. `capabilities.py`
+executes short codec probes and optional strict GPU proof; listings are not proof.
+`diagnostics.py` combines observed hardware/runtime facts and model integrity.
+`progress.py` prints throttled submission progress; final end-to-end measurements
+still include encoder flush. Source/model/executable paths cannot be overwritten
+by diagnostic JSON. See [installation](installation.md).

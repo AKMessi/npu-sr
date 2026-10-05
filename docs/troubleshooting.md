@@ -15,7 +15,7 @@ also show a traceback and ORT logs. Redact personal paths before sharing them.
 | QNN registered but no NPU device | Update the actual Qualcomm Hexagon NPU driver through Windows Update/OEM; a QNN GPU device is insufficient |
 | Strict session cannot compile / no QNN profile kernels | Redownload the pinned model, inspect verbose graph logs and installed QNN version; NPU mode intentionally fails |
 | Partial assignment rejected | The profile contains another provider's kernel. Adjust the model/export; do not relabel CPU work as NPU |
-| Model missing / manifest mismatch | Run `python scripts/download_model.py`; use `NPU_SR_MODEL_DIR` or `--model` for other directories |
+| Model missing / manifest mismatch | Run `npu-sr setup` or `npu-sr models download IDENTIFIER`; use `NPU_SR_MODEL_DIR` for other directories |
 | Image load failure | Supply a valid still PNG/JPEG/WebP under 16 million input pixels; EXIF orientation is supported |
 | Output path failure | Use a writable directory and PNG/JPEG/WebP extension; input/output must be different files |
 | Small Task Manager NPU graph | A small model finishes quickly; try a longer benchmark. ORT profiling and strict assignment are the primary check |
@@ -85,3 +85,18 @@ proof or count checks to obtain a faster number.
 NV12 rejects explicitly full-range sources; use `--frame-format rgb24` and
 `--neural-strength 1` for the supported RGB alternative. Fixed blending adds CPU
 work and changes quality; its setting must accompany comparisons.
+
+## Setup and default video command
+
+`setup` does not install the system App Runtime or accept third-party licenses
+on your behalf. If bootstrap fails, install the official ARM64 runtime and VC++
+redistributable before rerunning. `setup --download-ffmpeg` acquires the pinned
+GPL build; `--ffmpeg` selects an existing installation. They cannot be combined.
+A successful NPU proof does not imply every codec/profile is supported: doctor
+reports each executed probe and its limited resolution/frame-rate scope.
+
+The Windows ARM64 default video preset requires NPU and hardware codec proof.
+For an explicit CPU comparison use `--device cpu --decode software --encode software`.
+Use AC with energy saver off for sustained benchmarks; record the actual state.
+Normal progress reports frames submitted to the encoder, not displayed-frame
+latency. Native vendor preparation logs may still appear on a cache miss.

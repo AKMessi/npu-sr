@@ -47,8 +47,10 @@ allowlist of pickle globals; acquisition verifies the exact hash first.
 
 The v0.5 realtime preset selects the small QuickSRNet adaptation after locked
 holdout evaluation. Image commands retain their existing ESPCN default; explicit
-`--model` selects any registry option. Balanced/quality presets retain historical
-RGB settings and are not advertised as beating the new realtime model on video.
+`--model` selects any registry option. Balanced uses the same Small model through NV12 with a sustained performance
+request; quality uses Medium through NV12. Realtime uses Small with burst.
+These requests do not establish measured power savings. Medium has slightly
+better development quality and higher compute cost, not a universal ranking.
 
 ## QuickSRNet luminance exports
 

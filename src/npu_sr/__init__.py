@@ -1,3 +1,3 @@
-"""Image super-resolution through ONNX Runtime and Windows ML."""
+"""Local neural image and video enhancement on Snapdragon X."""
 
-__version__ = "0.6.0"
+__version__ = "0.8.0"

@@ -1,6 +1,6 @@
 # Research notes
 
-## v0.2 â€” checked 2026-10-04
+## v0.2 — checked 2026-10-04
 
 - [Microsoft's Python catalog flow](https://learn.microsoft.com/en-us/windows/ai/new-windows-ml/initialize-execution-providers)
   still requires explicit library registration in Python's ORT environment. The
@@ -64,8 +64,8 @@ Video API research and implementation belong to the subsequent gated releases.
   It is downloaded outside git, with its notices and licenses. No binaries are redistributed.
   Actual tests completed H.264, HEVC and AV1 encoding with activated
   `QCOM Hardware Encoder` transforms. D3D11VA H.264 decode completed with
-  selected `d3d11` frames and explicit download. The driver rejected a 64Ã—48
-  fixture, while 640Ã—360 worked; strict mode rejected that failure.
+  selected `d3d11` frames and explicit download. The driver rejected a 64×48
+  fixture, while 640×360 worked; strict mode rejected that failure.
 - Native libvmaf executed using the explicit `vmaf_v0.6.1` built-in model; a
   same-reference sanity run measured 99.39267 over ten sampled frames.
   [Netflix's integration documentation](https://github.com/Netflix/vmaf/blob/master/resource/doc/ffmpeg.md)
@@ -99,8 +99,8 @@ Video API research and implementation belong to the subsequent gated releases.
   below 0.002 on the test workload), but are rejected for the real-time preset.
   QNN logs showed more DDR traffic on larger graphs; this is consistent with a
   memory/locality cost, not a measured silicon-level diagnosis.
-- Native NV12 avoids the RGB round trip. Limited-range Y is normalized 16â€“235
-  to 0â€“1; native chroma is resized on CPU. Explicit full-range input needs RGB.
+- Native NV12 avoids the RGB round trip. Limited-range Y is normalized 16–235
+  to 0–1; native chroma is resized on CPU. Explicit full-range input needs RGB.
   Unknown YUV range is assumed limited. This changes the delivered colorspace
   path and requires new quality measurements; no zero-copy claim is made.
 - FFmpeg's [Media Foundation documentation](https://ffmpeg.org/ffmpeg-all.html#MediaFoundation)
@@ -122,7 +122,7 @@ Video API research and implementation belong to the subsequent gated releases.
   all run neural inference on every frame. Strength 0.5 improves average paired
   PSNR and SSIM in that suite; VMAF still favors bicubic. It is a disclosed quality
   compromise, not a general perceptual improvement. Pillow baseline resizing
-  cost about 10.6 ms at 540p; reusable separable float Catmullâ€“Rom buffers measured
+  cost about 10.6 ms at 540p; reusable separable float Catmull–Rom buffers measured
   about 6.9 ms in a 50-call CPU experiment. Edge/rounding semantics differ and
   are independently tested against Pillow's float resampler in the interior.
   Final sustained release trials remeasure the selected blend and QNN mode.
@@ -235,3 +235,13 @@ retain all paired metrics, and do not release v0.7 from these probes. Details:
 [temporal research](temporal-model.md). No unsupported-GridSample claim: current
 [QNN operator documentation](https://github.com/onnxruntime/onnxruntime-qnn/blob/main/docs/execution_providers/QNN-ExecutionProvider.md)
 lists it, but a usable motion-warp model still requires installed-runtime proof.
+
+
+### Packaged setup (2026-10-05)
+
+Current Microsoft [deployment guidance](https://learn.microsoft.com/en-us/windows/ai/new-windows-ml/distributing-your-app)
+requires framework-dependent Python deployment. Stable Windows App Runtime is
+2.5.1; retain tested 2.3 Python bindings and ORT/QNN pins. The [Python catalog flow](https://learn.microsoft.com/en-us/windows/ai/new-windows-ml/initialize-execution-providers)
+still requires explicit registration into Python ORT; preserve the existing flow.
+Package the pinned FFmpeg acquisition helper, not its binaries, and run actual
+codec/NPU proofs. Do not use listings as ready evidence.

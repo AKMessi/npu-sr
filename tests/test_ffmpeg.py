@@ -160,19 +160,17 @@ def test_cached_tool_requires_native_architecture_and_verified_marker(tmp_path, 
 
 @pytest.mark.parametrize("exit_code", [0, 0xC0000005])
 def test_acquisition_checks_startup_before_accepting_cache(tmp_path, monkeypatch, exit_code):
-    import importlib.util
     import zipfile
     from types import SimpleNamespace
 
-    spec = importlib.util.spec_from_file_location(
-        "download_ffmpeg", Path(__file__).parents[1] / "scripts/download_ffmpeg.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    from npu_sr import install_ffmpeg as module
+
     name = f"ffmpeg-{module.VERSION}-winarm64-gpl-shared-9.0.zip"
     with zipfile.ZipFile(tmp_path / name, "w") as archive:
         archive.writestr(name.removesuffix(".zip") + "/bin/ffmpeg.exe", b"logic fixture")
-    module.HASHES["arm64"] = hashlib.sha256((tmp_path / name).read_bytes()).hexdigest()
+    monkeypatch.setitem(
+        module.HASHES, "arm64", hashlib.sha256((tmp_path / name).read_bytes()).hexdigest()
+    )
     monkeypatch.setattr(
         module.subprocess, "run", lambda *a, **kw: SimpleNamespace(returncode=exit_code)
     )
@@ -183,6 +181,41 @@ def test_acquisition_checks_startup_before_accepting_cache(tmp_path, monkeypatch
     else:
         assert module.download("arm64", tmp_path).is_file()
         assert (tmp_path / "ready.json").is_file()
+
+
+def test_interrupted_download_never_leaves_an_accepted_archive(tmp_path, monkeypatch):
+    from npu_sr import install_ffmpeg
+
+    class Interrupted:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def read(self, size):
+            raise OSError("connection interrupted")
+
+    monkeypatch.setattr(install_ffmpeg.urllib.request, "urlopen", lambda *a, **k: Interrupted())
+    with pytest.raises(OSError, match="interrupted"):
+        install_ffmpeg.download("arm64", tmp_path)
+    assert not list(tmp_path.iterdir())
+
+
+def test_download_rejects_archive_traversal_even_with_matching_hash(tmp_path, monkeypatch):
+    import zipfile
+
+    from npu_sr import install_ffmpeg
+
+    name = f"ffmpeg-{install_ffmpeg.VERSION}-winarm64-gpl-shared-9.0.zip"
+    with zipfile.ZipFile(tmp_path / name, "w") as archive:
+        archive.writestr("../outside.exe", b"fixture")
+    monkeypatch.setitem(
+        install_ffmpeg.HASHES, "arm64", hashlib.sha256((tmp_path / name).read_bytes()).hexdigest()
+    )
+    with pytest.raises(ValueError, match="Unsafe"):
+        install_ffmpeg.download("arm64", tmp_path)
+    assert not (tmp_path.parent / "outside.exe").exists()
 
 
 @pytest.mark.parametrize("codec", ["h264", "hevc", "av1"])

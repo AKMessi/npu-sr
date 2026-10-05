@@ -66,6 +66,18 @@ def cpu_settings(ffmpeg):
     return VideoSettings(device="cpu", decode="software", encode="software", ffmpeg=ffmpeg)
 
 
+@pytest.mark.video_hw
+def test_first_run_setup_proves_npu_and_hardware_codecs():
+    from npu_sr.setup import prepare
+
+    report = prepare(["quicksrnet-small-y-x2", "quicksrnet-medium-y-x2"])
+    assert report["setup_ready"]
+    assert report["evidence"]["executed_kernel_counts"] == {"QNNExecutionProvider": 1}
+    assert report["evidence"]["cpu_fallback_disabled"]
+    assert report["video"]["decode"]["h264"]["status"] == "proven"
+    assert "QCOM Hardware Encoder" in report["video"]["encode"]["av1"]["evidence"]["transform"]
+
+
 def test_cpu_video_preserves_frames_audio_duration_and_order(video_source, tmp_path):
     source, ffmpeg = video_source
     output = tmp_path / "result.mp4"

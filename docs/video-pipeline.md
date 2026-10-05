@@ -18,7 +18,8 @@ webcam, seeking, GUI, or frame-rate conversion is exposed in this release.
 
 One model/session lives for the whole file. Strict assignment/profiling happens
 at initialization; three tensor warmups follow. Image preprocessing and tiling
-are reused. Frames are not written to PNG files. The default remains sequential RGB processing. v0.4 adds native NV12 buffers and
+are reused. Frames are not written to PNG files. The historical API default is sequential RGB processing. The normal Windows
+ARM64 CLI now selects the validated NV12 realtime preset. v0.4 added NV12 buffers and
 bounded reader/writer queues (depth 0–4); preset depth 2 overlaps decode, neural
 enhancement and encode. One worker owns the model and reusable tensors. Each
 queued frame owns its bytes. Pipes and queues apply backpressure; diagnostics,

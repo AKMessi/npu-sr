@@ -11,8 +11,9 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**v0.6 retains the quality-first QuickSRNet Small preset and makes default
-video validation lightweight.** No bicubic blend or neural-frame bypass.
+**Current main is the v0.8 installation/UX candidate; v0.6 remains the latest
+stable release until validation finishes.** It adds packaged setup, executed
+capability diagnostics and a one-command video preset. No neural-frame bypass.
 
 **960×540 → 1920×1080 @ 30 FPS: 48.7 FPS median streaming throughput**,
 three 120-second sources, every frame enhanced, strict QNN and hardware codecs
@@ -97,10 +98,9 @@ py -3.12-arm64 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install -e .
-python scripts/download_model.py
-npu-sr models download quicksrnet-small-y-x2
+npu-sr setup --download-ffmpeg
 npu-sr doctor
-npu-sr upscale examples/input.png -o output.png --device npu
+npu-sr upscale examples/input.png -o output.png --model quicksrnet-small-y-x2 --device npu
 ```
 
 If activation is blocked, invoke `.venv\Scripts\python.exe` and
@@ -111,6 +111,16 @@ If activation is blocked, invoke `.venv\Scripts\python.exe` and
 Weights remain ignored. Downloads verify source hashes and write an adjacent
 ONNX integrity/provenance manifest. Outside the clone, use `NPU_SR_MODEL_DIR` or
 acquire models in the user's application cache. See [models](docs/models.md).
+
+For wheel installation and CPU-only Linux, see [installation](docs/installation.md).
+The simplest Windows ARM64 video command is:
+
+```powershell
+npu-sr video input.mp4 -o enhanced.mp4
+```
+
+This selects the validated realtime model and requires strict NPU and hardware
+codec proof. Explicit CPU and historical model options remain available.
 
 ### Images and diagnostics
 
