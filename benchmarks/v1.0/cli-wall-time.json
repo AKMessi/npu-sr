@@ -1,0 +1,2157 @@
+{
+  "external_command_timing": {
+    "exit_code": 0,
+    "elapsed_seconds": 75.8221191,
+    "scope": "process launch through exit, including imports, printing and JSON",
+    "model_device_preset_flags": "none; actual default user command"
+  },
+  "report": {
+    "schema_version": 5,
+    "environment": {
+      "npu_sr_version": "1.0.0",
+      "timestamp": "2026-10-05T11:23:44.890424+00:00",
+      "git_commit": "b17680c1d8fa90ec61a7336ad70218ed01d5ab7e",
+      "working_tree_dirty": true,
+      "python_source_sha256": "e0e03dcc5bfec83fa5270d12ffeee59e3966b10a05be832e03ec44fb1c3a5881",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "1.0.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    "environment_start": {
+      "timestamp": "2026-10-05T11:22:32.291233+00:00",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "scope": "power state at command start; full software/hardware environment recorded at end"
+    },
+    "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffmpeg_sha256": "036cddde79bd3643ee32f80b4fd399c95c627457412a65bf81d6b09dc6aa188e",
+    "input_sha256": "dd8205affe117829a5e43c11e79b1abd65b0b8c103814cb7686352f681730d14",
+    "model": "quicksrnet-small-y-x2",
+    "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+    "model_precision": "float32 (QNN HTP uses float16 math)",
+    "tile_core": [
+      256,
+      256
+    ],
+    "tile_halo": 4,
+    "tile_count_per_frame": 12,
+    "neural_tile_runs": 43200,
+    "backend": "npu",
+    "execution_evidence": {
+      "device_type": "NPU",
+      "cpu_fallback_disabled": true,
+      "executed_kernel_counts": {
+        "QNNExecutionProvider": 1
+      },
+      "providers": [
+        "QNNExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "qnn_backend": "htp",
+      "qnn_package_version": "2.2480.53.0",
+      "htp_performance_mode_requested": "burst",
+      "context_cache": "hit"
+    },
+    "temporal_state": null,
+    "codec_evidence": {
+      "decode": {
+        "method": "D3D11VA hardware",
+        "hardware_format_selected": "d3d11",
+        "explicit_hwdownload": true
+      },
+      "encode": {
+        "method": "Media Foundation hardware",
+        "forced_hardware_enumeration": true,
+        "transform": "QCOM Hardware Encoder - AV1",
+        "initial_probe": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1",
+          "encoded_probe": {
+            "resolution": [
+              1920,
+              1080
+            ],
+            "frame_rate": "30",
+            "duration_seconds": 0.1,
+            "reported_frames": 3,
+            "audio": false,
+            "codec": "av1",
+            "color_range": "tv",
+            "color_space": "unknown",
+            "video_start_seconds": 0.0,
+            "format_start_seconds": 0.0,
+            "audio_start_seconds": null,
+            "audio_codec": null,
+            "audio_channels": null
+          },
+          "probe_frames": 3
+        }
+      }
+    },
+    "codec": "av1",
+    "bitrate": "8M",
+    "frame_format": "nv12",
+    "neural_strength": 1.0,
+    "preset": "realtime",
+    "pipeline_depth": 2,
+    "observed_queue_peaks": {
+      "decode_queue": 2,
+      "encode_queue": 2
+    },
+    "frame_latency_scope": "raw read start through encoder pipe submission; excludes encoder completion",
+    "npu_performance_requested": "burst",
+    "software_quality_crf": null,
+    "audio": "copy",
+    "audio_validation": {
+      "expected_offset_seconds": 0,
+      "actual_offset_seconds": 0.0,
+      "tolerance_seconds": 0.03,
+      "scope": "first audio stream codec/channels/start relative to first video frame; leading audio trimmed"
+    },
+    "input": {
+      "resolution": [
+        960,
+        540
+      ],
+      "frame_rate": "30",
+      "duration_seconds": 120.0,
+      "reported_frames": 3600,
+      "audio": true,
+      "codec": "h264",
+      "color_range": "unknown",
+      "color_space": "unknown",
+      "video_start_seconds": 0.0,
+      "format_start_seconds": 0.0,
+      "audio_start_seconds": 0.0,
+      "audio_codec": "aac",
+      "audio_channels": 2
+    },
+    "output": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "frame_rate": "30",
+      "duration_seconds": 120.0,
+      "reported_frames": 3600,
+      "audio": true,
+      "codec": "av1",
+      "color_range": "tv",
+      "color_space": "unknown",
+      "video_start_seconds": 0.0,
+      "format_start_seconds": 0.0,
+      "audio_start_seconds": 0.0,
+      "audio_codec": "aac",
+      "audio_channels": 2
+    },
+    "frames_processed": 3600,
+    "input_timestamps_validated": true,
+    "timeline_validation": {
+      "input": {
+        "method": "all packet presentation timestamps; actual pipeline frame count required",
+        "count": 3600,
+        "seconds": 0.18006889999378473,
+        "full_decode": false,
+        "limitation": "Packet inspection does not prove decoded pixel integrity."
+      },
+      "output": {
+        "method": "all packet presentation timestamps; actual pipeline frame count required",
+        "count": 3600,
+        "seconds": 0.09701820008922368,
+        "full_decode": false,
+        "limitation": "Packet inspection does not prove decoded pixel integrity."
+      }
+    },
+    "verify_full": false,
+    "output_timestamps_validated": true,
+    "hardware_rate_control": "u_vbr / camera_record",
+    "dropped_frames": 0,
+    "startup_ms": 3135.645799920894,
+    "neural_startup_ms": 2445.168700069189,
+    "warmup_tensor_runs": 3,
+    "processing_seconds": 69.26206839992665,
+    "output_validation_seconds": 0.1418478999985382,
+    "report_preparation_seconds": 2.8701048999791965,
+    "total_seconds": 75.41113619995303,
+    "total_seconds_scope": "process_video function; excludes CLI import, printing and JSON",
+    "whole_command_fps": 47.738307382805914,
+    "whole_command_real_time_factor": 0.6284261349996086,
+    "end_to_end_fps": 51.976501469941844,
+    "real_time_factor": 0.5771839033327221,
+    "process_cpu_seconds": 71.3125,
+    "process_memory": {
+      "working_set_bytes": 123396096,
+      "peak_process_working_set_bytes": 145752064,
+      "cpu_seconds": 72.171875
+    },
+    "resource_samples": [
+      {
+        "elapsed_seconds": 1.0134102000156417,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139075584,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 1.296875
+          },
+          "decoder": {
+            "working_set_bytes": 91131904,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.078125
+          },
+          "encoder": {
+            "working_set_bytes": 122261504,
+            "peak_process_working_set_bytes": 122261504,
+            "cpu_seconds": 0.140625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 2.0284221000038087,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139120640,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 2.3125
+          },
+          "decoder": {
+            "working_set_bytes": 89964544,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.078125
+          },
+          "encoder": {
+            "working_set_bytes": 120070144,
+            "peak_process_working_set_bytes": 122261504,
+            "cpu_seconds": 0.25
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 3.0312949999934062,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139177984,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 3.390625
+          },
+          "decoder": {
+            "working_set_bytes": 89907200,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.078125
+          },
+          "encoder": {
+            "working_set_bytes": 123699200,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.328125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 4.032778799999505,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139083776,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 4.421875
+          },
+          "decoder": {
+            "working_set_bytes": 90714112,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.109375
+          },
+          "encoder": {
+            "working_set_bytes": 120512512,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.40625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 5.0397513000061736,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139624448,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 5.4375
+          },
+          "decoder": {
+            "working_set_bytes": 91586560,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.15625
+          },
+          "encoder": {
+            "working_set_bytes": 120696832,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.46875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 6.045350199914537,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138379264,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 6.4375
+          },
+          "decoder": {
+            "working_set_bytes": 91254784,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.21875
+          },
+          "encoder": {
+            "working_set_bytes": 120684544,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.59375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 7.059749100008048,
+        "processes": {
+          "python": {
+            "working_set_bytes": 137900032,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 7.46875
+          },
+          "decoder": {
+            "working_set_bytes": 91066368,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.265625
+          },
+          "encoder": {
+            "working_set_bytes": 120733696,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.71875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 8.074628799920902,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138444800,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 8.4375
+          },
+          "decoder": {
+            "working_set_bytes": 92356608,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.328125
+          },
+          "encoder": {
+            "working_set_bytes": 120569856,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.8125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 9.089662399957888,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138498048,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 9.4375
+          },
+          "decoder": {
+            "working_set_bytes": 90955776,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.359375
+          },
+          "encoder": {
+            "working_set_bytes": 120676352,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 0.9375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 10.09118510002736,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138559488,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 10.484375
+          },
+          "decoder": {
+            "working_set_bytes": 91574272,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.40625
+          },
+          "encoder": {
+            "working_set_bytes": 120573952,
+            "peak_process_working_set_bytes": 123699200,
+            "cpu_seconds": 1.0
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 11.095753200002946,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138670080,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 11.546875
+          },
+          "decoder": {
+            "working_set_bytes": 91004928,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.453125
+          },
+          "encoder": {
+            "working_set_bytes": 124133376,
+            "peak_process_working_set_bytes": 124133376,
+            "cpu_seconds": 1.109375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 12.098256099969149,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138031104,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 12.578125
+          },
+          "decoder": {
+            "working_set_bytes": 90599424,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.484375
+          },
+          "encoder": {
+            "working_set_bytes": 120827904,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.171875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 13.104530600016005,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138543104,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 13.625
+          },
+          "decoder": {
+            "working_set_bytes": 90705920,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.546875
+          },
+          "encoder": {
+            "working_set_bytes": 120786944,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.28125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 14.108067899942398,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138567680,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 14.6875
+          },
+          "decoder": {
+            "working_set_bytes": 90669056,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.578125
+          },
+          "encoder": {
+            "working_set_bytes": 120733696,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.390625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 15.123035299940966,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138600448,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 15.765625
+          },
+          "decoder": {
+            "working_set_bytes": 90398720,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.609375
+          },
+          "encoder": {
+            "working_set_bytes": 120840192,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.53125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 16.137763499980792,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138948608,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 16.828125
+          },
+          "decoder": {
+            "working_set_bytes": 90046464,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.625
+          },
+          "encoder": {
+            "working_set_bytes": 120844288,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.65625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 17.139473999966867,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138420224,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 17.875
+          },
+          "decoder": {
+            "working_set_bytes": 90566656,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.640625
+          },
+          "encoder": {
+            "working_set_bytes": 120717312,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.75
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 18.143311799969524,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138981376,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 18.90625
+          },
+          "decoder": {
+            "working_set_bytes": 90718208,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.703125
+          },
+          "encoder": {
+            "working_set_bytes": 121565184,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.8125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 19.149636299931444,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138194944,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 19.96875
+          },
+          "decoder": {
+            "working_set_bytes": 90873856,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.75
+          },
+          "encoder": {
+            "working_set_bytes": 122015744,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.859375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 20.15612229995895,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138256384,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 21.015625
+          },
+          "decoder": {
+            "working_set_bytes": 90906624,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.828125
+          },
+          "encoder": {
+            "working_set_bytes": 121544704,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 1.953125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 21.16365300002508,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139075584,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 22.046875
+          },
+          "decoder": {
+            "working_set_bytes": 90902528,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.875
+          },
+          "encoder": {
+            "working_set_bytes": 121376768,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.015625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 22.16825390001759,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138387456,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 23.09375
+          },
+          "decoder": {
+            "working_set_bytes": 90980352,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.890625
+          },
+          "encoder": {
+            "working_set_bytes": 121417728,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.0625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 23.17856159992516,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138682368,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 24.21875
+          },
+          "decoder": {
+            "working_set_bytes": 91578368,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.953125
+          },
+          "encoder": {
+            "working_set_bytes": 121450496,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 24.183313800022006,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139161600,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 25.265625
+          },
+          "decoder": {
+            "working_set_bytes": 90808320,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 0.96875
+          },
+          "encoder": {
+            "working_set_bytes": 121606144,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.21875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 25.186928399954922,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139005952,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 26.328125
+          },
+          "decoder": {
+            "working_set_bytes": 91222016,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.046875
+          },
+          "encoder": {
+            "working_set_bytes": 121372672,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.296875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 26.20180449995678,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139091968,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 27.390625
+          },
+          "decoder": {
+            "working_set_bytes": 91181056,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.09375
+          },
+          "encoder": {
+            "working_set_bytes": 121487360,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.359375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 27.204333400004543,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138567680,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 28.453125
+          },
+          "decoder": {
+            "working_set_bytes": 91176960,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.140625
+          },
+          "encoder": {
+            "working_set_bytes": 121454592,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.421875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 28.213972299941815,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138973184,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 29.484375
+          },
+          "decoder": {
+            "working_set_bytes": 90726400,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.15625
+          },
+          "encoder": {
+            "working_set_bytes": 121671680,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.453125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 29.214348800014704,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138604544,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 30.46875
+          },
+          "decoder": {
+            "working_set_bytes": 90877952,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.203125
+          },
+          "encoder": {
+            "working_set_bytes": 121556992,
+            "peak_process_working_set_bytes": 124137472,
+            "cpu_seconds": 2.515625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 30.214658999932,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138899456,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 31.546875
+          },
+          "decoder": {
+            "working_set_bytes": 91017216,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.234375
+          },
+          "encoder": {
+            "working_set_bytes": 128180224,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.578125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 31.217855599941686,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139489280,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 32.625
+          },
+          "decoder": {
+            "working_set_bytes": 90832896,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.28125
+          },
+          "encoder": {
+            "working_set_bytes": 121544704,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.6875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 32.219816499971785,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138862592,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 33.640625
+          },
+          "decoder": {
+            "working_set_bytes": 90873856,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.375
+          },
+          "encoder": {
+            "working_set_bytes": 121565184,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.765625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 33.230259599979036,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139333632,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 34.734375
+          },
+          "decoder": {
+            "working_set_bytes": 90701824,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.453125
+          },
+          "encoder": {
+            "working_set_bytes": 121585664,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.8125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 34.23678149993066,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139423744,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 35.765625
+          },
+          "decoder": {
+            "working_set_bytes": 91013120,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.515625
+          },
+          "encoder": {
+            "working_set_bytes": 121556992,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.859375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 35.2415548999561,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138706944,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 36.875
+          },
+          "decoder": {
+            "working_set_bytes": 90796032,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.59375
+          },
+          "encoder": {
+            "working_set_bytes": 121593856,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 2.9375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 36.25281069998164,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139575296,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 37.859375
+          },
+          "decoder": {
+            "working_set_bytes": 90836992,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.640625
+          },
+          "encoder": {
+            "working_set_bytes": 121556992,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.0
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 37.254325499990955,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139030528,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 38.84375
+          },
+          "decoder": {
+            "working_set_bytes": 90853376,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.671875
+          },
+          "encoder": {
+            "working_set_bytes": 121544704,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.078125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 38.25532180001028,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139505664,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 39.859375
+          },
+          "decoder": {
+            "working_set_bytes": 91209728,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.78125
+          },
+          "encoder": {
+            "working_set_bytes": 121565184,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.15625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 39.26119959994685,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139079680,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 40.859375
+          },
+          "decoder": {
+            "working_set_bytes": 90742784,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.796875
+          },
+          "encoder": {
+            "working_set_bytes": 121597952,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.203125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 40.26896959997248,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139186176,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 41.90625
+          },
+          "decoder": {
+            "working_set_bytes": 90767360,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.828125
+          },
+          "encoder": {
+            "working_set_bytes": 121937920,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.3125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 41.2791419000132,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139591680,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 42.953125
+          },
+          "decoder": {
+            "working_set_bytes": 90890240,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.859375
+          },
+          "encoder": {
+            "working_set_bytes": 121675776,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.390625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 42.293230399955064,
+        "processes": {
+          "python": {
+            "working_set_bytes": 140959744,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 43.984375
+          },
+          "decoder": {
+            "working_set_bytes": 90955776,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.875
+          },
+          "encoder": {
+            "working_set_bytes": 121659392,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.4375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 43.293605700018816,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139304960,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 45.046875
+          },
+          "decoder": {
+            "working_set_bytes": 90882048,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.9375
+          },
+          "encoder": {
+            "working_set_bytes": 121675776,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.484375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 44.296502899960615,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138833920,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 46.125
+          },
+          "decoder": {
+            "working_set_bytes": 90808320,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 1.984375
+          },
+          "encoder": {
+            "working_set_bytes": 121679872,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.5625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 45.30072429997381,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139296768,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 47.171875
+          },
+          "decoder": {
+            "working_set_bytes": 90984448,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.0
+          },
+          "encoder": {
+            "working_set_bytes": 121683968,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 46.30190830002539,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139411456,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 48.234375
+          },
+          "decoder": {
+            "working_set_bytes": 90693632,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.078125
+          },
+          "encoder": {
+            "working_set_bytes": 121683968,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.65625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 47.305304599925876,
+        "processes": {
+          "python": {
+            "working_set_bytes": 138625024,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 49.28125
+          },
+          "decoder": {
+            "working_set_bytes": 91078656,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.09375
+          },
+          "encoder": {
+            "working_set_bytes": 121716736,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.71875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 48.320276899961755,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139452416,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 50.3125
+          },
+          "decoder": {
+            "working_set_bytes": 90787840,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.15625
+          },
+          "encoder": {
+            "working_set_bytes": 121872384,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.78125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 49.33087229996454,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139354112,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 51.375
+          },
+          "decoder": {
+            "working_set_bytes": 90959872,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.265625
+          },
+          "encoder": {
+            "working_set_bytes": 121802752,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.921875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 50.33311699994374,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139452416,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 52.4375
+          },
+          "decoder": {
+            "working_set_bytes": 90816512,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.375
+          },
+          "encoder": {
+            "working_set_bytes": 121733120,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 3.96875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 51.34162289998494,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139513856,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 53.4375
+          },
+          "decoder": {
+            "working_set_bytes": 90910720,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.40625
+          },
+          "encoder": {
+            "working_set_bytes": 121737216,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.046875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 52.34955699997954,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139046912,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 54.515625
+          },
+          "decoder": {
+            "working_set_bytes": 90976256,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.46875
+          },
+          "encoder": {
+            "working_set_bytes": 121827328,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.140625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 53.35207020002417,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139649024,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 55.546875
+          },
+          "decoder": {
+            "working_set_bytes": 90685440,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.484375
+          },
+          "encoder": {
+            "working_set_bytes": 121745408,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.234375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 54.353922899928875,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139608064,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 56.53125
+          },
+          "decoder": {
+            "working_set_bytes": 90865664,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.5
+          },
+          "encoder": {
+            "working_set_bytes": 121737216,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.296875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 55.361222599982284,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139653120,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 57.625
+          },
+          "decoder": {
+            "working_set_bytes": 91246592,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.5
+          },
+          "encoder": {
+            "working_set_bytes": 122060800,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 56.36479999998119,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139735040,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 58.625
+          },
+          "decoder": {
+            "working_set_bytes": 91045888,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.53125
+          },
+          "encoder": {
+            "working_set_bytes": 122048512,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.4375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 57.36994100001175,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139235328,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 59.6875
+          },
+          "decoder": {
+            "working_set_bytes": 90992640,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.609375
+          },
+          "encoder": {
+            "working_set_bytes": 121856000,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.53125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 58.37026559992228,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139726848,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 60.734375
+          },
+          "decoder": {
+            "working_set_bytes": 91107328,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.65625
+          },
+          "encoder": {
+            "working_set_bytes": 121864192,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.609375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 59.38245209993329,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139259904,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 61.75
+          },
+          "decoder": {
+            "working_set_bytes": 90689536,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.71875
+          },
+          "encoder": {
+            "working_set_bytes": 122028032,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.671875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 60.393762800027616,
+        "processes": {
+          "python": {
+            "working_set_bytes": 142438400,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 62.765625
+          },
+          "decoder": {
+            "working_set_bytes": 90624000,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.75
+          },
+          "encoder": {
+            "working_set_bytes": 121704448,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.75
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 61.40162030002102,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139083776,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 63.796875
+          },
+          "decoder": {
+            "working_set_bytes": 90701824,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.859375
+          },
+          "encoder": {
+            "working_set_bytes": 121757696,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.828125
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 62.402313599945046,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139771904,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 64.84375
+          },
+          "decoder": {
+            "working_set_bytes": 90738688,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.9375
+          },
+          "encoder": {
+            "working_set_bytes": 121769984,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 4.90625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 63.41773290000856,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139386880,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 65.828125
+          },
+          "decoder": {
+            "working_set_bytes": 90824704,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 2.984375
+          },
+          "encoder": {
+            "working_set_bytes": 121802752,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.0
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 64.43215220002457,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139878400,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 66.8125
+          },
+          "decoder": {
+            "working_set_bytes": 90947584,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 3.09375
+          },
+          "encoder": {
+            "working_set_bytes": 121823232,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.140625
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 65.43755329994019,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139980800,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 67.84375
+          },
+          "decoder": {
+            "working_set_bytes": 90750976,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 3.125
+          },
+          "encoder": {
+            "working_set_bytes": 121810944,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.234375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 66.4447411999572,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139542528,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 68.953125
+          },
+          "decoder": {
+            "working_set_bytes": 90906624,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 3.21875
+          },
+          "encoder": {
+            "working_set_bytes": 121786368,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.296875
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 67.45662409998477,
+        "processes": {
+          "python": {
+            "working_set_bytes": 139509760,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 69.96875
+          },
+          "decoder": {
+            "working_set_bytes": 90845184,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 3.296875
+          },
+          "encoder": {
+            "working_set_bytes": 121786368,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.359375
+          }
+        }
+      },
+      {
+        "elapsed_seconds": 68.45751159999054,
+        "processes": {
+          "python": {
+            "working_set_bytes": 140050432,
+            "peak_process_working_set_bytes": 145752064,
+            "cpu_seconds": 70.984375
+          },
+          "decoder": {
+            "working_set_bytes": 90755072,
+            "peak_process_working_set_bytes": 92594176,
+            "cpu_seconds": 3.296875
+          },
+          "encoder": {
+            "working_set_bytes": 121982976,
+            "peak_process_working_set_bytes": 128180224,
+            "cpu_seconds": 5.40625
+          }
+        }
+      }
+    ],
+    "resources": {
+      "sample_window_seconds": 67.4441013999749,
+      "process_cpu_seconds": {
+        "python": 69.6875,
+        "decoder": 3.21875,
+        "encoder": 5.265625
+      },
+      "process_cpu_percent_of_machine": 14.488271282688684,
+      "logical_cpu_count": 8,
+      "peak_sampled_aggregate_working_set_bytes": 358096896,
+      "first_sample_working_set_bytes": 352468992,
+      "last_sample_working_set_bytes": 352788480,
+      "first_window_mean_working_set_bytes": 351230795.2941176,
+      "final_window_mean_working_set_bytes": 352183115.2941176,
+      "memory_comparison_samples_per_window": 34,
+      "scope": "Python + decoder + encoder; 1s sampled working set, CPU deltas between samples; excludes other apps"
+    },
+    "resource_sample_scope": "1s Windows process CPU/working set; last 7200 samples; no process IDs",
+    "sustained": {
+      "first_10s_fps": 50.5,
+      "final_10s_fps": 52.2,
+      "minimum_rolling_10s_fps": 50.5,
+      "scope": "encoder pipe submissions, windows on 1s boundaries; first window includes codec startup, final includes flush; encoder completion timing not available",
+      "throughput_seconds": [
+        {
+          "second": 0,
+          "frames": 43
+        },
+        {
+          "second": 1,
+          "frames": 53
+        },
+        {
+          "second": 2,
+          "frames": 54
+        },
+        {
+          "second": 3,
+          "frames": 53
+        },
+        {
+          "second": 4,
+          "frames": 52
+        },
+        {
+          "second": 5,
+          "frames": 53
+        },
+        {
+          "second": 6,
+          "frames": 51
+        },
+        {
+          "second": 7,
+          "frames": 48
+        },
+        {
+          "second": 8,
+          "frames": 49
+        },
+        {
+          "second": 9,
+          "frames": 49
+        },
+        {
+          "second": 10,
+          "frames": 51
+        },
+        {
+          "second": 11,
+          "frames": 52
+        },
+        {
+          "second": 12,
+          "frames": 53
+        },
+        {
+          "second": 13,
+          "frames": 52
+        },
+        {
+          "second": 14,
+          "frames": 52
+        },
+        {
+          "second": 15,
+          "frames": 53
+        },
+        {
+          "second": 16,
+          "frames": 52
+        },
+        {
+          "second": 17,
+          "frames": 53
+        },
+        {
+          "second": 18,
+          "frames": 52
+        },
+        {
+          "second": 19,
+          "frames": 52
+        },
+        {
+          "second": 20,
+          "frames": 52
+        },
+        {
+          "second": 21,
+          "frames": 52
+        },
+        {
+          "second": 22,
+          "frames": 52
+        },
+        {
+          "second": 23,
+          "frames": 52
+        },
+        {
+          "second": 24,
+          "frames": 53
+        },
+        {
+          "second": 25,
+          "frames": 52
+        },
+        {
+          "second": 26,
+          "frames": 52
+        },
+        {
+          "second": 27,
+          "frames": 53
+        },
+        {
+          "second": 28,
+          "frames": 52
+        },
+        {
+          "second": 29,
+          "frames": 53
+        },
+        {
+          "second": 30,
+          "frames": 52
+        },
+        {
+          "second": 31,
+          "frames": 53
+        },
+        {
+          "second": 32,
+          "frames": 52
+        },
+        {
+          "second": 33,
+          "frames": 53
+        },
+        {
+          "second": 34,
+          "frames": 52
+        },
+        {
+          "second": 35,
+          "frames": 53
+        },
+        {
+          "second": 36,
+          "frames": 52
+        },
+        {
+          "second": 37,
+          "frames": 51
+        },
+        {
+          "second": 38,
+          "frames": 52
+        },
+        {
+          "second": 39,
+          "frames": 53
+        },
+        {
+          "second": 40,
+          "frames": 52
+        },
+        {
+          "second": 41,
+          "frames": 52
+        },
+        {
+          "second": 42,
+          "frames": 53
+        },
+        {
+          "second": 43,
+          "frames": 52
+        },
+        {
+          "second": 44,
+          "frames": 53
+        },
+        {
+          "second": 45,
+          "frames": 52
+        },
+        {
+          "second": 46,
+          "frames": 52
+        },
+        {
+          "second": 47,
+          "frames": 51
+        },
+        {
+          "second": 48,
+          "frames": 53
+        },
+        {
+          "second": 49,
+          "frames": 52
+        },
+        {
+          "second": 50,
+          "frames": 52
+        },
+        {
+          "second": 51,
+          "frames": 53
+        },
+        {
+          "second": 52,
+          "frames": 52
+        },
+        {
+          "second": 53,
+          "frames": 51
+        },
+        {
+          "second": 54,
+          "frames": 52
+        },
+        {
+          "second": 55,
+          "frames": 52
+        },
+        {
+          "second": 56,
+          "frames": 52
+        },
+        {
+          "second": 57,
+          "frames": 53
+        },
+        {
+          "second": 58,
+          "frames": 52
+        },
+        {
+          "second": 59,
+          "frames": 52
+        },
+        {
+          "second": 60,
+          "frames": 53
+        },
+        {
+          "second": 61,
+          "frames": 52
+        },
+        {
+          "second": 62,
+          "frames": 53
+        },
+        {
+          "second": 63,
+          "frames": 52
+        },
+        {
+          "second": 64,
+          "frames": 53
+        },
+        {
+          "second": 65,
+          "frames": 52
+        },
+        {
+          "second": 66,
+          "frames": 53
+        },
+        {
+          "second": 67,
+          "frames": 52
+        },
+        {
+          "second": 68,
+          "frames": 52
+        }
+      ],
+      "throughput_history_scope": "last 600 complete seconds; minimum retained for whole run"
+    },
+    "phase_statistics": {
+      "preprocessing_ms": {
+        "median_ms": 1.343499985523522,
+        "mean_ms": 1.3824686118621483,
+        "p95_ms": 1.68979995069094,
+        "p99_ms": 2.0216470269951956
+      },
+      "tile_extraction_ms": {
+        "median_ms": 0.5216000718064606,
+        "mean_ms": 0.5346696670231823,
+        "p95_ms": 0.6276200001593678,
+        "p99_ms": 0.7589108427055178
+      },
+      "inference_ms": {
+        "median_ms": 9.047199971973896,
+        "mean_ms": 9.090969389750777,
+        "p95_ms": 9.448040218558162,
+        "p99_ms": 9.744619154371318
+      },
+      "stitching_ms": {
+        "median_ms": 0.8350499556399882,
+        "mean_ms": 0.8613127219723538,
+        "p95_ms": 1.02680001873523,
+        "p99_ms": 1.1681011598557234
+      },
+      "fusion_and_finite_check_ms": {
+        "median_ms": 0.32380002085119486,
+        "mean_ms": 0.327309751107047,
+        "p95_ms": 0.42023994028568246,
+        "p99_ms": 0.5359380051959297
+      },
+      "luminance_quantization_ms": {
+        "median_ms": 2.661400008946657,
+        "mean_ms": 2.6882795269031905,
+        "p95_ms": 2.9158100776839997,
+        "p99_ms": 3.140612933784723
+      },
+      "chroma_scaling_ms": {
+        "median_ms": 4.051850002724677,
+        "mean_ms": 4.0982315557387965,
+        "p95_ms": 4.36750496737659,
+        "p99_ms": 4.615384986391289
+      },
+      "output_copy_ms": {
+        "median_ms": 0.11309992987662554,
+        "mean_ms": 0.12624780537508842,
+        "p95_ms": 0.16351007507182652,
+        "p99_ms": 0.615405028220266
+      },
+      "postprocessing_ms": {
+        "median_ms": 7.173700025305152,
+        "mean_ms": 7.243081222049012,
+        "p95_ms": 7.678864919580519,
+        "p99_ms": 8.216149930376558
+      },
+      "enhancement_ms": {
+        "median_ms": 19.018199993297458,
+        "mean_ms": 19.151017916738056,
+        "p95_ms": 20.131409965688363,
+        "p99_ms": 21.00218096282332
+      },
+      "encoder_pipe_wait_ms": {
+        "median_ms": 0.2525000018067658,
+        "mean_ms": 0.28706358328539255,
+        "p95_ms": 0.32602492137812067,
+        "p99_ms": 0.5476549779996239
+      },
+      "decoder_pipe_wait_ms": {
+        "median_ms": 0.6338999955914915,
+        "mean_ms": 0.6627691666815534,
+        "p95_ms": 0.8209499646909533,
+        "p99_ms": 0.9567110659554598
+      },
+      "frame_latency_ms": {
+        "median_ms": 76.52190001681447,
+        "mean_ms": 77.10284880540308,
+        "p95_ms": 80.12033994309604,
+        "p99_ms": 84.5910381048452
+      },
+      "frame_total_ms": {
+        "median_ms": 19.917349913157523,
+        "mean_ms": 20.100850666705,
+        "p95_ms": 21.02373989182524,
+        "p99_ms": 21.908187993103628
+      },
+      "completion_interval_ms": {
+        "median_ms": 19.049800001084805,
+        "mean_ms": 19.22696277777302,
+        "p95_ms": 20.180729997809976,
+        "p99_ms": 21.052453997544937
+      }
+    },
+    "whole_run_phase_statistics": {
+      "preprocessing_ms": {
+        "samples": 3600,
+        "mean_ms": 1.3824686118621483,
+        "minimum_ms": 0.990699976682663,
+        "maximum_ms": 4.276899970136583,
+        "median_ms": 1.325,
+        "p95_ms": 1.675,
+        "p99_ms": 2.025,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "tile_extraction_ms": {
+        "samples": 3600,
+        "mean_ms": 0.5346696670231823,
+        "minimum_ms": 0.4422999918460846,
+        "maximum_ms": 1.060699811205268,
+        "median_ms": 0.525,
+        "p95_ms": 0.625,
+        "p99_ms": 0.775,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "inference_ms": {
+        "samples": 3600,
+        "mean_ms": 9.090969389750777,
+        "minimum_ms": 8.711399976164103,
+        "maximum_ms": 21.438600262627006,
+        "median_ms": 9.025,
+        "p95_ms": 9.425,
+        "p99_ms": 9.725499999999988,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "stitching_ms": {
+        "samples": 3600,
+        "mean_ms": 0.8613127219723538,
+        "minimum_ms": 0.7228001486510038,
+        "maximum_ms": 2.6073999470099807,
+        "median_ms": 0.825,
+        "p95_ms": 1.025,
+        "p99_ms": 1.175,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "fusion_and_finite_check_ms": {
+        "samples": 3600,
+        "mean_ms": 0.327309751107047,
+        "minimum_ms": 0.1906000543385744,
+        "maximum_ms": 0.7924999808892608,
+        "median_ms": 0.325,
+        "p95_ms": 0.425,
+        "p99_ms": 0.525,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "luminance_quantization_ms": {
+        "samples": 3600,
+        "mean_ms": 2.6882795269031905,
+        "minimum_ms": 2.507299999706447,
+        "maximum_ms": 9.498400031588972,
+        "median_ms": 2.675,
+        "p95_ms": 2.925,
+        "p99_ms": 3.125,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "chroma_scaling_ms": {
+        "samples": 3600,
+        "mean_ms": 4.0982315557387965,
+        "minimum_ms": 3.8879000348970294,
+        "maximum_ms": 12.104700086638331,
+        "median_ms": 4.075,
+        "p95_ms": 4.375,
+        "p99_ms": 4.625,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "output_copy_ms": {
+        "samples": 3600,
+        "mean_ms": 0.12624780537508842,
+        "minimum_ms": 0.1012999564409256,
+        "maximum_ms": 0.9935999987646937,
+        "median_ms": 0.125,
+        "p95_ms": 0.175,
+        "p99_ms": 0.625,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "postprocessing_ms": {
+        "samples": 3600,
+        "mean_ms": 7.243081222049012,
+        "minimum_ms": 6.862399983219802,
+        "maximum_ms": 23.241299903020263,
+        "median_ms": 7.175,
+        "p95_ms": 7.675,
+        "p99_ms": 8.225,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "enhancement_ms": {
+        "samples": 3600,
+        "mean_ms": 19.151017916738056,
+        "minimum_ms": 18.257100018672645,
+        "maximum_ms": 42.82470000907779,
+        "median_ms": 19.025,
+        "p95_ms": 20.125,
+        "p99_ms": 21.025,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "encoder_pipe_wait_ms": {
+        "samples": 3600,
+        "mean_ms": 0.28706358328539255,
+        "minimum_ms": 0.13950001448392868,
+        "maximum_ms": 121.18679995182902,
+        "median_ms": 0.275,
+        "p95_ms": 0.325,
+        "p99_ms": 0.5254999999999882,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "decoder_pipe_wait_ms": {
+        "samples": 3600,
+        "mean_ms": 0.6627691666815534,
+        "minimum_ms": 0.26110000908374786,
+        "maximum_ms": 93.1613000575453,
+        "median_ms": 0.625,
+        "p95_ms": 0.825,
+        "p99_ms": 0.975,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "frame_latency_ms": {
+        "samples": 3600,
+        "mean_ms": 77.10284880540308,
+        "minimum_ms": 47.048799926415086,
+        "maximum_ms": 186.51190004311502,
+        "median_ms": 76.525,
+        "p95_ms": 80.125,
+        "p99_ms": 84.57549999999999,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "frame_total_ms": {
+        "samples": 3600,
+        "mean_ms": 20.100850666705,
+        "minimum_ms": 18.954900093376637,
+        "maximum_ms": 141.50899986270815,
+        "median_ms": 19.925,
+        "p95_ms": 21.025,
+        "p99_ms": 21.92549999999999,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      },
+      "completion_interval_ms": {
+        "samples": 3600,
+        "mean_ms": 19.22696277777302,
+        "minimum_ms": 0.5380999064072967,
+        "maximum_ms": 140.15790005214512,
+        "median_ms": 19.025,
+        "p95_ms": 20.175,
+        "p99_ms": 21.075,
+        "overflow_samples": 0,
+        "quantile_bin_width_ms": 0.05,
+        "scope": "all frames; approximate midpoint histogram quantiles; actual mean/extrema"
+      }
+    },
+    "phase_sample_scope": "last 3600 frames; bounded storage",
+    "inference_only_theoretical_fps": 109.99927038885501,
+    "timing_scope": "decode process start through encoder flush; excludes initialization, output validation and hashing",
+    "pipe_timings": "read/write blocking time, not isolated hardware codec execution time"
+  }
+}

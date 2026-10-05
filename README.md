@@ -11,24 +11,26 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**The v1 candidate is undergoing final installed-wheel validation.** The latest
-published release is [v0.9.0](https://github.com/AKMessi/npu-sr/releases/tag/v0.9.0).
-Setup, diagnostics, strict hardware proof and a one-command video preset are included.
+**v1.0 locally enhances low-resolution video using the NPU for neural work and
+hardware video engines for codec work.** Setup, diagnostics and strict execution
+checks are included. Image SR/denoising and CPU/DirectML comparison remain available.
 
-**Validated v0.9 baseline: 960×540 → 1920×1080 @ 30 FPS, 53.05 FPS median throughput**,
-three independent trials, **678–682 seconds of actual processing each**,
+**960×540 → 1920×1080 @ 30 FPS: 52.74 FPS median end-to-end throughput**,
+three independent trials, **682 seconds of actual processing each**,
 36,000 frames and 432,000 neural calls per trial, zero application drops.
 Strict QNN, D3D11VA H.264 decode and QCOM AV1 hardware encoding are verified.
 On 24 frozen clips, including twelve originally held out of model selection,
 it beats delivered bicubic by **2.00 dB PSNR, 0.00912 SSIM and 5.95 VMAF**
 on average. All clips were rechecked without retuning.
 
-See the [v0.9 results](benchmarks/v0.9/summary.md) for every trial, clip, setting,
+See the [v1.0 results](benchmarks/v1.0/summary.md) for every trial, clip, setting,
 format limitation and timing scope. AC, Balanced, saver off; other background
 processes uncontrolled; power and temperature not measured. These are results
 from one laptop and declared inputs, not general Snapdragon performance claims.
-Whole function time was 688–693 seconds; the final packet audit took under one
-second. `--verify-full` retains the slower decoded-frame forensic audit.
+Whole function time was 692–697 seconds; the final packet audit took 0.70–1.35
+seconds. A separate plain 120-second user command took **75.82 seconds from
+process launch to exit**, including imports/printing/JSON. `--verify-full`
+retains the slower decoded-frame forensic audit.
 
 ## Results and examples
 
@@ -63,7 +65,7 @@ performance trials; they are not general Snapdragon claims. Historical reports:
 [v0.1](benchmarks/snapdragon-x-plus.json) · [v0.2](benchmarks/v0.2/summary.md) ·
 [v0.3](benchmarks/v0.3/summary.md) · [v0.4](benchmarks/v0.4/summary.md) ·
 [v0.5](benchmarks/v0.5/summary.md) · [v0.6](benchmarks/v0.6/summary.md) ·
-[v0.8](benchmarks/v0.8/summary.md) · [v0.9](benchmarks/v0.9/summary.md).
+[v0.8](benchmarks/v0.8/summary.md) · [v0.9](benchmarks/v0.9/summary.md) · [v1.0](benchmarks/v1.0/summary.md).
 
 ## Hardware and prerequisites
 
@@ -239,7 +241,7 @@ Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.
 - [x] v0.6: cheaper default validation and CPU/memory profiling
 - [x] v0.8: packaged installation, executed diagnostics and user presets
 - [x] v0.9: long-run reliability, audio/cadence and format validation
-- [ ] v1.0: final installed-wheel release validation
+- [x] v1.0: final installed-wheel sustained validation, reliable outputs and published artifacts
 - [ ] Temporal model: researched, quality gate not passed; remains outside defaults
 - [ ] Future: temporal models, live sources, perceptual preprocessing, further codec/NPU experiments
 

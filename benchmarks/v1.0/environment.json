@@ -1,0 +1,145 @@
+{
+  "environments": [
+    {
+      "npu_sr_version": "1.0.0",
+      "timestamp": "2026-10-05T10:52:01.712610+00:00",
+      "git_commit": "b17680c1d8fa90ec61a7336ad70218ed01d5ab7e",
+      "working_tree_dirty": false,
+      "python_source_sha256": "e0e03dcc5bfec83fa5270d12ffeee59e3966b10a05be832e03ec44fb1c3a5881",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "1.0.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    {
+      "npu_sr_version": "1.0.0",
+      "timestamp": "2026-10-05T11:03:40.024870+00:00",
+      "git_commit": "b17680c1d8fa90ec61a7336ad70218ed01d5ab7e",
+      "working_tree_dirty": false,
+      "python_source_sha256": "e0e03dcc5bfec83fa5270d12ffeee59e3966b10a05be832e03ec44fb1c3a5881",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "1.0.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    },
+    {
+      "npu_sr_version": "1.0.0",
+      "timestamp": "2026-10-05T11:15:16.818555+00:00",
+      "git_commit": "b17680c1d8fa90ec61a7336ad70218ed01d5ab7e",
+      "working_tree_dirty": false,
+      "python_source_sha256": "e0e03dcc5bfec83fa5270d12ffeee59e3966b10a05be832e03ec44fb1c3a5881",
+      "os": "Windows",
+      "architecture": "ARM64",
+      "python": "3.12.0",
+      "software_versions": {
+        "npu-sr": "1.0.0",
+        "numpy": "2.5.3",
+        "Pillow": "12.3.0",
+        "onnx": "1.23.1",
+        "onnxruntime-windowsml": "1.25.2.202605110140",
+        "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+        "winrt-runtime": "3.2.1"
+      },
+      "power": "not measured",
+      "background_processes": "uncontrolled",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "qnn_catalog_package": "2.2480.53.0",
+      "windows_build": 26200,
+      "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+      "npu_driver": "30.0.219.1000"
+    }
+  ],
+  "start_snapshots": [
+    {
+      "timestamp": "2026-10-05T10:40:33.952237+00:00",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "scope": "power state at command start; full software/hardware environment recorded at end"
+    },
+    {
+      "timestamp": "2026-10-05T10:52:15.327521+00:00",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "scope": "power state at command start; full software/hardware environment recorded at end"
+    },
+    {
+      "timestamp": "2026-10-05T11:03:52.174911+00:00",
+      "power_state": {
+        "ac_line": "plugged in",
+        "active_power_scheme": "Balanced",
+        "battery_percent": 100,
+        "energy_saver": false
+      },
+      "scope": "power state at command start; full software/hardware environment recorded at end"
+    }
+  ],
+  "measurement_candidate": {
+    "git_commit": "b17680c1d8fa90ec61a7336ad70218ed01d5ab7e",
+    "wheel_sha256": "308ca24f181d262277d389ef7733026aa4f99bbb4a2d3d4d068876745953fbfc",
+    "wheel_bytes": 112288,
+    "power_state_before_trials": {
+      "ac_line": "plugged in",
+      "active_power_scheme": "Balanced",
+      "battery_percent": 100,
+      "energy_saver": false
+    },
+    "method": "Fresh ARM64 installed wheel, three independent primary trials; no concurrent project tests/training/builds"
+  },
+  "scope": "One X1P-42-100, AC/Balanced/saver off; no concurrent project tests/training/builds; other background processes uncontrolled",
+  "power": "not measured",
+  "temperature": "not measured",
+  "accelerator_utilization": "not measured"
+}

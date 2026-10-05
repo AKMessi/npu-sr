@@ -1,0 +1,12 @@
+{
+  "tool": "pip-audit",
+  "scope": "installed development distributions; editable project skipped",
+  "checked_distributions": 120,
+  "known_advisories": 0,
+  "skipped": [
+    {
+      "name": "npu-sr",
+      "reason": "distribution marked as editable"
+    }
+  ]
+}

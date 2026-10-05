@@ -1,0 +1,24 @@
+{
+  "quality_numeric_gate_passed": true,
+  "production_realtime_acceptance": {
+    "passed": true,
+    "failures": [],
+    "minimum_trials": 3,
+    "minimum_processing_seconds": 600,
+    "profile": "production 540p30"
+  },
+  "ordinary_tests": 280,
+  "npu_tests": 12,
+  "directml_tests": 8,
+  "video_hardware_tests": 7,
+  "source_fingerprint": "e0e03dcc5bfec83fa5270d12ffeee59e3966b10a05be832e03ec44fb1c3a5881",
+  "limitations": [
+    "Temporal model candidates rejected; spatial default retained",
+    "Visual inspection limited to hash-verified consecutive crops, not full playback or blinded study",
+    "Coarse temporal diagnostic worsens 2.17%; native diagnostic improves 8.93%; neither is standard flicker metric",
+    "One verified SKU; others unknown",
+    "HDR/VFR/anamorphic/rotation metadata unsupported",
+    "No power/temperature/accelerator utilization measured",
+    "No zero-copy or live/player integration"
+  ]
+}

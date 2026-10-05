@@ -1,9 +1,13 @@
 # Changelog
 
-## 1.0.0 — unreleased candidate
+## 1.0.0 — 2026-10-05
 
-- Freeze the validated Small/NV12 realtime profile for final installed-wheel
-  validation; retain strict proof, persistent sessions and compatibility commands.
+- Fresh ARM64 installed-wheel validation: three actual 682-second processing
+  trials at 52.73/52.77/52.74 FPS; all 108,000 frames and 1,296,000 neural calls,
+  strict QNN/hardware codecs, zero application drops, bounded memory/queues.
+- Full frozen 24-clip quality recheck remains +2.00 dB PSNR/+0.00912 SSIM/
+  +5.95 VMAF versus bicubic; final installed-wheel regression deltas are zero.
+  Both temporal diagnostics and limited inspection scope remain disclosed.
 - Quality preset selects AV1, matching its measured delivered-quality comparison;
   balanced retains H.264 and explicit codec overrides remain compatible.
 - Prevent report/checkpoint writes from replacing models, manifests or generated

@@ -1,0 +1,1275 @@
+{
+  "baseline_report": "../v0.9/quality.json",
+  "baseline_report_sha256": "d6251b14ad6bed6f3b897e198c48c8a0ce94257bf5d4c81eca8510d71f6e5cc8",
+  "protocol": "native coded Y, peak255; sampled PSNR/SSIM every third frame, VMAF/NEG every frame; equal clip means; frozen v0.5 selection rechecked without retuning",
+  "selection_lock": {
+    "status": "locked before holdout preparation/evaluation; not a release pass",
+    "model": "quicksrnet-small-y-x2",
+    "model_sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf",
+    "source_sha256": "d95d70f1d2366cb9c28d99f8c7aa5bb07e1ffeaf5d7e30d9c66ab0fa28c6d0f8",
+    "corpus": "benchmarks/corpus-v1.json",
+    "selection_data": "12 development clips only",
+    "settings": {
+      "frame_format": "nv12",
+      "neural_strength": 1.0,
+      "color_boundary": "preserve coded range/matrix on both raw encoder input and output",
+      "tile_core": 256,
+      "halo": 4,
+      "npu_performance": "burst",
+      "pipeline_depth": 2,
+      "decode": "hardware",
+      "encode": "hardware",
+      "codec": "av1",
+      "bitrate": "8M"
+    },
+    "rationale": "Unblended small improves all three development averages and secondary NEG versus bicubic. Scalar 0.5/0.75 reduce PSNR/SSIM/VMAF averages. Temporal diagnostic increases about 2.4%, no inspected severe artifact. Medium doubles model-only compute for modest preliminary quality gains; reserved for comparison. Avoid learned/adaptive fusion complexity without a demonstrated benefit.",
+    "required_next": [
+      "evaluate all 12 holdout clips with these fixed settings",
+      "manual temporal/artifact review",
+      "sustained performance validation",
+      "complete comparative model reports",
+      "all release checks"
+    ],
+    "corpus_definition_sha256": "0c1fa99643fe341f700007806b3d71904a88dd28dc4362d876e766f5b037a7d0"
+  },
+  "summary": {
+    "candidate": "quicksrnet-small-y-x2",
+    "aggregation": "equal per-clip arithmetic means; all declared clips",
+    "numeric_gate_passed": true,
+    "failures": [],
+    "release_gate": "manual temporal/artifact review and performance validation also required",
+    "groups": {
+      "all": {
+        "clips": 24,
+        "bicubic": {
+          "psnr_y_db": 37.865273205842364,
+          "ssim_y": 0.9619095408809275,
+          "vmaf": 85.61595945833334,
+          "vmaf_neg": 81.94709458333334,
+          "temporal_difference_error": 0.0013617733468209152
+        },
+        "candidate": {
+          "psnr_y_db": 39.869301505357704,
+          "ssim_y": 0.9710323487114197,
+          "vmaf": 91.56559879166666,
+          "vmaf_neg": 87.72792270833334,
+          "temporal_difference_error": 0.0013912817465103605
+        },
+        "gain": {
+          "psnr_y_db": 2.0040282995153453,
+          "ssim_y": 0.009122807830492232,
+          "vmaf": 5.949639333333333,
+          "vmaf_neg": 5.780828125000002,
+          "temporal_difference_error": 2.9508399689445006e-05
+        }
+      },
+      "split:development": {
+        "clips": 12,
+        "bicubic": {
+          "psnr_y_db": 37.11006828130743,
+          "ssim_y": 0.9617812838517459,
+          "vmaf": 84.96517591666668,
+          "vmaf_neg": 80.07300066666666,
+          "temporal_difference_error": 0.0012606391086145805
+        },
+        "candidate": {
+          "psnr_y_db": 39.30489787507889,
+          "ssim_y": 0.9713361209680103,
+          "vmaf": 91.39232750000001,
+          "vmaf_neg": 86.54159758333333,
+          "temporal_difference_error": 0.0012909989953975292
+        },
+        "gain": {
+          "psnr_y_db": 2.1948295937714586,
+          "ssim_y": 0.00955483711626461,
+          "vmaf": 6.427151583333333,
+          "vmaf_neg": 6.468596916666669,
+          "temporal_difference_error": 3.035988678294848e-05
+        }
+      },
+      "source:tos": {
+        "clips": 7,
+        "bicubic": {
+          "psnr_y_db": 39.984826040572365,
+          "ssim_y": 0.9679975573558359,
+          "vmaf": 88.39016671428571,
+          "vmaf_neg": 86.94313271428571,
+          "temporal_difference_error": 0.0020874357634401617
+        },
+        "candidate": {
+          "psnr_y_db": 41.211561180031154,
+          "ssim_y": 0.9716072440680993,
+          "vmaf": 91.87641,
+          "vmaf_neg": 90.35557457142856,
+          "temporal_difference_error": 0.00213032982256917
+        },
+        "gain": {
+          "psnr_y_db": 1.226735139458785,
+          "ssim_y": 0.003609686712263122,
+          "vmaf": 3.4862432857142847,
+          "vmaf_neg": 3.41244185714286,
+          "temporal_difference_error": 4.2894059129008716e-05
+        }
+      },
+      "category:talking-heads": {
+        "clips": 1,
+        "bicubic": {
+          "psnr_y_db": 37.540952788535925,
+          "ssim_y": 0.9618217389519452,
+          "vmaf": 85.79433,
+          "vmaf_neg": 84.044422,
+          "temporal_difference_error": 0.0017875301972620904
+        },
+        "candidate": {
+          "psnr_y_db": 39.62378229584766,
+          "ssim_y": 0.9678545537002925,
+          "vmaf": 92.112408,
+          "vmaf_neg": 90.051922,
+          "temporal_difference_error": 0.0017993581318783978
+        },
+        "gain": {
+          "psnr_y_db": 2.082829507311736,
+          "ssim_y": 0.0060328147483472705,
+          "vmaf": 6.318078,
+          "vmaf_neg": 6.007500000000007,
+          "temporal_difference_error": 1.1827934616307368e-05
+        }
+      },
+      "category:faces": {
+        "clips": 5,
+        "bicubic": {
+          "psnr_y_db": 38.25889101678978,
+          "ssim_y": 0.9537843570878841,
+          "vmaf": 85.009441,
+          "vmaf_neg": 83.03442059999999,
+          "temporal_difference_error": 0.0018685519670520998
+        },
+        "candidate": {
+          "psnr_y_db": 39.21592080800776,
+          "ssim_y": 0.9598058411098617,
+          "vmaf": 89.26711900000001,
+          "vmaf_neg": 87.04223920000001,
+          "temporal_difference_error": 0.0019001203061299056
+        },
+        "gain": {
+          "psnr_y_db": 0.9570297912179797,
+          "ssim_y": 0.00602148402197753,
+          "vmaf": 4.2576779999999985,
+          "vmaf_neg": 4.007818600000005,
+          "temporal_difference_error": 3.156833907780588e-05
+        }
+      },
+      "category:city": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 43.15272992256584,
+          "ssim_y": 0.9854035451470146,
+          "vmaf": 91.89628350000001,
+          "vmaf_neg": 90.184887,
+          "temporal_difference_error": 0.0013944107002893452
+        },
+        "candidate": {
+          "psnr_y_db": 44.78917562606689,
+          "ssim_y": 0.9880638179769987,
+          "vmaf": 95.7800045,
+          "vmaf_neg": 94.008772,
+          "temporal_difference_error": 0.001420939727335049
+        },
+        "gain": {
+          "psnr_y_db": 1.636445703501046,
+          "ssim_y": 0.0026602728299842116,
+          "vmaf": 3.8837210000000013,
+          "vmaf_neg": 3.823884999999997,
+          "temporal_difference_error": 2.652902704570353e-05
+        }
+      },
+      "category:low-light": {
+        "clips": 3,
+        "bicubic": {
+          "psnr_y_db": 38.296331205353944,
+          "ssim_y": 0.9725306237687361,
+          "vmaf": 81.329085,
+          "vmaf_neg": 79.54344466666667,
+          "temporal_difference_error": 0.0007429360040130577
+        },
+        "candidate": {
+          "psnr_y_db": 40.92150288721995,
+          "ssim_y": 0.9822606064992541,
+          "vmaf": 90.11550266666667,
+          "vmaf_neg": 87.603304,
+          "temporal_difference_error": 0.0007546353268507141
+        },
+        "gain": {
+          "psnr_y_db": 2.625171681866005,
+          "ssim_y": 0.009729982730518024,
+          "vmaf": 8.78641766666667,
+          "vmaf_neg": 8.059859333333335,
+          "temporal_difference_error": 1.1699322837656472e-05
+        }
+      },
+      "category:fast-motion": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 36.56972890505237,
+          "ssim_y": 0.9535316731614274,
+          "vmaf": 93.659407,
+          "vmaf_neg": 90.042768,
+          "temporal_difference_error": 0.0023845464803325493
+        },
+        "candidate": {
+          "psnr_y_db": 38.302419644002654,
+          "ssim_y": 0.9640372557920978,
+          "vmaf": 97.854495,
+          "vmaf_neg": 94.82648850000001,
+          "temporal_difference_error": 0.002471854181414865
+        },
+        "gain": {
+          "psnr_y_db": 1.7326907389502821,
+          "ssim_y": 0.010505582630670307,
+          "vmaf": 4.195087999999998,
+          "vmaf_neg": 4.783720500000008,
+          "temporal_difference_error": 8.730770108231569e-05
+        }
+      },
+      "category:scene-cuts": {
+        "clips": 1,
+        "bicubic": {
+          "psnr_y_db": 35.774532019430445,
+          "ssim_y": 0.9545632201765037,
+          "vmaf": 92.212148,
+          "vmaf_neg": 91.160474,
+          "temporal_difference_error": 0.002723823609087467
+        },
+        "candidate": {
+          "psnr_y_db": 37.64773755060495,
+          "ssim_y": 0.9645692500517156,
+          "vmaf": 96.169082,
+          "vmaf_neg": 95.07752,
+          "temporal_difference_error": 0.002821835060379522
+        },
+        "gain": {
+          "psnr_y_db": 1.8732055311745057,
+          "ssim_y": 0.01000602987521182,
+          "vmaf": 3.956934000000004,
+          "vmaf_neg": 3.9170460000000134,
+          "temporal_difference_error": 9.801145129205522e-05
+        }
+      },
+      "source:bbb": {
+        "clips": 6,
+        "bicubic": {
+          "psnr_y_db": 36.541617540087834,
+          "ssim_y": 0.9461345104684774,
+          "vmaf": 86.49647750000001,
+          "vmaf_neg": 81.42963216666665,
+          "temporal_difference_error": 0.0010139903022483743
+        },
+        "candidate": {
+          "psnr_y_db": 38.54548185566059,
+          "ssim_y": 0.9622509684691996,
+          "vmaf": 93.36627083333333,
+          "vmaf_neg": 87.92496066666666,
+          "temporal_difference_error": 0.001043223290174615
+        },
+        "gain": {
+          "psnr_y_db": 2.00386431557275,
+          "ssim_y": 0.01611645800072209,
+          "vmaf": 6.869793333333334,
+          "vmaf_neg": 6.495328499999999,
+          "temporal_difference_error": 2.9232987926240618e-05
+        }
+      },
+      "category:animation": {
+        "clips": 8,
+        "bicubic": {
+          "psnr_y_db": 38.4070457952529,
+          "ssim_y": 0.9557833159753599,
+          "vmaf": 87.2767755,
+          "vmaf_neg": 82.90851025,
+          "temporal_difference_error": 0.001163875363158491
+        },
+        "candidate": {
+          "psnr_y_db": 40.40399082719333,
+          "ssim_y": 0.9685860020674849,
+          "vmaf": 93.60578562500001,
+          "vmaf_neg": 89.11607087499999,
+          "temporal_difference_error": 0.0011965218785559512
+        },
+        "gain": {
+          "psnr_y_db": 1.9969450319404363,
+          "ssim_y": 0.012802686092124912,
+          "vmaf": 6.329010125,
+          "vmaf_neg": 6.207560625000001,
+          "temporal_difference_error": 3.264651539746017e-05
+        }
+      },
+      "category:landscape": {
+        "clips": 1,
+        "bicubic": {
+          "psnr_y_db": 33.939255470865206,
+          "ssim_y": 0.9279491117015478,
+          "vmaf": 83.475438,
+          "vmaf_neg": 78.443385,
+          "temporal_difference_error": 0.0015752492908941782
+        },
+        "candidate": {
+          "psnr_y_db": 36.68916349464867,
+          "ssim_y": 0.9576611809616662,
+          "vmaf": 91.249396,
+          "vmaf_neg": 85.463719,
+          "temporal_difference_error": 0.0016454434545383223
+        },
+        "gain": {
+          "psnr_y_db": 2.749908023783462,
+          "ssim_y": 0.02971206926011838,
+          "vmaf": 7.7739580000000075,
+          "vmaf_neg": 7.020333999999991,
+          "temporal_difference_error": 7.019416364414401e-05
+        }
+      },
+      "category:foliage": {
+        "clips": 4,
+        "bicubic": {
+          "psnr_y_db": 38.42273267930775,
+          "ssim_y": 0.9531734334823689,
+          "vmaf": 82.5041265,
+          "vmaf_neg": 79.60967950000001,
+          "temporal_difference_error": 0.0014491316065410116
+        },
+        "candidate": {
+          "psnr_y_db": 39.53356283038523,
+          "ssim_y": 0.9596391744588775,
+          "vmaf": 86.43851475,
+          "vmaf_neg": 83.23610000000001,
+          "temporal_difference_error": 0.0014869688455128082
+        },
+        "gain": {
+          "psnr_y_db": 1.1108301510774794,
+          "ssim_y": 0.006465740976508649,
+          "vmaf": 3.9343882499999996,
+          "vmaf_neg": 3.626420500000002,
+          "temporal_difference_error": 3.7837238971796734e-05
+        }
+      },
+      "source:sintel": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 44.003330560748076,
+          "ssim_y": 0.9847297324960078,
+          "vmaf": 89.6176695,
+          "vmaf_neg": 87.3451445,
+          "temporal_difference_error": 0.0016135305458888408
+        },
+        "candidate": {
+          "psnr_y_db": 45.97951774179157,
+          "ssim_y": 0.9875911028623412,
+          "vmaf": 94.32433,
+          "vmaf_neg": 92.6894015,
+          "temporal_difference_error": 0.0016564176436999595
+        },
+        "gain": {
+          "psnr_y_db": 1.976187181043496,
+          "ssim_y": 0.0028613703663333823,
+          "vmaf": 4.706660499999998,
+          "vmaf_neg": 5.344257000000006,
+          "temporal_difference_error": 4.288709781111882e-05
+        }
+      },
+      "category:camera-pan": {
+        "clips": 7,
+        "bicubic": {
+          "psnr_y_db": 36.831219719421206,
+          "ssim_y": 0.9649760896950814,
+          "vmaf": 85.75194642857142,
+          "vmaf_neg": 83.41685500000001,
+          "temporal_difference_error": 0.0010160372273976398
+        },
+        "candidate": {
+          "psnr_y_db": 39.62535243447615,
+          "ssim_y": 0.9760954398522186,
+          "vmaf": 93.65956128571428,
+          "vmaf_neg": 90.849103,
+          "temporal_difference_error": 0.0010458131454594414
+        },
+        "gain": {
+          "psnr_y_db": 2.7941327150549307,
+          "ssim_y": 0.011119350157137133,
+          "vmaf": 7.907614857142856,
+          "vmaf_neg": 7.432248000000001,
+          "temporal_difference_error": 2.9775918061801736e-05
+        }
+      },
+      "source:forest": {
+        "clips": 4,
+        "bicubic": {
+          "psnr_y_db": 37.9830201234912,
+          "ssim_y": 0.9455893794877821,
+          "vmaf": 80.7875645,
+          "vmaf_neg": 79.35707375,
+          "temporal_difference_error": 0.0018220566171037273
+        },
+        "candidate": {
+          "psnr_y_db": 38.86522516526695,
+          "ssim_y": 0.9540778688811216,
+          "vmaf": 85.07419,
+          "vmaf_neg": 82.22318200000001,
+          "temporal_difference_error": 0.0018619795278799261
+        },
+        "gain": {
+          "psnr_y_db": 0.8822050417757481,
+          "ssim_y": 0.008488489393339405,
+          "vmaf": 4.286625500000001,
+          "vmaf_neg": 2.86610825,
+          "temporal_difference_error": 3.992291077619845e-05
+        }
+      },
+      "category:natural-landscape": {
+        "clips": 1,
+        "bicubic": {
+          "psnr_y_db": 39.02688499270924,
+          "ssim_y": 0.9618247223396013,
+          "vmaf": 92.669608,
+          "vmaf_neg": 90.595469,
+          "temporal_difference_error": 0.0021219508538574184
+        },
+        "candidate": {
+          "psnr_y_db": 39.685942839626264,
+          "ssim_y": 0.9670583823912576,
+          "vmaf": 95.690232,
+          "vmaf_neg": 92.329229,
+          "temporal_difference_error": 0.0022572221214012984
+        },
+        "gain": {
+          "psnr_y_db": 0.6590578469170225,
+          "ssim_y": 0.005233660051656375,
+          "vmaf": 3.020623999999998,
+          "vmaf_neg": 1.7337600000000037,
+          "temporal_difference_error": 0.00013527126754388002
+        }
+      },
+      "source:night": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 36.04160800004314,
+          "ssim_y": 0.965953587658591,
+          "vmaf": 78.18234100000001,
+          "vmaf_neg": 76.5840185,
+          "temporal_difference_error": 0.0004531607379714053
+        },
+        "candidate": {
+          "psnr_y_db": 38.982004158053066,
+          "ssim_y": 0.978919087427951,
+          "vmaf": 88.314901,
+          "vmaf_neg": 85.79408950000001,
+          "temporal_difference_error": 0.00045834177131270925
+        },
+        "gain": {
+          "psnr_y_db": 2.9403961580099285,
+          "ssim_y": 0.012965499769360067,
+          "vmaf": 10.132560000000005,
+          "vmaf_neg": 9.210071000000006,
+          "temporal_difference_error": 5.18103334130391e-06
+        }
+      },
+      "category:fine-texture": {
+        "clips": 5,
+        "bicubic": {
+          "psnr_y_db": 37.71814222672363,
+          "ssim_y": 0.9709017604353274,
+          "vmaf": 86.5048524,
+          "vmaf_neg": 78.556241,
+          "temporal_difference_error": 0.000830514101827212
+        },
+        "candidate": {
+          "psnr_y_db": 40.08634463469447,
+          "ssim_y": 0.9807868658174506,
+          "vmaf": 92.76653400000001,
+          "vmaf_neg": 85.0024652,
+          "temporal_difference_error": 0.000830864610664866
+        },
+        "gain": {
+          "psnr_y_db": 2.3682024079708426,
+          "ssim_y": 0.00988510538212306,
+          "vmaf": 6.261681600000003,
+          "vmaf_neg": 6.4462242000000005,
+          "temporal_difference_error": 3.505088376539215e-07
+        }
+      },
+      "source:None": {
+        "clips": 3,
+        "bicubic": {
+          "psnr_y_db": 32.53370393337863,
+          "ssim_y": 0.9831049528600726,
+          "vmaf": 86.107572,
+          "vmaf_neg": 74.75464233333334,
+          "temporal_difference_error": 0.0001883197099983963
+        },
+        "candidate": {
+          "psnr_y_db": 37.241824091215456,
+          "ssim_y": 0.9935626645590375,
+          "vmaf": 96.222218,
+          "vmaf_neg": 86.52388300000001,
+          "temporal_difference_error": 0.00018055882522390837
+        },
+        "gain": {
+          "psnr_y_db": 4.708120157836819,
+          "ssim_y": 0.010457711698964886,
+          "vmaf": 10.114645999999999,
+          "vmaf_neg": 11.769240666666667,
+          "temporal_difference_error": -7.760884774487935e-06
+        }
+      },
+      "category:text": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 31.02192349608164,
+          "ssim_y": 0.9835726426989995,
+          "vmaf": 79.161358,
+          "vmaf_neg": 77.342105,
+          "temporal_difference_error": 0.00017328295793573738
+        },
+        "candidate": {
+          "psnr_y_db": 36.97927785353297,
+          "ssim_y": 0.9959368346104048,
+          "vmaf": 94.333327,
+          "vmaf_neg": 92.05091200000001,
+          "temporal_difference_error": 0.00015992062886258855
+        },
+        "gain": {
+          "psnr_y_db": 5.9573543574513295,
+          "ssim_y": 0.012364191911405364,
+          "vmaf": 15.171968999999997,
+          "vmaf_neg": 14.708807,
+          "temporal_difference_error": -1.3362329073148815e-05
+        }
+      },
+      "category:ui": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 31.02192349608164,
+          "ssim_y": 0.9835726426989995,
+          "vmaf": 79.161358,
+          "vmaf_neg": 77.342105,
+          "temporal_difference_error": 0.00017328295793573738
+        },
+        "candidate": {
+          "psnr_y_db": 36.97927785353297,
+          "ssim_y": 0.9959368346104048,
+          "vmaf": 94.333327,
+          "vmaf_neg": 92.05091200000001,
+          "temporal_difference_error": 0.00015992062886258855
+        },
+        "gain": {
+          "psnr_y_db": 5.9573543574513295,
+          "ssim_y": 0.012364191911405364,
+          "vmaf": 15.171968999999997,
+          "vmaf_neg": 14.708807,
+          "temporal_difference_error": -1.3362329073148815e-05
+        }
+      },
+      "category:synthetic": {
+        "clips": 1,
+        "bicubic": {
+          "psnr_y_db": 35.55726480797262,
+          "ssim_y": 0.9821695731822191,
+          "vmaf": 100.0,
+          "vmaf_neg": 69.579717,
+          "temporal_difference_error": 0.00021839321412371417
+        },
+        "candidate": {
+          "psnr_y_db": 37.76691656658042,
+          "ssim_y": 0.988814324456303,
+          "vmaf": 100.0,
+          "vmaf_neg": 75.469825,
+          "temporal_difference_error": 0.000221835217946548
+        },
+        "gain": {
+          "psnr_y_db": 2.209651758607798,
+          "ssim_y": 0.0066447512740839265,
+          "vmaf": 0.0,
+          "vmaf_neg": 5.890107999999998,
+          "temporal_difference_error": 3.442003822833826e-06
+        }
+      },
+      "category:compression-artifacts": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 35.30173720889289,
+          "ssim_y": 0.9278470257336063,
+          "vmaf": 61.4208075,
+          "vmaf_neg": 60.318239500000004,
+          "temporal_difference_error": 0.0025332720355363183
+        },
+        "candidate": {
+          "psnr_y_db": 35.47457458692142,
+          "ssim_y": 0.9283428912106384,
+          "vmaf": 64.5709085,
+          "vmaf_neg": 63.119535,
+          "temporal_difference_error": 0.0025343655737661056
+        },
+        "gain": {
+          "psnr_y_db": 0.17283737802853238,
+          "ssim_y": 0.0004958654770320647,
+          "vmaf": 3.150100999999996,
+          "vmaf_neg": 2.801295500000002,
+          "temporal_difference_error": 1.0935382297873157e-06
+        }
+      },
+      "split:holdout": {
+        "clips": 12,
+        "bicubic": {
+          "psnr_y_db": 38.6204781303773,
+          "ssim_y": 0.9620377979101095,
+          "vmaf": 86.266743,
+          "vmaf_neg": 83.82118849999999,
+          "temporal_difference_error": 0.0014629075850272502
+        },
+        "candidate": {
+          "psnr_y_db": 40.43370513563652,
+          "ssim_y": 0.970728576454829,
+          "vmaf": 91.73887008333332,
+          "vmaf_neg": 88.91424783333333,
+          "temporal_difference_error": 0.001491564497623192
+        },
+        "gain": {
+          "psnr_y_db": 1.8132270052592325,
+          "ssim_y": 0.008690778544719854,
+          "vmaf": 5.4721270833333335,
+          "vmaf_neg": 5.093059333333335,
+          "temporal_difference_error": 2.865691259594153e-05
+        }
+      },
+      "category:skin": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 44.34570306332943,
+          "ssim_y": 0.9826166962004946,
+          "vmaf": 93.1112845,
+          "vmaf_neg": 91.05971199999999,
+          "temporal_difference_error": 0.0018688040373530568
+        },
+        "candidate": {
+          "psnr_y_db": 45.286869028374525,
+          "ssim_y": 0.9841836267292157,
+          "vmaf": 96.03714149999999,
+          "vmaf_neg": 94.18934250000001,
+          "temporal_difference_error": 0.0019096428817512588
+        },
+        "gain": {
+          "psnr_y_db": 0.9411659650450908,
+          "ssim_y": 0.0015669305287209778,
+          "vmaf": 2.9258570000000006,
+          "vmaf_neg": 3.1296305000000046,
+          "temporal_difference_error": 4.083884439820193e-05
+        }
+      },
+      "category:natural-foliage": {
+        "clips": 2,
+        "bicubic": {
+          "psnr_y_db": 38.204938951739635,
+          "ssim_y": 0.9478389600188917,
+          "vmaf": 85.9382965,
+          "vmaf_neg": 84.417059,
+          "temporal_difference_error": 0.0014837197744002489
+        },
+        "candidate": {
+          "psnr_y_db": 39.61510975633534,
+          "ssim_y": 0.962071934129777,
+          "vmaf": 91.8182685,
+          "vmaf_neg": 88.3132405,
+          "temporal_difference_error": 0.0014915999650321316
+        },
+        "gain": {
+          "psnr_y_db": 1.4101708045957047,
+          "ssim_y": 0.014232974110885366,
+          "vmaf": 5.879972000000002,
+          "vmaf_neg": 3.8961814999999973,
+          "temporal_difference_error": 7.880190631882715e-06
+        }
+      }
+    },
+    "pairs": [
+      {
+        "clip": "conversation",
+        "bicubic": {
+          "psnr_y_db": 37.540952788535925,
+          "ssim_y": 0.9618217389519452,
+          "vmaf": 85.79433,
+          "vmaf_neg": 84.044422,
+          "temporal_difference_error": 0.0017875301972620904
+        },
+        "candidate": {
+          "psnr_y_db": 39.62378229584766,
+          "ssim_y": 0.9678545537002925,
+          "vmaf": 92.112408,
+          "vmaf_neg": 90.051922,
+          "temporal_difference_error": 0.0017993581318783978
+        },
+        "gain": {
+          "psnr_y_db": 2.082829507311736,
+          "ssim_y": 0.0060328147483472705,
+          "vmaf": 6.318078,
+          "vmaf_neg": 6.007500000000007,
+          "temporal_difference_error": 1.1827934616307368e-05
+        }
+      },
+      {
+        "clip": "dark-city",
+        "bicubic": {
+          "psnr_y_db": 42.80577761597556,
+          "ssim_y": 0.9856846959890264,
+          "vmaf": 87.622573,
+          "vmaf_neg": 85.462297,
+          "temporal_difference_error": 0.0013224865360963623
+        },
+        "candidate": {
+          "psnr_y_db": 44.800500345553715,
+          "ssim_y": 0.9889436446418604,
+          "vmaf": 93.716706,
+          "vmaf_neg": 91.221733,
+          "temporal_difference_error": 0.0013472224379267239
+        },
+        "gain": {
+          "psnr_y_db": 1.9947227295781573,
+          "ssim_y": 0.0032589486528339373,
+          "vmaf": 6.094132999999999,
+          "vmaf_neg": 5.759435999999994,
+          "temporal_difference_error": 2.4735901830361595e-05
+        }
+      },
+      {
+        "clip": "action",
+        "bicubic": {
+          "psnr_y_db": 35.774532019430445,
+          "ssim_y": 0.9545632201765037,
+          "vmaf": 92.212148,
+          "vmaf_neg": 91.160474,
+          "temporal_difference_error": 0.002723823609087467
+        },
+        "candidate": {
+          "psnr_y_db": 37.64773755060495,
+          "ssim_y": 0.9645692500517156,
+          "vmaf": 96.169082,
+          "vmaf_neg": 95.07752,
+          "temporal_difference_error": 0.002821835060379522
+        },
+        "gain": {
+          "psnr_y_db": 1.8732055311745057,
+          "ssim_y": 0.01000602987521182,
+          "vmaf": 3.956934000000004,
+          "vmaf_neg": 3.9170460000000134,
+          "temporal_difference_error": 9.801145129205522e-05
+        }
+      },
+      {
+        "clip": "animated-landscape",
+        "bicubic": {
+          "psnr_y_db": 33.939255470865206,
+          "ssim_y": 0.9279491117015478,
+          "vmaf": 83.475438,
+          "vmaf_neg": 78.443385,
+          "temporal_difference_error": 0.0015752492908941782
+        },
+        "candidate": {
+          "psnr_y_db": 36.68916349464867,
+          "ssim_y": 0.9576611809616662,
+          "vmaf": 91.249396,
+          "vmaf_neg": 85.463719,
+          "temporal_difference_error": 0.0016454434545383223
+        },
+        "gain": {
+          "psnr_y_db": 2.749908023783462,
+          "ssim_y": 0.02971206926011838,
+          "vmaf": 7.7739580000000075,
+          "vmaf_neg": 7.020333999999991,
+          "temporal_difference_error": 7.019416364414401e-05
+        }
+      },
+      {
+        "clip": "animated-leaves",
+        "bicubic": {
+          "psnr_y_db": 41.492720002878144,
+          "ssim_y": 0.9809825112133209,
+          "vmaf": 86.847412,
+          "vmaf_neg": 82.193707,
+          "temporal_difference_error": 0.000300460381339895
+        },
+        "candidate": {
+          "psnr_y_db": 43.500076652717254,
+          "ssim_y": 0.9854292497096193,
+          "vmaf": 93.336191,
+          "vmaf_neg": 88.026101,
+          "temporal_difference_error": 0.00030491028380932785
+        },
+        "gain": {
+          "psnr_y_db": 2.00735664983911,
+          "ssim_y": 0.004446738496298397,
+          "vmaf": 6.488778999999994,
+          "vmaf_neg": 5.832393999999994,
+          "temporal_difference_error": 4.449902469432854e-06
+        }
+      },
+      {
+        "clip": "animated-face",
+        "bicubic": {
+          "psnr_y_db": 33.48066466450445,
+          "ssim_y": 0.9183091944191011,
+          "vmaf": 82.320753,
+          "vmaf_neg": 78.100422,
+          "temporal_difference_error": 0.0002433545008455253
+        },
+        "candidate": {
+          "psnr_y_db": 34.82476458255945,
+          "ssim_y": 0.9384753830783271,
+          "vmaf": 90.929816,
+          "vmaf_neg": 85.817238,
+          "temporal_difference_error": 0.000252007287714956
+        },
+        "gain": {
+          "psnr_y_db": 1.3440999180550008,
+          "ssim_y": 0.020166188659226036,
+          "vmaf": 8.609063000000006,
+          "vmaf_neg": 7.716816000000009,
+          "temporal_difference_error": 8.652786869430668e-06
+        }
+      },
+      {
+        "clip": "snow-pan",
+        "bicubic": {
+          "psnr_y_db": 44.816336932394904,
+          "ssim_y": 0.9884282401318766,
+          "vmaf": 86.155698,
+          "vmaf_neg": 84.014945,
+          "temporal_difference_error": 0.0013182169390082777
+        },
+        "candidate": {
+          "psnr_y_db": 47.123911699538084,
+          "ssim_y": 0.9912552620237145,
+          "vmaf": 91.840757,
+          "vmaf_neg": 90.377449,
+          "temporal_difference_error": 0.0013464705724994645
+        },
+        "gain": {
+          "psnr_y_db": 2.30757476714318,
+          "ssim_y": 0.002827021891837922,
+          "vmaf": 5.685058999999995,
+          "vmaf_neg": 6.362504000000001,
+          "temporal_difference_error": 2.825363349118681e-05
+        }
+      },
+      {
+        "clip": "aerial-landscape",
+        "bicubic": {
+          "psnr_y_db": 39.02688499270924,
+          "ssim_y": 0.9618247223396013,
+          "vmaf": 92.669608,
+          "vmaf_neg": 90.595469,
+          "temporal_difference_error": 0.0021219508538574184
+        },
+        "candidate": {
+          "psnr_y_db": 39.685942839626264,
+          "ssim_y": 0.9670583823912576,
+          "vmaf": 95.690232,
+          "vmaf_neg": 92.329229,
+          "temporal_difference_error": 0.0022572221214012984
+        },
+        "gain": {
+          "psnr_y_db": 0.6590578469170225,
+          "ssim_y": 0.005233660051656375,
+          "vmaf": 3.020623999999998,
+          "vmaf_neg": 1.7337600000000037,
+          "temporal_difference_error": 0.00013527126754388002
+        }
+      },
+      {
+        "clip": "starfield",
+        "bicubic": {
+          "psnr_y_db": 35.79893045300499,
+          "ssim_y": 0.9654007833922746,
+          "vmaf": 78.53246,
+          "vmaf_neg": 76.923107,
+          "temporal_difference_error": 0.0004394585352753754
+        },
+        "candidate": {
+          "psnr_y_db": 38.74134012577469,
+          "ssim_y": 0.9786174903579342,
+          "vmaf": 88.758581,
+          "vmaf_neg": 85.986551,
+          "temporal_difference_error": 0.0004446278486231231
+        },
+        "gain": {
+          "psnr_y_db": 2.942409672769699,
+          "ssim_y": 0.013216706965659575,
+          "vmaf": 10.226121000000006,
+          "vmaf_neg": 9.063444000000004,
+          "temporal_difference_error": 5.1693133477477234e-06
+        }
+      },
+      {
+        "clip": "ui-horizontal",
+        "bicubic": {
+          "psnr_y_db": 30.979342807408266,
+          "ssim_y": 0.9834024388300631,
+          "vmaf": 79.714133,
+          "vmaf_neg": 77.720292,
+          "temporal_difference_error": 0.00020903724026901857
+        },
+        "candidate": {
+          "psnr_y_db": 36.85022748242359,
+          "ssim_y": 0.9957781726958311,
+          "vmaf": 94.732935,
+          "vmaf_neg": 92.375832,
+          "temporal_difference_error": 0.000189820440574594
+        },
+        "gain": {
+          "psnr_y_db": 5.870884675015326,
+          "ssim_y": 0.012375733865768068,
+          "vmaf": 15.018801999999994,
+          "vmaf_neg": 14.655540000000002,
+          "temporal_difference_error": -1.9216799694424572e-05
+        }
+      },
+      {
+        "clip": "moving-texture",
+        "bicubic": {
+          "psnr_y_db": 35.55726480797262,
+          "ssim_y": 0.9821695731822191,
+          "vmaf": 100.0,
+          "vmaf_neg": 69.579717,
+          "temporal_difference_error": 0.00021839321412371417
+        },
+        "candidate": {
+          "psnr_y_db": 37.76691656658042,
+          "ssim_y": 0.988814324456303,
+          "vmaf": 100.0,
+          "vmaf_neg": 75.469825,
+          "temporal_difference_error": 0.000221835217946548
+        },
+        "gain": {
+          "psnr_y_db": 2.209651758607798,
+          "ssim_y": 0.0066447512740839265,
+          "vmaf": 0.0,
+          "vmaf_neg": 5.890107999999998,
+          "temporal_difference_error": 3.442003822833826e-06
+        }
+      },
+      {
+        "clip": "compressed-faces",
+        "bicubic": {
+          "psnr_y_db": 34.108156820009484,
+          "ssim_y": 0.9308391758934687,
+          "vmaf": 64.237558,
+          "vmaf_neg": 62.637771,
+          "temporal_difference_error": 0.0028677080053156434
+        },
+        "candidate": {
+          "psnr_y_db": 34.40441086507199,
+          "ssim_y": 0.9315765575476023,
+          "vmaf": 68.171826,
+          "vmaf_neg": 66.302052,
+          "temporal_difference_error": 0.0028612350874780697
+        },
+        "gain": {
+          "psnr_y_db": 0.2962540450625042,
+          "ssim_y": 0.0007373816541336176,
+          "vmaf": 3.9342679999999888,
+          "vmaf_neg": 3.6642810000000026,
+          "temporal_difference_error": -6.472917837573727e-06
+        }
+      },
+      {
+        "clip": "street-foliage",
+        "bicubic": {
+          "psnr_y_db": 40.663598873341435,
+          "ssim_y": 0.973749508634055,
+          "vmaf": 99.551636,
+          "vmaf_neg": 98.945408,
+          "temporal_difference_error": 0.00261540320990053
+        },
+        "candidate": {
+          "psnr_y_db": 41.48803202385572,
+          "ssim_y": 0.9766824014656226,
+          "vmaf": 99.855165,
+          "vmaf_neg": 99.662653,
+          "temporal_difference_error": 0.0027350799749760422
+        },
+        "gain": {
+          "psnr_y_db": 0.8244331505142881,
+          "ssim_y": 0.002932892831567613,
+          "vmaf": 0.3035289999999975,
+          "vmaf_neg": 0.7172450000000055,
+          "temporal_difference_error": 0.00011967676507551204
+        }
+      },
+      {
+        "clip": "city-pan",
+        "bicubic": {
+          "psnr_y_db": 43.49968222915613,
+          "ssim_y": 0.9851223943050027,
+          "vmaf": 96.169994,
+          "vmaf_neg": 94.907477,
+          "temporal_difference_error": 0.0014663348644823283
+        },
+        "candidate": {
+          "psnr_y_db": 44.77785090658006,
+          "ssim_y": 0.9871839913121372,
+          "vmaf": 97.843303,
+          "vmaf_neg": 96.795811,
+          "temporal_difference_error": 0.0014946570167433738
+        },
+        "gain": {
+          "psnr_y_db": 1.2781686774239347,
+          "ssim_y": 0.002061597007134486,
+          "vmaf": 1.6733090000000033,
+          "vmaf_neg": 1.8883340000000004,
+          "temporal_difference_error": 2.8322152261045465e-05
+        }
+      },
+      {
+        "clip": "skin-closeup",
+        "bicubic": {
+          "psnr_y_db": 45.501081937557615,
+          "ssim_y": 0.9842021675408503,
+          "vmaf": 93.142928,
+          "vmaf_neg": 91.44408,
+          "temporal_difference_error": 0.0018287639219367099
+        },
+        "candidate": {
+          "psnr_y_db": 45.738614272703984,
+          "ssim_y": 0.9844403097574634,
+          "vmaf": 95.26638,
+          "vmaf_neg": 93.377331,
+          "temporal_difference_error": 0.001852921048602063
+        },
+        "gain": {
+          "psnr_y_db": 0.23753233514636918,
+          "ssim_y": 0.00023814221661311308,
+          "vmaf": 2.1234520000000003,
+          "vmaf_neg": 1.9332509999999985,
+          "temporal_difference_error": 2.415712666535303e-05
+        }
+      },
+      {
+        "clip": "animated-fur",
+        "bicubic": {
+          "psnr_y_db": 37.932845068369794,
+          "ssim_y": 0.9639592808221877,
+          "vmaf": 86.215195,
+          "vmaf_neg": 81.614322,
+          "temporal_difference_error": 0.0012377815196663886
+        },
+        "candidate": {
+          "psnr_y_db": 40.7003803304407,
+          "ssim_y": 0.9770989137465106,
+          "vmaf": 93.549602,
+          "vmaf_neg": 88.348621,
+          "temporal_difference_error": 0.0012347163493231549
+        },
+        "gain": {
+          "psnr_y_db": 2.7675352620709077,
+          "ssim_y": 0.013139632924322853,
+          "vmaf": 7.334406999999999,
+          "vmaf_neg": 6.734298999999993,
+          "temporal_difference_error": -3.0651703432336714e-06
+        }
+      },
+      {
+        "clip": "animated-motion",
+        "bicubic": {
+          "psnr_y_db": 37.3649257906743,
+          "ssim_y": 0.9525001261463512,
+          "vmaf": 95.106666,
+          "vmaf_neg": 88.925062,
+          "temporal_difference_error": 0.0020452693515776318
+        },
+        "candidate": {
+          "psnr_y_db": 38.95710173740036,
+          "ssim_y": 0.96350526153248,
+          "vmaf": 99.539908,
+          "vmaf_neg": 94.575457,
+          "temporal_difference_error": 0.002121873302450208
+        },
+        "gain": {
+          "psnr_y_db": 1.5921759467260586,
+          "ssim_y": 0.011005135386128795,
+          "vmaf": 4.433241999999993,
+          "vmaf_neg": 5.650395000000003,
+          "temporal_difference_error": 7.660395087257616e-05
+        }
+      },
+      {
+        "clip": "animated-forest-pan",
+        "bicubic": {
+          "psnr_y_db": 35.03929424323512,
+          "ssim_y": 0.9331068385083556,
+          "vmaf": 85.013401,
+          "vmaf_neg": 79.300895,
+          "temporal_difference_error": 0.000681826769166628
+        },
+        "candidate": {
+          "psnr_y_db": 36.60140433619708,
+          "ssim_y": 0.9513358217865937,
+          "vmaf": 91.592712,
+          "vmaf_neg": 85.318628,
+          "temporal_difference_error": 0.0007003890632117217
+        },
+        "gain": {
+          "psnr_y_db": 1.5621100929619587,
+          "ssim_y": 0.018228983278238076,
+          "vmaf": 6.579311000000004,
+          "vmaf_neg": 6.017733000000007,
+          "temporal_difference_error": 1.8562294045093683e-05
+        }
+      },
+      {
+        "clip": "animated-skin",
+        "bicubic": {
+          "psnr_y_db": 43.19032418910125,
+          "ssim_y": 0.9810312248601389,
+          "vmaf": 93.079641,
+          "vmaf_neg": 90.675344,
+          "temporal_difference_error": 0.001908844152769404
+        },
+        "candidate": {
+          "psnr_y_db": 44.83512378404506,
+          "ssim_y": 0.9839269437009678,
+          "vmaf": 96.807903,
+          "vmaf_neg": 95.001354,
+          "temporal_difference_error": 0.0019663647149004548
+        },
+        "gain": {
+          "psnr_y_db": 1.6447995949438123,
+          "ssim_y": 0.0028957188408288426,
+          "vmaf": 3.728262000000001,
+          "vmaf_neg": 4.326010000000011,
+          "temporal_difference_error": 5.752056213105083e-05
+        }
+      },
+      {
+        "clip": "aerial-foliage",
+        "bicubic": {
+          "psnr_y_db": 43.01738525718945,
+          "ssim_y": 0.9764727728550486,
+          "vmaf": 89.944385,
+          "vmaf_neg": 88.419129,
+          "temporal_difference_error": 0.0017900742994031466
+        },
+        "candidate": {
+          "psnr_y_db": 44.0004179603451,
+          "ssim_y": 0.980182916028537,
+          "vmaf": 93.653266,
+          "vmaf_neg": 89.605701,
+          "temporal_difference_error": 0.0017810879434292082
+        },
+        "gain": {
+          "psnr_y_db": 0.9830327031556507,
+          "ssim_y": 0.0037101431734883894,
+          "vmaf": 3.708881000000005,
+          "vmaf_neg": 1.1865719999999982,
+          "temporal_difference_error": -8.986355973938367e-06
+        }
+      },
+      {
+        "clip": "ground-forest",
+        "bicubic": {
+          "psnr_y_db": 33.39249264628982,
+          "ssim_y": 0.9192051471827346,
+          "vmaf": 81.932208,
+          "vmaf_neg": 80.414989,
+          "temporal_difference_error": 0.0011773652493973514
+        },
+        "candidate": {
+          "psnr_y_db": 35.229801552325576,
+          "ssim_y": 0.943960952231017,
+          "vmaf": 89.983271,
+          "vmaf_neg": 87.02078,
+          "temporal_difference_error": 0.0012021119866350552
+        },
+        "gain": {
+          "psnr_y_db": 1.8373089060357586,
+          "ssim_y": 0.024755805048282342,
+          "vmaf": 8.051063,
+          "vmaf_neg": 6.605790999999996,
+          "temporal_difference_error": 2.4746737237703797e-05
+        }
+      },
+      {
+        "clip": "night-silhouettes",
+        "bicubic": {
+          "psnr_y_db": 36.28428554708128,
+          "ssim_y": 0.9665063919249072,
+          "vmaf": 77.832222,
+          "vmaf_neg": 76.24493,
+          "temporal_difference_error": 0.0004668629406674353
+        },
+        "candidate": {
+          "psnr_y_db": 39.22266819033144,
+          "ssim_y": 0.9792206844979677,
+          "vmaf": 87.871221,
+          "vmaf_neg": 85.601628,
+          "temporal_difference_error": 0.0004720556940022954
+        },
+        "gain": {
+          "psnr_y_db": 2.938382643250158,
+          "ssim_y": 0.01271429257306056,
+          "vmaf": 10.038999000000004,
+          "vmaf_neg": 9.356698000000009,
+          "temporal_difference_error": 5.192753334860097e-06
+        }
+      },
+      {
+        "clip": "ui-vertical",
+        "bicubic": {
+          "psnr_y_db": 31.064504184755016,
+          "ssim_y": 0.9837428465679359,
+          "vmaf": 78.608583,
+          "vmaf_neg": 76.963918,
+          "temporal_difference_error": 0.00013752867560245618
+        },
+        "candidate": {
+          "psnr_y_db": 37.10832822464235,
+          "ssim_y": 0.9960954965249785,
+          "vmaf": 93.933719,
+          "vmaf_neg": 91.725992,
+          "temporal_difference_error": 0.00013002081715058313
+        },
+        "gain": {
+          "psnr_y_db": 6.043824039887333,
+          "ssim_y": 0.01235264995704266,
+          "vmaf": 15.325136,
+          "vmaf_neg": 14.762073999999998,
+          "temporal_difference_error": -7.507858451873058e-06
+        }
+      },
+      {
+        "clip": "compressed-foliage",
+        "bicubic": {
+          "psnr_y_db": 36.49531759777629,
+          "ssim_y": 0.924854875573744,
+          "vmaf": 58.604057,
+          "vmaf_neg": 57.998708,
+          "temporal_difference_error": 0.002198836065756993
+        },
+        "candidate": {
+          "psnr_y_db": 36.54473830877085,
+          "ssim_y": 0.9251092248736745,
+          "vmaf": 60.969991,
+          "vmaf_neg": 59.937018,
+          "temporal_difference_error": 0.0022074960600541415
+        },
+        "gain": {
+          "psnr_y_db": 0.04942071099456058,
+          "ssim_y": 0.0002543492999305119,
+          "vmaf": 2.365934000000003,
+          "vmaf_neg": 1.9383100000000013,
+          "temporal_difference_error": 8.659994297148359e-06
+        }
+      }
+    ],
+    "native_temporal_diagnostic": {
+      "bicubic": 0.0055233105626388565,
+      "quicksrnet-small-y-x2": 0.005030088340858174
+    }
+  },
+  "basis": "Complete frozen 24-clip v0.9 recheck; v1 default weights and native-Y frame math unchanged. Final installed-wheel regression checks are recorded separately. Repeated holdout is not newly unseen data."
+}

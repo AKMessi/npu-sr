@@ -1,0 +1,172 @@
+{
+  "os": "Windows",
+  "architecture": "ARM64",
+  "windows_build": 26200,
+  "processor": "Snapdragon(R) X Plus - X1P42100 - Qualcomm(R) Oryon(TM) CPU",
+  "npu_driver": "30.0.219.1000",
+  "software_versions": {
+    "npu-sr": "1.0.0",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0",
+    "onnx": "1.23.1",
+    "onnxruntime-windowsml": "1.25.2.202605110140",
+    "wasdk-Microsoft.Windows.AI.MachineLearning": "2.3.0",
+    "winrt-runtime": "3.2.1"
+  },
+  "model": "quicksrnet-small-y-x2",
+  "model_status": "ready",
+  "windows_ml": "available",
+  "qnn_status": "ready (strict inference and ORT profile verified)",
+  "cpu_backend": "available",
+  "errors": [],
+  "ready": true,
+  "ort_version": "1.25.2",
+  "ort_providers": [
+    "DmlExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "evidence": {
+    "device_type": "NPU",
+    "cpu_fallback_disabled": true,
+    "executed_kernel_counts": {
+      "QNNExecutionProvider": 1
+    },
+    "providers": [
+      "QNNExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "qnn_backend": "htp",
+    "qnn_package_version": "2.2480.53.0",
+    "htp_performance_mode_requested": "default",
+    "context_cache": "disabled"
+  },
+  "startup_ms": 2505.6186000583693,
+  "models": {
+    "quicksrnet-small-y-x2": {
+      "status": "ready",
+      "sha256": "4e54ddc579e3ec2fbcb66a14b621b88eb3d65b7d84d39672a5450a5fd78154bf"
+    },
+    "quicksrnet-medium-y-x2": {
+      "status": "ready",
+      "sha256": "e39e5ecf2ad7346b18eb39a49d2d13b0349d36169b58632db4200b1416002f06"
+    },
+    "dncnn-25": {
+      "status": "ready",
+      "sha256": "87e89ac1ef6521da388a5a65b572e532b0eb120cf56bd33df1c9cbfa9d7ab40a"
+    }
+  },
+  "video": {
+    "ready": true,
+    "decode": {
+      "h264": {
+        "status": "proven",
+        "evidence": {
+          "method": "D3D11VA hardware",
+          "hardware_format_selected": "d3d11",
+          "explicit_hwdownload": true
+        }
+      }
+    },
+    "encode": {
+      "h264": {
+        "status": "proven",
+        "evidence": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - H264",
+          "encoded_probe": {
+            "resolution": [
+              1920,
+              1080
+            ],
+            "frame_rate": "30",
+            "duration_seconds": 0.1,
+            "reported_frames": 3,
+            "audio": false,
+            "codec": "h264",
+            "color_range": "unknown",
+            "color_space": "unknown",
+            "video_start_seconds": 0.0,
+            "format_start_seconds": 0.0,
+            "audio_start_seconds": null,
+            "audio_codec": null,
+            "audio_channels": null
+          },
+          "probe_frames": 3
+        }
+      },
+      "hevc": {
+        "status": "proven",
+        "evidence": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - HEVC",
+          "encoded_probe": {
+            "resolution": [
+              1920,
+              1080
+            ],
+            "frame_rate": "30",
+            "duration_seconds": 0.1,
+            "reported_frames": 3,
+            "audio": false,
+            "codec": "hevc",
+            "color_range": "tv",
+            "color_space": "unknown",
+            "video_start_seconds": 0.0,
+            "format_start_seconds": 0.0,
+            "audio_start_seconds": null,
+            "audio_codec": null,
+            "audio_channels": null
+          },
+          "probe_frames": 3
+        }
+      },
+      "av1": {
+        "status": "proven",
+        "evidence": {
+          "method": "Media Foundation hardware",
+          "forced_hardware_enumeration": true,
+          "transform": "QCOM Hardware Encoder - AV1",
+          "encoded_probe": {
+            "resolution": [
+              1920,
+              1080
+            ],
+            "frame_rate": "30",
+            "duration_seconds": 0.1,
+            "reported_frames": 3,
+            "audio": false,
+            "codec": "av1",
+            "color_range": "tv",
+            "color_space": "unknown",
+            "video_start_seconds": 0.0,
+            "format_start_seconds": 0.0,
+            "audio_start_seconds": null,
+            "audio_codec": null,
+            "audio_channels": null
+          },
+          "probe_frames": 3
+        }
+      }
+    },
+    "errors": [],
+    "ffmpeg_version": "ffmpeg version n9.0.1-11-ge47273f4d9-20260831 Copyright (c) 2000-2026 the FFmpeg developers",
+    "scope": "three SDR frames, H.264 960x540 decode and 1920x1080 encode at 30 FPS"
+  },
+  "gpu": {
+    "status": "proven",
+    "evidence": {
+      "device_type": "GPU",
+      "cpu_fallback_disabled": true,
+      "executed_kernel_counts": {
+        "DmlExecutionProvider": 1
+      },
+      "providers": [
+        "DmlExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "gpu_description": "Qualcomm(R) Adreno(TM) X1-45 GPU"
+    }
+  }
+}
