@@ -100,3 +100,21 @@ For an explicit CPU comparison use `--device cpu --decode software --encode soft
 Use AC with energy saver off for sustained benchmarks; record the actual state.
 Normal progress reports frames submitted to the encoder, not displayed-frame
 latency. Native vendor preparation logs may still appear on a cache miss.
+
+
+## Hardware output format failure
+
+Strict startup encodes/probes the requested dimensions, framerate and container.
+On the tested QCOM driver, AV1 1708×960 becomes 1712×960 and is rejected. Choose
+`--codec hevc` or `--codec h264` with MP4. H.264/HEVC hardware MKV headers fail
+on this stack; choose MP4 or explicit `--encode software`. AV1/MKV uses tested
+sequence-header extraction. Do not remove frame/geometry checks to force a file.
+[Executed limits and evidence](hardware-codecs.md).
+
+## Variable cadence or HDR
+
+VFR, HDR, anamorphic pixels and rotation metadata are rejected. Normalize them
+explicitly before enhancement; a CFR conversion may insert/drop source frames
+outside npu-sr and must not be described as frame-preserving enhancement. A
+nominal FPS value alone does not establish cadence. The application validates
+actual packet timestamps/counts and processed/encoded frame accounting.

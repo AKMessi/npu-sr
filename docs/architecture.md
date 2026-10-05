@@ -1,101 +1,73 @@
 # Architecture
 
-`cli.py` parses commands and presents actionable failures. `model.py` supplies
-the model registry and checks generated manifests. `acquire.py` retains the exact
-v0.1 baseline; `acquire_models.py` constructs additional static ONNX graphs from
-hash-checked upstream parameters without TensorFlow/PyTorch dependencies.
-`qnn.py` owns Windows ML's process-lifetime bootstrap and
-provider registration. `runtime.py` owns strict session creation and inference proof.
-`image.py` owns preprocessing, tiling, reconstruction and file IO.
-`benchmark.py` measures inference independently of acquisition/startup;
-`suite.py` adds full-image phase measurements and reference-based quality evaluation.
+```mermaid
+flowchart TD
+    source[Compressed CFR SDR video] --> decode[FFmpeg decoder]
+    decode --> frames[Owned NV12 frames / bounded read queue]
+    frames --> cpu[CPU Y normalization and halo tiles]
+    catalog[Windows ML catalog / Python ORT registration] --> runtime[Persistent ONNX Runtime / QNN HTP session]
+    cpu --> runtime
+    runtime --> npu[Qualcomm Hexagon NPU]
+    npu --> post[CPU stitching / clamp / chroma resize]
+    post --> queue[Bounded write queue]
+    queue --> encode[FFmpeg encoder and audio mux]
+    encode --> validate[Counts / cadence / geometry / audio validation]
+    validate --> output[Atomic enhanced output]
+```
 
-## Model
+Windows ML installs/registers the provider before ORT session creation; it does
+not perform a second inference pass. Decoder/encoder are labeled hardware only
+when their executed proofs pass. Current primary profile uses D3D11VA H.264 and
+QCOM AV1 Media Foundation. NV12 is downloaded to system memory, not zero-copy.
 
-The export preserves the pretrained TF-ESPCN parameters and function: 5×5 Conv
-(1→64), Relu, 3×3 Conv (64→32), Relu, 3×3 Conv (32→4), DepthToSpace x2, Tanh.
-Bias addition is folded into each Conv, weights change HWIO→OIHW, and the external
-layout changes NHWC→NCHW. With one output channel, DCR pixel shuffle matches the
-upstream TensorFlow depth-to-space ordering. No retraining occurs.
+## Modules
 
-Input: `[1,1,136,136]`, float32 luminance in [0,1]. Output: `[1,1,272,272]`, float32.
-Model opset is 13 and IR version is 8 for broad runtime compatibility.
-CPU uses FP32; the selected QNN HTP device uses FP16 math for floating operators.
-The CPU and NPU consume the same ONNX file, identified by SHA256 in benchmark JSON.
+| Responsibility | Module |
+|---|---|
+| CLI and errors | `cli.py`, `errors.py`, `progress.py` |
+| Installation and capability proof | `setup.py`, `install_ffmpeg.py`, `capabilities.py`, `diagnostics.py` |
+| Model contracts/provenance/export | `model.py`, `acquire.py`, `acquire_models.py`, `quicksr.py` |
+| Windows ML/QNN bootstrap | `qnn.py` |
+| Strict runtime, GPU proof, context integrity | `runtime.py`, `gpu.py`, `cache.py` |
+| Images and tiles | `image.py` |
+| Video decoding/encoding, pipe framing/cleanup | `ffmpeg.py` |
+| Video orchestration, presets, frame processing | `video.py`, `planar.py` |
+| Bounded ordered frame stream | `stream.py` |
+| Counts/timestamps, optional forensic audit | `video_validation.py` |
+| Timing/resources/power states | `video_stats.py`, `monitoring.py` |
+| Benchmarks and quality | `benchmark.py`, `suite.py`, `video_benchmark.py`, `video_quality.py`, `quality_gate.py` |
+| Experimental temporal state/export | `temporal.py`, `temporal_model.py`; not the default |
 
-## Image path
+Reader and writer threads overlap codec IO. The main thread owns the model input
+and runs ORT synchronously; there is no concurrent submission on a single QNN
+session. Owned complete frame bytes cross depth-two FIFO queues. Tile tensors
+are consumed before their reusable buffers change. Callback indices are checked
+against sequential frame order; all expected neural calls and encoded frames
+must match before output is published.
 
-Load PNG/JPEG/still WebP, reject oversized inputs, apply EXIF orientation, and split
-RGB/alpha. Compute full-range BT.601-style luminance/chroma in float32:
-`Y=.299R+.587G+.114B`, `Cb=.564(B-Y)+.5`, `Cr=.713(R-Y)+.5`.
-This matches the upstream normalized luminance convention. The output reconstruction
-uses the inverse coefficients, bicubic chroma and alpha, and clamps to uint8.
-Color management and metadata copying remain outside scope.
+## Contracts
 
-## Why tiles exist in v0.1
+Model registry entries supply task/scale/core/halo/color/precision and static
+input/output shapes. Halo outputs are discarded, exterior edges repeat pixels,
+and partial tiles are padded/cropped. One compilation serves every frame size via
+tiles. No image resizing to a fixed arbitrary model canvas or bypassed SR exists.
 
-The QNN EP requires fixed input shapes. Resizing every source to one arbitrary
-model size would lose aspect ratio or detail. We instead use a single compiled
-136×136 shape for all sources, with 128×128 cores and a four-pixel halo.
-The three convolution kernels have total receptive radius `2+1+1=4`.
-Halo outputs are discarded. Image edges repeat the outermost pixel; internal
-tile boundaries use their actual image neighbors. The final partial tiles are
-padded and cropped, producing exactly `2W×2H`, including for a 1×1 source.
-There is no multiscale selection, overlap blending, parallel tile scheduler, or batching.
+The default video model is QuickSRNet Small neutral Y, core256/halo4/input264²,
+FP32 ONNX and QNN HTP FP16 math. NV12 uses limited-range Y16–235 and bicubic UV.
+Image commands retain the original ESPCN default and full-range Rec.601-style
+luminance/chroma reconstruction, alpha handling and exact 2× dimensions.
+See [models](models.md), [image path](image-pipeline.md), [video path](video-pipeline.md).
 
-## Backend contract
+Strict NPU disables ORT CPU fallback, selects an NPU device plus HTP backend,
+runs proof on the actual session and requires exclusively QNN executed kernels.
+Every cache load repeats proof. Auto may create a new explicitly reported CPU
+session on initialization failure; no midstream backend switch occurs.
+[QNN details](qnn.md). IO, transfers and orchestration remain CPU work.
 
-NPU readiness requires catalog installation, Python ORT registration, selection
-of a QNN device of hardware type NPU, session compilation without CPU fallback,
-valid proof output, and executed QNN kernels in a profile with no other providers.
-The proof uses the same session that subsequently processes the image. The temporary
-profile is consumed and deleted; stopped profiling does not affect warm measurements.
-Every session has a measured startup field separate from inference latency.
-
-Auto mode can create a new CPU session if NPU initialization/proof fails, with an
-explicit message. A later run failure never triggers silent backend switching.
-Benchmark always creates explicit CPU and NPU sessions, and reports unavailable
-NPU status instead of generating measurements for a nonexistent backend.
-
-## v0.2 contracts and reuse
-
-Registry entries provide task, scale, core, halo and color space; runtime shape
-checks and image padding/stitching consume that shared contract. Learned denoising
-uses scale one. Inputs are copied into one reused contiguous tile buffer.
-Independent TF graph reference tests validate additional SR export semantics.
-
-One Runtime can serve many images. QNN contexts can be cached locally using
-`cache.py`; model/runtime/package/driver changes select another cache key.
-Integrity checks precede loading, and strict proof follows every cache load.
-DirectML provides a separately verified GPU comparison. See [models](models.md),
-[image pipeline](image-pipeline.md) and [research notes](research-notes.md).
-Video reuses that same Runtime for an entire stream; image behavior is preserved.
-
-
-## v0.4 frame stream
-
-`stream.py` owns bounded FIFO overlap and cancellation; `Frame` carries ordered,
-owned data from a sequential source without seeking or requiring a known length.
-The file adapter validates CFR/counts separately. Future pipe/live sources can
-supply the iterator without changing enhancement/sink contracts.
-
-`planar.py` owns reusable native limited-range NV12 buffers. `video.py` materializes
-presets, keeps one strict runtime alive and validates actual encoded output before
-atomic publication. `video_stats.py` and `monitoring.py` retain bounded timing,
-queue and OS process samples. `video_benchmark.py` implements sustained gates,
-aligned delivered quality and the isolated-model quality regression gate.
-
-Reader/writer threads overlap decode/encode; the main thread alone runs ORT and
-owns model tensors. No concurrent invocation on one QNN session, tile batching,
-model bypass or unbounded queue is introduced. See [realtime](realtime.md) and
-[video pipeline](video-pipeline.md) for scopes and settings.
-
-## Installation and capability UX
-
-`setup.py` acquires verified models and optional pinned FFmpeg; `install_ffmpeg.py`
-contains the same installer used by the clone-compatible script. `capabilities.py`
-executes short codec probes and optional strict GPU proof; listings are not proof.
-`diagnostics.py` combines observed hardware/runtime facts and model integrity.
-`progress.py` prints throttled submission progress; final end-to-end measurements
-still include encoder flush. Source/model/executable paths cannot be overwritten
-by diagnostic JSON. See [installation](installation.md).
+Default file validation inspects bounded reordered packet PTS/counts, compares
+actual pipeline frames, dimensions, cadence, duration and copied audio, then
+renames an owned temporary output atomically. Packet counts alone do not prove
+pixel integrity; `--verify-full` decodes every frame again under a timeout.
+Full-file seeking/count validation belongs to the file adapter; the sequential
+`Frame` stream does not require a known length, enabling future live adapters.
+No live source/player is implemented. [Codec evidence](hardware-codecs.md).

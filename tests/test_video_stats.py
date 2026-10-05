@@ -157,6 +157,9 @@ def test_presets_materialize_and_explicit_options_override():
     assert realtime.model == "quicksrnet-small-y-x2"
     overridden = settings_for_preset("realtime", {"codec": "hevc", "frame_format": "rgb24"})
     assert overridden.codec == "hevc" and overridden.frame_format == "rgb24"
+    quality = settings_for_preset("quality", {})
+    assert quality.model == "quicksrnet-medium-y-x2" and quality.codec == "av1"
+    assert settings_for_preset("quality", {"codec": "h264"}).codec == "h264"
 
 
 def test_image_quality_gate_rejects_quality_collapse_and_cpu_fallback():

@@ -1,4 +1,10 @@
-# v1 engineering gates
+# Development history
+
+Historical hypotheses and observations, retained as an engineering record.
+Entries describing next steps or earlier test counts reflect their original
+stage, not the current release status. See [performance engineering](performance-engineering.md)
+and the release benchmark summaries for final decisions and validation.
+
 
 This is a temporary working record, not a release promise. The v0.5 realtime selection follows the stronger quality gates. Earlier tags remain immutable.
 

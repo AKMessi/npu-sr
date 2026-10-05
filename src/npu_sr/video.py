@@ -70,6 +70,7 @@ PRESETS = {
         "frame_format": "nv12",
         "npu_performance": "sustained_high_performance",
         "pipeline_depth": 2,
+        "codec": "av1",
     },
     "balanced": {
         "model": "quicksrnet-small-y-x2",

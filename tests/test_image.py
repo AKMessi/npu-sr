@@ -65,6 +65,24 @@ def test_save_load_and_jpeg_alpha(tmp_path: Path):
         save_image(image, tmp_path / "x.tiff")
 
 
+def test_image_encoding_disk_failure_preserves_previous_output(tmp_path, monkeypatch):
+    import errno
+
+    path = tmp_path / "previous.png"
+    image = Image.new("RGB", (16, 16), "gray")
+    image.save(path)
+    before = path.read_bytes()
+
+    def fail(self, target, **kwargs):
+        Path(target).write_bytes(b"partial encoded bytes")
+        raise OSError(errno.ENOSPC, "No space left on device")
+
+    monkeypatch.setattr(Image.Image, "save", fail)
+    with pytest.raises(SRException, match="No space"):
+        save_image(image, path)
+    assert path.read_bytes() == before and list(tmp_path.iterdir()) == [path]
+
+
 def test_bad_image_and_unsupported_input(tmp_path: Path):
     path = tmp_path / "bad.png"
     path.write_bytes(b"not an image")

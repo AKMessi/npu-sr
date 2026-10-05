@@ -1,5 +1,7 @@
 """Deterministic luminance SR, bicubic chroma/alpha, and fixed-shape tile stitching."""
 
+import os
+import tempfile
 import warnings
 from collections.abc import Iterator
 from dataclasses import dataclass
@@ -208,6 +210,7 @@ def infer_y(
 
 
 def save_image(image: Image.Image, path: Path) -> None:
+    """Publish a complete encoded image atomically; preserve prior output on failure."""
     extension = path.suffix.lower()
     if extension not in {".png", ".jpg", ".jpeg", ".webp"}:
         raise SRException("Unsupported output extension. Use .png, .jpg, .jpeg, or .webp.")
@@ -216,8 +219,16 @@ def save_image(image: Image.Image, path: Path) -> None:
         background = Image.new("RGB", image.size, "white")
         background.paste(image, mask=image.getchannel("A"))
         image = background
+    temporary = None
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
-        image.save(path, **({"quality": 95} if extension != ".png" else {}))
+        descriptor, name = tempfile.mkstemp(prefix=".npu-sr-", suffix=extension, dir=path.parent)
+        os.close(descriptor)
+        temporary = Path(name)
+        image.save(temporary, **({"quality": 95} if extension != ".png" else {}))
+        os.replace(temporary, path)
     except (OSError, ValueError) as exc:
         raise SRException(f"Cannot save output '{path}': {exc}") from exc
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)

@@ -1,53 +1,83 @@
-# Quality evaluation
+# Quality and its limits
 
-The v0.5 protocol compares delivered video with a native high-resolution reference,
-not with its enlarged low-resolution input. The corpus and split were frozen
-before expanded scoring. Development selected QuickSRNet Small Y; its hash and
-settings were locked before evaluating holdout. Future tuning needs new holdout
-material rather than reusing these clips as supposedly unseen data.
+The default realtime model is a neutral-Y adaptation of QuickSRNet Small, chosen
+using twelve development clips. Twelve other clips were originally held out of
+selection. The frozen 24-clip corpus is rerun for regressions without retuning;
+repeated holdout evaluation is not newly unseen test data.
 
-## Sources and preparation
+## Ground truth
 
-[Corpus declaration](../benchmarks/corpus-v1.json) records source URL, source
-license/usage terms, SHA256, exact time/crop, split and categories. Media is
-acquired in the application cache. Blender CC BY 3.0 permits attributed
-adaptations. NASA footage remains subject to its media usage guidelines;
-no endorsement or blanket public-domain claim is made. Original UI/texture
-stress tests are distinct from photographed detail. Scripts verify hashes,
-extract only a declared ZIP member and avoid enlarging low-resolution references.
+References are high-quality 1080p source frames, not enlarged low-resolution
+inputs. Source/license/hash, exact times, retiming, crop/padding, input degradation
+and output encoding are declared in [the corpus](../benchmarks/corpus-v1.json).
+Blender films, NASA scenes and project-generated UI/texture sequences cover faces,
+motion, foliage, text, animation, low light and compression stress. Films/datasets
+remain outside git. Rights and attribution are recorded per source. NASA usage
+guidelines include exceptions; no blanket public-domain or endorsement claim is made.
+References are lossless FFV1, with declared limited-range BT709 and active film
+regions. The corpus is 24 two-second clips, not a full-movie perceptual study.
 
-References use lossless FFV1, 1920×1080 limited-range BT709. Letterboxed material
-is padded and scored only in its active ROI. Input is 960×540 bicubic downscale
-and H.264 CRF 10; declared compression-stress cases use CRF 26. Bicubic and neural
-outputs use the same QCOM AV1 hardware encoder and 8 Mbit/s target.
-Known color range/matrix are preserved on both raw encoder input and output.
+The controlled degradation uses antialiased bicubic downscale to 540p and H.264
+CRF10, with declared CRF26 stress cases. Both reconstruction methods use QCOM AV1
+at the same 8M setting. This does not represent every real streaming degradation.
 
 ## Metrics
 
-- PSNR: native decoded coded-Y, peak 255, two-pixel shave, mean sampled MSE per clip.
-- SSIM: native Y, 11×11 Gaussian, sigma 1.5, population covariance, valid support.
-- PSNR/SSIM sample every third frame; VMAF 0.6.1 and 0.6.1 NEG sample every frame.
-- VMAF uses an active ROI and shared ordinal CFR clock; no repeated last frame.
-- Temporal difference error: absolute change in reconstruction residual between
-  consecutive frames, normalized by 255, ROI reduced to 256×144. Every frame is
-  used. This is a project diagnostic without motion compensation, not a standard
-  perceptual metric; it can reward smoothing and cannot establish absence of flicker.
+- Native decoded coded Y, peak 255; predeclared active ROI excludes film padding.
+- PSNR derives from the clip's mean sampled MSE; every third frame, two-pixel shave.
+- SSIM uses an 11×11 Gaussian, sigma 1.5, population covariance, the same sampling/shave.
+- VMAF 0.6.1 and enhancement-limited NEG 0.6.1 evaluate every frame of the declared ROI.
+- Average all clips equally, retain every per-clip result and also group by source,
+  category and original split. A VMAF-saturated synthetic clip remains included.
 
-Equal clip averages include all declared cases. Per-clip, per-source, per-category,
-development and holdout scores are retained. The paired numeric gate rejects
-missing/duplicate comparisons, mismatched references/frames/ROI, nonfinite scores,
-CPU fallback and neural-frame bypass. Manual artifact review and sustained
-performance are additional gates. Saturated VMAF values are not excluded.
+The [v0.9 recheck](../benchmarks/v0.9/quality.json) gives:
 
-## Reproduce and interpret
+| Method | PSNR dB | SSIM | VMAF |
+|---|---:|---:|---:|
+| Bicubic + AV1 | 37.8653 | 0.961910 | 85.6160 |
+| QuickSRNet Small / QNN + AV1 | 39.8693 | 0.971032 | 91.5656 |
+| Difference | +2.0040 | +0.009123 | +5.9496 |
 
-See [v0.5 results and commands](../benchmarks/v0.5/summary.md).
-`evaluate-video` retains its earlier RGB protocol for compatibility; the expanded
-corpus scripts explicitly call the native-Y evaluator. Absolute v0.4 and v0.5
-scores are therefore not directly comparable. New-model gains are paired within
-the same declared protocol. Model-only inference throughput is not video FPS.
+These are luma-focused measurements, not complete color/perceptual correctness
+or a promise for all content. Colored input is not identical to the original RGB
+QuickSRNet: the export evaluates the network at R=G=B=Y and mixes output RGB to Y.
+CPU chroma resize is separately visible in delivered output. See [models](models.md).
 
-The 24 two-second clips cover diverse cases but are still a limited corpus.
-Six-consecutive-frame contact sheets and same-size delivered crops were inspected;
-this is not a comprehensive playback study. Longer motion sequences and temporal
-models are future validation work. No universal enhancement guarantee is made.
+## Temporal evidence
+
+Two project diagnostics compare consecutive reconstruction-error changes to the
+reference: a coarse 256×144 version and a native-resolution version. Neither uses
+motion compensation or is a standard perceptual flicker metric. They can reward
+smoothing or constant bias and must be read with spatial scores and inspection.
+
+In the frozen recheck, coarse error worsens **2.17%**, while native error improves
+**8.93%**. Both are reported. Hash-verified six-consecutive-frame native crops of
+faces, foliage, aerial texture, a night scene and text show sharpening/blur tradeoffs
+without severe instability in those inspected regions. This is limited crop
+inspection, not full playback or a blinded study; artifacts elsewhere remain possible.
+
+Small trained temporal corrections did not pass their development gates, so none
+became the default. See [the rejected temporal experiments](temporal-model.md).
+The production model still processes frames independently and may ring or flicker.
+
+## Presets and reproduction
+
+Realtime uses Small/burst/NV12/AV1; balanced uses Small/sustained/NV12/H.264;
+quality uses Medium/sustained/NV12/AV1. A performance request is not an energy
+measurement. Medium had modestly higher mean development scores under equal AV1
+encoding, with higher neural compute cost; that is not a universal ranking.
+Use identical codecs/settings when comparing models. [Settings and speeds](realtime.md).
+
+Prepare with `scripts/download_quality_corpus.py`; run `run_quality_corpus.py`
+for development/holdout and aggregate using `summarize_quality_corpus.py`.
+The scripts require exact input/reference/model hashes and complete paired results.
+Weights, software changes and different degradation require fresh validation.
+
+
+The paired numeric gate rejects missing/duplicate comparisons, mismatched
+references/frames/ROI, nonfinite metrics, CPU fallback and neural-frame bypass.
+VMAF uses a shared ordinal CFR clock and expected frame count; no repeated final
+reference frame is allowed. `evaluate-video` retains its legacy RGB protocol for
+compatibility, while the frozen corpus scripts use the native-Y evaluator.
+Absolute earlier RGB-protocol scores must not be treated as model improvements
+against the later native-Y protocol. Future tuning requires fresh holdout material.

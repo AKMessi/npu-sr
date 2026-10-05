@@ -72,3 +72,7 @@ input leaves 22,284 learned values, plus 48 fixed luminance mixing coefficients
 and two Clip constants. Medium has 50,604 original parameters. Model provenance,
 export hashes, comparative results and limitations are in the
 [v0.5 report](../benchmarks/v0.5/summary.md).
+
+The v1 quality preset selects AV1 to match its delivered-quality comparison.
+Balanced retains H.264 for broader CPU/tool compatibility. Codec differences can
+change rankings; use explicit identical codec settings for model comparisons.

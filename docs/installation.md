@@ -1,6 +1,6 @@
 # Installation
 
-The setup command is included in v0.8 wheels and source installations.
+The setup command is included in release wheels and source installations (v0.8+).
 
 ## Snapdragon Windows
 

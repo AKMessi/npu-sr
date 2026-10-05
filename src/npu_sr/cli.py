@@ -248,10 +248,19 @@ def _setup(args: argparse.Namespace) -> int:
 
 
 def _protect_report(destination: Path | None, sources: list[Path | None]) -> None:
-    if destination is not None and destination.resolve() in {
-        path.resolve() for path in sources if path is not None
-    }:
-        raise SRException("Diagnostic JSON would overwrite a model, manifest or executable.")
+    if destination is None:
+        return
+    # Protect other acquired registry models too, including filesystem aliases.
+    directory = model_directory()
+    assets = [directory / f"{name}.{suffix}" for name in MODELS for suffix in ("onnx", "json")]
+    for source in [*sources, *assets]:
+        if source is not None and (
+            destination.resolve() == source.resolve()
+            or (destination.exists() and source.exists() and destination.samefile(source))
+        ):
+            raise SRException(
+                "Output/report would overwrite input, output, model, manifest or executable."
+            )
 
 
 def _upscale(args: argparse.Namespace) -> int:
@@ -263,9 +272,9 @@ def _upscale(args: argparse.Namespace) -> int:
             "Output must differ from input; the source image will not be overwritten."
         )
     started = perf_counter()
-    runtime = Runtime(
-        resolve_model(args.model, args.command), args.device, args.verbose, args.cache_dir
-    )
+    model = resolve_model(args.model, args.command)
+    _protect_report(args.output, [args.input, model, model.with_suffix(".json")])
+    runtime = Runtime(model, args.device, args.verbose, args.cache_dir)
     if runtime.spec.task != args.command:
         raise SRException(
             f"Model {runtime.spec.identifier} is for {runtime.spec.task}, not {args.command}."
@@ -299,6 +308,8 @@ def _upscale(args: argparse.Namespace) -> int:
         paths = [args.comparison_dir / name for name in names]
         if any(path.resolve() == args.input.resolve() for path in paths):
             raise SRException("Comparison directory would overwrite the source image.")
+        for path in paths:
+            _protect_report(path, [args.input, model, model.with_suffix(".json")])
         save_image(original, paths[0])
         if args.command == "upscale":
             save_image(original.resize(output.size, Image.Resampling.BICUBIC), paths[1])
@@ -330,6 +341,7 @@ def _benchmark(args: argparse.Namespace) -> int:
     from .model import manifest_spec, validate_model
 
     path = resolve_model(args.model)
+    _protect_report(args.json, [args.input, path, path.with_suffix(".json")])
     prepared = preprocess(load_image(args.input), manifest_spec(validate_model(path)))
     report = benchmark(prepared, path, args.runs, args.warmups, args.verbose, args.gpu)
     print("Backend       Median      Mean       p95       Theoretical images/sec")
@@ -413,6 +425,8 @@ def _suite(args: argparse.Namespace) -> int:
         args.quality and args.json.is_file() and args.json.parent.resolve() == args.input.resolve()
     ):
         raise SRException("JSON report would overwrite benchmark input data.")
+    paths = [resolve_model(name) for name in args.models]
+    _protect_report(args.json, [args.input, *paths, *(path.with_suffix(".json") for path in paths)])
     if args.quality:
         report = quality_suite(args.input, args.models, args.devices)
     else:
@@ -432,8 +446,11 @@ def _suite(args: argparse.Namespace) -> int:
 
 
 def _video(args: argparse.Namespace) -> int:
+    from . import __version__
     from .benchmark import save_report
     from .video import VideoSettings, process_video, settings_for_preset
+
+    print(f"npu-sr {__version__}")
 
     if args.json and args.json.resolve() in {args.input.resolve(), args.output.resolve()}:
         raise SRException("Video JSON would overwrite input or output.")
@@ -456,6 +473,14 @@ def _video(args: argparse.Namespace) -> int:
         preset,
         {key: getattr(args, key) for key in VideoSettings.__dataclass_fields__ if key != "preset"},
     )
+    model = resolve_model(settings.model)
+    protected = [args.input, args.output, model, model.with_suffix(".json"), settings.ffmpeg]
+    if args.command in {"benchmark-video", "benchmark-realtime"}:
+        if not 1 <= args.trials <= 20:
+            raise SRException("Video benchmark trials must be 1–20.")
+        protected.extend(args.output / f"trial-{index + 1}.mp4" for index in range(args.trials))
+    _protect_report(args.json, protected)
+    _protect_report(args.output, [model, model.with_suffix(".json"), settings.ffmpeg])
     if settings.cache_dir is None and settings.device != "cpu":
         from dataclasses import replace
 
@@ -522,6 +547,7 @@ def _video_quality(args: argparse.Namespace) -> int:
 
     if args.json.resolve() in {args.input.resolve(), args.reference.resolve()}:
         raise SRException("Quality JSON would overwrite video input.")
+    _protect_report(args.json, [args.input, args.reference, args.ffmpeg])
     report = evaluate_video(args.input, args.reference, args.ffmpeg, args.stride, args.vmaf)
     save_report(report, args.json)
     print(f"PSNR Y: {report['mean_psnr_y_db']} dB; SSIM Y: {report['mean_ssim_y']:.4f}")

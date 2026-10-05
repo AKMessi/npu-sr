@@ -30,3 +30,8 @@ audit. FFmpeg and driver parsers remain separate attack surfaces: use trusted
 sources and current compatible tools. Model/tool hashes establish reproducibility,
 not immunity from defects. CI audits installed dependencies for known advisories;
 the audit cannot assess proprietary drivers or undisclosed vulnerabilities.
+
+CLI output/report guards protect active inputs, model/manifest files and known
+benchmark video outputs, including hardlink aliases. Complete images and videos
+are published by atomic rename after encoding/validation. Report checkpoints may
+replace their own report file intentionally; they are not backups or signatures.

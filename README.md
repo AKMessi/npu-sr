@@ -11,10 +11,11 @@ remain available. An NPU is a processor designed to run neural networks efficien
 
 This project explores practical local workloads for the NPU, with reproducible
 models, strict execution checks and measurements rather than utilization claims.
-**v0.9 adds long-run reliability checks, audio timing fixes and executed codec/container
-validation.** Setup, diagnostics and a one-command video preset are included.
+**The v1 candidate is undergoing final installed-wheel validation.** The latest
+published release is [v0.9.0](https://github.com/AKMessi/npu-sr/releases/tag/v0.9.0).
+Setup, diagnostics, strict hardware proof and a one-command video preset are included.
 
-**960×540 → 1920×1080 @ 30 FPS: 53.05 FPS median end-to-end throughput**,
+**Validated v0.9 baseline: 960×540 → 1920×1080 @ 30 FPS, 53.05 FPS median throughput**,
 three independent trials, **678–682 seconds of actual processing each**,
 36,000 frames and 432,000 neural calls per trial, zero application drops.
 Strict QNN, D3D11VA H.264 decode and QCOM AV1 hardware encoding are verified.
@@ -116,6 +117,7 @@ ONNX integrity/provenance manifest. Outside the clone, use `NPU_SR_MODEL_DIR` or
 acquire models in the user's application cache. See [models](docs/models.md).
 
 For wheel installation and CPU-only Linux, see [installation](docs/installation.md).
+Release wheels include setup; no PyPI publication is claimed.
 The simplest Windows ARM64 video command is:
 
 ```powershell
@@ -224,7 +226,8 @@ are committed without datasets, machine identifiers or private paths.
 - Driver/provider updates can change compatibility; proof runs for every new session/cache load.
 - Models, FFmpeg, proprietary runtimes and benchmark datasets are acquired separately.
 
-Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.md).
+Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.md), [quality](docs/quality.md),
+[hardware codecs](docs/hardware-codecs.md) and [hardware matrix](docs/hardware-matrix.md).
 
 ## Roadmap and license
 
@@ -234,7 +237,10 @@ Run `doctor` for missing components. See [troubleshooting](docs/troubleshooting.
 - [x] v0.4: sustained realtime video, bounded pipeline, measured quality/speed tradeoffs
 - [x] v0.5: expanded quality corpus, QuickSRNet, improved delivered quality
 - [x] v0.6: cheaper default validation and CPU/memory profiling
-- [ ] v0.7–v1: temporal research, installation UX and long-run reliability
+- [x] v0.8: packaged installation, executed diagnostics and user presets
+- [x] v0.9: long-run reliability, audio/cadence and format validation
+- [ ] v1.0: final installed-wheel release validation
+- [ ] Temporal model: researched, quality gate not passed; remains outside defaults
 - [ ] Future: temporal models, live sources, perceptual preprocessing, further codec/NPU experiments
 
 Our code is [MIT](LICENSE). ESPCN/FSRCNN/LapSRN upstream weights are Apache-2.0;

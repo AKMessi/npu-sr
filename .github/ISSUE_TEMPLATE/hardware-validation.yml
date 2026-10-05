@@ -1,0 +1,40 @@
+name: Hardware validation
+description: Share an actual local run on another Snapdragon device.
+title: "Hardware validation: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Only executed runs qualify as verified. Review JSON/logs for private paths,
+        machine names, tokens and personal data before sharing. Do not upload
+        models, runtime binaries, datasets or large videos.
+  - type: input
+    id: device
+    attributes:
+      label: Processor SKU
+      placeholder: Snapdragon X Plus X1P-64-100
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: npu-sr version and commit
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Executed diagnostics and tests
+      description: Include reviewed doctor JSON, runtime/driver versions, exact commands and actual test results.
+    validations:
+      required: true
+  - type: textarea
+    id: performance
+    attributes:
+      label: Benchmark evidence
+      description: Include input properties, model hash, codec/settings, power state, trial durations and reviewed JSON. Provider lists alone are not proof.
+  - type: textarea
+    id: failures
+    attributes:
+      label: Failures and limitations
+      description: Include unsuccessful paths as well as successes.

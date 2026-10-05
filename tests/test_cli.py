@@ -88,6 +88,81 @@ def test_diagnostic_json_cannot_overwrite_model_manifest(tiny_model, capsys):
     assert "overwrite" in capsys.readouterr().err
 
 
+@pytest.mark.parametrize(
+    "command", ["benchmark", "benchmark-suite", "video", "benchmark-video", "benchmark-realtime"]
+)
+def test_report_cannot_replace_selected_model_manifest(
+    command, tiny_model, tmp_path, capsys, monkeypatch
+):
+    manifest = tiny_model.with_suffix(".json")
+    before = manifest.read_bytes()
+    args = [command, str(tmp_path / "source.png"), "--json", str(manifest)]
+    if command == "benchmark-suite":
+        monkeypatch.setenv("NPU_SR_MODEL_DIR", str(tiny_model.parent))
+        args += ["--models", "espcn-x2"]
+    else:
+        args += ["--model", str(tiny_model)]
+    if command in {"video", "benchmark-video", "benchmark-realtime"}:
+        args += ["-o", str(tmp_path / "result.mp4")]
+    assert main(args) == 1
+    assert manifest.read_bytes() == before
+    assert "overwrite" in capsys.readouterr().err
+
+
+def test_report_rejects_a_hardlink_to_model_manifest(tiny_model, tmp_path, capsys):
+    manifest = tiny_model.with_suffix(".json")
+    alias = tmp_path / "report.json"
+    try:
+        alias.hardlink_to(manifest)
+    except OSError:
+        pytest.skip("Filesystem does not support hardlink regression")
+    before = manifest.read_bytes()
+    assert main(["benchmark", "missing.png", "--model", str(tiny_model), "--json", str(alias)]) == 1
+    assert manifest.read_bytes() == before and alias.read_bytes() == before
+    assert "overwrite" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("command", ["benchmark-video", "benchmark-realtime"])
+def test_checkpoint_json_cannot_replace_a_generated_video(command, tmp_path, capsys):
+    directory = tmp_path / "trials"
+    target = directory / "trial-1.mp4"
+    assert main([command, "missing.mp4", "-o", str(directory), "--json", str(target)]) == 1
+    assert "overwrite" in capsys.readouterr().err and not directory.exists()
+
+
+def test_extreme_trial_count_is_rejected_before_allocating_output_paths(tmp_path, capsys):
+    assert (
+        main(["benchmark-video", "missing.mp4", "-o", str(tmp_path), "--trials", "100000000"]) == 1
+    )
+    assert "trials must be" in capsys.readouterr().err
+
+
+def test_image_output_hardlink_cannot_destroy_input(tiny_model, tmp_path, capsys):
+    source, output = tmp_path / "input.png", tmp_path / "output.png"
+    Image.new("RGB", (16, 16), "gray").save(source)
+    try:
+        output.hardlink_to(source)
+    except OSError:
+        pytest.skip("Filesystem does not support hardlink regression")
+    before = source.read_bytes()
+    assert (
+        main(
+            [
+                "upscale",
+                str(source),
+                "-o",
+                str(output),
+                "--device",
+                "cpu",
+                "--model",
+                str(tiny_model),
+            ]
+        )
+        == 1
+    )
+    assert source.read_bytes() == before and "overwrite" in capsys.readouterr().err
+
+
 def test_redirected_cli_dimensions_are_utf8(tiny_model, tmp_path):
     import os
     import subprocess

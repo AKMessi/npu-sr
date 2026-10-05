@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 — unreleased candidate
+
+- Freeze the validated Small/NV12 realtime profile for final installed-wheel
+  validation; retain strict proof, persistent sessions and compatibility commands.
+- Quality preset selects AV1, matching its measured delivered-quality comparison;
+  balanced retains H.264 and explicit codec overrides remain compatible.
+- Prevent report/checkpoint writes from replacing models, manifests or generated
+  videos, including filesystem aliases; publish complete image files atomically.
+- Print version for video commands; clarify quality, timing, hardware and codec
+  scopes, installation, model provenance and known unsupported paths.
+- Convert the temporary engineering plan to documented development history and
+  a concise measurement/decision log. Add a community hardware validation form
+  without marking untested devices verified.
+
 ## 0.9.0 — 2026-10-05
 
 - Correct copied audio timing relative to the first video frame; retain delayed

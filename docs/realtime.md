@@ -51,8 +51,9 @@ All settings are printed; explicit options override them. Consult the release
 | balanced | QuickSRNet Small Y | native NV12, unblended | sustained_high_performance | 2 |
 | quality | QuickSRNet Medium Y | native NV12, unblended | sustained_high_performance | 2 |
 
-Realtime additionally requires NPU, hardware decode, hardware AV1 encode. Other
-presets retain the default auto device/codecs unless explicitly selected. The
+Realtime additionally requires NPU, hardware decode and hardware AV1 encode.
+Quality selects AV1 to match its measured delivered-quality comparison; balanced
+retains H.264. Both use auto device/hardware selection unless overridden. The
 quality model has modestly higher development-video scores and higher compute
 cost, not universal superiority. An ordinary Windows ARM64 video command selects
 realtime; CPU/non-ARM commands select balanced. Explicit legacy model/frame-path

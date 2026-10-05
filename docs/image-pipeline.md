@@ -27,3 +27,7 @@ planes in place avoids several full-size float RGB arrays and preserves the
 previous pixel formula exactly. See the release benchmark summary for measured
 before/after results. Larger tiles reduce calls but also increase padding on
 partial tiles; they are not always faster for small images.
+
+Encoded images are written to an owned temporary file in the output directory
+and atomically renamed only after successful encoding. Disk/encode failure
+preserves existing output. CLI rejects input/model/report filesystem aliases.
